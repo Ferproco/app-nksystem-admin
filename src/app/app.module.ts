@@ -41,6 +41,7 @@ import { TipoImpuestoService } from './components/impuesto/TipoImpuestoService.s
 import { FilterClientePipe } from './components/cliente/catalogo-cliente/filter-cliente.pipe';
 import { FilterVendedorPipe } from './components/vendedor/catalogo-vendedor/filter-vendedor.pipe';
 import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filter-articulo.pipe';
+import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filt
     CrearImpuestoComponent,
     FilterClientePipe,
     FilterVendedorPipe,
-    FilterArticuloPipe
+    FilterArticuloPipe,
+    CrearVendedorComponent
   ],
   imports: [
     BrowserModule,
