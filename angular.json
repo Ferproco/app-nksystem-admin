@@ -25,7 +25,6 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/css/estilos.css",
               "src/assets/css/form/all-type-forms.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/font-awesome.min.css",
