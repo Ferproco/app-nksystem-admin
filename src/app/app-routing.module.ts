@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/vendedores', component: CatalogoVendedorComponent},
   { path: 'ventas/formapagos', component: CatalogoFormapagoComponent},
-  { path: 'ventas/proveedores', component: CatalogoProveedorComponent},
+  { path: 'compras/proveedores', component: CatalogoProveedorComponent},
   { path: 'ventas/facturas', component: CatalogoFacturaComponent},
   { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent},
   { path: 'inventario/listararticulos', component: CatalogoArticuloComponent},

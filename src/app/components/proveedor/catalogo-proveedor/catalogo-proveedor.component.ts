@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Proveedor } from '../../model/Proveedor.model';
 import { ProveedorService } from '../ProveedorService.service';
 
@@ -12,14 +14,17 @@ export class CatalogoProveedorComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Proveedores';
   lstProveedores: Proveedor[] = [];
-
-  constructor(private proveedorService:ProveedorService) { }
-
+  filtrarproveedores='';
+  
   POSTS: any;
   page = 1;
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
+
+  constructor(private proveedorService:ProveedorService,private router: Router, private toastr: ToastrService) { }
+
+ 
   ngOnInit(): void {
     this.listarProveedores();
   }
@@ -31,7 +36,11 @@ export class CatalogoProveedorComponent implements OnInit {
      this.lstProveedores = response as Proveedor[];
      console.log(this.lstProveedores);
      this.loading = false;
-   });
+   },
+   error => {
+    this.loading=false;
+    this.toastr.error('Opss ocurrio un error' + '<br>' + error.message, 'Error', { enableHtml: true, closeButton: true });
+  });
  }
  onTableDataChange(event){
   this.page = event;
@@ -43,6 +52,11 @@ onTableSizeChange(event): void {
   this.page = 1;
   this.lstProveedores;
 } 
-
+registrarproveedores() {
+  
+    }
 
 }
+
+
+
