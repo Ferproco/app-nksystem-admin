@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Vendedor } from '../../model/Vendedor.model';
 import { VendedorService } from '../VendedorService.service';
@@ -17,7 +18,8 @@ export class CatalogoVendedorComponent implements OnInit {
   filtrarvendedores = '';
 
   constructor(private vendedorService: VendedorService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private router: Router) { }
 
   POSTS: any;
   page = 1;
@@ -43,7 +45,7 @@ export class CatalogoVendedorComponent implements OnInit {
  }
 
  registrarvendedor(){
-
+  this.router.navigate(['ventas/crearvendedores']);
  }
 
  onTableDataChange(event){

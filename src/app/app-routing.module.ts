@@ -1,3 +1,4 @@
+import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
 import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vendedor/catalogo-vendedor.component';
 import { CatalogoClienteComponent } from './components/cliente/catalogo-cliente/catalogo-cliente.component';
 import { AppComponent } from './app.component';
@@ -20,7 +21,8 @@ import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/
 const routes: Routes = [
   { path: '', component: MainComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
-  { path: 'ventas/vendedores', component: CatalogoVendedorComponent},
+  { path: 'ventas/listarvendedores', component: CatalogoVendedorComponent},
+  { path: 'ventas/crearvendedores', component: CrearVendedorComponent},
   { path: 'ventas/formapagos', component: CatalogoFormapagoComponent},
   { path: 'compras/proveedores', component: CatalogoProveedorComponent},
   { path: 'ventas/facturas', component: CatalogoFacturaComponent},
