@@ -14,6 +14,8 @@ export class CatalogoArticuloComponent implements OnInit {
   titulo = 'Listado de Articulos';
   lstArticulos: Articulo[] = [];
 
+  filtrararticulos = '';
+
   POSTS: any;
   page = 1;
   count = 0;

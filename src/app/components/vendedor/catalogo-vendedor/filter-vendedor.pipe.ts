@@ -12,6 +12,10 @@ export class FilterVendedorPipe implements PipeTransform {
         if (vendedor.nombre.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
           resultvendedores.push(vendedor);
         }
+        else
+          if (vendedor.codigo.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+            resultvendedores.push(vendedor);
+          }
       }
     }
     catch (err) { }

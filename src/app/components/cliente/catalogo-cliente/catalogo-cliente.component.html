@@ -18,9 +18,9 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="breadcome-heading">
-                                        <a href=""><i class="fa fa-pencil"></i></a>
-                                            <button type="button" (click)="registrarclientes()" class="form-control">Crear Cliente</button>                                            
-                                       
+                                      <button type="button" (click)="registrarclientes()" class="form-control">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        Crear Cliente</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -33,7 +33,7 @@
                                             <a routerLink="/ventas/clientes"><span class="bread-blod">Listado de
                                                     Clientes </span></a>
                                         </li>
-                                       
+
                                     </ul>
                                 </div>
                             </div>
@@ -53,26 +53,23 @@
                     <div class="sparkline13-list shadow-reset">
                         <div class="sparkline13-hd">
                             <div class="main-sparkline13-hd">
-                                <h1>Catalogo <span class="table-project-n">de</span> Clientes</h1>
-                                <div class="sparkline13-outline-icon">
-                                    <span class="sparkline13-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                    <span><i class="fa fa-wrench"></i></span>
-                                    <span class="sparkline13-collapse-close"><i class="fa fa-times"></i></span>
-                                </div>
+                                <h1>
+                                  <i class="fa fa-server" aria-hidden="true"></i>
+                                  Listado <span class="table-project-n">de</span> Clientes</h1>
                             </div>
                         </div>
                         <div class="sparkline8-graph">
                          <form role="search" class="" name="clientelist">
                             <div class="breadcome-heading">
-                               
-                                    <input 
-                                    type="text" 
+
+                                    <input
+                                    type="text"
                                     name="filtrarclientes"
                                     [(ngModel)]="filtrarclientes"
-                                    placeholder="Buscar..." 
+                                    placeholder="Buscar..."
                                     class="form-control">
                                     <a href=""><i class="fa fa-search"></i></a>
-                                
+
                              </div>
                             <br>
                           <div class="static-table-list">
@@ -100,7 +97,7 @@
                                             <td>{{cliente.nombre}}</td>
                                             <td>{{cliente.telefonomovil}}</td>
                                             <td>{{cliente.direccionfiscal}}</td>
-                                            <td>{{cliente.correoe}}</td>                                                                    
+                                            <td>{{cliente.correoe}}</td>
                                             <td>
                                                 <div *ngIf="cliente.status === 'A'; else inactivo" class="btn-group project-list-add">
                                                     <button class="btn btn-white btn-xs">Activo  </button>
