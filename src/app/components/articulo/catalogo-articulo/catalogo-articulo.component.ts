@@ -47,6 +47,6 @@ export class CatalogoArticuloComponent implements OnInit {
   }
 
   registrararticulos() {
-this.router.navigate(['inventario/creararticulo']);
+    this.router.navigate(['inventario/creararticulo']);
   }
 }
