@@ -9,6 +9,10 @@ export class FilterProveedorPipe implements PipeTransform {
     const resultproveedores = [];
     try {
       for (const Proveedores of value) {
+        if (Proveedores.rif.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+          resultproveedores.push(Proveedores);
+        }
+        else
         if (Proveedores.nombre.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
           resultproveedores.push(Proveedores);
         }

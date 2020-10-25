@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/listarvendedores', component: CatalogoVendedorComponent},
   { path: 'ventas/crearvendedores', component: CrearVendedorComponent},
-  { path: 'ventas/formapagos', component: CatalogoFormapagoComponent},
+  { path: 'configuracion/listarformapagos', component: CatalogoFormapagoComponent},
   { path: 'compras/proveedores', component: CatalogoProveedorComponent},
   { path: 'ventas/facturas', component: CatalogoFacturaComponent},
   { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent},

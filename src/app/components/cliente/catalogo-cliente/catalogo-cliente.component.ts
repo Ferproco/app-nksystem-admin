@@ -14,14 +14,16 @@ export class CatalogoClienteComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Clientes';
   lstClientes: Cliente[] = [];
-  filtrarclientes='';
+  filtrarclientes = '';
   POSTS: any;
   page = 1;
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
-  
-  constructor(private clienteServicio: ClienteService,private router: Router, private toastr: ToastrService) { }
+
+  constructor(private clienteServicio: ClienteService,
+              private router: Router,
+              private toastr: ToastrService) { }
 
 
   ngOnInit(): void {
@@ -37,20 +39,21 @@ export class CatalogoClienteComponent implements OnInit {
      this.loading = false;
    },
    error => {
-     this.loading=false;
-     this.toastr.error('Opss ocurrio un error' + '<br>' + error.message, 'Error', { enableHtml: true, closeButton: true });
+     this.loading = false;
+     this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+     { enableHtml: true, closeButton: true });
    });
  }
  onTableDataChange(event){
   this.page = event;
   this.lstClientes;
-}  
+}
 
 onTableSizeChange(event): void {
   this.tableSize = event.target.value;
   this.page = 1;
   this.lstClientes;
-} 
+}
 registrarclientes() {
   this.router.navigate(['ventas/crearcliente']);
     }

@@ -40,7 +40,8 @@ export class CatalogoVendedorComponent implements OnInit {
    },
      error => {
        this.loading = false;
-       this.toastr.error('Opss ocurrio un error' + '<br>' + error.message, 'Error', { enableHtml: true, closeButton: true });
+       this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+     { enableHtml: true, closeButton: true });
      });
  }
 

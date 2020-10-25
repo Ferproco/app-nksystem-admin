@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Articulo } from '../../model/Articulo.model';
 import { ArticuloService } from '../ArticuloService.service';
 
@@ -22,6 +23,7 @@ export class CatalogoArticuloComponent implements OnInit {
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
   constructor(private articuloServicio: ArticuloService,
+              private toastr: ToastrService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -35,6 +37,11 @@ export class CatalogoArticuloComponent implements OnInit {
         this.lstArticulos = response as Articulo[];
         console.log(this.lstArticulos);
         this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+        { enableHtml: true, closeButton: true });
       });
   }
   onTableDataChange(event) {

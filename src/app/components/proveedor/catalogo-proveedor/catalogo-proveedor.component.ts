@@ -15,16 +15,18 @@ export class CatalogoProveedorComponent implements OnInit {
   titulo = 'Listado de Proveedores';
   lstProveedores: Proveedor[] = [];
   filtrarproveedores='';
-  
+
   POSTS: any;
   page = 1;
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
 
-  constructor(private proveedorService:ProveedorService,private router: Router, private toastr: ToastrService) { }
+  constructor(private proveedorService: ProveedorService,
+              private router: Router,
+              private toastr: ToastrService) { }
 
- 
+
   ngOnInit(): void {
     this.listarProveedores();
   }
@@ -38,20 +40,21 @@ export class CatalogoProveedorComponent implements OnInit {
      this.loading = false;
    },
    error => {
-    this.loading=false;
-    this.toastr.error('Opss ocurrio un error' + '<br>' + error.message, 'Error', { enableHtml: true, closeButton: true });
+    this.loading = false;
+    this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+     { enableHtml: true, closeButton: true });
   });
  }
  onTableDataChange(event){
   this.page = event;
   this.lstProveedores;
-}  
+}
 
 onTableSizeChange(event): void {
   this.tableSize = event.target.value;
   this.page = 1;
   this.lstProveedores;
-} 
+}
 registrarproveedores() {
   this.router.navigate(['compras/crearproveedor']);
     }

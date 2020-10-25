@@ -9,6 +9,10 @@ export class FilterClientePipe implements PipeTransform {
     const resultclientes = [];
     try {
       for (const Clientes of value) {
+        if (Clientes.rif.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+          resultclientes.push(Clientes);
+        }
+        else
         if (Clientes.nombre.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
           resultclientes.push(Clientes);
         }

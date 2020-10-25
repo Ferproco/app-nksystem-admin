@@ -30,10 +30,9 @@
                                             <span class="bread-slash">/ Ventas /</span>
                                         </li>
                                         <li>
-                                            <a routerLink="/ventas/clientes"><span class="bread-blod">Listado de
-                                                    Clientes </span></a>
+                                            <a routerLink="/ventas/clientes"><span class="bread-blod">
+                                              Listado de Clientes </span></a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -82,8 +81,8 @@
                                             <th>Telefonos</th>
                                             <th>Direccion</th>
                                             <th>Email</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Estado</th>
+                                            <th>Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,10 +107,17 @@
                                                   </div>
                                                   </ng-template>
                                             </td>
-                                            <td>
-                                              <div class="btn-group project-list-action">
-                                                <button class="btn btn-white btn-active btn-xs"><i class="fa fa-folder"></i> View</button>
-                                                <button class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Edit</button>
+                                            <td class="datatable-ct">
+                                              <div class="btn-group project-list-add">
+                                                <button class="btn btn-white btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>  </button>
+                                              </div>
+                                               |
+                                              <div class="btn-group project-list-add">
+                                                <button class="btn btn-white btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  </button>
+                                              </div>
+                                               |
+                                              <div class="btn-group project-list-add">
+                                                <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </div>
                                             </td>
                                         </tr>

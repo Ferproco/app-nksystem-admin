@@ -18,8 +18,9 @@
                                 <div class="col-lg-6">
                                     <div class="breadcome-heading">
                                         <form role="search" class="">
-                                            <a href=""><i class="fa fa-pencil"></i></a>
-                                            <button type="button" (click)="registrarproveedores()" class="form-control">Crear Proveedor</button>                                            
+                                            <button type="button" (click)="registrarproveedores()" class="form-control">
+                                              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                              Crear Proveedor</button>
                                         </form>
                                     </div>
                                 </div>
@@ -31,10 +32,10 @@
                                         </li>
                                         <li>
                                             <a routerLink="/compras/proveedores">
-                                                <span class="bread-blod">Listado de
-                                                Proveedores </span>
+                                                <span class="bread-blod">
+                                                  Listado de Proveedores </span>
                                             </a>
-                                            
+
                                         </li>
                                     </ul>
                                 </div>
@@ -55,30 +56,22 @@
                     <div class="sparkline13-list shadow-reset">
                         <div class="sparkline13-hd">
                             <div class="main-sparkline13-hd">
-                                <h1>Catalogo <span class="table-project-n">de</span> Proveedor</h1>
-                                <div class="sparkline13-outline-icon">
-                                    <span class="sparkline13-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                    <span><i class="fa fa-wrench"></i></span>
-                                    <span class="sparkline13-collapse-close"><i class="fa fa-times"></i></span>
-                                </div>
+                                <h1>
+                                  <i class="fa fa-server" aria-hidden="true"></i>
+                                  Listado <span class="table-project-n">de</span> Proveedor</h1>
                             </div>
                         </div>
                         <div class="sparkline8-graph">
 
                             <form role="search" class="" name="proveedorlist">
                                 <div class="breadcome-heading">
-                                   
-                                        <input 
-                                        type="text" 
-                                        name="filtrarproveedores"
-                                        [(ngModel)]="filtrarproveedores"
-                                        placeholder="Buscar..." 
-                                        class="form-control">
-                                        <a href=""><i class="fa fa-search"></i></a>
-                                    
-                                 </div>
+                                  <input type="text" name="filtrarproveedores" [(ngModel)]="filtrarproveedores" placeholder="Buscar..."
+                                    class="form-control">
+                                  <a href=""><i class="fa fa-search"></i></a>
+
+                                </div>
                                 <br>
-                           
+
                           <div class="static-table-list">
                               <table class="table">
                                     <thead>
@@ -105,7 +98,7 @@
                                             <td>{{proveedor.telefonofijo1}}</td>
                                             <td>{{proveedor.direccionfiscal}}</td>
                                             <td>{{proveedor.correoe}}</td>
-                                                                    
+
                                             <td>
                                                 <div *ngIf="proveedor.status === 'A'; else inactivo" class="btn-group project-list-add">
                                                     <button class="btn btn-white btn-xs">Activo  </button>
@@ -116,11 +109,18 @@
                                                   </div>
                                                   </ng-template>
                                             </td>
-                                            <td>
-                                              <div class="btn-group project-list-action">
-                                                <button class="btn btn-white btn-active btn-xs"><i class="fa fa-folder"></i> View</button>
-                                                <button class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Edit</button>
-                                             </div>
+                                            <td class="datatable-ct">
+                                              <div class="btn-group project-list-add">
+                                                <button class="btn btn-white btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>  </button>
+                                              </div>
+                                               |
+                                              <div class="btn-group project-list-add">
+                                                <button class="btn btn-white btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  </button>
+                                              </div>
+                                               |
+                                              <div class="btn-group project-list-add">
+                                                <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            </div>
                                             </td>
                                         </tr>
                                     </tbody>
