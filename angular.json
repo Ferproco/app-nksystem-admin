@@ -25,6 +25,7 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/css/estilos.css",
               "src/assets/css/form/all-type-forms.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/font-awesome.min.css",
@@ -91,7 +92,7 @@
               "src/assets/js/data-table/bootstrap-table-export.js",
               "src/assets/js/select2/select2.full.min.js",
               "src/assets/js/select2/select2-active.js",
-              "src/assets/js/dropzone.js",          
+              "src/assets/js/dropzone.js",
               "src/assets/js/main.js",
               "src/assets/js/icheck/icheck.min.js",
               "src/assets/js/icheck/icheck-active.js"
