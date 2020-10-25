@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: 'ventas/crearimpuestos', component: CrearImpuestoComponent},
   { path: 'configuracion/usuario', component: CatalogoUsuarioComponent}
 
+
 ];
 
 @NgModule({
