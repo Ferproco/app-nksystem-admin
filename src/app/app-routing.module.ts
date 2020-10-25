@@ -14,6 +14,7 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
 import { CrearClienteComponent } from './components/cliente/crear-cliente/crear-cliente.component';
 import { CatalogoImpuestoComponent } from './components/impuesto/catalogo-impuesto/catalogo-impuesto.component';
 import { CrearImpuestoComponent } from './components/impuesto/crear-impuesto/crear-impuesto.component';
+import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'ventas/crearcliente', component: CrearClienteComponent},
   { path: 'ventas/listarimpuestos', component: CatalogoImpuestoComponent},
   { path: 'ventas/crearimpuestos', component: CrearImpuestoComponent},
+  { path: 'compras/crearproveedor', component: CrearProveedorComponent},
   { path: 'configuracion/usuario', component: CatalogoUsuarioComponent}
 
 

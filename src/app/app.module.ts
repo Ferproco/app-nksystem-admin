@@ -42,6 +42,7 @@ import { FilterClientePipe } from './components/cliente/catalogo-cliente/filter-
 import { FilterVendedorPipe } from './components/vendedor/catalogo-vendedor/filter-vendedor.pipe';
 import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filter-articulo.pipe';
 import { FilterProveedorPipe } from './components/proveedor/catalogo-proveedor/filter-proveedor.pipe';
+import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { FilterProveedorPipe } from './components/proveedor/catalogo-proveedor/f
     FilterClientePipe,
     FilterVendedorPipe,
     FilterArticuloPipe,
-    FilterProveedorPipe
+    FilterProveedorPipe,
+    CrearProveedorComponent
   ],
   imports: [
     BrowserModule,

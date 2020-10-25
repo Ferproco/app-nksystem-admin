@@ -53,7 +53,7 @@ onTableSizeChange(event): void {
   this.lstProveedores;
 } 
 registrarproveedores() {
-  
+  this.router.navigate(['compras/crearproveedor']);
     }
 
 }
