@@ -44,6 +44,15 @@ import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filt
 import { FilterProveedorPipe } from './components/proveedor/catalogo-proveedor/filter-proveedor.pipe';
 import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
 import { FilterFormapagoPipe } from './components/formapago/catalogo-formapago/filter-formapago.pipe';
+import { CrearFormapagoComponent } from './components/formapago/crear-formapago/crear-formapago.component';
+import { CatalogoAlmacenComponent } from './components/almacen/catalogo-almacen/catalogo-almacen.component';
+import { FilterAlmacenPipe } from './components/almacen/catalogo-almacen/filter-almacen.pipe';
+import { Almacen } from './components/model/Almacen.model';
+import { AlmacenService } from './components/almacen/AlmacenService.service';
+import { CrearAlmacenComponent } from './components/almacen/crear-almacen/crear-almacen.component';
+import { CatalogoCategoriaComponent } from './components/categoria/catalogo-categoria/catalogo-categoria.component';
+import { CategoriaService } from './components/categoria/CategoriaService.service';
+import { FilterCategoriaPipe } from './components/categoria/catalogo-categoria/filter-categoria.pipe';
 
 @NgModule({
   declarations: [
@@ -69,7 +78,13 @@ import { FilterFormapagoPipe } from './components/formapago/catalogo-formapago/f
     FilterArticuloPipe,
     FilterProveedorPipe,
     CrearProveedorComponent,
-    FilterFormapagoPipe
+    FilterFormapagoPipe,
+    CrearFormapagoComponent,
+    CatalogoAlmacenComponent,
+    FilterAlmacenPipe,
+    CrearAlmacenComponent,
+    CatalogoCategoriaComponent,
+    FilterCategoriaPipe,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +108,10 @@ import { FilterFormapagoPipe } from './components/formapago/catalogo-formapago/f
               ImpuestoService,
               MarcaService,
               TipoImpuestoService,
-              GrupoArticuloService],
+              GrupoArticuloService,
+              AlmacenService,
+              CategoriaService],
+              
 
   bootstrap: [AppComponent]
 })
