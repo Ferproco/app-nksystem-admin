@@ -37,8 +37,7 @@ const routes: Routes = [
   { path: 'ventas/crearimpuestos', component: CrearImpuestoComponent},
   { path: 'compras/crearproveedor', component: CrearProveedorComponent},
   { path: 'inventario/listaralmacenes', component: CatalogoAlmacenComponent},
-  { path: 'inventario/crearinventario', component:CrearAlmacenComponent},
-  { path: 'inventario/crearinventario', component:CrearAlmacenComponent},
+  { path: 'inventario/crearalmacen', component:CrearAlmacenComponent},
   { path: 'inventario/listarcategorias', component:CatalogoCategoriaComponent},
   { path: 'configuracion/usuario', component: CatalogoUsuarioComponent}
 

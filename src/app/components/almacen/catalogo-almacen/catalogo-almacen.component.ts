@@ -53,6 +53,6 @@ onTableSizeChange(event): void {
   this.lstAlmacenes;
 }
 registraralmacenes() {
-  this.router.navigate(['inventario/crearinventario']);
+  this.router.navigate(['inventario/crearalmacen']);
     }
 }
