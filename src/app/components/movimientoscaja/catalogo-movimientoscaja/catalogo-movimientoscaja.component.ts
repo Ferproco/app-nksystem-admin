@@ -9,11 +9,11 @@ import { MovimientosCajaService } from '../MovimientosCajaService.service';
 })
 export class CatalogoMovimientoscajaComponent implements OnInit {
 
-  
+
   loading = false;
   titulo = 'Listado de Movimientos de Caja';
   lstMovimientosCaja: MovimientosCaja[] = [];
-  constructor(private movimientosCajaService:MovimientosCajaService) { }
+  constructor(private movimientosCajaService: MovimientosCajaService) { }
 
   POSTS: any;
   page = 1;
@@ -38,11 +38,11 @@ export class CatalogoMovimientoscajaComponent implements OnInit {
  onTableDataChange(event){
   this.page = event;
   this.lstMovimientosCaja;
-}  
+}
 
 onTableSizeChange(event): void {
   this.tableSize = event.target.value;
   this.page = 1;
   this.lstMovimientosCaja;
-} 
+}
 }

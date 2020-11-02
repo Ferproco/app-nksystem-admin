@@ -1,27 +1,27 @@
 export class Articulo {
-    codigo: String;
+    codigo: string;
     codmarca: number;
     codfamilia: number;
-    pro_codigo: String;
-    abrevunidadmedida: String;
-    codgrupoarticulo: String;
-    nomarticulo: String;
+    pro_codigo: string;
+    abrevunidadmedida: string;
+    codgrupoarticulo: string;
+    nomarticulo: string;
     preciosugerido: number;
     stockminimo: number;
     stockmaximo: number;
     puntoreorden: number;
-    codigobarraprincipal: String;
-    origen: String;
-    imagen: String;
-    nombimagen: String;
-    status: String;
+    codigobarraprincipal: string;
+    origen: string;
+    imagen: string;
+    nombimagen: string;
+    status: string;
     alto: number;
     ancho: number;
     compuesto: boolean;
     costodirecto: number;
     costoreferencial: number;
     costoreposicion: number;
-    descripcionlarga: String;
+    descripcionlarga: string;
     empacado: boolean;
     fraccionado: boolean;
     facturable: boolean;
@@ -30,9 +30,9 @@ export class Articulo {
     profundidad: number;
     serializado: boolean;
     sinexistencia: boolean;
-    tipoarticulo: String;
-    tipocosto: String;
-    ubicacion: String;
+    tipoarticulo: string;
+    tipocosto: string;
+    ubicacion: string;
     ultimocosto: number;
     costoreal: number;
     descuentoprov1: number;
@@ -40,31 +40,95 @@ export class Articulo {
     descuentoprov3: number;
     descuentoprov4: number;
     costobase: number;
-    tipodescuento: String;
+    tipodescuento: string;
     usacesta: boolean;
     precioporempaque: boolean;
-    codtipoiva: String;
+    codtipoiva: string;
     codtipislr: number;
     codmoneda: number;
     codpresentacion: number;
     codtipo: number;
     codsabor: number;
-    codnegocio: String;
-    codvendedor: String;
+    codnegocio: string;
+    codvendedor: string;
     codlinea: number;
     aplicalista: boolean;
     merma: number;
     cantreorden: number;
     despostable: boolean;
-    serial: String;
-    fechaultcompra: String;
-    color: String;
-    nombrefamilia: String;
-    nombregrupoarticulo: String;
-    nombreunidadmedida: String;
-    nombremarca: String;
+    serial: string;
+    fechaultcompra: string;
+    color: string;
+    nombrefamilia: string;
+    nombregrupoarticulo: string;
+    nombreunidadmedida: string;
+    nombremarca: string;
 
-    constructor(codigo: String,codmarca: number,codfamilia: number,pro_codigo: String, abrevunidadmedida: String,codgrupoarticulo: String, nomarticulo: String, preciosugerido: number, stockminimo: number,stockmaximo: number,puntoreorden: number, codigobarraprincipal: String,origen: String, imagen: String, nombimagen: String,status: String,alto: number,ancho: number,compuesto: boolean,costodirecto: number,costoreferencial: number,costoreposicion: number, descripcionlarga: String,  empacado: boolean, fraccionado: boolean,facturable: boolean,pctdescuento: number, peso: number,profundidad: number,serializado: boolean,sinexistencia: boolean,tipoarticulo: String,tipocosto: String,ubicacion: String, ultimocosto: number,costoreal: number,descuentoprov1: number, descuentoprov2: number, descuentoprov3: number, descuentoprov4: number,  costobase: number,tipodescuento: String,usacesta: boolean,precioporempaque: boolean,codtipoiva: String, codtipislr: number, codmoneda: number,codpresentacion: number,codtipo: number,codsabor: number,codnegocio: String, codvendedor: String,codlinea: number,aplicalista: boolean, merma: number,cantreorden: number, despostable: boolean,serial: String,fechaultcompra: String, color: String,nombrefamilia: String,nombregrupoarticulo: String,nombreunidadmedida: String,nombremarca: String) {
+    constructor(
+      codigo: string,
+      codmarca: number,
+      codfamilia: number,
+      pro_codigo: string,
+      abrevunidadmedida: string,
+      codgrupoarticulo: string,
+      nomarticulo: string,
+      preciosugerido: number,
+      stockminimo: number,
+      stockmaximo: number,
+      puntoreorden: number,
+      codigobarraprincipal: string,
+      origen: string,
+      imagen: string,
+      nombimagen: string,
+      status: string,
+      alto: number,
+      ancho: number,
+      compuesto: boolean,
+      costodirecto: number,
+      costoreferencial: number,
+      costoreposicion: number,
+      descripcionlarga: string,
+      empacado: boolean,
+      fraccionado: boolean,
+      facturable: boolean,
+      pctdescuento: number,
+      peso: number,
+      profundidad: number,
+      serializado: boolean,
+      sinexistencia: boolean,
+      tipoarticulo: string,
+      tipocosto: string,
+      ubicacion: string,
+      ultimocosto: number,
+      costoreal: number,
+      descuentoprov1: number,
+      descuentoprov2: number,
+      descuentoprov3: number,
+      descuentoprov4: number,
+      costobase: number,
+      tipodescuento: string,
+      usacesta: boolean,
+      precioporempaque: boolean,
+      codtipoiva: string,
+      codtipislr: number,
+      codmoneda: number,
+      codpresentacion: number,
+      codtipo: number,
+      codsabor: number,
+      codnegocio: string,
+      codvendedor: string,
+      codlinea: number,
+      aplicalista: boolean,
+      merma: number,
+      cantreorden: number,
+      despostable: boolean,
+      serial: string,
+      fechaultcompra: string,
+      color: string,
+      nombrefamilia: string,
+      nombregrupoarticulo: string,
+      nombreunidadmedida: string,
+      nombremarca: string) {
 
 
         this.codigo=codigo;

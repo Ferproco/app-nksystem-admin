@@ -21,10 +21,10 @@ export class CatalogoCategoriaComponent implements OnInit {
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
-  
+
   constructor(private categoriaServicio: CategoriaService,
-    private toastr: ToastrService,
-    private router: Router) { }
+              private toastr: ToastrService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.listarCategorias();

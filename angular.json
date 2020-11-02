@@ -24,78 +24,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/assets/css/form/all-type-forms.css",
-              "src/assets/css/bootstrap.min.css",
-              "src/assets/css/font-awesome.min.css",
-              "src/assets/css/adminpro-custon-icon.css",
-              "src/assets/css/meanmenu.min.css",
-              "src/assets/css/jquery.mCustomScrollbar.min.css",
-              "src/assets/css/animate.css",
-              "src/assets/css/bootstrap-table.css",
-              "src/assets/css/bootstrap-editable.css",
-              "src/assets/css/normalize.css",
-              "src/assets/css/select2.min.css",
-              "src/assets/css/select2.css",
-              "src/assets/css/modals.css",
-              "src/assets/css/touchspin/jquery.bootstrap-touchspin.min.css",
-              "src/assets/css/datapicker/datepicker3.css",
-              "src/assets/css/form/themesaller-forms.css",
-              "src/assets/css/c3.min.css",
-              "src/assets/css/responsive.css",
-              "src/assets/css/chosen/bootstrap-chosen.css",
-              "src/assets/css/dropzone.css"
-
-
+              "src/styles.css"
             ],
-            "scripts": [
-              "src/assets/js/vendor/jquery-1.11.3.min.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/main.js",
-              "src/assets/js/data-table/bootstrap-table-export.js",
-              "src/assets/js/data-table/colResizable-1.5.source.js",
-              "src/assets/js/data-table/bootstrap-table-resizable.js",
-              "src/assets/js/data-table/bootstrap-editable.js",
-              "src/assets/js/data-table/bootstrap-table-editable.js",
-              "src/assets/js/vendor/modernizr-2.8.3.min.js",
-              "src/assets/js/vendor/jquery-1.11.3.min.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/jquery.meanmenu.js",
-              "src/assets/js/jquery.mCustomScrollbar.concat.min.js",
-              "src/assets/js/jquery.sticky.js",
-              "src/assets/js/jquery.scrollUp.min.js",
-              "src/assets/js/counterup/jquery.counterup.min.js",
-              "src/assets/js/counterup/waypoints.min.js",
-              "src/assets/js/counterup/waypoints.min.js",
-              "src/assets/js/peity/jquery.peity.min.js",
-              "src/assets/js/peity/peity-active.js",
-              "src/assets/js/rounded-counter/jquery.countdown.min.js",
-              "src/assets/js/rounded-counter/jquery.knob.js",
-              "src/assets/js/rounded-counter/jquery.appear.js",
-              "src/assets/js/rounded-counter/knob-active.js",
-              "src/assets/js/sparkline/jquery.sparkline.min.js",
-              "src/assets/js/sparkline/sparkline-active.js",
-              "src/assets/js/map/raphael.min.js",
-              "src/assets/js/map/jquery.mapael.js",
-              "src/assets/js/map/france_departments.js",
-              "src/assets/js/map/world_countries.js",
-              "src/assets/js/map/usa_states.js",
-              "src/assets/js/map/map-active.js",
-              "src/assets/js/data-table/bootstrap-table.js",
-              "src/assets/js/data-table/tableExport.js",
-              "src/assets/js/data-table/data-table-active.js",
-              "src/assets/js/data-table/bootstrap-table-editable.js",
-              "src/assets/js/data-table/bootstrap-editable.js",
-              "src/assets/js/data-table/bootstrap-table-resizable.js",
-              "src/assets/js/data-table/colResizable-1.5.source.js",
-              "src/assets/js/data-table/bootstrap-table-export.js",
-              "src/assets/js/select2/select2.full.min.js",
-              "src/assets/js/select2/select2-active.js",
-              "src/assets/js/dropzone.js",
-              "src/assets/js/main.js",
-              "src/assets/js/icheck/icheck.min.js",
-              "src/assets/js/icheck/icheck-active.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -192,6 +123,6 @@
   },
   "defaultProject": "app-nksystem-admin",
   "cli": {
-    "analytics": "6c06e8ff-9992-4cd7-8cb9-525a8d6c8324"
+    "analytics": "0b9092b3-fe17-4f83-b714-1df7ff6cf626"
   }
 }

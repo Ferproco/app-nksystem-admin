@@ -2,17 +2,29 @@ export class Impuesto {
 
 
     idimpuesto: number;
-    tipoimpuesto: string;
+    nombreimpuesto: string;
+    idtipoimpuesto: number;
     normal: number;
     recargo: number;
     fechaini: string;
     fechafin: string;
     status: string;
     codnegocio: string;
-    constructor(idimpuesto: number, tipoimpuesto: string, normal: number, recargo: number, fechaini: string, fechafin: string, status: string, codnegocio: string) {
+
+    constructor(
+      idimpuesto: number,
+      nombreimp: string,
+      idtipoimpuesto: number,
+      normal: number,
+      recargo: number,
+      fechaini: string,
+      fechafin: string,
+      status: string,
+      codnegocio: string) {
 
         this.idimpuesto = idimpuesto;
-        this.tipoimpuesto = tipoimpuesto;
+        this.nombreimpuesto = nombreimp;
+        this.idtipoimpuesto = idtipoimpuesto;
         this.normal = normal;
         this.recargo = recargo;
         this.fechaini = fechaini;

@@ -11,7 +11,7 @@ export class CatalogoFacturaComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Facturas';
   lstFacturas: Factura[] = [];
-  constructor(private facturaService:FacturaService) { }
+  constructor(private facturaService: FacturaService) { }
 
   POSTS: any;
   page = 1;
@@ -36,12 +36,12 @@ export class CatalogoFacturaComponent implements OnInit {
  onTableDataChange(event){
   this.page = event;
   this.lstFacturas;
-}  
+}
 
 onTableSizeChange(event): void {
   this.tableSize = event.target.value;
   this.page = 1;
   this.lstFacturas;
-} 
+}
 
 }

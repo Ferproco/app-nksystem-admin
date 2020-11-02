@@ -14,7 +14,7 @@ export class CatalogoProveedorComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Proveedores';
   lstProveedores: Proveedor[] = [];
-  filtrarproveedores='';
+  filtrarproveedores = '';
 
   POSTS: any;
   page = 1;

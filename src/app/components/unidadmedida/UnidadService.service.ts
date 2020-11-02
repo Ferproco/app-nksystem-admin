@@ -14,14 +14,13 @@ export class UnidadService{
 
   }
 
-  listarUnidades(codnegocio: string){
+  listarUnidades(codnegocio: string) {
     const body = {
 
     };
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/unidadmedida';
-    return this.httpClient.get(endpoint, {headers: httpHeaders});
+    return this.httpClient.get(endpoint, { headers: httpHeaders });
   }
- 
 
 }
