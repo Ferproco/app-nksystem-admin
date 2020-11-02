@@ -55,6 +55,6 @@ export class CatalogoCategoriaComponent implements OnInit {
   }
 
   registrarcategorias() {
-    this.router.navigate(['inventario/creararticulo']);
+    this.router.navigate(['inventario/crearcategoria']);
   }
 }
