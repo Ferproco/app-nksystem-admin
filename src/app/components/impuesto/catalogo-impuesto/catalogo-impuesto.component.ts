@@ -19,9 +19,9 @@ export class CatalogoImpuestoComponent implements OnInit {
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
-  
+
   constructor(private impuestoServicio: ImpuestoService,
-    private router: Router) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     this.listarImpuestos();
@@ -38,15 +38,15 @@ export class CatalogoImpuestoComponent implements OnInit {
  onTableDataChange(event){
   this.page = event;
   this.lstImpuestos;
-}  
+}
 
 onTableSizeChange(event): void {
   this.tableSize = event.target.value;
   this.page = 1;
   this.lstImpuestos;
-} 
+}
 registrarimpuestos() {
-  this.router.navigate(['ventas/crearimpuestos']);
+  this.router.navigate(['configuracion/crearimpuestos']);
     }
 
 }

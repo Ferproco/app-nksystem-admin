@@ -1,47 +1,47 @@
-import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
-import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vendedor/catalogo-vendedor.component';
-import { CatalogoClienteComponent } from './components/cliente/catalogo-cliente/catalogo-cliente.component';
+import { MainComponent } from './components/main/main.component';
+import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CatalogoFormapagoComponent } from './components/formapago/catalogo-formapago/catalogo-formapago.component';
-import { MainComponent } from './components/main/main.component';
-import { CatalogoProveedorComponent } from './components/proveedor/catalogo-proveedor/catalogo-proveedor.component';
-import { CatalogoFacturaComponent } from './components/factura/catalogo-factura/catalogo-factura.component';
-import { CatalogoMovimientoscajaComponent } from './components/movimientoscaja/catalogo-movimientoscaja/catalogo-movimientoscaja.component';
 import { CatalogoArticuloComponent } from './components/articulo/catalogo-articulo/catalogo-articulo.component';
-import { CatalogoUsuarioComponent } from './components/configuracion/catalogo-usuario/catalogo-usuario.component';
 import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
+import { CatalogoClienteComponent } from './components/cliente/catalogo-cliente/catalogo-cliente.component';
 import { CrearClienteComponent } from './components/cliente/crear-cliente/crear-cliente.component';
 import { CatalogoImpuestoComponent } from './components/impuesto/catalogo-impuesto/catalogo-impuesto.component';
 import { CrearImpuestoComponent } from './components/impuesto/crear-impuesto/crear-impuesto.component';
-import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
+import { CatalogoCategoriaComponent } from './components/categoria/catalogo-categoria/catalogo-categoria.component';
 import { CatalogoAlmacenComponent } from './components/almacen/catalogo-almacen/catalogo-almacen.component';
 import { CrearAlmacenComponent } from './components/almacen/crear-almacen/crear-almacen.component';
-import { CatalogoCategoriaComponent } from './components/categoria/catalogo-categoria/catalogo-categoria.component';
-
+import { CatalogoUsuarioComponent } from './components/configuracion/catalogo-usuario/catalogo-usuario.component';
+import { CatalogoFormapagoComponent } from './components/formapago/catalogo-formapago/catalogo-formapago.component';
+import { CatalogoMovimientoscajaComponent } from './components/movimientoscaja/catalogo-movimientoscaja/catalogo-movimientoscaja.component';
+import { CatalogoFacturaComponent } from './components/factura/catalogo-factura/catalogo-factura.component';
+import { CatalogoProveedorComponent } from './components/proveedor/catalogo-proveedor/catalogo-proveedor.component';
+import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
+import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vendedor/catalogo-vendedor.component';
+import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
 
 const routes: Routes = [
-  { path: '', component: MainComponent},
-  { path: 'ventas/clientes', component: CatalogoClienteComponent},
-  { path: 'ventas/listarvendedores', component: CatalogoVendedorComponent},
-  { path: 'ventas/crearvendedores', component: CrearVendedorComponent},
-  { path: 'configuracion/listarformapagos', component: CatalogoFormapagoComponent},
-  { path: 'compras/proveedores', component: CatalogoProveedorComponent},
-  { path: 'ventas/facturas', component: CatalogoFacturaComponent},
-  { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent},
+  { path: '', component: LoginComponent},
+  { path: 'main/dashboard', component: MainComponent},
   { path: 'inventario/listararticulos', component: CatalogoArticuloComponent},
   { path: 'inventario/creararticulo', component: CrearArticuloComponent},
-  { path: 'ventas/crearcliente', component: CrearClienteComponent},
-  { path: 'ventas/listarimpuestos', component: CatalogoImpuestoComponent},
-  { path: 'ventas/crearimpuestos', component: CrearImpuestoComponent},
-  { path: 'compras/crearproveedor', component: CrearProveedorComponent},
   { path: 'inventario/listaralmacenes', component: CatalogoAlmacenComponent},
-  { path: 'inventario/crearalmacen', component:CrearAlmacenComponent},
-  { path: 'inventario/listarcategorias', component:CatalogoCategoriaComponent},
-  { path: 'configuracion/usuario', component: CatalogoUsuarioComponent}
-
-
+  { path: 'inventario/crearalmacen', component: CrearAlmacenComponent},
+  { path: 'inventario/listarcategorias', component: CatalogoCategoriaComponent},
+  { path: 'ventas/clientes', component: CatalogoClienteComponent},
+  { path: 'ventas/crearcliente', component: CrearClienteComponent},
+  { path: 'ventas/facturas', component: CatalogoFacturaComponent},
+  { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent},
+  { path: 'ventas/listarvendedores', component: CatalogoVendedorComponent},
+  { path: 'ventas/crearvendedores', component: CrearVendedorComponent},
+  { path: 'configuracion/listarimpuestos', component: CatalogoImpuestoComponent},
+  { path: 'configuracion/crearimpuestos', component: CrearImpuestoComponent},
+  { path: 'configuracion/usuario', component: CatalogoUsuarioComponent},
+  { path: 'configuracion/listarformapagos', component: CatalogoFormapagoComponent},
+  { path: 'configuracion/crearformapagos', component: CatalogoFormapagoComponent},
+  { path: 'compras/listarproveedores', component: CatalogoProveedorComponent},
+  { path: 'compras/crearproveedor', component: CrearProveedorComponent},
 ];
 
 @NgModule({

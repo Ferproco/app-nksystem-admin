@@ -19,15 +19,15 @@ export class CatalogoAlmacenComponent implements OnInit {
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
-  
+
   constructor(private almacenServicio: AlmacenService,
-    private router: Router,
-    private toastr: ToastrService) { }
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.listarAlmacenes();
   }
-  
+
   listarAlmacenes(){
     this.loading = true;
     this.almacenServicio.listarAlmacenes('')

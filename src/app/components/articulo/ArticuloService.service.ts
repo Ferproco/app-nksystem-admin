@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Api } from 'src/app/config';
 import { Articulo } from '../model/Articulo.model';
 
@@ -11,9 +12,7 @@ export class ArticuloService{
   lstArticulos: Articulo[] = [];
   uriapi: string = Api.url;
 
-  constructor(private httpClient: HttpClient){
-
-  }
+  constructor(private httpClient: HttpClient){ }
 
   listarArticulos(codnegocio: string){
     const body = {
@@ -23,6 +22,4 @@ export class ArticuloService{
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
- 
-
 }

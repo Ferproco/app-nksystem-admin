@@ -1,340 +1,282 @@
 <div class="loading" *ngIf="loading">
-    <!--<div class="textoGuardando">{{"PROCESANDO" | translate}}...</div>-->
-    <div class="textoGuardando">Procesando...</div>
-    <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
+  <!--<div class="textoGuardando">{{"PROCESANDO" | translate}}...</div>-->
+  <div class="textoGuardando">Procesando...</div>
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
 </div>
 
+<div class="wrapper-pro">
+  <app-menu></app-menu>
+  <app-header></app-header>
+</div>
 
 <form [formGroup]="formimpuesto" (ngSubmit)="guardarImpuesto($event)">
-<div class="content-inner-all">    
+
+  <div class="content-inner-all">
     <!-- Breadcome start-->
     <div class="breadcome-area mg-b-30 small-dn">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcome-list shadow-reset">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="breadcome-heading">
-                                    <a href=""><i class="fa fa-pencil"></i></a>
-                                    <button type="submit" class="form-control">Guardar</button>
-
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="breadcome-menu">
-                                    <li>
-                                        <a routerLink="/">Inicio</a>
-                                        <span class="bread-slash">/ Ventas /</span>
-                                    </li>
-                                    <li>
-                                        <a routerLink="/inventario/listararticulos"><span class="bread-blod">Impuestos /</span></a>
-                                    </li>
-                                    <li><span class="bread-blod">Crear</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcome-list shadow-reset">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="breadcome-heading">
+                    <button type="submit" class="form-control">
+                      <i class="fa fa-save" aria-hidden="true"></i>
+                      Guardar</button>
+                  </div>
                 </div>
+                <div class="col-lg-6">
+                  <ul class="breadcome-menu">
+                    <li>
+                      <a routerLink="/main/dashboard">Inicio</a>
+                      <span class="bread-slash">/ Configuración /</span>
+                    </li>
+                    <li>
+                      <a routerLink="/configuracion/listarimpuestos"><span class="bread-blod">Listado de
+                          Impuestos /</span></a>
+                    </li>
+                    <li><span class="bread-blod">Crear</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<!-- Static Table Start -->
-<div class="content-inner-all">
+  </div>
+
+
+  <div class="content-inner-all">
     <!-- Breadcome End-->
-    <div class="project-details-area mg-b-15">
-        <div class="container-fluid">
-            <div class="row">
-                
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <div class="project-details-wrap shadow-reset">
-                        <div class="row">
-                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                <div class="project-details-title">
-                                    <h2><span class="profile-details-name-nn">Impuestos/</span> Nuevo</h2>
-                                </div>
+    <div class="admin-dashone-data-table-area mg-b-15">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="sparkline13-list shadow-reset">
+              <div class="sparkline13-hd">
+                <div class="main-sparkline13-hd">
+                  <h1>
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                    Registro <span class="table-project-n">de</span> Impuestos</h1>
+                </div>
+              </div>
+              <div class="sparkline8-graph">
 
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                            </div>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="project-details-mg">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                          <div class="col-lg-4">
+                            <span><strong>Tipo Impuesto:</strong></span>
+                          </div>
                         </div>
-                        <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                          <div class="project-details-dt">
+                            <span>
+                              <div class="chosen-select-single mg-b-20">
+                                <select class="select2_demo_3 form-control" formControlName="idtipoimpuesto">
+                                  <option value="0">--Seleccione--</option>
+                                  <option value="{{tipoimpuesto.id}}" *ngFor="let tipoimpuesto of lstTipoImpuestos">
+                                    {{tipoimpuesto.nombretipoimpuesto}}</option>
+
+                                </select>
+                              </div>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="project-details-mg">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                          <div class="col-lg-4">
+                            <span><strong>Nombre:</strong></span>
+                          </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                          <div class="project-details-dt">
+                            <span>
+                              <input formControlName="nombreimpuesto" type="text" class="form-control"
+                                placeholder="Ingrese el Nombre del Impuesto" />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="project-details-mg">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                          <div class="col-lg-4">
+                            <span><strong>% Tarifa:</strong></span>
+                          </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                          <div class="input-knob-dial-wrap">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="chosen-select-single mg-b-20">
+                                  <input formControlName="normal" type="number" class="form-control"
+                                    placeholder="Ingrese Tarifa" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="project-details-mg">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                          <div class="col-lg-4">
+                            <span><strong>Vigente Desde:</strong></span>
+                          </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                          <div class="input-knob-dial-wrap">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="chosen-select-single mg-b-20">
+
+
+                                    <div class="input-group date">
+                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                      <input type="text" formControlName="fechaini" class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="project-details-mg">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                          <div class="col-lg-4">
+                            <label>
+                              <input type="checkbox" formControlName="status" value="">
+                              <i></i> Activo </label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="project-details-tab">
+                      <ul class="nav nav-tabs res-pd-less-sm">
+                        <li class="active"><a data-toggle="tab" href="#home">Configuración Contabilidad</a>
+                        </li>
+
+
+                      </ul>
+                      <div class="tab-content res-tab-content-project">
+                        <div id="home" class="tab-pane fade in active animated zoomInLeft">
+                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="project-details-mg">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <div class="col-lg-4">
-                                                <span><strong>Tipo Impuesto:</strong></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                            <div class="input-knob-dial-wrap">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="chosen-select-single mg-b-20">
-                                                            <select class="select2_demo_3 form-control"
-                                                            formControlName="tipoimpuesto">
-                                                                <option value="0">--Seleccione--</option>
-                                                                <option value="{{tipoimpuesto.id}}" *ngFor="let tipoimpuesto of lstTipoImpuestos">{{tipoimpuesto.nombretipoimpuesto}}</option>
-                                                                
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
- 
-            
-                                <div class="project-details-mg">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <div class="col-lg-4">
-                                                <span><strong>Nombre:</strong></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                            <div class="project-details-dt">
-                                                <span>
-                                                    <input
-                                                    formControlName="nombre" 
-                                                    type="text" 
-                                                    class="form-control"
-                                                    placeholder="Ingrese Nombre" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                
-            
-                                <div class="project-details-mg">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <div class="col-lg-4">
-                                                <span><strong>% Tarifa:</strong></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                            <div class="project-details-dt">
-                                                <span>
-                                                    <input
-                                                    formControlName="nombre" 
-                                                    type="text" 
-                                                    class="form-control"
-                                                    placeholder="Ingrese Tarifa" />
-                                                </span>
-                                            </div>
-                                        </div>
+
+
+                              <div class="project-details-mg">
+                                <div class="row">
+                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="col-lg-4">
+                                      <span><strong>Cuenta Contable Ventas:</strong></span>
                                     </div>
-                                </div>
-                                
-            
-                                <div class="project-details-mg">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <div class="col-lg-4">
-                                                <span><strong>Vigente Desde:</strong></span>
-                                            </div>
+                                  </div>
+                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <div class="input-knob-dial-wrap">
+                                      <div class="row">
+                                        <div class="col-lg-12">
+                                          <div class="chosen-select-single mg-b-20">
+
+                                            <select class="select2_demo_3 form-control">
+                                              <option>--Seleccione--
+                                              </option>
+                                              <option value="Bahamas">
+                                                Bahamas</option>
+                                              <option value="Bahrain">
+                                                Bahrain</option>
+                                              <option value="Bangladesh">
+                                                Bangladesh</option>
+
+                                            </select>
+                                          </div>
+
                                         </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                            <div class="project-details-dt">
-                                                <span>
-                                                    <input
-                                                    formControlName="nombre" 
-                                                    type="text" 
-                                                    class="form-control"
-                                                    placeholder="Ingrese Fecha" />
-                                                </span>
-                                            </div>
-                                        </div>
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
-                            
-                    
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                               
-               
-                               
-                                <div class="project-details-mg">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <div class="col-lg-4">
-                                                <span><strong>Status:</strong></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                            <div class="btn-group project-list-ad">
-                                                <button class="btn btn-white btn-xs">Active</button>
-                                            </div>
-                                        </div>
+                              </div>
+
+                              <div class="project-details-mg">
+                                <div class="row">
+                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="col-lg-4">
+                                      <span><strong>Cuenta Contable Compras:</strong></span>
                                     </div>
+                                  </div>
+                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <div class="input-knob-dial-wrap">
+                                      <div class="row">
+                                        <div class="col-lg-12">
+                                          <div class="chosen-select-single mg-b-20">
+
+                                            <select class="select2_demo_3 form-control">
+                                              <option>--Seleccione--
+                                              </option>
+                                              <option value="Bahamas">
+                                                Bahamas</option>
+                                              <option value="Bahrain">
+                                                Bahrain</option>
+                                              <option value="Bangladesh">
+                                                Bangladesh</option>
+
+                                            </select>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
+                              </div>
 
                             </div>
+
+                          </div>
                         </div>
+                        <!-- TERMINA PESTAÑA HOME -->
 
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="project-details-tab">
-                                    <ul class="nav nav-tabs res-pd-less-sm">
-                                        <li class="active"><a data-toggle="tab" href="#home">Configuración Contabilidad</a>
-                                        </li>
-                                       
-                                        
-                                    </ul>
-                                    <div class="tab-content res-tab-content-project">
-                                        <div id="home" class="tab-pane fade in active animated zoomInLeft">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-                                                    
-                                                    
-                                                    <div class="project-details-mg">
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                                <div class="col-lg-4">
-                                                                    <span><strong>Cuenta Contable Ventas:</strong></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                                <div class="input-knob-dial-wrap">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="chosen-select-single mg-b-20">
 
-                                                                                <select
-                                                                                    class="select2_demo_3 form-control">
-                                                                                    <option>--Seleccione--
-                                                                                    </option>
-                                                                                    <option value="Bahamas">
-                                                                                        Bahamas</option>
-                                                                                    <option value="Bahrain">
-                                                                                        Bahrain</option>
-                                                                                    <option value="Bangladesh">
-                                                                                        Bangladesh</option>
-                                                                                    
-                                                                                </select>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                    
-                                                    <div class="project-details-mg">
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                                <div class="col-lg-4">
-                                                                    <span><strong>Cuenta Contable Compras:</strong></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                                <div class="input-knob-dial-wrap">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="chosen-select-single mg-b-20">
-
-                                                                                <select
-                                                                                    class="select2_demo_3 form-control">
-                                                                                    <option>--Seleccione--
-                                                                                    </option>
-                                                                                    <option value="Bahamas">
-                                                                                        Bahamas</option>
-                                                                                    <option value="Bahrain">
-                                                                                        Bahrain</option>
-                                                                                    <option value="Bangladesh">
-                                                                                        Bangladesh</option>
-                                                                                    
-                                                                                </select>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                        
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- TERMINA PESTAÑA HOME -->
-                             
-
-                             
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="project-details-descri project-details-mg-t-30 shadow-reset">
-                        <h2>Project Description</h2>
-                        <div class="dropzone-pro shadow-reset nt-mg-b-30">
-                            <div id="dropzone1" class="dropzone dropzone-custom needsclick">
-                                <div class="dz-message needsclick download-custom">
-                                    <span class="adminpro-icon adminpro-cloud-computing-down download-icon"></span>
-                                    <h2>Drop files here or click to upload.</h2>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="sparkline7-list shadow-reset mg-t-30">
-                        <div class="main-spark7-hd">
-                            <div class="project-details-descri project-details-mg-t-30 shadow-reset">
-                                <h2>Project Description</h2>
-                                <p>There are many variations of the passages of Lorem on the Ipsum available,
-                                    but the majority have suffered alteration in some form, by injected humour,
-                                    or one of randomised words.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sparkline8-list shadow-reset mg-t-30">
-                        <div class="sparkline8-hd">
-                            <div class="main-spark7-hd">
-                                <h1>Files</h1>
-                                <div class="sparkline8-outline-icon">
-                                    <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                    <span><i class="fa fa-wrench"></i></span>
-                                    <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sparkline8-graph project-details-price-hd">
-                            <div class="project-details-files">
-                                <div class="view-mail-file-list">
-                                    <div class="view-file-in">
-                                        <i class="fa fa-file"></i>
-                                    </div>
-                                    <div class="file-type-view">
-                                        <h5><a href="#">Document-file.zip</a></h5>
-                                        <p>Added: jun 18, 2018</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+
+  </div>
+
+
 </form>
 
+<app-footer></app-footer>
