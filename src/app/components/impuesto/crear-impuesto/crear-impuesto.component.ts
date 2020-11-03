@@ -58,7 +58,7 @@ export class CrearImpuestoComponent implements OnInit {
       normal: ['0', [Validators.required]],
       fechaini: [new Date(), [Validators.required]],
       idtipoimpuesto: ['0', [Validators.required]],
-      status: ['1', [Validators.required]]
+      status: ['', [Validators.required]]
 
     });
   }

@@ -55,6 +55,10 @@ import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vended
 import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
 import { FilterVendedorPipe } from './components/vendedor/catalogo-vendedor/filter-vendedor.pipe';
 import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuentasxcobrar.component';
+import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
+
+import { FilterUnidadmedidaPipe } from './components/unidadmedida/catalogo-unidadmedida/filter-unidadmedida.pipe';
+import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unidadmedida/crear-unidadmedida.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +94,10 @@ import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuen
     CatalogoVendedorComponent,
     CrearVendedorComponent,
     FilterVendedorPipe,
-    CuentasxcobrarComponent
+    CuentasxcobrarComponent,
+    CatalogoUnidadmedidaComponent,
+    FilterUnidadmedidaPipe,
+    CrearUnidadmedidaComponent
   ],
   imports: [
     BrowserModule,

@@ -25,6 +25,7 @@ export class ImpuestoService{
   }
 
   guardarImpuesto(id: number, impuesto: Impuesto){
+    console.log(JSON.stringify(impuesto));
     const body = {
       idimpuesto: id,
       nombreimpuesto: impuesto.nombreimpuesto,

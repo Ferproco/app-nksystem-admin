@@ -23,6 +23,26 @@ export class AlmacenService{
     const endpoint: any = this.uriapi + 'api/almacen';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
+
+  guardarAlmacen(id: number, almacen: Almacen){
+    console.log(JSON.stringify(almacen));
+    const body = {
+      idalmacen: id,
+      codalmacen:'',
+      codnegocio: '',
+      nombre: almacen.nombre,
+      principal:almacen.principal,
+      tipoalmacen:'',
+      direccion: almacen.direccion,
+      status: almacen.status
+     
+    };
+    console.log('id ' + id + 'almacen ' + JSON.stringify(body));
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/almacen';
+    return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
+  }
+
  
 
 }
