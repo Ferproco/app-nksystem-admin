@@ -59,6 +59,9 @@ import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalog
 
 import { FilterUnidadmedidaPipe } from './components/unidadmedida/catalogo-unidadmedida/filter-unidadmedida.pipe';
 import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unidadmedida/crear-unidadmedida.component';
+import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
+import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
+import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
 
 @NgModule({
   declarations: [
@@ -97,7 +100,9 @@ import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unid
     CuentasxcobrarComponent,
     CatalogoUnidadmedidaComponent,
     FilterUnidadmedidaPipe,
-    CrearUnidadmedidaComponent
+    CrearUnidadmedidaComponent,
+    CatalogoTransaccionesComponent,
+    FilterTransaccionesPipe
   ],
   imports: [
     BrowserModule,
@@ -124,7 +129,8 @@ import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unid
     MovimientosCajaService,
     FacturaService,
     ProveedorService,
-    VendedorService
+    VendedorService,
+    TransaccionesService
   ],
   bootstrap: [AppComponent]
 })

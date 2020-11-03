@@ -22,6 +22,7 @@ import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vended
 import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
 import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
 import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unidadmedida/crear-unidadmedida.component';
+import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'inventario/listarunidades', component: CatalogoUnidadmedidaComponent},
   { path: 'inventario/crearunidad', component: CrearUnidadmedidaComponent},
   { path: 'inventario/listarcategorias', component: CatalogoCategoriaComponent},
+  { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/crearcliente', component: CrearClienteComponent},
   { path: 'ventas/facturas', component: CatalogoFacturaComponent},
