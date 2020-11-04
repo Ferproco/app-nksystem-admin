@@ -81,18 +81,31 @@
                     </div>
                     <div class="form-group">
                       <label for="password3">Nombre</label>
-                      <input formControlName="nombreimpuesto" type="text" class="form-control"
+                      <input
+                      formControlName="nombreimpuesto"
+                      [ngClass]="{'invalid-data': nombreimpuesto.invalid && (nombreimpuesto.touched || nombreimpuesto.dirty)}"
+                      type="text"
+                      class="form-control"
                       placeholder="Ingrese el Nombre del Impuesto" />
+                      <div *ngIf="nombreimpuesto.invalid  && (nombreimpuesto.dirty || nombreimpuesto.touched)">
+                        <div *ngIf="nombreimpuesto.errors.required">
+                          Nombre Requerido
+                        </div>
+                        <div class="invalid-mensaje" *ngIf="nombreimpuesto.errors.pattern">
+                          Nombre Incorrecto
+                        </div>
+                      </div>
                     </div>
+
                     <div class="form-group">
                       <label for="password3">% Tarifa</label>
                       <input
                       formControlName="normal"
-                      [ngClass]="{'is-invalid': normal.invalid && (normal.touched || normal.dirty)}"
+                      [ngClass]="{'invalid-data': normal.invalid && (normal.touched || normal.dirty)}"
                       type="number"
                       class="form-control"
                       placeholder="Ingrese Tarifa" />
-                      <div class="invalid-data" *ngIf="normal.invalid  && (normal.dirty || normal.touched)">
+                      <div class="invalid-mensaje" *ngIf="normal.invalid  && (normal.dirty || normal.touched)">
                         <div *ngIf="normal.errors.required">
                           % Tarifa Requerido
                         </div>
@@ -101,14 +114,17 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="password3">Vigente Desde</label>
-                      <div class="chosen-select-single mg-b-20">
-                        <div class="input-group date">
-                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                          <input type="text" formControlName="fechaini" class="form-control">
-                      </div>
-                    </div>
+
+                      <input matInput [matDatepicker]="picker">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+
+                      <input matInput [matDatepicker]="picker1" type="text" formControlName="fechaini" class="form-control">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
                     </div>
                     <div class="form-group">
                       <label>

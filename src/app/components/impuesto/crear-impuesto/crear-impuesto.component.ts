@@ -70,7 +70,7 @@ export class CrearImpuestoComponent implements OnInit {
   private buildForm(){
     this.formimpuesto = this.formbuilder.group({
       nombreimpuesto: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      normal: ['0', [Validators.required, Validators.pattern(this.patten)]],
+      normal: ['0', [Validators.required, Validators.pattern(this.paterhombre)]],
       fechaini: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
       idtipoimpuesto: [null, [Validators.required]],
       status: ['1', [Validators.required]]
@@ -80,6 +80,9 @@ export class CrearImpuestoComponent implements OnInit {
 
   get normal() {
     return this.formimpuesto.get('normal');
+  }
+  get nombreimpuesto() {
+    return this.formimpuesto.get('nombreimpuesto');
   }
 
 }

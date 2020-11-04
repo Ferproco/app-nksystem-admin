@@ -33,7 +33,7 @@ export class ImpuestoService{
       recargo: 0,
       fechaini: new Date(impuesto.fechaini),
       fechafin: new Date(impuesto.fechaini),
-      status: impuesto.status,
+      status: impuesto.status === '1' ? 'ACTIVO' : 'INACTIVO',
       codnegocio: '',
       idtipoimpuesto: impuesto.idtipoimpuesto
     };
