@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Impuesto } from '../../model/Impuesto.model';
 import { ImpuestoService } from '../ImpuestoService.service';
 
@@ -21,7 +22,8 @@ export class CatalogoImpuestoComponent implements OnInit {
   tableSizes = [3, 6, 9, 12];
 
   constructor(private impuestoServicio: ImpuestoService,
-              private router: Router) { }
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.listarImpuestos();
@@ -33,6 +35,11 @@ export class CatalogoImpuestoComponent implements OnInit {
      this.lstImpuestos = response as Impuesto[];
      console.log(this.lstImpuestos);
      this.loading = false;
+   },
+   error => {
+     this.loading = false;
+     this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+   { enableHtml: true, closeButton: true });
    });
  }
  onTableDataChange(event){
@@ -45,9 +52,11 @@ onTableSizeChange(event): void {
   this.page = 1;
   this.lstImpuestos;
 }
-registrarimpuestos() {
-  this.router.navigate(['configuracion/crearimpuestos']);
-    }
+  registrarimpuestos() {
+    this.router.navigate(['configuracion/crearimpuestos']);
+  }
+
+
 
 }
 

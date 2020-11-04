@@ -1,3 +1,4 @@
+import { CrearImpuestoComponent } from './components/impuesto/crear-impuesto/crear-impuesto.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -29,7 +30,6 @@ import { CatalogoClienteComponent } from './components/cliente/catalogo-cliente/
 import { CrearClienteComponent } from './components/cliente/crear-cliente/crear-cliente.component';
 import { FilterClientePipe } from './components/cliente/catalogo-cliente/filter-cliente.pipe';
 import { CatalogoImpuestoComponent } from './components/impuesto/catalogo-impuesto/catalogo-impuesto.component';
-import { CrearImpuestoComponent } from './components/impuesto/crear-impuesto/crear-impuesto.component';
 import { CatalogoCategoriaComponent } from './components/categoria/catalogo-categoria/catalogo-categoria.component';
 import { CategoriaService } from './components/categoria/CategoriaService.service';
 import { FilterCategoriaPipe } from './components/categoria/catalogo-categoria/filter-categoria.pipe';

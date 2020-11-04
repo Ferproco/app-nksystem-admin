@@ -3,6 +3,8 @@ import { Component, OnInit, ɵCodegenComponentFactoryResolver } from '@angular/c
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { TipoImpuestoService } from '../TipoImpuestoService.service';
+import { formatDate } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-impuesto',
@@ -16,12 +18,16 @@ export class CrearImpuestoComponent implements OnInit {
   loading = false;
   formimpuesto: FormGroup;
 
-
+  patterninstrucciones = '^[A-Za-z0-9? _-]+$';
+  patten = '[0-9]+(\[0-9][0-9]?)?';
+  paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
+  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
   constructor(private tipoimpuestoServicio: TipoImpuestoService,
               private impuestoService: ImpuestoService,
               private formbuilder: FormBuilder,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private router: Router) {
 
     this.buildForm();
   }
@@ -34,11 +40,16 @@ export class CrearImpuestoComponent implements OnInit {
     event.preventDefault();
     const value = this.formimpuesto.value;
     console.log(value);
-
-    this.toastr.info('Falta Informacion requerida', 'Informacion', { enableHtml: true, closeButton: true });
     this.impuestoService.guardarImpuesto(this.idimpuesto, value)
     .subscribe(response => {
+      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+      this.router.navigate(['configuracion/listarimpuestos']);
       console.log(response);
+    },
+    error => {
+      this.loading = false;
+      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+    { enableHtml: true, closeButton: true });
     });
   }
 
@@ -49,18 +60,26 @@ export class CrearImpuestoComponent implements OnInit {
         this.lstTipoImpuestos = response as any[];
         console.log(this.lstTipoImpuestos);
         this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+      { enableHtml: true, closeButton: true });
       });
   }
   private buildForm(){
-
     this.formimpuesto = this.formbuilder.group({
-      nombreimpuesto: ['', [Validators.required]],
-      normal: ['0', [Validators.required]],
-      fechaini: [new Date(), [Validators.required]],
-      idtipoimpuesto: ['0', [Validators.required]],
+      nombreimpuesto: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      normal: ['0', [Validators.required, Validators.pattern(this.patten)]],
+      fechaini: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
+      idtipoimpuesto: [null, [Validators.required]],
       status: ['1', [Validators.required]]
 
     });
+  }
+
+  get normal() {
+    return this.formimpuesto.get('normal');
   }
 
 }
