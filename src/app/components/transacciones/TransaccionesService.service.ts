@@ -2,44 +2,37 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Api } from 'src/app/config';
 import { Impuesto } from '../model/Impuesto.model';
+import { Transacciones } from '../model/Transacciones.model';
 
 
 
 @Injectable()
-export class ImpuestoService{
+export class TransaccionesService{
 
-  lstImpuestos: Impuesto[] = [];
+  lstTransacciones: Transacciones[] = [];
   uriapi: string = Api.url;
 
   constructor(private httpClient: HttpClient){
 
   }
 
-  listarImpuestos(codnegocio: string){
+  listarTransacciones(codnegocio: string){
     const body = {
 
     };
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    const endpoint: any = this.uriapi + 'api/impuesto';
+    const endpoint: any = this.uriapi + 'api/transacciones';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarImpuesto(id: number, impuesto: Impuesto){
-    console.log(JSON.stringify(impuesto));
+  guardarTransaccion(id: number, transaccion: Transacciones){
+    console.log(JSON.stringify(transaccion));
     const body = {
-      idimpuesto: id,
-      nombreimpuesto: impuesto.nombreimpuesto,
-      normal: impuesto.normal,
-      recargo: 0,
-      fechaini: new Date(impuesto.fechaini),
-      fechafin: new Date(impuesto.fechaini),
-      status: impuesto.status,
-      codnegocio: '',
-      idtipoimpuesto: impuesto.idtipoimpuesto
+      
     };
-    console.log('id ' + id + 'impuesto ' + JSON.stringify(body));
+    console.log('id ' + id + 'transaccion ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    const endpoint: any = this.uriapi + 'api/impuesto';
+    const endpoint: any = this.uriapi + 'api/transacciones';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
 

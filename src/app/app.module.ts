@@ -55,6 +55,13 @@ import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vended
 import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
 import { FilterVendedorPipe } from './components/vendedor/catalogo-vendedor/filter-vendedor.pipe';
 import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuentasxcobrar.component';
+import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
+
+import { FilterUnidadmedidaPipe } from './components/unidadmedida/catalogo-unidadmedida/filter-unidadmedida.pipe';
+import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unidadmedida/crear-unidadmedida.component';
+import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
+import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
+import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
 
 @NgModule({
   declarations: [
@@ -90,7 +97,12 @@ import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuen
     CatalogoVendedorComponent,
     CrearVendedorComponent,
     FilterVendedorPipe,
-    CuentasxcobrarComponent
+    CuentasxcobrarComponent,
+    CatalogoUnidadmedidaComponent,
+    FilterUnidadmedidaPipe,
+    CrearUnidadmedidaComponent,
+    CatalogoTransaccionesComponent,
+    FilterTransaccionesPipe
   ],
   imports: [
     BrowserModule,
@@ -117,7 +129,8 @@ import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuen
     MovimientosCajaService,
     FacturaService,
     ProveedorService,
-    VendedorService
+    VendedorService,
+    TransaccionesService
   ],
   bootstrap: [AppComponent]
 })

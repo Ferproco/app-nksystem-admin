@@ -1,13 +1,14 @@
 export class Almacen{
     codalmacen: string;
 	codnegocio: string;
-    nombre: String;
+    nombre: string;
 	principal: Boolean;
     tipoalmacen: string;
     direccion: string;
     idalmacen: number;
+    status:string;
 
-    constructor( codalmacen: string,codnegocio: string,nombre: string, principal: Boolean,tipoalmacen: string, direccion: string,idalmacen: number){
+    constructor( codalmacen: string,codnegocio: string,nombre: string, principal: Boolean,tipoalmacen: string, direccion: string,idalmacen: number,status:string){
 
 
         this.codalmacen=codalmacen;
@@ -17,5 +18,6 @@ export class Almacen{
         this.tipoalmacen=tipoalmacen;
         this.direccion=direccion;
         this.idalmacen=idalmacen;
+        this.status=status;
     }
 }
