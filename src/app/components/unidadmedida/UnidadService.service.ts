@@ -37,4 +37,8 @@ export class UnidadService{
     const endpoint: any = this.uriapi + 'api/unidadmedida';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
+
+  
+
+
 }

@@ -2,13 +2,13 @@ export class Almacen{
     codalmacen: string;
 	codnegocio: string;
     nombre: string;
-	principal: Boolean;
+	principal: string;
     tipoalmacen: string;
     direccion: string;
     idalmacen: number;
     status:string;
 
-    constructor( codalmacen: string,codnegocio: string,nombre: string, principal: Boolean,tipoalmacen: string, direccion: string,idalmacen: number,status:string){
+    constructor( codalmacen: string,codnegocio: string,nombre: string, principal: string,tipoalmacen: string, direccion: string,idalmacen: number,status:string){
 
 
         this.codalmacen=codalmacen;

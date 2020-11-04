@@ -31,10 +31,10 @@ export class AlmacenService{
       codalmacen:'',
       codnegocio: '',
       nombre: almacen.nombre,
-      principal:almacen.principal,
+      principal: almacen.principal === '1' ? true : false,
       tipoalmacen:'',
       direccion: almacen.direccion,
-      status: almacen.status
+      status: almacen.status === '1' ? 'ACTIVO' : 'INACTIVO',
      
     };
     console.log('id ' + id + 'almacen ' + JSON.stringify(body));

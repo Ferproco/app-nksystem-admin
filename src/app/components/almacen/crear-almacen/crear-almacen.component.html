@@ -23,7 +23,7 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="breadcome-heading">
-                      <button type="submit" class="form-control">
+                      <button type="submit" class="form-control" [disabled]="formalmacen.invalid">
                         <i class="fa fa-save" aria-hidden="true"></i>
                         Guardar</button>
                     </div>
@@ -65,73 +65,66 @@
                       Registro <span class="table-project-n">de</span> Almacenes</h1>
                   </div>
                 </div>
-                <div class="sparkline8-graph">
-  
-                  <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="sparkline10-graph">
+                  <div class="col-lg-4">
+                    <div id="pwd-container3">
             
-                      <div class="project-details-mg">
-                        <div class="row">
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="col-lg-4">
-                              <span><strong>Nombre:</strong></span>
-                            </div>
+                      <div class="form-group">
+                        <label for="password3">Nombre</label>
+                        <input
+                        formControlName="nombre"
+                        [ngClass]="{'invalid-data': nombre.invalid && (nombre.touched || nombre.dirty)}"
+                        type="text"
+                        class="form-control"
+                        placeholder="Ingrese el Nombre del Almacén" />
+                        <div *ngIf="nombre.invalid  && (nombre.dirty || nombre.touched)">
+                          <div *ngIf="nombre.errors.required">
+                            Nombre Requerido
                           </div>
-                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                            <div class="project-details-dt">
-                              <span>
-                                <input formControlName="nombre" type="text" class="form-control"
-                                  placeholder="Ingrese el Nombre del Almacén" />
-                              </span>
-                            </div>
+                          <div class="invalid-mensaje" *ngIf="nombre.errors.pattern">
+                            Nombre Incorrecto
                           </div>
                         </div>
                       </div>
-  
-                      <div class="project-details-mg">
-                        <div class="row">
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="col-lg-4">
-                              <span><strong>Dirección:</strong></span>
-                            </div>
+                      
+                      <div class="form-group">
+                        <label for="password3">Dirección</label>
+                        <input
+                        formControlName="direccion"
+                        [ngClass]="{'invalid-data': direccion.invalid && (direccion.touched || direccion.dirty)}"
+                        type="text"
+                        class="form-control"
+                        placeholder="Ingrese la Dirección del Almacén" />
+                        <div *ngIf="direccion.invalid  && (direccion.dirty || direccion.touched)">
+                          <div *ngIf="direccion.errors.required">
+                            Nombre Requerido
                           </div>
-                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                            <div class="project-details-dt">
-                              <span>
-                                <input formControlName="direccion" type="text" class="form-control"
-                                  placeholder="Ingrese la dirección del Almacén" />
-                              </span>
-                            </div>
+                          <div class="invalid-mensaje" *ngIf="direccion.errors.pattern">
+                            Nombre Incorrecto
                           </div>
                         </div>
                       </div>
                    
   
-                      <div class="project-details-mg">
-                        <div class="row">
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="col-lg-4">
-                              <label>
-                                <input type="checkbox" formControlName="status" value="">
-                                <i></i> Activo </label>
-                            </div>
-                          </div>
-  
-                        </div>
-                      </div>
+                     
+                              <div class="form-group">
+                                <label>
+                                  <input type="checkbox" formControlName="principal" value="">
+                                  <i></i> Almacén Principal </label>
+                              </div>
+                           
 
-                      <div class="project-details-mg">
-                        <div class="row">
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="col-lg-4">
-                              <label>
-                                <input type="checkbox" formControlName="principal" value="">
-                                <i></i> Almacén Principal </label>
-                            </div>
-                          </div>
+                      
+                         
+                              <div class="form-group">
+                                <label>
+                                  <input type="checkbox" formControlName="status" value="">
+                                  <i></i> Activo </label>
+                              </div>
+                            
   
-                        </div>
-                      </div>
+                       
+  
                     </div>
                   </div>
   
