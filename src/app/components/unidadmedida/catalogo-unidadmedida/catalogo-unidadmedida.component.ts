@@ -48,6 +48,6 @@ onTableSizeChange(event): void {
   this.lstUnidades;
 }
 registrarunidades() {
-  this.router.navigate(['inventario/crearunidad']);
+  this.router.navigate(['inventario/listarunidades']);
     }
 }

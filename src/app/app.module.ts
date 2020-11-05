@@ -59,7 +59,7 @@ import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuen
 import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
 
 import { FilterUnidadmedidaPipe } from './components/unidadmedida/catalogo-unidadmedida/filter-unidadmedida.pipe';
-import { CrearUnidadmedidaComponent } from './components/unidadmedida/crear-unidadmedida/crear-unidadmedida.component';
+
 import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
 import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
 import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
@@ -104,7 +104,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     CuentasxcobrarComponent,
     CatalogoUnidadmedidaComponent,
     FilterUnidadmedidaPipe,
-    CrearUnidadmedidaComponent,
+    
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe
   ],
