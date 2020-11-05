@@ -32,7 +32,6 @@ const routes: Routes = [
   { path: 'inventario/listaralmacenes', component: CatalogoAlmacenComponent},
   { path: 'inventario/crearalmacen', component: CrearAlmacenComponent},
   { path: 'inventario/listarunidades', component: CatalogoUnidadmedidaComponent},
-  
   { path: 'inventario/listarcategorias', component: CatalogoCategoriaComponent},
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
