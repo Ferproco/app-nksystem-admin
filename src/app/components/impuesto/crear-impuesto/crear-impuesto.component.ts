@@ -1,3 +1,4 @@
+import { TipoImpuesto } from './../../model/TipoImpuesto.model';
 import { ImpuestoService } from './../ImpuestoService.service';
 import { Component, OnInit, ɵCodegenComponentFactoryResolver } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -5,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { TipoImpuestoService } from '../TipoImpuestoService.service';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-crear-impuesto',
@@ -46,14 +49,15 @@ export class CrearImpuestoComponent implements OnInit {
       this.router.navigate(['configuracion/listarimpuestos']);
       console.log(response);
     },
-    error => {
+    ((error: HttpErrorResponse) => {
       this.loading = false;
-      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-    { enableHtml: true, closeButton: true });
-    });
+      console.log('Error ' + error);
+      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
+      { enableHtml: true, closeButton: true });
+    }));
   }
 
-  listarTipoImpuestos(){
+  listarTipoImpuestos() {
     this.loading = true;
     this.tipoimpuestoServicio.listarTipoImpuestos('')
       .subscribe(response => {
@@ -61,12 +65,14 @@ export class CrearImpuestoComponent implements OnInit {
         console.log(this.lstTipoImpuestos);
         this.loading = false;
       },
-      error => {
+      ((error: HttpErrorResponse) => {
         this.loading = false;
+        console.log('Error ' + error);
         this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-      { enableHtml: true, closeButton: true });
-      });
+        { enableHtml: true, closeButton: true });
+      }));
   }
+
   private buildForm(){
     this.formimpuesto = this.formbuilder.group({
       nombreimpuesto: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
