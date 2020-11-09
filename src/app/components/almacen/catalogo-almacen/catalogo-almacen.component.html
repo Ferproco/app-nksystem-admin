@@ -1,4 +1,4 @@
-<p>catalogo-almacen works!</p>
+
 <div class="loading" *ngIf="loading">
     <!--<div class="textoGuardando">{{"PROCESANDO" | translate}}...</div>-->
     <div class="textoGuardando">Procesando...</div>
@@ -11,7 +11,7 @@
     <app-menu></app-menu>
     <app-header></app-header>
   </div>
-  
+
 <div class="content-inner-all">
 
           <!-- Breadcome start-->
@@ -90,17 +90,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let almacen of lstAlmacenes | filterAlmacen:filtraralmacenes | paginate : {
-                                            itemsPerPage: tableSize,
-                                            currentPage: page,
-                                            totalItems: count
-                                          };">
+                                        <tr *ngFor="let almacen of lstAlmacenes | filterAlmacen:filtraralmacenes">
                                             <td></td>
                                             <td>{{almacen.idalmacen}}</td>
                                             <td>{{almacen.nombre}}</td>
                                             <td>{{almacen.direccion}}</td>
                                             <td>{{almacen.principal}}</td>
-                                           
+
                                             <td>
                                                 <div *ngIf="almacen.status === 'ACTIVO'; else inactivo" class="btn-group project-list-add">
                                                     <button class="btn btn-white btn-xs">Activo  </button>
@@ -128,10 +124,10 @@
                                     </tbody>
                                 </table>
                                 <br>
-                                <div class="login-submit-cs">
-                                    <pagination-controls responsive="true" previousLabel="" nextLabel="" (pageChange)="onTableDataChange($event)">
-                                    </pagination-controls>
-                                </div>
+                                <mat-paginator [length]="LengthTable"
+                                [pageSize]="10"
+                                [pageSizeOptions]="[5, 10, 25, 100]">
+                              </mat-paginator>
                             </div>
                         </form>
                         </div>
@@ -144,5 +140,4 @@
 <!-- Static Table End -->
 
 
-<app-footer></app-footer>
 

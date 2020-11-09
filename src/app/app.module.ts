@@ -1,4 +1,4 @@
-import { MatDatepickerModule } from '@angular/material/datepicker';
+
 import { CrearImpuestoComponent } from './components/impuesto/crear-impuesto/crear-impuesto.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -64,6 +64,9 @@ import { CatalogoTransaccionesComponent } from './components/transacciones/catal
 import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
 import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -104,7 +107,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     CuentasxcobrarComponent,
     CatalogoUnidadmedidaComponent,
     FilterUnidadmedidaPipe,
-    
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe
   ],
@@ -118,7 +120,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatPaginatorModule
   ],
   providers: [
     ArticuloService,

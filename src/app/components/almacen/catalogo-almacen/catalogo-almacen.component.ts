@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +20,7 @@ export class CatalogoAlmacenComponent implements OnInit {
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
+  LengthTable = 0;
 
   constructor(private almacenServicio: AlmacenService,
               private router: Router,
@@ -33,25 +35,21 @@ export class CatalogoAlmacenComponent implements OnInit {
     this.almacenServicio.listarAlmacenes('')
    .subscribe(response => {
      this.lstAlmacenes = response as Almacen[];
-     console.log(this.lstAlmacenes);
+     this.LengthTable = this.lstAlmacenes.length;
      this.loading = false;
    },
-   error => {
-     this.loading = false;
-     this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-     { enableHtml: true, closeButton: true });
-   });
- }
- onTableDataChange(event){
-  this.page = event;
-  this.lstAlmacenes;
-}
+   ((error: HttpErrorResponse) => {
+    this.loading = false;
+    if (error.status === 404){
 
-onTableSizeChange(event): void {
-  this.tableSize = event.target.value;
-  this.page = 1;
-  this.lstAlmacenes;
-}
+    }
+    else{
+      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+      { enableHtml: true, closeButton: true });
+    }
+  }));
+ }
+
 registraralmacenes() {
   this.router.navigate(['inventario/crearalmacen']);
     }

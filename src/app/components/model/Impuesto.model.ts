@@ -1,3 +1,4 @@
+import { TipoImpuesto } from './TipoImpuesto.model';
 export class Impuesto {
 
 
@@ -10,6 +11,7 @@ export class Impuesto {
     fechafin: string;
     status: string;
     codnegocio: string;
+    tipoimpuestos: TipoImpuesto;
 
     constructor(
       idimpuesto: number,
@@ -20,7 +22,8 @@ export class Impuesto {
       fechaini: string,
       fechafin: string,
       status: string,
-      codnegocio: string) {
+      codnegocio: string,
+      tipoimp: TipoImpuesto) {
 
         this.idimpuesto = idimpuesto;
         this.nombreimpuesto = nombreimp;
@@ -31,7 +34,6 @@ export class Impuesto {
         this.fechafin = fechafin;
         this.status = status;
         this.codnegocio = codnegocio;
-
-
+        this.tipoimpuestos = tipoimp;
     }
 }

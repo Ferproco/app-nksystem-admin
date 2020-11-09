@@ -21,6 +21,7 @@ export class CatalogoImpuestoComponent implements OnInit {
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
+  LengthTable = 0;
 
   constructor(private impuestoServicio: ImpuestoService,
               private router: Router,
@@ -37,12 +38,11 @@ export class CatalogoImpuestoComponent implements OnInit {
       .subscribe(response => {
         console.log('result ' + response);
         this.lstImpuestos = response as Impuesto[];
-        console.log(this.lstImpuestos);
+        this.LengthTable = this.lstImpuestos.length;
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
-          console.log('Error ' + JSON.stringify(error));
           if (error.status === 404){
 
           }
@@ -53,16 +53,6 @@ export class CatalogoImpuestoComponent implements OnInit {
         }));
   }
 
-  onTableDataChange(event) {
-    this.page = event;
-    this.lstImpuestos;
-  }
-
-  onTableSizeChange(event): void {
-    this.tableSize = event.target.value;
-    this.page = 1;
-    this.lstImpuestos;
-  }
 
   registrarimpuestos() {
     this.router.navigate(['configuracion/crearimpuestos']);

@@ -89,11 +89,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let impuesto of lstImpuestos | paginate : {
-                                            itemsPerPage: tableSize,
-                                            currentPage: page,
-                                            totalItems: count
-                                          };">
+                                        <tr *ngFor="let impuesto of lstImpuestos">
                                             <td></td>
                                             <td>{{impuesto.idimpuesto}}</td>
                                             <td>{{impuesto.nombreimpuesto}}</td>
@@ -131,10 +127,13 @@
                                     </tbody>
                                 </table>
                                 <br>
-                                <div class="login-submit-cs">
-                                    <pagination-controls responsive="true" previousLabel="" nextLabel="" (pageChange)="onTableDataChange($event)">
-                                    </pagination-controls>
-                                </div>
+
+                                  <mat-paginator [length]="LengthTable"
+                                    [pageSize]="10"
+                                    [pageSizeOptions]="[5, 10, 25, 100]">
+                                  </mat-paginator>
+
+
                             </div>
                         </div>
                     </div>
@@ -145,6 +144,6 @@
 </div>
 <!-- Static Table End -->
 
-<app-footer></app-footer>
+
 
 
