@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -21,6 +22,7 @@ export class CatalogoCategoriaComponent implements OnInit {
   count = 0;
   tableSize = 10;
   tableSizes = [3, 6, 9, 12];
+  LengthTable = 0;
 
   constructor(private categoriaServicio: CategoriaService,
               private toastr: ToastrService,
@@ -29,30 +31,28 @@ export class CatalogoCategoriaComponent implements OnInit {
   ngOnInit(): void {
     this.listarCategorias();
   }
+
   listarCategorias() {
     this.loading = true;
     this.categoriaServicio.listarCategorias('')
       .subscribe(response => {
         this.lstCategorias = response as Categoria[];
+        this.LengthTable = this.lstCategorias.length;
         console.log(this.lstCategorias);
         this.loading = false;
       },
-      error => {
+      ((error: HttpErrorResponse) => {
         this.loading = false;
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-        { enableHtml: true, closeButton: true });
-      });
-  }
-  onTableDataChange(event) {
-    this.page = event;
-    this.lstCategorias;
+        if (error.status === 404){
+
+        }
+        else{
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+          { enableHtml: true, closeButton: true });
+        }
+      }));
   }
 
-  onTableSizeChange(event): void {
-    this.tableSize = event.target.value;
-    this.page = 1;
-    this.lstCategorias;
-  }
 
   registrarcategorias() {
     this.router.navigate(['inventario/crearcategoria']);

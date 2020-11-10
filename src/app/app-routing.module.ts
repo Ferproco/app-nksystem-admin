@@ -23,6 +23,8 @@ import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/cre
 import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
 
 import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
+import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -33,6 +35,7 @@ const routes: Routes = [
   { path: 'inventario/crearalmacen', component: CrearAlmacenComponent},
   { path: 'inventario/listarunidades', component: CatalogoUnidadmedidaComponent},
   { path: 'inventario/listarcategorias', component: CatalogoCategoriaComponent},
+  { path: 'inventario/crearcategoria', component: CrearCategoriaComponent},
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/crearcliente', component: CrearClienteComponent},

@@ -67,6 +67,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
 
 
 
@@ -108,7 +109,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     CatalogoUnidadmedidaComponent,
     FilterUnidadmedidaPipe,
     CatalogoTransaccionesComponent,
-    FilterTransaccionesPipe
+    FilterTransaccionesPipe,
+    CrearCategoriaComponent
   ],
   imports: [
     BrowserModule,
