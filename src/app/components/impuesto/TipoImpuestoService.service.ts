@@ -1,11 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable} from 'rxjs';
 import { Api } from 'src/app/config';
 
 import { Impuesto } from '../model/Impuesto.model';
 import { TipoImpuesto } from '../model/TipoImpuesto.model';
-
-
 
 @Injectable()
 export class TipoImpuestoService{
@@ -17,14 +16,14 @@ export class TipoImpuestoService{
 
   }
 
-  listarTipoImpuestos(codnegocio: string){
+  listarTipoImpuestos<T>(codnegocio: string): Observable<T>{
     const body = {
 
     };
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/tipoimpuesto';
-    return this.httpClient.get(endpoint, {headers: httpHeaders});
+    return this.httpClient.get<T>(endpoint, {headers: httpHeaders});
   }
- 
+
 
 }
