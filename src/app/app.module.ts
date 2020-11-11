@@ -68,6 +68,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
+import { CatalogoContactosComponent } from './components/contacto/catalogo-contactos/catalogo-contactos.component';
 
 
 
@@ -110,7 +111,8 @@ import { CrearCategoriaComponent } from './components/categoria/crear-categoria/
     FilterUnidadmedidaPipe,
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe,
-    CrearCategoriaComponent
+    CrearCategoriaComponent,
+    CatalogoContactosComponent
   ],
   imports: [
     BrowserModule,
