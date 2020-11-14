@@ -9,7 +9,7 @@ export class FilterFormapagoPipe implements PipeTransform {
     const resultformaspago = [];
     try {
       for (const formapago of value) {
-        if (formapago.codigoforma.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+        if (formapago.id.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
           resultformaspago.push(formapago);
         }
         else

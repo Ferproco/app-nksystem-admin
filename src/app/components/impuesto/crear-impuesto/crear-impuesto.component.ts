@@ -67,9 +67,13 @@ export class CrearImpuestoComponent implements OnInit {
       },
       ((error: HttpErrorResponse) => {
         this.loading = false;
-        console.log('Error ' + error);
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-        { enableHtml: true, closeButton: true });
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
       }));
   }
 

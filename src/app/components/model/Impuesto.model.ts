@@ -15,7 +15,7 @@ export class Impuesto {
 
     constructor(
       idimpuesto: number,
-      nombreimp: string,
+      nombreimpuesto: string,
       idtipoimpuesto: number,
       normal: number,
       recargo: number,
@@ -23,10 +23,10 @@ export class Impuesto {
       fechafin: string,
       status: string,
       codnegocio: string,
-      tipoimp: TipoImpuesto) {
+      tipoimpuestos: TipoImpuesto) {
 
         this.idimpuesto = idimpuesto;
-        this.nombreimpuesto = nombreimp;
+        this.nombreimpuesto = nombreimpuesto;
         this.idtipoimpuesto = idtipoimpuesto;
         this.normal = normal;
         this.recargo = recargo;
@@ -34,6 +34,6 @@ export class Impuesto {
         this.fechafin = fechafin;
         this.status = status;
         this.codnegocio = codnegocio;
-        this.tipoimpuestos = tipoimp;
+        this.tipoimpuestos = tipoimpuestos;
     }
 }

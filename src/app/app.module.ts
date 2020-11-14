@@ -57,20 +57,25 @@ import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/cre
 import { FilterVendedorPipe } from './components/vendedor/catalogo-vendedor/filter-vendedor.pipe';
 import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuentasxcobrar.component';
 import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
-
 import { FilterUnidadmedidaPipe } from './components/unidadmedida/catalogo-unidadmedida/filter-unidadmedida.pipe';
-
 import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
 import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
 import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
+import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
+import { CatalogoContactosComponent } from './components/contacto/catalogo-contactos/catalogo-contactos.component';
+
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
-import { CatalogoContactosComponent } from './components/contacto/catalogo-contactos/catalogo-contactos.component';
-
-
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -126,7 +131,16 @@ import { CatalogoContactosComponent } from './components/contacto/catalogo-conta
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatInputModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatProgressSpinnerModule
+
   ],
   providers: [
     ArticuloService,
