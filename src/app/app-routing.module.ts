@@ -24,6 +24,8 @@ import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalog
 
 import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
 import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
+import { CatalogoContactosComponent } from './components/contacto/catalogo-contactos/catalogo-contactos.component';
+import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
 
 
 const routes: Routes = [
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'configuracion/crearformapagos', component: CatalogoFormapagoComponent},
   { path: 'compras/listarproveedores', component: CatalogoProveedorComponent},
   { path: 'compras/crearproveedor', component: CrearProveedorComponent},
+  { path: 'contactos/listarcontactos', component: CatalogoContactosComponent},
+  { path: 'contactos/crearcontacto', component: CrearContactoComponent},
 ];
 
 @NgModule({
