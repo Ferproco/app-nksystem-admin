@@ -117,7 +117,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe,
     CrearCategoriaComponent,
-    CatalogoContactosComponent
+    CatalogoContactosComponent,
+    CrearContactoComponent
   ],
   imports: [
     BrowserModule,
@@ -158,7 +159,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FacturaService,
     ProveedorService,
     VendedorService,
-    TransaccionesService
+    TransaccionesService,
+    ContactoService,
+    TipoIdentificacionService
   ],
   bootstrap: [AppComponent]
 })
