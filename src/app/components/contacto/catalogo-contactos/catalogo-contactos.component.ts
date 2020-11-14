@@ -52,7 +52,7 @@ export class CatalogoContactosComponent implements OnInit {
 
 
   registrarcontactos() {
-    this.router.navigate(['contactos/listarcontactos']);
+    this.router.navigate(['contactos/crearcontacto']);
   }
 
 

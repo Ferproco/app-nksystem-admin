@@ -69,6 +69,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
 import { CatalogoContactosComponent } from './components/contacto/catalogo-contactos/catalogo-contactos.component';
+import { ContactoService } from './components/contacto/ContactoService.service';
+import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
+import { TipoIdentificacionService } from './components/contacto/TipoIdentificacionService.service';
 
 
 
@@ -112,7 +115,8 @@ import { CatalogoContactosComponent } from './components/contacto/catalogo-conta
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe,
     CrearCategoriaComponent,
-    CatalogoContactosComponent
+    CatalogoContactosComponent,
+    CrearContactoComponent
   ],
   imports: [
     BrowserModule,
@@ -144,7 +148,9 @@ import { CatalogoContactosComponent } from './components/contacto/catalogo-conta
     FacturaService,
     ProveedorService,
     VendedorService,
-    TransaccionesService
+    TransaccionesService,
+    ContactoService,
+    TipoIdentificacionService
   ],
   bootstrap: [AppComponent]
 })

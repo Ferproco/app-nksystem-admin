@@ -4,6 +4,7 @@ export class Contacto{
     private codvendedor:number;   
     private codnegocio:number;   
     private codtipoidentificacion:number; 
+    private numeroidentificacion:string;
     private nombre:string;    
     private razonsocial:string;
     private telefonomovil:string;
@@ -23,7 +24,7 @@ export class Contacto{
     private codcontable:number;
 
     constructor(id:number, codgrupo:number,codvendedor:number,codnegocio:number, codtipoidentificacion:number, 
-         nombre:string, razonsocial:string,telefonomovil:string, telefonofijo1:string,telefonofijo2:string,
+        numeroidentificacion:string, nombre:string, razonsocial:string,telefonomovil:string, telefonofijo1:string,telefonofijo2:string,
         telefonofax:string,direccionfiscal:string,correoe:string, codtipocontacto:number, codformapago:number,
         codtipocontibuyente:number,status:string,regimeniva:string,fecharegistro:Date,tarifa:string,contribuyente:string,
         codcontable:number){
@@ -33,6 +34,7 @@ export class Contacto{
          this.codvendedor=codvendedor;
          this.codnegocio=codnegocio;
          this.codtipoidentificacion= codtipoidentificacion;
+         this.numeroidentificacion=numeroidentificacion;
          this.nombre=nombre;
          this.razonsocial= razonsocial;
          this.telefonomovil=telefonomovil;
