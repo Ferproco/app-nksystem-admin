@@ -76,6 +76,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
+import { ContactoService } from './components/contacto/ContactoService.service';
+import { TipoIdentificacionService } from './components/contacto/TipoIdentificacionService.service';
 
 @NgModule({
   declarations: [
