@@ -1,11 +1,18 @@
 export class FormaPago{
-    
-constructor(){
+    id: number;
+    nombre: string;
+    codnegocio: string ;
+    dias:number;
+    status:string;
+
+constructor(id: number,nombre: string, codnegocio: string,dias:number,status:string){
+    this.id=id;
+    this.nombre=nombre; 
+    this.codnegocio=codnegocio;
+    this.dias=dias;
+    this.status=status;
 
 }
-
-
-
 
 
 
