@@ -78,7 +78,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
 import { ContactoService } from './components/contacto/ContactoService.service';
-import { TipoIdentificacionService } from './components/contacto/TipoIdentificacionService.service';
+import { TipoIdentificacionService } from './components/contacto/crear-contacto/TipoIdentificacionService.service';
+import { TipoContribuyenteService } from './components/contacto/crear-contacto/TipoContribuyenteService.service';
 
 @NgModule({
   declarations: [
@@ -164,7 +165,8 @@ import { TipoIdentificacionService } from './components/contacto/TipoIdentificac
     VendedorService,
     TransaccionesService,
     ContactoService,
-    TipoIdentificacionService
+    TipoIdentificacionService,
+    TipoContribuyenteService
   ],
   bootstrap: [AppComponent]
 })

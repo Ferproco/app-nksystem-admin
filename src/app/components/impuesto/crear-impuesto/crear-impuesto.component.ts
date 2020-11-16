@@ -41,13 +41,13 @@ export class CrearImpuestoComponent implements OnInit {
 
   guardarImpuesto(event: Event){
     event.preventDefault();
+    this.loading = true;
     const value = this.formimpuesto.value;
-    console.log(value);
     this.impuestoService.guardarImpuesto(this.idimpuesto, value)
     .subscribe(response => {
+      this.loading = false;
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
       this.router.navigate(['configuracion/listarimpuestos']);
-      console.log(response);
     },
     ((error: HttpErrorResponse) => {
       this.loading = false;
@@ -62,7 +62,6 @@ export class CrearImpuestoComponent implements OnInit {
     this.tipoimpuestoServicio.listarTipoImpuestos('')
       .subscribe(response => {
         this.lstTipoImpuestos = response as any[];
-        console.log(this.lstTipoImpuestos);
         this.loading = false;
       },
       ((error: HttpErrorResponse) => {
