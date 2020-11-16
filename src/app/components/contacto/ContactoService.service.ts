@@ -25,10 +25,10 @@ export class ContactoService{
   }
 
   guardarContacto(id: number, contacto: Contacto){
-    console.log(JSON.stringify(contacto));
+    console.log('el contacto enviado es ' + JSON.stringify(contacto));
     const body = {
       idi: id,
-     
+
     };
     console.log('id ' + id + 'contacto ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

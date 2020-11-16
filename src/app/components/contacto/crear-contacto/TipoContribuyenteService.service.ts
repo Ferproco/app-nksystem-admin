@@ -1,24 +1,24 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Vendedor } from '../model/Vendedor.model';
 import { Api } from 'src/app/config';
+import { Contacto } from '../../model/Contacto.model';
 
 @Injectable()
-export class VendedorService{
+export class TipoContribuyenteService{
 
-  lstVendedores: Vendedor[] = [];
+  lstTipoIdentificacion: Contacto[] = [];
   uriapi: string = Api.url;
 
   constructor(private httpClient: HttpClient){
 
   }
-  listarVendedores(codnegocio: string){
+
+  listarTipoContribuyente(codnegocio: string){
     const body = {
 
     };
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    const endpoint: any = this.uriapi + 'api/vendedor';
+    const endpoint: any = this.uriapi + 'api/tipocontribuyente';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
-
 }
