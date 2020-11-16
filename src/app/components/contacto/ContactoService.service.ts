@@ -24,10 +24,26 @@ export class ContactoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarContacto(id: number, contacto: Contacto){
+  guardarContacto(id: number, idnegocio: number, contacto: Contacto){
     console.log('el contacto enviado es ' + JSON.stringify(contacto));
     const body = {
-      idi: id,
+      codtipocontibuyente: Number(contacto.codtipocontibuyente),
+      codtipoidentificacion: Number(contacto.codtipoidentificacion),
+      codnegocio: Number(idnegocio),
+      numeroidentificacion: contacto.numeroidentificacion,
+      nombre: contacto.nombre,
+      razonsocial: contacto.razonsocial,
+      telefonomovil: contacto.telefonomovil,
+      telefonofijo1: contacto.telefonofijo1,
+      telefonofijo2: contacto.telefonofijo2,
+      telefonofax: contacto.telefonofax,
+      direccionfiscal: contacto.direccionfiscal,
+      correoe: contacto.correoe,
+      fecharegistro: new Date(contacto.fecharegistro),
+      codtipocontacto: Number(contacto.codtipocontacto),
+      codvendedor: Number(contacto.codvendedor),
+      codformapago: Number(contacto.codformapago),
+      status: contacto.status === '1' ? 'ACTIVO' : 'INACTIVO'
 
     };
     console.log('id ' + id + 'contacto ' + JSON.stringify(body));

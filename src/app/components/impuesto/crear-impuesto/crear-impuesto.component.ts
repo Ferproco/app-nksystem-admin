@@ -20,6 +20,7 @@ export class CrearImpuestoComponent implements OnInit {
   lstTipoImpuestos: any [] = [];
   loading = false;
   formimpuesto: FormGroup;
+  idnegocio: number;
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -33,6 +34,7 @@ export class CrearImpuestoComponent implements OnInit {
               private router: Router) {
 
     this.buildForm();
+    this.idnegocio = 1;
   }
 
   ngOnInit(): void {
@@ -43,7 +45,7 @@ export class CrearImpuestoComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.formimpuesto.value;
-    this.impuestoService.guardarImpuesto(this.idimpuesto, value)
+    this.impuestoService.guardarImpuesto(this.idimpuesto, this.idnegocio, value)
     .subscribe(response => {
       this.loading = false;
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });

@@ -69,7 +69,7 @@
                                 <input type="radio"
                                 formControlName="codtipocontacto"
                                 checked=""
-                                value="0"
+                                value="1"
                                 name="codtipocontacto"> <i></i> Cliente
                             </label>
                         </div>
@@ -80,7 +80,7 @@
                             <input type="radio"
                             formControlName="codtipocontacto"
                             checked=""
-                            value="1"
+                            value="2"
                             name="codtipocontacto"> <i></i> Proveedor
                         </label>
                       </div>
@@ -287,7 +287,6 @@
                         <div class="form-group">
                           <label for="username">Vendedor</label>
                           <select class="select2_demo_3 form-control" formControlName="codvendedor">
-                            <option [value]="null">--Seleccione--</option>
                             <option value="{{vendedor.id}}" *ngFor="let vendedor of lstVendedores">
                               {{vendedor.nombre}}</option>
                           </select>
@@ -298,8 +297,7 @@
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Forma Pago</label>
-                          <select class="select2_demo_3 form-control" formControlName="codvendedor">
-                            <option [value]="null">--Seleccione--</option>
+                          <select class="select2_demo_3 form-control" formControlName="codformapago">
                             <option value="{{formapago.id}}" *ngFor="let formapago of lstformaspago">
                               {{formapago.nombre}}</option>
                           </select>

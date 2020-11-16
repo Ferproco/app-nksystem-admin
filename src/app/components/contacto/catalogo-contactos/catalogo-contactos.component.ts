@@ -32,13 +32,14 @@ export class CatalogoContactosComponent implements OnInit {
               private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.listarContactos();
   }
+
   private listarContactos(): void {
     this.loading = true;
-    console.log('entro aqui');
     this.contactoServicio.listarContactos('')
       .subscribe(response => {
-        console.log('result ' + response);
+
         this.lstContactos = response as Contacto[];
         this.dataSource = new MatTableDataSource(this.lstContactos);
         this.dataSource.paginator = this.paginator;

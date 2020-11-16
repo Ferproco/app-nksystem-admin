@@ -24,8 +24,8 @@ export class ImpuestoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarImpuesto(id: number, impuesto: Impuesto){
-    console.log(JSON.stringify(impuesto));
+  guardarImpuesto(id: number, idnegocio: number, impuesto: Impuesto){
+
     const body = {
       idimpuesto: id,
       nombreimpuesto: impuesto.nombreimpuesto,
@@ -34,10 +34,10 @@ export class ImpuestoService{
       fechaini: new Date(impuesto.fechaini),
       fechafin: new Date(impuesto.fechaini),
       status: impuesto.status === '1' ? 'ACTIVO' : 'INACTIVO',
-      codnegocio: '',
-      idtipoimpuesto: impuesto.idtipoimpuesto
+      codnegocio: idnegocio,
+      idtipoimpuesto: Number(impuesto.idtipoimpuesto)
     };
-    console.log('id ' + id + 'impuesto ' + JSON.stringify(body));
+
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/impuesto';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});

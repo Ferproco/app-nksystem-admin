@@ -24,6 +24,7 @@ export class CrearContactoComponent implements OnInit {
   lstTipoContribuyente: any [] = [];
   lstVendedores: any [] = [];
   lstformaspago: any [] = [];
+  idnegocio: number;
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -39,6 +40,7 @@ export class CrearContactoComponent implements OnInit {
               private toastr: ToastrService,
               private router: Router) {
       this.buildForm();
+      this.idnegocio = 1;
     }
 
   ngOnInit(): void {
@@ -53,7 +55,7 @@ export class CrearContactoComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.formcontacto.value;
-    this.contactoServicio.guardarContacto(this.id, value)
+    this.contactoServicio.guardarContacto(this.id, this.idnegocio, value)
     .subscribe(response => {
       this.loading = false;
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
