@@ -28,16 +28,17 @@ export class CrearFormapagoComponent implements OnInit {
                private router: Router) {
 
       this.buildForm();
-      this.idnegocio=1;
+      this.idnegocio = 1;
      }
 
   ngOnInit(): void {
+
   }
   guardarFormaPago(event: Event){
     event.preventDefault();
-    const value = this.formapagoService.value;
+    const value = this.formformapago.value;
     console.log(value);
-    this.formapagoService.guardarFormaPago(this.id,this.idnegocio, value)
+    this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value)
     .subscribe(response => {
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
       this.router.navigate(['configuracion/listarformaspagos']);
@@ -51,12 +52,12 @@ export class CrearFormapagoComponent implements OnInit {
     }));
   }
 
-  
+
   private buildForm(){
     this.formformapago = this.formbuilder.group({
       nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       dias: ['0', [Validators.required, Validators.pattern(this.paterhombre)]],
-     
+
       status: ['1', [Validators.required]]
 
     });
