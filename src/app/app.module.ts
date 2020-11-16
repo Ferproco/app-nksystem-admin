@@ -81,6 +81,7 @@ import { ContactoService } from './components/contacto/ContactoService.service';
 import { TipoIdentificacionService } from './components/contacto/crear-contacto/TipoIdentificacionService.service';
 import { TipoContribuyenteService } from './components/contacto/crear-contacto/TipoContribuyenteService.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,6 +124,7 @@ import { TipoContribuyenteService } from './components/contacto/crear-contacto/T
     CrearCategoriaComponent,
     CatalogoContactosComponent,
     CrearContactoComponent
+    
   ],
   imports: [
     BrowserModule,
