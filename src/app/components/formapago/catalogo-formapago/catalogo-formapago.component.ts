@@ -99,15 +99,19 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
     });*/
   }
 
-  Ver(){
+  Ver(id: number){
 
   }
 
-  Modificar(){
+  Modificar(id: number){
+
+    this.formaPagoService.idformapago.emit(id);
+    this.router.navigate(['configuracion/crearformapagos']);
+
 
   }
 
-  Eliminar(){
+  Eliminar(id: number){
 
   }
 
