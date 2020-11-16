@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,10 +12,14 @@ import { FormaPagoService } from '../FormaPagoService.service';
 })
 export class CrearFormapagoComponent implements OnInit {
 
+  /*
+  VARIABLE DE ENTRADA QUE SE LA PASA EL CATALOGO PARA BUSCAR LA FORMA DE PAGO
+  */
+  @Input() idformapago: number;
   id = 0;
   loading = false;
   formformapago: FormGroup;
-  idnegocio:1;
+  idnegocio: number;
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
