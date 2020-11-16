@@ -23,7 +23,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   LengthTable = 0;
   sortedData;
 
-  displayedColumns: string[] = ['Codigo', 'Nombre', 'Aplicar', 'Tipo' , 'Dias Plazo' , 'Status', 'Acción'];
+  displayedColumns: string[] = ['Codigo', 'Nombre',  'Dias Plazo' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<FormaPago>;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -66,7 +66,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
  }
 
   registrarformapago() {
-
+    this.router.navigate(['configuracion/crearformapagos']);
   }
 
   applyFilter(event: Event) {
