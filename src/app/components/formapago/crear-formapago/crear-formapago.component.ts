@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,14 +12,10 @@ import { FormaPagoService } from '../FormaPagoService.service';
 })
 export class CrearFormapagoComponent implements OnInit {
 
-  /*
-  VARIABLE DE ENTRADA QUE SE LA PASA EL CATALOGO PARA BUSCAR LA FORMA DE PAGO
-  */
-  @Input() idformapago: number;
   id = 0;
   loading = false;
   formformapago: FormGroup;
-  idnegocio: number;
+  idnegocio:number;
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -32,17 +28,16 @@ export class CrearFormapagoComponent implements OnInit {
                private router: Router) {
 
       this.buildForm();
-      this.idnegocio = 1;
+      this.idnegocio=1;
      }
 
   ngOnInit(): void {
-
   }
   guardarFormaPago(event: Event){
     event.preventDefault();
-    const value = this.formformapago.value;
+    const value = this.formapagoService.value;
     console.log(value);
-    this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value)
+    this.formapagoService.guardarFormaPago(this.id,this.idnegocio, value)
     .subscribe(response => {
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
       this.router.navigate(['configuracion/listarformaspagos']);
@@ -56,12 +51,12 @@ export class CrearFormapagoComponent implements OnInit {
     }));
   }
 
-
+  
   private buildForm(){
     this.formformapago = this.formbuilder.group({
       nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       dias: ['0', [Validators.required, Validators.pattern(this.paterhombre)]],
-
+     
       status: ['1', [Validators.required]]
 
     });
