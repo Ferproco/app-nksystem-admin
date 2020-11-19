@@ -6,7 +6,10 @@ export class Contacto {
    codnegocio: number;
    codtipoidentificacion: number;
    numeroidentificacion: string;
-   nombre: string;
+   nombreprimero:string;   
+   nombresegundo:string;
+   apellidoprimero:string;
+   apellidosegundo:string;
    razonsocial: string;
    telefonomovil: string;
    telefonofijo1: string;
@@ -23,12 +26,17 @@ export class Contacto {
    tarifa: string;
    contribuyente: string;
    codcontable: number;
+   codtipopersona:number;
+   codpais:number;
+   coddepartamento:number;
+   codmunicipio:number;
 
   constructor(id: number, codgrupo: number, codvendedor: number, codnegocio: number, codtipoidentificacion: number,
-    numeroidentificacion: string, nombre: string, razonsocial: string, telefonomovil: string, telefonofijo1: string, telefonofijo2: string,
+    numeroidentificacion: string, nombreprimero:string, nombresegundo:string, apellidoprimero:string,
+    apellidosegundo:string, razonsocial: string, telefonomovil: string, telefonofijo1: string, telefonofijo2: string,
     telefonofax: string, direccionfiscal: string, correoe: string, codtipocontacto: number, codformapago: number,
     codtipocontibuyente: number, status: string, regimeniva: string, fecharegistro: Date, tarifa: string, contribuyente: string,
-    codcontable: number) {
+    codcontable: number,codtipopersona:number,codpais:number,coddepartamento:number,codmunicipio:number) {
 
     this.id = id;
     this.codgrupo = codgrupo;
@@ -36,7 +44,10 @@ export class Contacto {
     this.codnegocio = codnegocio;
     this.codtipoidentificacion = codtipoidentificacion;
     this.numeroidentificacion = numeroidentificacion;
-    this.nombre = nombre;
+    this.nombreprimero=nombreprimero;   
+    this.nombresegundo=nombresegundo;
+    this.apellidoprimero=apellidoprimero;
+    this.apellidosegundo=apellidosegundo;
     this.razonsocial = razonsocial;
     this.telefonomovil = telefonomovil;
     this.telefonofijo1 = telefonofijo1;
@@ -53,6 +64,11 @@ export class Contacto {
     this.tarifa = tarifa;
     this.contribuyente = contribuyente;
     this.codcontable = codcontable;
+    this.codtipopersona=codtipopersona;
+    this.codpais=codpais;
+    this.coddepartamento=coddepartamento;
+    this.codmunicipio=codmunicipio;
+
   }
 
 }

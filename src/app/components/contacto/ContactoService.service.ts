@@ -31,7 +31,10 @@ export class ContactoService{
       codtipoidentificacion: Number(contacto.codtipoidentificacion),
       codnegocio: Number(idnegocio),
       numeroidentificacion: contacto.numeroidentificacion,
-      nombre: contacto.nombre,
+      nombreprimero: contacto.nombreprimero,
+      nombresegundo:contacto.nombresegundo,
+      apellidoprimero:contacto.apellidoprimero,
+      apellidosegundo:contacto.apellidosegundo,
       razonsocial: contacto.razonsocial,
       telefonomovil: contacto.telefonomovil,
       telefonofijo1: contacto.telefonofijo1,
@@ -43,6 +46,10 @@ export class ContactoService{
       codtipocontacto: Number(contacto.codtipocontacto),
       codvendedor: Number(contacto.codvendedor),
       codformapago: Number(contacto.codformapago),
+      codtipopersona: Number(contacto.codtipopersona),
+      codpais:Number(contacto.codpais),
+      coddepartamento:(contacto.coddepartamento),
+      codmunicipio:(contacto.codmunicipio),
       status: contacto.status === '1' ? 'ACTIVO' : 'INACTIVO'
 
     };

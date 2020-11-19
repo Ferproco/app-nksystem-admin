@@ -80,6 +80,9 @@ import { CrearContactoComponent } from './components/contacto/crear-contacto/cre
 import { ContactoService } from './components/contacto/ContactoService.service';
 import { TipoIdentificacionService } from './components/contacto/crear-contacto/TipoIdentificacionService.service';
 import { TipoContribuyenteService } from './components/contacto/crear-contacto/TipoContribuyenteService.service';
+import { PaisService } from './components/contacto/crear-contacto/PaisService.service';
+import { DepartamentoService } from './components/departamento/DepartamentoService.service';
+import { MunicipioService } from './components/municipio/MunicipioService.service';
 
 
 @NgModule({
@@ -168,7 +171,10 @@ import { TipoContribuyenteService } from './components/contacto/crear-contacto/T
     TransaccionesService,
     ContactoService,
     TipoIdentificacionService,
-    TipoContribuyenteService
+    TipoContribuyenteService,
+    PaisService,
+    DepartamentoService,
+    MunicipioService,
   ],
   bootstrap: [AppComponent]
 })

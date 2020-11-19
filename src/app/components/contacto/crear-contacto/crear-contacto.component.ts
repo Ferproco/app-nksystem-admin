@@ -9,6 +9,15 @@ import { ToastrService } from 'ngx-toastr';
 import { ContactoService } from '../ContactoService.service';
 import { TipoIdentificacionService } from './TipoIdentificacionService.service';
 import { VendedorService } from '../../vendedor/VendedorService.service';
+import { PaisService } from './PaisService.service';
+import { DepartamentoService } from '../../departamento/DepartamentoService.service';
+import { MunicipioService } from '../../municipio/MunicipioService.service';
+
+export interface Tipopersona{
+  id: number;
+  nombre: string;
+ 
+}
 
 @Component({
   selector: 'app-crear-contacto',
@@ -24,7 +33,17 @@ export class CrearContactoComponent implements OnInit {
   lstTipoContribuyente: any [] = [];
   lstVendedores: any [] = [];
   lstformaspago: any [] = [];
+  lstPais: any [] = [];
+  lstDepartamentos:any [] = [];
+  lstMunicipios:any [] = [];
   idnegocio: number;
+
+  tipopersona: Tipopersona[]=[
+    {id: 1, nombre: 'Persona Natural'},
+    {id: 2, nombre: 'Persona Juridica'}
+  ]
+   
+  
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -36,6 +55,9 @@ export class CrearContactoComponent implements OnInit {
               private tipocontribuyenteServicio: TipoContribuyenteService,
               private formaPagoService: FormaPagoService,
               private vendedorService: VendedorService,
+              private paisService:PaisService,
+              private departamentoService:DepartamentoService,
+              private municipioServicio:MunicipioService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router) {
@@ -48,6 +70,9 @@ export class CrearContactoComponent implements OnInit {
     this.listarTipoContribuyente();
     this. listarVendedores();
     this.listarFormasdepago();
+    this.listarPais();
+    this.listarDepartamentos();
+    this.listarMunicipios();
 
   }
 
@@ -112,7 +137,45 @@ export class CrearContactoComponent implements OnInit {
         }
       }));
   }
+  listarDepartamentos() {
+    this.loading = true;
+    this.departamentoService.listarDepartamentos('')
+      .subscribe(response => {
+        this.lstDepartamentos = response as any[];
+        console.log(this.lstDepartamentos);
+        this.loading = false;
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
 
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+  }
+
+  listarMunicipios() {
+    this.loading = true;
+    this.municipioServicio.listarMunicipios('')
+      .subscribe(response => {
+        this.lstMunicipios = response as any[];
+        console.log(this.lstMunicipios);
+        this.loading = false;
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+  }
   listarVendedores() {
     this.loading = true;
     this.vendedorService.listarVendedores('')
@@ -150,13 +213,34 @@ export class CrearContactoComponent implements OnInit {
         }
       }));
   }
+  listarPais() {
+    this.loading = true;
+    this.paisService.listarPais('')
+      .subscribe(response => {
+        this.lstPais = response as any[];
+        console.log(this.lstPais);
+        this.loading = false;
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
 
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+  }
   private buildForm(){
     this.formcontacto = this.formbuilder.group({
       codtipocontibuyente: [null, [Validators.required]],
       codtipoidentificacion: [null, [Validators.required]],
       numeroidentificacion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombreprimero: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombresegundo: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      apellidoprimero: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      apellidosegundo: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       razonsocial: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       telefonomovil: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofijo1: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
@@ -168,6 +252,10 @@ export class CrearContactoComponent implements OnInit {
       codtipocontacto: [0, [Validators.required]],
       codvendedor: [0, [Validators.required]],
       codformapago: [0, [Validators.required]],
+      codtipopersona:[null, [Validators.required]],
+      codpais:[null, [Validators.required]],
+      coddepartamento:[null, [Validators.required]],
+      codmunicipio:[null, [Validators.required]],
       status: ['1', [Validators.required]]
     });
   }
@@ -175,8 +263,20 @@ export class CrearContactoComponent implements OnInit {
   get codtipocontibuyente(){
     return this.formcontacto.get('codtipocontibuyente');
   }
-  get nombre() {
-    return this.formcontacto.get('nombre');
+  get codtipopersona(){
+    return this.formcontacto.get('codtipopersona');
+  }
+  get nombreprimero() {
+    return this.formcontacto.get('nombreprimero');
+  }
+  get nombresegundo() {
+    return this.formcontacto.get('nombresegundo');
+  }
+  get apellidoprimero() {
+    return this.formcontacto.get('apellidoprimero');
+  }
+  get apellidosegundo() {
+    return this.formcontacto.get('apellidosegundo');
   }
   get numeroidentificacion() {
     return this.formcontacto.get('numeroidentificacion');
