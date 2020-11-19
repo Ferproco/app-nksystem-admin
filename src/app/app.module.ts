@@ -83,6 +83,7 @@ import { TipoContribuyenteService } from './components/contacto/crear-contacto/T
 import { PaisService } from './components/contacto/crear-contacto/PaisService.service';
 import { DepartamentoService } from './components/departamento/DepartamentoService.service';
 import { MunicipioService } from './components/municipio/MunicipioService.service';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -127,7 +128,6 @@ import { MunicipioService } from './components/municipio/MunicipioService.servic
     CrearCategoriaComponent,
     CatalogoContactosComponent,
     CrearContactoComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -138,6 +138,7 @@ import { MunicipioService } from './components/municipio/MunicipioService.servic
     NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxChartsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,

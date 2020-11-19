@@ -16,7 +16,7 @@ import { MunicipioService } from '../../municipio/MunicipioService.service';
 export interface Tipopersona{
   id: number;
   nombre: string;
- 
+
 }
 
 @Component({
@@ -34,16 +34,19 @@ export class CrearContactoComponent implements OnInit {
   lstVendedores: any [] = [];
   lstformaspago: any [] = [];
   lstPais: any [] = [];
-  lstDepartamentos:any [] = [];
-  lstMunicipios:any [] = [];
+  lstDepartamentos: any [] = [];
+  lstMunicipios: any [] = [];
   idnegocio: number;
 
-  tipopersona: Tipopersona[]=[
+  tipopersona: Tipopersona[] = [
     {id: 1, nombre: 'Persona Natural'},
     {id: 2, nombre: 'Persona Juridica'}
   ]
-   
-  
+
+  saleData = [
+    { name: "Compras", value: 105000 },
+    { name: "Ventas", value: 55000 }
+  ];
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -55,9 +58,9 @@ export class CrearContactoComponent implements OnInit {
               private tipocontribuyenteServicio: TipoContribuyenteService,
               private formaPagoService: FormaPagoService,
               private vendedorService: VendedorService,
-              private paisService:PaisService,
-              private departamentoService:DepartamentoService,
-              private municipioServicio:MunicipioService,
+              private paisService: PaisService,
+              private departamentoService: DepartamentoService,
+              private municipioServicio: MunicipioService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router) {

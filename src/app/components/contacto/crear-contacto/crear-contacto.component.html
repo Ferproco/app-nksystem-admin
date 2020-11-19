@@ -88,8 +88,6 @@
                 </div>
                 <br>
                   <div class="row">
-                  </div>
-                  <div class="row">
                     <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
@@ -101,29 +99,6 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                    
-                      <div class="col-lg-5">
-                        <div id="pwd-container3">
-                          <div class="form-group">
-                            <label for="username">Teléfono 1</label>
-                            <input formControlName="telefonofijo1"
-                              [ngClass]="{'invalid-data': telefonofijo1.invalid && (telefonofijo1.touched || telefonofijo1.dirty)}"
-                              type="text" class="form-control" placeholder="Ingrese el Teléfono 1" />
-                            <div *ngIf="telefonofijo1.invalid  && (telefonofijo1.dirty || telefonofijo1.touched)">
-                              <div class="invalid-mensaje" *ngIf="telefonofijo1.errors.pattern">
-                                Telefono 1 Incorrecto
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                   
-                   
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">N° Identificacion</label>
@@ -140,27 +115,6 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-lg-5">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                          <label for="username">Teléfono 2</label>
-                          <input formControlName="telefonofijo2"
-                            [ngClass]="{'invalid-data': telefonofijo2.invalid && (telefonofijo2.touched || telefonofijo2.dirty)}"
-                            type="text" class="form-control" placeholder="Ingrese el Teléfono 2" />
-                          <div *ngIf="telefonofijo2.invalid  && (telefonofijo2.dirty || telefonofijo2.touched)">
-                            <div class="invalid-mensaje" *ngIf="telefonofijo2.errors.pattern">
-                              Telefono 2 Incorrecto
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                   
-                   
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Tipo Persona</label>
@@ -170,31 +124,9 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
-                          <label for="username">Celular</label>
-                          <input
-                        formControlName="telefonomovil"
-                        [ngClass]="{'invalid-data': telefonomovil.invalid && (telefonomovil.touched || telefonomovil.dirty)}"
-                        type="text"
-                        class="form-control"
-                        placeholder="Ingrese el Teléfono Móvil" />
-                        <div *ngIf="telefonomovil.invalid  && (telefonomovil.dirty || telefonomovil.touched)">
-                            <div class="invalid-mensaje" *ngIf="telefonomovil.errors.pattern">
-                              Telefono Movil Incorrecto
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                          <label for="username">Nombres y Apellidos</label>
+                          <label for="username">Nombre</label>
                           <input
                         formControlName="nombreprimero"
                         [ngClass]="{'invalid-data': nombreprimero.invalid && (nombreprimero.touched || nombreprimero.dirty)}"
@@ -211,32 +143,10 @@
                         </div>
                         </div>
                       </div>
-                    </div>
-                 
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
-                          <label for="username">Fax</label>
-                          <input formControlName="telefonofax"
-                            [ngClass]="{'invalid-data': telefonofax.invalid && (telefonofax.touched || telefonofax.dirty)}" type="text"
-                            class="form-control" placeholder="Ingrese el Teléfono Fax" />
-                          <div *ngIf="telefonofax.invalid  && (telefonofax.dirty || telefonofax.touched)">
-                            <div class="invalid-mensaje" *ngIf="telefonofax.errors.pattern">
-                              Telefono Fax Incorrecto
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                   
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                          
+                          <label for="username">Segundo Nombre</label>
                           <input
-                         
                         formControlName="nombresegundo"
                         [ngClass]="{'invalid-data': nombresegundo.invalid && (nombresegundo.touched || nombresegundo.dirty)}"
                         type="text"
@@ -252,14 +162,9 @@
                         </div>
                         </div>
                       </div>
-                    </div>
-                    
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
-                         
+                          <label for="username">Primer Apellido</label>
                           <input
                         formControlName="apellidoprimero"
                         [ngClass]="{'invalid-data': apellidoprimero.invalid && (apellidoprimero.touched || apellidoprimero.dirty)}"
@@ -268,22 +173,17 @@
                         placeholder="Primer Apellido" />
                         <div *ngIf="apellidoprimero.invalid  && (apellidoprimero.dirty || apellidoprimero.touched)">
                           <div *ngIf="apellidoprimero.errors.required">
-                            Nombre Requerido
+                            Primer Apellido Requerido
                           </div>
                           <div class="invalid-mensaje" *ngIf="apellidoprimero.errors.pattern">
-                            Nombre Incorrecto
+                            Primer Apellido Incorrecto
                           </div>
                         </div>
                         </div>
                       </div>
-                    </div>
-               
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
-                         
+                          <label for="username">Segundo Apellido</label>
                           <input
                         formControlName="apellidosegundo"
                         [ngClass]="{'invalid-data': apellidosegundo.invalid && (apellidosegundo.touched || apellidosegundo.dirty)}"
@@ -292,19 +192,14 @@
                         placeholder="Segundo Apellido" />
                         <div *ngIf="apellidosegundo.invalid  && (apellidosegundo.dirty || apellidosegundo.touched)">
                           <div *ngIf="apellidosegundo.errors.required">
-                            Nombre Requerido
+                            Segundo Apellido Requerido
                           </div>
                           <div class="invalid-mensaje" *ngIf="apellidosegundo.errors.pattern">
-                            Nombre Incorrecto
+                            Segundo Apellido Incorrecto
                           </div>
                         </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Razon Social</label>
@@ -324,11 +219,6 @@
                         </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  <div class="row">
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Responsabilidad Tributaria</label>
@@ -339,13 +229,6 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                    
-                    
-                  
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Correo Electrónico</label>
@@ -362,8 +245,98 @@
                           </div>
                         </div>
                       </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <label for="username">Dirección</label>
+                          <textarea formControlName="direccionfiscal"
+                            [ngClass]="{'invalid-data': direccionfiscal.invalid && (direccionfiscal.touched || direccionfiscal.dirty)}"
+                            type="text" class="form-control" placeholder="Ingrese la Dirección"></textarea>
+                        </div>
+                      </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <select class="select2_demo_3 form-control" formControlName="codpais">
+                            <option [value]="null">--Seleccione--</option>
+                            <option value="{{pais.id}}" *ngFor="let pais of lstPais">
+                              {{pais.nombre}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <select class="select2_demo_3 form-control" formControlName="coddepartamento">
+                            <option [value]="null">Departamento</option>
+                            <option value="{{departamento.id}}" *ngFor="let departamento of lstDepartamentos">
+                              {{departamento.nombre}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <select class="select2_demo_3 form-control" formControlName="codmunicipio">
+                            <option [value]="null">Municipio</option>
+                            <option value="{{municipio.id}}" *ngFor="let municipio of lstMunicipios">
+                              {{municipio.nombre}}</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                     <div class="col-lg-5">
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <label for="username">Teléfono 1</label>
+                          <input formControlName="telefonofijo1"
+                            [ngClass]="{'invalid-data': telefonofijo1.invalid && (telefonofijo1.touched || telefonofijo1.dirty)}"
+                            type="text" class="form-control" placeholder="Ingrese el Teléfono 1" />
+                          <div *ngIf="telefonofijo1.invalid  && (telefonofijo1.dirty || telefonofijo1.touched)">
+                            <div class="invalid-mensaje" *ngIf="telefonofijo1.errors.pattern">
+                              Telefono 1 Incorrecto
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <label for="username">Teléfono 2</label>
+                          <input formControlName="telefonofijo2"
+                            [ngClass]="{'invalid-data': telefonofijo2.invalid && (telefonofijo2.touched || telefonofijo2.dirty)}"
+                            type="text" class="form-control" placeholder="Ingrese el Teléfono 2" />
+                          <div *ngIf="telefonofijo2.invalid  && (telefonofijo2.dirty || telefonofijo2.touched)">
+                            <div class="invalid-mensaje" *ngIf="telefonofijo2.errors.pattern">
+                              Telefono 2 Incorrecto
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <label for="username">Celular</label>
+                          <input
+                        formControlName="telefonomovil"
+                        [ngClass]="{'invalid-data': telefonomovil.invalid && (telefonomovil.touched || telefonomovil.dirty)}"
+                        type="text"
+                        class="form-control"
+                        placeholder="Ingrese el Teléfono Móvil" />
+                        <div *ngIf="telefonomovil.invalid  && (telefonomovil.dirty || telefonomovil.touched)">
+                            <div class="invalid-mensaje" *ngIf="telefonomovil.errors.pattern">
+                              Telefono Movil Incorrecto
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <label for="username">Fax</label>
+                          <input formControlName="telefonofax"
+                            [ngClass]="{'invalid-data': telefonofax.invalid && (telefonofax.touched || telefonofax.dirty)}" type="text"
+                            class="form-control" placeholder="Ingrese el Teléfono Fax" />
+                          <div *ngIf="telefonofax.invalid  && (telefonofax.dirty || telefonofax.touched)">
+                            <div class="invalid-mensaje" *ngIf="telefonofax.errors.pattern">
+                              Telefono Fax Incorrecto
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Plazo Pago</label>
@@ -373,27 +346,6 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                    
-                  </div>
-                  
-                  
-                
-                  
-
-                  <div class="row">
-                    <div class="col-lg-5">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                          <label for="username">Dirección</label>
-                          <textarea formControlName="direccionfiscal"
-                            [ngClass]="{'invalid-data': direccionfiscal.invalid && (direccionfiscal.touched || direccionfiscal.dirty)}"
-                            type="text" class="form-control" placeholder="Ingrese la Dirección"></textarea>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-5">
                       <div id="pwd-container3">
                         <div class="form-group">
                           <label for="username">Vendedor</label>
@@ -405,50 +357,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="row">
-                    <div class="col-lg-2">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                         
-                          <select class="select2_demo_3 form-control" formControlName="codpais">
-                            <option [value]="null">--Seleccione--</option>
-                            <option value="{{pais.id}}" *ngFor="let pais of lstPais">
-                              {{pais.nombre}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                         
-                          <select class="select2_demo_3 form-control" formControlName="coddepartamento">
-                            <option [value]="null">Departamento</option>
-                            <option value="{{departamento.id}}" *ngFor="let departamento of lstDepartamentos">
-                              {{departamento.nombre}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    
-                  
-                  </div>
-
-                 <div class="row">
-                  <div class="col-lg-2">
-                    <div id="pwd-container3">
-                      <div class="form-group">
-                       
-                        <select class="select2_demo_3 form-control" formControlName="codmunicipio">
-                          <option [value]="null">Municipio</option>
-                          <option value="{{municipio.id}}" *ngFor="let municipio of lstMunicipios">
-                            {{municipio.nombre}}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                 </div>
                   <div class="row">
                     <div class="col-lg-10">
                       <div id="pwd-container3">
@@ -460,6 +368,45 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="project-details-tab">
+                        <ul class="nav nav-tabs res-pd-less-sm">
+                          <li class="active"><a data-toggle="tab" href="#home">Datos Básicos</a>
+                          </li>
+                          <li><a data-toggle="tab" href="#menu1">Empaque</a>
+                          </li>
+                          <li><a data-toggle="tab" href="#menu2">Documentos de Compra</a>
+                          </li>
+                          <li><a data-toggle="tab" href="#menu3">Documentos de Venta</a>
+                          </li>
+                          <li><a data-toggle="tab" href="#menu4">Movimientos de Almacén</a>
+                          </li>
+                        </ul>
+                        <div class="tab-content res-tab-content-project">
+                          <div id="home" class="tab-pane fade in active animated zoomInLeft">
+
+                          </div>
+                          <!-- TERMINA PESTAÑA HOME -->
+                          <div id="menu1" class="tab-pane fade animated zoomInLeft">
+
+                          </div>
+
+                          <div id="menu2" class="tab-pane fade animated zoomInLeft">
+
+                          </div>
+                          <div id="menu3" class="tab-pane fade animated zoomInLeft">
+
+                          </div>
+                          <div id="menu4" class="tab-pane fade animated zoomInLeft">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -467,74 +414,65 @@
               <div class="sparkline8-list basic-res-b-30 shadow-reset">
                   <div class="sparkline8-hd">
                       <div class="main-sparkline8-hd">
-                        <h1>
-                          <i class="fa fa-eye" aria-hidden="true"></i>
+                        <h1><i class="fa fa-eye" aria-hidden="true"></i>
                           Imagen <span class="table-project-n"></span></h1>
-                          <div class="sparkline8-outline-icon">
-                              <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                              <span><i class="fa fa-wrench"></i></span>
-                              <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
-                          </div>
+                          <div class="sparkline8-outline-icon"></div>
                       </div>
                   </div>
-              </div>
-          </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  
-
-    <div class="content-inner-all">
-      <!-- Breadcome End-->
-      <div class="admin-dashone-data-table-area mg-b-15">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="sparkline13-list shadow-reset">
-                <div class="sparkline13-hd">
-                  <div class="main-sparkline13-hd">
-                    <h1>
-                      <i class="fa fa-edit" aria-hidden="true"></i>
-                      Configuración <span class="table-project-n">Contable</span></h1>
-                  </div>
-                </div>
-
-                <div class="sparkline10-graph">
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                          <label for="username">Cuenta Contable Ventas</label>
-                          <select class="select2_demo_3 form-control">
-                            <option [value]="null">--Seleccione--</option>
-                            <option value="0"></option>
-                          </select>
+                  <div class="sparkline8-graph project-details-price-hd">
+                    <div class="project-details-files">
+                        <div class="view-mail-file-list">
+                            <div class="view-file-in">
+                                <i class="fa fa-file"></i>
+                            </div>
+                            <div class="file-type-view">
+                                <h5><a href="#">Document-file.jpg</a></h5>
+                            </div>
                         </div>
-                      </div>
                     </div>
-
-                    <div class="col-lg-4">
-                      <div id="pwd-container3">
-                        <div class="form-group">
-                          <label for="username">Cuenta Contable Compras</label>
-                          <select class="select2_demo_3 form-control">
-                            <option [value]="null">--Seleccione--</option>
-                            <option value="0"></option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
+              <div class="sparkline8-list shadow-reset mg-t-30">
+                <div class="sparkline8-hd">
+                    <div class="main-spark7-hd">
+                      <h1><i class="fa big-icon fa-bar-chart-o"></i>
+                        Estadistica <span class="table-project-n"></span></h1>
+                        <div class="sparkline8-outline-icon"></div>
+                    </div>
+                </div>
+                <div class="sparkline8-graph project-details-price-hd">
+                    <div class="project-details-files">
+                        <div class="view-mail-file-list">
+                            <div class="view-file-in">
+                              <ngx-charts-bar-vertical
+                              [view]="[340,400]"
+                              [results]="saleData"
+                              [xAxisLabel]="'Products'"
+                              [legendTitle]="'Product Sale Chart'"
+                              [yAxisLabel]="'Sale'"
+                              [legend]="false"
+                              [showXAxisLabel]="true"
+                              [showYAxisLabel]="true"
+                              [xAxis]="true"
+                              [yAxis]="true"
+                              [gradient]="true">
+                          </ngx-charts-bar-vertical>
+                            </div>
+                            <div class="file-type-view">
+                                <h5><a href="#">Ventas y Compras</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
+
+
+          </div>
         </div>
       </div>
     </div>
 
-  </form>
+ </form>
 
 
