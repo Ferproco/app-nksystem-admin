@@ -19,7 +19,7 @@ import { RegistrarseComponent } from './components/login/registrarse/registrarse
 import { MainComponent } from './components/main/main.component';
 import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filter-articulo.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
+
 import { ClienteService } from './components/cliente/ClienteService.service';
 import { FamiliaService } from './components/familia/FamiliaService.service';
 import { GrupoArticuloService } from './components/grupoarticulo/GrupoArticuloService.service';
@@ -84,12 +84,14 @@ import { PaisService } from './components/contacto/crear-contacto/PaisService.se
 import { DepartamentoService } from './components/departamento/DepartamentoService.service';
 import { MunicipioService } from './components/municipio/MunicipioService.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
+import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CatalogoArticuloComponent,
     FooterComponent,
     HeaderComponent,
     MenuComponent,
@@ -97,6 +99,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     RegistrarseComponent,
     MainComponent,
     FilterArticuloPipe,
+    CatalogoArticuloComponent,
     CrearArticuloComponent,
     CatalogoClienteComponent,
     CrearClienteComponent,
@@ -128,6 +131,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     CrearCategoriaComponent,
     CatalogoContactosComponent,
     CrearContactoComponent
+  
   ],
   imports: [
     BrowserModule,
@@ -176,6 +180,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     PaisService,
     DepartamentoService,
     MunicipioService,
+    ListaPrecioService,
   ],
   bootstrap: [AppComponent]
 })

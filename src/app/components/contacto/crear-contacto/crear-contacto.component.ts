@@ -12,6 +12,7 @@ import { VendedorService } from '../../vendedor/VendedorService.service';
 import { PaisService } from './PaisService.service';
 import { DepartamentoService } from '../../departamento/DepartamentoService.service';
 import { MunicipioService } from '../../municipio/MunicipioService.service';
+import { ListaPrecioService } from '../../listapeccio/ListaPrecioService.service';
 
 export interface Tipopersona{
   id: number;
@@ -25,8 +26,8 @@ export interface Tipopersona{
   styleUrls: ['./crear-contacto.component.css']
 })
 export class CrearContactoComponent implements OnInit {
+  
   id = 0;
-
   loading = false;
   formcontacto: FormGroup;
   lstTipoIdentificacion: any [] = [];
@@ -37,6 +38,7 @@ export class CrearContactoComponent implements OnInit {
   lstDepartamentos: any [] = [];
   lstMunicipios: any [] = [];
   idnegocio: number;
+  lstListaprecios: any [] = [];
 
   tipopersona: Tipopersona[] = [
     {id: 1, nombre: 'Persona Natural'},
@@ -61,6 +63,7 @@ export class CrearContactoComponent implements OnInit {
               private paisService: PaisService,
               private departamentoService: DepartamentoService,
               private municipioServicio: MunicipioService,
+              private listaprecioServicio:ListaPrecioService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router) {
@@ -76,6 +79,7 @@ export class CrearContactoComponent implements OnInit {
     this.listarPais();
     this.listarDepartamentos();
     this.listarMunicipios();
+    this.listarListaPrecios();
 
   }
 
@@ -235,6 +239,26 @@ export class CrearContactoComponent implements OnInit {
         }
       }));
   }
+  listarListaPrecios() {
+    this.loading = true;
+    this.listaprecioServicio.listarListaPrecios('')
+      .subscribe(response => {
+        this.lstListaprecios = response as any[];
+        console.log(this.lstListaprecios);
+        this.loading = false;
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+  }
+
   private buildForm(){
     this.formcontacto = this.formbuilder.group({
       codtipocontibuyente: [null, [Validators.required]],
@@ -259,6 +283,10 @@ export class CrearContactoComponent implements OnInit {
       codpais:[null, [Validators.required]],
       coddepartamento:[null, [Validators.required]],
       codmunicipio:[null, [Validators.required]],
+      lugarenvio: ['', [Validators.pattern(this.parrterobservaciones)]],
+      cupo: ['', [ Validators.pattern(this.parrterobservaciones)]],
+      codlistaprecio:[null, [Validators.required]],
+      direccionexogena:['', [Validators.pattern(this.parrterobservaciones)]],
       status: ['1', [Validators.required]]
     });
   }
@@ -304,5 +332,15 @@ export class CrearContactoComponent implements OnInit {
   }
   get razonsocial(){
     return this.formcontacto.get('razonsocial');
+  }
+  get cupo(){
+    return this.formcontacto.get('cupo');
+  }
+  
+  get lugarenvio(){
+    return this.formcontacto.get('lugarenvio');
+  }
+  get direccionexogena(){
+    return this.formcontacto.get('direccionexogena');
   }
 }

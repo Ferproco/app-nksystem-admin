@@ -1,10 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { FamiliaService } from '../../familia/FamiliaService.service';
 import { GrupoArticuloService } from '../../grupoarticulo/GrupoArticuloService.service';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 import { MarcaService } from '../../marca/MarcaService.service';
 import { UnidadService } from '../../unidadmedida/UnidadService.service';
+import { ArticuloService } from '../ArticuloService.service';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -13,22 +17,33 @@ import { UnidadService } from '../../unidadmedida/UnidadService.service';
 })
 export class CrearArticuloComponent implements OnInit {
 
+  id = 0;
   lstFamilias: any [] = [];
   lstUnidades: any [] = [];
   lstImpuestos: any [] = [];
   lstMarcas: any[]=[];
   lstGrupoArticulos:any[]=[];
   loading = false;
+  idnegocio: number;
   formarticulo: FormGroup;
 
-  constructor(private familiaserive: FamiliaService,
+  patterninstrucciones = '^[A-Za-z0-9? _-]+$';
+  patten = '[0-9]+(\[0-9][0-9]?)?';
+  paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
+  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+
+  constructor(private articuloservice:ArticuloService,
+              private familiaserive: FamiliaService,
               private unidadservice: UnidadService,
               private impuestoservice:ImpuestoService,
               private marcaservice:MarcaService,
               private grupoarticuloservice:GrupoArticuloService,
-              private formbuilder: FormBuilder) {
+              private formbuilder: FormBuilder,
+              private toastr: ToastrService,
+              private router: Router) {
 
     this.buildForm();
+    this.idnegocio = 1;
    }
 
   ngOnInit(): void {
@@ -54,8 +69,24 @@ export class CrearArticuloComponent implements OnInit {
 
   guardarArticulo(event: Event){
     event.preventDefault();
+    this.loading = true;
     const value = this.formarticulo.value;
-    console.log(value);
+    this.articuloservice.guardarArticlo(this.id, this.idnegocio, value)
+    .subscribe(response => {
+      this.loading = false;
+      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+      this.router.navigate(['inventario/listararticulos']);
+    },
+    ((error: HttpErrorResponse) => {
+      this.loading = false;
+      if (error.status === 404) {
+
+      }
+      else {
+        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+          { enableHtml: true, closeButton: true });
+      }
+    }));
   }
 
   listarFamilias(){
@@ -104,5 +135,10 @@ export class CrearArticuloComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  get codigo(){
+    return this.formarticulo.get('codigo');
+  }
+  get nombre(){
+    return this.formarticulo.get('nombre');
+  }
 }

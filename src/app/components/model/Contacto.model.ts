@@ -16,6 +16,7 @@ export class Contacto {
    telefonofijo2: string;
    telefonofax: string;
    direccionfiscal: string;
+   direccionexogena:string;
    correoe: string;
    codtipocontacto: number;
    codformapago: number;
@@ -30,13 +31,16 @@ export class Contacto {
    codpais:number;
    coddepartamento:number;
    codmunicipio:number;
+   lugarenvio:string;
+   cupo:string;
+   codlistaprecio:number;
 
   constructor(id: number, codgrupo: number, codvendedor: number, codnegocio: number, codtipoidentificacion: number,
     numeroidentificacion: string, nombreprimero:string, nombresegundo:string, apellidoprimero:string,
     apellidosegundo:string, razonsocial: string, telefonomovil: string, telefonofijo1: string, telefonofijo2: string,
-    telefonofax: string, direccionfiscal: string, correoe: string, codtipocontacto: number, codformapago: number,
+    telefonofax: string, direccionfiscal: string,direccionexogena:string, correoe: string, codtipocontacto: number, codformapago: number,
     codtipocontibuyente: number, status: string, regimeniva: string, fecharegistro: Date, tarifa: string, contribuyente: string,
-    codcontable: number,codtipopersona:number,codpais:number,coddepartamento:number,codmunicipio:number) {
+    codcontable: number,codtipopersona:number,codpais:number,coddepartamento:number,codmunicipio:number,lugarenvio:string,cupo:string,codlistaprecio:number) {
 
     this.id = id;
     this.codgrupo = codgrupo;
@@ -68,6 +72,10 @@ export class Contacto {
     this.codpais=codpais;
     this.coddepartamento=coddepartamento;
     this.codmunicipio=codmunicipio;
+    this.direccionexogena=direccionexogena;
+    this.lugarenvio=lugarenvio;
+    this.cupo=cupo;
+    this.codlistaprecio=codlistaprecio;
 
   }
 

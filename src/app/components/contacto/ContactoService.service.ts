@@ -48,8 +48,12 @@ export class ContactoService{
       codformapago: Number(contacto.codformapago),
       codtipopersona: Number(contacto.codtipopersona),
       codpais:Number(contacto.codpais),
-      coddepartamento:(contacto.coddepartamento),
-      codmunicipio:(contacto.codmunicipio),
+      coddepartamento:Number(contacto.coddepartamento),
+      codmunicipio:Number(contacto.codmunicipio),
+      lugarenvio:contacto.lugarenvio,
+      cupo:contacto.cupo,
+      codlistaprecio:Number(contacto.codlistaprecio),
+      direccionexogena:contacto.direccionexogena,
       status: contacto.status === '1' ? 'ACTIVO' : 'INACTIVO'
 
     };
