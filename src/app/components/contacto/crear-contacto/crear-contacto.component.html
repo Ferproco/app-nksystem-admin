@@ -85,7 +85,7 @@
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Tipo Identificacion</label>
-                        <select class="select2_demo_3 form-control" formControlName="codtipoidentificacion">
+                        <select class="select2_demo_3 form-control" formControlName="codtipoidentificacion" (change)="MostrarCampos($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{tipoidentificacion.id}}"
                             *ngFor="let tipoidentificacion of lstTipoIdentificacion">
@@ -110,10 +110,10 @@
                         </div>
                       </div>
                     </div>
-                    <div id="pwd-container3">
+                    <div id="pwd-container3" *ngIf="visible">
                       <div class="form-group">
                         <label for="username">Tipo Persona</label>
-                        <select class="select2_demo_3 form-control" formControlName="codtipopersona">
+                        <select class="select2_demo_3 form-control" formControlName="codtipopersona" (change)="MostrarCamposTipoPresona($event.target.value)">
                           <option value="null">--Seleccione--</option>
                           <option value="{{tipoper.id}}" *ngFor="let tipoper of tipopersona">{{tipoper.nombre}}</option>
                         </select>
@@ -121,7 +121,7 @@
                     </div>
 
 
-                    <div id="pwd-container3">
+                    <div id="pwd-container3" *ngIf="visiblenombres">
                       <div class="form-group">
                         <label for="username">Primer Nombre</label>
                         <input formControlName="nombreprimero"
@@ -138,7 +138,7 @@
                       </div>
                     </div>
 
-                    <div id="pwd-container3">
+                    <div id="pwd-container3" *ngIf="visiblenombres">
                       <div class="form-group">
                         <label for="username">Segundo Nombre</label>
                         <input formControlName="nombresegundo"
@@ -157,9 +157,9 @@
 
 
 
-                    <div id="pwd-container3">
+                    <div id="pwd-container3" *ngIf="visiblenombres">
                       <div class="form-group">
-                        <label for="username">Primer Apellido</label>
+                        <label for="username">Primer Apellido </label>
                         <input formControlName="apellidoprimero"
                           [ngClass]="{'invalid-data': apellidoprimero.invalid && (apellidoprimero.touched || apellidoprimero.dirty)}"
                           type="text" class="form-control" placeholder="Primer Apellido" />
@@ -173,7 +173,7 @@
                         </div>
                       </div>
                     </div>
-                    <div id="pwd-container3">
+                    <div id="pwd-container3" *ngIf="visiblenombres">
                       <div class="form-group">
                         <label for="username">Segundo Apellido</label>
                         <input formControlName="apellidosegundo"
@@ -189,7 +189,7 @@
                         </div>
                       </div>
                     </div>
-                    <div id="pwd-container3">
+                    <div id="pwd-container3"  *ngIf="visible">
                       <div class="form-group">
                         <label for="username">Razon Social</label>
                         <input formControlName="razonsocial"
@@ -205,7 +205,7 @@
                         </div>
                       </div>
                     </div>
-                    <div id="pwd-container3">
+                    <div id="pwd-container3" *ngIf="!visible">
                       <div class="form-group">
                         <label for="username">Responsabilidad Tributaria</label>
                         <select class="select2_demo_3 form-control" formControlName="codtipocontibuyente">
@@ -264,7 +264,7 @@
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Pais</label>
-                                  <select class="select2_demo_3 form-control" formControlName="codpais">
+                                  <select class="select2_demo_3 form-control" formControlName="codpais" (change)="listarDepartamentos($event.target.value)" >
                                     <option [value]="null">--Seleccione--</option>
                                     <option value="{{pais.id}}" *ngFor="let pais of lstPais">
                                       {{pais.nombre}}</option>
@@ -371,36 +371,9 @@
                                 </div>
                               </div>
 
-                              <div id="pwd-container3">
-                                <div class="form-group">
-                                  <label for="username">Pais</label>
-                                  <select class="select2_demo_3 form-control" formControlName="codpais">
-                                    <option [value]="null">--Seleccione--</option>
-                                    <option value="{{pais.id}}" *ngFor="let pais of lstPais">
-                                      {{pais.nombre}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div id="pwd-container3">
-                                <div class="form-group">
-                                  <label for="username">Departamento</label>
-                                  <select class="select2_demo_3 form-control" formControlName="coddepartamento">
-                                    <option [value]="null">Departamento</option>
-                                    <option value="{{departamento.id}}" *ngFor="let departamento of lstDepartamentos">
-                                      {{departamento.nombre}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div id="pwd-container3">
-                                <div class="form-group">
-                                  <label for="username">Municipioo</label>
-                                  <select class="select2_demo_3 form-control" formControlName="codmunicipio">
-                                    <option [value]="null">Municipio</option>
-                                    <option value="{{municipio.id}}" *ngFor="let municipio of lstMunicipios">
-                                      {{municipio.nombre}}</option>
-                                  </select>
-                                </div>
-                              </div>
+                            
+                             
+                              
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Plazo Crédito</label>
@@ -518,11 +491,7 @@
                 <div class="project-details-files">
                   <div class="view-mail-file-list">
                     <div class="view-file-in">
-                      <ngx-charts-bar-vertical [view]="[340,400]" [results]="saleData" [xAxisLabel]="'Products'"
-                        [legendTitle]="'Product Sale Chart'" [yAxisLabel]="'Sale'" [legend]="false"
-                        [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
-                      </ngx-charts-bar-vertical>
-                    </div>
+                     </div>
                     <div class="file-type-view">
                       <h5><a href="#">Ventas y Compras</a></h5>
                     </div>

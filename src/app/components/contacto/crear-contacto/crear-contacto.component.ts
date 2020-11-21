@@ -40,6 +40,9 @@ export class CrearContactoComponent implements OnInit {
   idnegocio: number;
   lstListaprecios: any [] = [];
 
+  visible = false;
+  visiblenombres=false;
+
   tipopersona: Tipopersona[] = [
     {id: 1, nombre: 'Persona Natural'},
     {id: 2, nombre: 'Persona Juridica'}
@@ -76,8 +79,7 @@ export class CrearContactoComponent implements OnInit {
     this.listarTipoContribuyente();
     this. listarVendedores();
     this.listarFormasdepago();
-    this.listarPais();
-    this.listarDepartamentos();
+    this.listarPais();   
     this.listarMunicipios();
     this.listarListaPrecios();
 
@@ -144,9 +146,12 @@ export class CrearContactoComponent implements OnInit {
         }
       }));
   }
-  listarDepartamentos() {
+  listarDepartamentos(event) {
     this.loading = true;
-    this.departamentoService.listarDepartamentos('')
+    this.lstDepartamentos = [];
+    this.lstMunicipios = [];
+    console.log('el id del pais ' + event );
+    this.departamentoService.listarDepartamentosporPais('', Number(event))
       .subscribe(response => {
         this.lstDepartamentos = response as any[];
         console.log(this.lstDepartamentos);
@@ -257,6 +262,27 @@ export class CrearContactoComponent implements OnInit {
             { enableHtml: true, closeButton: true });
         }
       }));
+  }
+
+  MostrarCampos(event){
+    const idtipo = Number(event);
+    if (idtipo === 6){
+      this.visible = true;
+    }
+    else{
+      this.visible = false;
+    }
+
+  }
+  MostrarCamposTipoPresona(event){
+    const idtipo = Number(event);
+    if (idtipo === 1){
+      this.visiblenombres = true;
+    }
+    else{
+      this.visiblenombres = false;
+    }
+
   }
 
   private buildForm(){

@@ -21,4 +21,11 @@ export class DepartamentoService{
     const endpoint: any = this.uriapi + 'api/departamento';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
+
+  listarDepartamentosporPais(codnegocio: string, idpais: number){
+   
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/departamento/' + idpais;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
 }
