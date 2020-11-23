@@ -110,6 +110,21 @@
                         </div>
                       </div>
                     </div>
+                    <div id="pwd-container3"  *ngIf="visiblecodigodv">
+                      <div class="form-group">
+                        <label for="username">DV</label>
+                        <input formControlName="codigodv"
+                          [ngClass]="{'invalid-data': codigodv.invalid && (codigodv.touched || codigodv.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el Número de Codigo" />
+                        <div
+                          *ngIf="codigodv.invalid  && (codigodv.dirty || codigodv.touched)">
+                          
+                          <div class="invalid-mensaje" *ngIf="codigodv.errors.pattern">
+                            N° DV Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div id="pwd-container3" *ngIf="visible">
                       <div class="form-group">
                         <label for="username">Tipo Persona</label>
@@ -128,10 +143,7 @@
                           [ngClass]="{'invalid-data': nombreprimero.invalid && (nombreprimero.touched || nombreprimero.dirty)}"
                           type="text" class="form-control" placeholder="Primer Nombre" />
                         <div *ngIf="nombreprimero.invalid  && (nombreprimero.dirty || nombreprimero.touched)">
-                          <div *ngIf="nombreprimero.errors.required">
-                            Nombre Requerido
-                          </div>
-                          <div class="invalid-mensaje" *ngIf="nombreprimero.errors.pattern">
+                         <div class="invalid-mensaje" *ngIf="nombreprimero.errors.pattern">
                             Nombre Incorrecto
                           </div>
                         </div>
@@ -145,9 +157,7 @@
                           [ngClass]="{'invalid-data': nombresegundo.invalid && (nombresegundo.touched || nombresegundo.dirty)}"
                           type="text" class="form-control" placeholder="Segundo Nombre" />
                         <div *ngIf="nombresegundo.invalid  && (nombresegundo.dirty || nombresegundo.touched)">
-                          <div *ngIf="nombresegundo.errors.required">
-                            Nombre Requerido
-                          </div>
+                         
                           <div class="invalid-mensaje" *ngIf="nombresegundo.errors.pattern">
                             Nombre Incorrecto
                           </div>
@@ -164,9 +174,7 @@
                           [ngClass]="{'invalid-data': apellidoprimero.invalid && (apellidoprimero.touched || apellidoprimero.dirty)}"
                           type="text" class="form-control" placeholder="Primer Apellido" />
                         <div *ngIf="apellidoprimero.invalid  && (apellidoprimero.dirty || apellidoprimero.touched)">
-                          <div *ngIf="apellidoprimero.errors.required">
-                            Primer Apellido Requerido
-                          </div>
+                          
                           <div class="invalid-mensaje" *ngIf="apellidoprimero.errors.pattern">
                             Primer Apellido Incorrecto
                           </div>
@@ -180,32 +188,28 @@
                           [ngClass]="{'invalid-data': apellidosegundo.invalid && (apellidosegundo.touched || apellidosegundo.dirty)}"
                           type="text" class="form-control" placeholder="Segundo Apellido" />
                         <div *ngIf="apellidosegundo.invalid  && (apellidosegundo.dirty || apellidosegundo.touched)">
-                          <div *ngIf="apellidosegundo.errors.required">
-                            Segundo Apellido Requerido
-                          </div>
+                          
                           <div class="invalid-mensaje" *ngIf="apellidosegundo.errors.pattern">
                             Segundo Apellido Incorrecto
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div id="pwd-container3"  *ngIf="visible">
+                    <div id="pwd-container3"  *ngIf="visiblerazonsocial">
                       <div class="form-group">
                         <label for="username">Razon Social</label>
                         <input formControlName="razonsocial"
                           [ngClass]="{'invalid-data': razonsocial.invalid && (razonsocial.touched || razonsocial.dirty)}"
                           type="text" class="form-control" placeholder="Ingrese la Razon Social" />
                         <div *ngIf="razonsocial.invalid  && (razonsocial.dirty || razonsocial.touched)">
-                          <div *ngIf="razonsocial.errors.required">
-                            Razon Social Requerido
-                          </div>
+                          
                           <div class="invalid-mensaje" *ngIf="razonsocial.errors.pattern">
                             Razon Social Incorrecto
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div id="pwd-container3" *ngIf="!visible">
+                    <div id="pwd-container3" *ngIf="visibleresponsabilidadtributaria">
                       <div class="form-group">
                         <label for="username">Responsabilidad Tributaria</label>
                         <select class="select2_demo_3 form-control" formControlName="codtipocontibuyente">
@@ -264,14 +268,16 @@
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Pais</label>
-                                  <select class="select2_demo_3 form-control" formControlName="codpais" (change)="listarDepartamentos($event.target.value)" >
+                                  <select class="select2_demo_3 form-control" formControlName="codpais" (change)="listarDepartamentos($event.target.value)">
                                     <option [value]="null">--Seleccione--</option>
                                     <option value="{{pais.id}}" *ngFor="let pais of lstPais">
-                                      {{pais.nombre}}</option>
+                                      {{pais.nombre}}
+                                    </option>
+                                      
                                   </select>
                                 </div>
                               </div>
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visibledepartamento">
                                 <div class="form-group">
                                   <label for="username">Departamento</label>
                                   <select class="select2_demo_3 form-control" formControlName="coddepartamento">
@@ -281,7 +287,7 @@
                                   </select>
                                 </div>
                               </div>
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visiblemunicipio">
                                 <div class="form-group">
                                   <label for="username">Municipioo</label>
                                   <select class="select2_demo_3 form-control" formControlName="codmunicipio">
@@ -350,11 +356,22 @@
                                     [ngClass]="{'invalid-data': correoe.invalid && (correoe.touched || correoe.dirty)}"
                                     type="text" class="form-control" placeholder="Ingrese el Correo" />
                                   <div *ngIf="correoe.invalid  && (correoe.dirty || correoe.touched)">
-                                    <div *ngIf="correoe.errors.required">
-                                      Correo Requerido
-                                    </div>
-                                    <div class="invalid-mensaje" *ngIf="correoe.errors.pattern">
+                                     <div class="invalid-mensaje" *ngIf="correoe.errors.pattern">
                                       Correo Incorrecto
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Pagina Web</label>
+                                  <input formControlName="paginaweb"
+                                    [ngClass]="{'invalid-data': paginaweb.invalid && (paginaweb.touched || paginaweb.dirty)}"
+                                    type="text" class="form-control" placeholder="Ingrese la Pagina Web" />
+                                  <div *ngIf="paginaweb.invalid  && (paginaweb.dirty || paginaweb.touched)">
+                                    
+                                    <div class="invalid-mensaje" *ngIf="paginaweb.errors.pattern">
+                                      Pagina Web Incorrecto
                                     </div>
                                   </div>
                                 </div>
@@ -417,17 +434,44 @@
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Cupo</label>
-                                  <input formControlName="cupo"
-                                    [ngClass]="{'invalid-data': cupo.invalid && (cupo.touched || cupo.dirty)}"
+                                  <input formControlName="limitecreditohasta"
+                                    [ngClass]="{'invalid-data': limitecreditohasta.invalid && (limitecreditohasta.touched || limitecreditohasta.dirty)}"
                                     type="text" class="form-control" placeholder="Ingrese el cupo" />
-                                  <div *ngIf="cupo.invalid  && (cupo.dirty || cupo.touched)">
-                                    <div class="invalid-mensaje" *ngIf="razonsocial.errors.pattern">
+                                  <div *ngIf="limitecreditohasta.invalid  && (limitecreditohasta.dirty || limitecreditohasta.touched)">
+                                    <div class="invalid-mensaje" *ngIf="limitecreditohasta.errors.pattern">
                                       Cupo Incorrecto
                                     </div>
                                   </div>
                                 </div>
                               </div>
-
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="password3">Fecha Desde</label>
+                                  <input matInput [matDatepicker]="fechacreditodesde" type="text" formControlName="fechacreditodesde"
+                                    class="form-control">
+                                  <mat-datepicker-toggle matSuffix [for]="fechacreditodesde"></mat-datepicker-toggle>
+                                  <mat-datepicker #fechacreditodesde></mat-datepicker>
+                                </div>
+                              </div>
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="password3">Fecha Hasta</label>
+                                  <input matInput [matDatepicker]="fechacreditohasta" type="text" formControlName="fechacreditohasta"
+                                    class="form-control">
+                                  <mat-datepicker-toggle matSuffix [for]="fechacreditohasta"></mat-datepicker-toggle>
+                                  <mat-datepicker #fechacreditohasta></mat-datepicker>
+                                </div>
+                              </div>
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Observaciones</label>
+                                  <textarea formControlName="observaciones"
+                                    [ngClass]="{'invalid-data': observaciones.invalid && (observaciones.touched || observaciones.dirty)}"
+                                    type="text" class="form-control" placeholder="Ingrese las Observaciones"></textarea>
+                                </div>
+                              </div>
+                              
+                               
                             </div>
 
                           </div>
