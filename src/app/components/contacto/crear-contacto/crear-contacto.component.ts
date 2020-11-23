@@ -358,7 +358,7 @@ export class CrearContactoComponent implements OnInit {
       fechacreditohasta:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
       observaciones: ['', [Validators.pattern(this.parrterobservaciones)]],
       descuentocondicionado: ['', [Validators.pattern(this.parrterobservaciones)]],
-      codigodv:[null],
+      codigodv:[0, [Validators.pattern(this.paterhombre)]],
       responsableiva: ['No', [Validators.required]],
       status: ['1', [Validators.required]]
     });

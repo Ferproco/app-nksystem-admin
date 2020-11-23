@@ -113,16 +113,9 @@
                     <div id="pwd-container3"  *ngIf="visiblecodigodv">
                       <div class="form-group">
                         <label for="username">DV</label>
-                        <input formControlName="codigodv"
-                          [ngClass]="{'invalid-data': codigodv.invalid && (codigodv.touched || codigodv.dirty)}"
-                          type="text" class="form-control" placeholder="Ingrese el Número de Codigo" />
-                        <div
-                          *ngIf="codigodv.invalid  && (codigodv.dirty || codigodv.touched)">
-                          
-                          <div class="invalid-mensaje" *ngIf="codigodv.errors.pattern">
-                            N° DV Incorrecto
-                          </div>
-                        </div>
+                        <input formControlName="codigodv"                         
+                          type="number" class="form-control" placeholder="Ingrese el Número de Identificación" />
+                      
                       </div>
                     </div>
                     <div id="pwd-container3" *ngIf="visible">
