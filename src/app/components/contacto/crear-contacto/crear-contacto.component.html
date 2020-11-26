@@ -82,6 +82,7 @@
                 <br>
                 <div class="row">
                   <div class="col-lg-5">
+                   
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Tipo Identificacion</label>
@@ -114,7 +115,7 @@
                       <div class="form-group">
                         <label for="username">DV</label>
                         <input formControlName="codigodv"                         
-                          type="number" class="form-control" placeholder="Ingrese el Número de Identificación" />
+                          type="number" class="form-control" placeholder="Ingrese el Número de Identificación"/>
                       
                       </div>
                     </div>
@@ -204,7 +205,7 @@
                     </div>
                     <div id="pwd-container3" *ngIf="visibleresponsabilidadtributaria">
                       <div class="form-group">
-                        <label for="username">Responsabilidad Tributaria</label>
+                        <label for="username">Tipo de Contribuyente</label>
                         <select class="select2_demo_3 form-control" formControlName="codtipocontibuyente">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{tipocontribuyente.id}}"
@@ -273,7 +274,7 @@
                               <div id="pwd-container3" *ngIf="visibledepartamento">
                                 <div class="form-group">
                                   <label for="username">Departamento</label>
-                                  <select class="select2_demo_3 form-control" formControlName="coddepartamento">
+                                  <select class="select2_demo_3 form-control" formControlName="coddepartamento" (change)="listarMunicipios($event.target.value)">
                                     <option [value]="null">Departamento</option>
                                     <option value="{{departamento.id}}" *ngFor="let departamento of lstDepartamentos">
                                       {{departamento.nombre}}</option>
@@ -455,6 +456,20 @@
                                   <mat-datepicker #fechacreditohasta></mat-datepicker>
                                 </div>
                               </div>
+
+                             
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Descuento Condicionado:</label>
+                                  <select class="select2_demo_3 form-control" formControlName="descuentocondicionado">
+                                    <option value="0">--Seleccione--</option>
+                                    <option value="Bahamas">Si</option>
+                                    <option value="Bahrain">No</option>
+                                   
+                                  </select>
+                                </div>
+                              </div>
+
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Observaciones</label>

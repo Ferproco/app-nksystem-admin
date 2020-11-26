@@ -39,8 +39,16 @@ export class CatalogoContactosComponent implements OnInit {
     this.loading = true;
     this.contactoServicio.listarContactos('')
       .subscribe(response => {
-
-        this.lstContactos = response as Contacto[];
+        const listacontacto = response as Contacto[];
+        listacontacto.forEach(element => {
+          if (element.nombreprimero === ''){
+            element.nombreprimero = element.razonsocial;
+          }
+          else{
+            element.nombreprimero = element.nombreprimero + '' + element.nombresegundo + '' + element.apellidoprimero + '' + element.apellidosegundo;
+          }
+          this.lstContactos.push(element);
+        });
         this.dataSource = new MatTableDataSource(this.lstContactos);
         this.dataSource.paginator = this.paginator;
         this.LengthTable = this.lstContactos.length;

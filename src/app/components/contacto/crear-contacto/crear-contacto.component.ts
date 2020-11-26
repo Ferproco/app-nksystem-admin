@@ -44,6 +44,8 @@ export class CrearContactoComponent implements OnInit {
   vendedorxdefecto=1;
   listaprecioxdefecto=1;
   plazocreditoxdefecto=1;
+  tipopersonaxdefecto=2;
+  condicionadoxdefecto=0;
   
   visible = false;
   visiblenombres=false;
@@ -58,6 +60,8 @@ export class CrearContactoComponent implements OnInit {
     {id: 1, nombre: 'Persona Natural'},
     {id: 2, nombre: 'Persona Juridica'}
   ]
+
+  
 
   saleData = [
     { name: "Compras", value: 105000 },
@@ -91,7 +95,7 @@ export class CrearContactoComponent implements OnInit {
     this. listarVendedores();
     this.listarFormasdepago();
     this.listarPais();   
-    this.listarMunicipios();
+    
     this.listarListaPrecios();
 
   }
@@ -180,9 +184,13 @@ export class CrearContactoComponent implements OnInit {
       }));
   }
 
-  listarMunicipios() {
+ 
+  listarMunicipios (event) {
     this.loading = true;
-    this.municipioServicio.listarMunicipios('')
+    this.lstMunicipios = [];
+    
+    console.log('el id del departamento ' + event );
+    this.municipioServicio.listarMunicipiosporDepartamento('', Number(event))
       .subscribe(response => {
         this.lstMunicipios = response as any[];
         console.log(this.lstMunicipios);
@@ -344,7 +352,7 @@ export class CrearContactoComponent implements OnInit {
       codtipocontacto: [0, [Validators.required]],
       codvendedor: [this.vendedorxdefecto, [Validators.required]],
       codformapago: [this.plazocreditoxdefecto, [Validators.required]],
-      codtipopersona:[1, [Validators.required]],
+      codtipopersona:[this.tipopersonaxdefecto, [Validators.required]],
       codpais:[this.paisxdefecto],
       coddepartamento:[null],
       codmunicipio:[null],
@@ -357,8 +365,8 @@ export class CrearContactoComponent implements OnInit {
       fechacreditodesde:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
       fechacreditohasta:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
       observaciones: ['', [Validators.pattern(this.parrterobservaciones)]],
-      descuentocondicionado: ['', [Validators.pattern(this.parrterobservaciones)]],
-      codigodv:[0, [Validators.pattern(this.paterhombre)]],
+      descuentocondicionado: ['No', [Validators.pattern(this.parrterobservaciones)]],
+      codigodv:[this.condicionadoxdefecto, [Validators.pattern(this.paterhombre)]],
       responsableiva: ['No', [Validators.required]],
       status: ['1', [Validators.required]]
     });
