@@ -2,7 +2,7 @@ import { FormaPago } from './../../model/FormaPago.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormaPagoService } from '../FormaPagoService.service';
 
@@ -22,6 +22,7 @@ export class CrearFormapagoComponent implements OnInit {
   formformapago: FormGroup;
   idnegocio: number;
   formapago: FormaPago;
+  operacion: string = 'GUARDAR';
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -31,44 +32,49 @@ export class CrearFormapagoComponent implements OnInit {
   constructor( private formapagoService: FormaPagoService,
                private formbuilder: FormBuilder,
                private toastr: ToastrService,
-               private router: Router) {
-      this.buildForm();
+               private router: Router,
+               private route: ActivatedRoute) {
+
       this.idnegocio = 1;
+      this.formapago = new FormaPago(0, '', 0, this.idnegocio, 1);
+      if (this.route.snapshot.params.id){
+        this.id = this.route.snapshot.params.id;
+        this.buscarFormaPago(this.id);
+        this.operacion = 'MODIFICAR';
+      }
 
 
      }
 
   ngOnInit(): void {
-
-    this.formapagoService.idformapago.subscribe(
-      (id: number) => this.buscarFormaPago(id)
-    );
-
+    this.buildForm(this.formapago);
   }
 
-  public buildForm(){
-
+  public buildForm(formapago: FormaPago){
     this.formformapago = this.formbuilder.group({
-      nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      dias: ['0', [Validators.required, Validators.pattern(this.paterhombre)]],
-      status: ['1', [Validators.required]]
-
+      id: [formapago.id, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombre: [formapago.nombre, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      dias: [formapago.dias, [Validators.required, Validators.pattern(this.paterhombre)]],
+      status: [formapago.status, [Validators.required]]
     });
   }
 
   buscarFormaPago(id: number) {
-
+    let status = 0;
     this.loading = true;
     const obj = this.formapagoService.mostrarFormaPago(id)
       .subscribe(response => {
-        console.log(JSON.stringify(response));
-        this.formapago = response as FormaPago;
-        const nombre = this.formapago.nombre;
-        console.log('el nombre ' + nombre);
-        this.formformapago.controls.nombre.setValue(response);
-        this.formformapago.get('dias').setValue(this.formapago.dias);
+        const forma = response as any;
+        if (forma.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        forma.status = status;
+        this.formapago = new FormaPago(forma.id, forma.nombre, forma.dias, this.idnegocio, status);
+        this.buildForm(this.formapago);
         this.loading = false;
-
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -81,23 +87,20 @@ export class CrearFormapagoComponent implements OnInit {
           }
         }));
 
-
-    /*
-    console.log(this.formapago.nombre + ' nombre forma ' + ' y trae ' + this.formformapago.get('nombre').value);*/
   }
 
   guardarFormaPago(event: Event){
     event.preventDefault();
     const value = this.formformapago.value;
     console.log(value);
-    this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value)
+    this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value, this.operacion)
     .subscribe(response => {
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
       this.router.navigate(['configuracion/listarformaspagos']);
     },
     ((error: HttpErrorResponse) => {
       this.loading = false;
-      console.log('Error ' + error);
+      console.log('Error ' + JSON.stringify(error));
       this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
       { enableHtml: true, closeButton: true });
     }));
@@ -112,5 +115,9 @@ export class CrearFormapagoComponent implements OnInit {
 
   get status() {
     return this.formformapago.get('status');
+  }
+  onChange($event) {
+    console.log($event.target.checked + ' esto es lo que se chequeo');
+    this.formformapago.get('status').setValue($event.target.checked === true ? 1 : 0);
   }
 }

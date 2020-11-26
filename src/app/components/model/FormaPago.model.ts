@@ -3,10 +3,10 @@ export class FormaPago {
   nombre: string;
   codnegocio: number;
   dias: number;
-  status: string;
+  status: number;
 
 
-  constructor(id: number, nombre: string, codnegocio: number, dias: number, status: string) {
+  constructor(id: number, nombre: string, dias: number, codnegocio: number, status: number) {
     this.id = id;
     this.nombre = nombre;
     this.codnegocio = codnegocio;

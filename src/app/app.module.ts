@@ -76,6 +76,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
 import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
 import { ContactoService } from './components/contacto/ContactoService.service';
 import { TipoIdentificacionService } from './components/contacto/crear-contacto/TipoIdentificacionService.service';
@@ -86,6 +88,7 @@ import { MunicipioService } from './components/municipio/MunicipioService.servic
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
 import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
+import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 
 
 
@@ -130,8 +133,9 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
     FilterTransaccionesPipe,
     CrearCategoriaComponent,
     CatalogoContactosComponent,
-    CrearContactoComponent
-  
+    CrearContactoComponent,
+    MensajeEliminarComponent
+
   ],
   imports: [
     BrowserModule,
@@ -154,8 +158,9 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
     MatMenuModule,
     MatIconModule,
     MatToolbarModule,
-    MatProgressSpinnerModule
-
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [
     ArticuloService,
@@ -180,7 +185,7 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
     PaisService,
     DepartamentoService,
     MunicipioService,
-    ListaPrecioService,
+    ListaPrecioService
   ],
   bootstrap: [AppComponent]
 })
