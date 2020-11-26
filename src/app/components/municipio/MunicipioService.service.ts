@@ -22,4 +22,11 @@ export class MunicipioService{
     const endpoint: any = this.uriapi + 'api/municipio';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
+
+  listarMunicipiosporDepartamento(codnegocio: string, iddepartamento: number){
+   
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/municipio/' + iddepartamento;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
 }

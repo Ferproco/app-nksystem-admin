@@ -18,14 +18,17 @@ import { ArticuloService } from '../ArticuloService.service';
 export class CrearArticuloComponent implements OnInit {
 
   id = 0;
+  loading = false;
   lstFamilias: any [] = [];
   lstUnidades: any [] = [];
   lstImpuestos: any [] = [];
   lstMarcas: any[]=[];
   lstGrupoArticulos:any[]=[];
-  loading = false;
+  
   idnegocio: number;
   formarticulo: FormGroup;
+
+  unidadmedidaxdefecto:2;
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -60,7 +63,7 @@ export class CrearArticuloComponent implements OnInit {
       codigo: ['',[Validators.required]],
       nombre:['',[Validators.required]],
       tipoproducto: ['0',[Validators.required]],
-      unidadmedida: ['0',[Validators.required]],
+      unidadmedida: [this.unidadmedidaxdefecto,[Validators.required]],
       impuesto:['0',[Validators.required]],
       marca:['0',[Validators.required]],
       grupoarticulo:['0',[Validators.required]]
@@ -96,7 +99,17 @@ export class CrearArticuloComponent implements OnInit {
         this.lstFamilias = response as any[];
         console.log(this.lstFamilias);
         this.loading = false;
-      });
+      },
+       ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
 
   listarUnidades(){
@@ -106,7 +119,17 @@ export class CrearArticuloComponent implements OnInit {
         this.lstUnidades = response as any[];
         console.log(this.lstUnidades);
         this.loading = false;
-      });
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
   listarImpuestos(){
     this.loading = true;
@@ -115,7 +138,17 @@ export class CrearArticuloComponent implements OnInit {
         this.lstImpuestos = response as any[];
         console.log(this.lstImpuestos);
         this.loading = false;
-      });
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
   listarMarcas(){
     this.loading = true;
@@ -124,7 +157,17 @@ export class CrearArticuloComponent implements OnInit {
         this.lstMarcas = response as any[];
         console.log(this.lstMarcas);
         this.loading = false;
-      });
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
   listarGrupoArticulos(){
     this.loading = true;
@@ -133,7 +176,17 @@ export class CrearArticuloComponent implements OnInit {
         this.lstGrupoArticulos = response as any[];
         console.log(this.lstGrupoArticulos);
         this.loading = false;
-      });
+      }, 
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
   get codigo(){
     return this.formarticulo.get('codigo');

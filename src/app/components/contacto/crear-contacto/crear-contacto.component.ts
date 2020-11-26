@@ -40,13 +40,28 @@ export class CrearContactoComponent implements OnInit {
   idnegocio: number;
   lstListaprecios: any [] = [];
 
+  paisxdefecto = 48;
+  vendedorxdefecto=1;
+  listaprecioxdefecto=1;
+  plazocreditoxdefecto=1;
+  tipopersonaxdefecto=2;
+  condicionadoxdefecto=0;
+  
   visible = false;
   visiblenombres=false;
+  visiblerazonsocial=true;
+  visibleresponsabilidadtributaria=false;
+  visibledepartamento=true;
+  visiblemunicipio=true;
+  visiblecodigodv=false;
+  
 
   tipopersona: Tipopersona[] = [
     {id: 1, nombre: 'Persona Natural'},
     {id: 2, nombre: 'Persona Juridica'}
   ]
+
+  
 
   saleData = [
     { name: "Compras", value: 105000 },
@@ -80,7 +95,7 @@ export class CrearContactoComponent implements OnInit {
     this. listarVendedores();
     this.listarFormasdepago();
     this.listarPais();   
-    this.listarMunicipios();
+    
     this.listarListaPrecios();
 
   }
@@ -169,9 +184,13 @@ export class CrearContactoComponent implements OnInit {
       }));
   }
 
-  listarMunicipios() {
+ 
+  listarMunicipios (event) {
     this.loading = true;
-    this.municipioServicio.listarMunicipios('')
+    this.lstMunicipios = [];
+    
+    console.log('el id del departamento ' + event );
+    this.municipioServicio.listarMunicipiosporDepartamento('', Number(event))
       .subscribe(response => {
         this.lstMunicipios = response as any[];
         console.log(this.lstMunicipios);
@@ -268,9 +287,33 @@ export class CrearContactoComponent implements OnInit {
     const idtipo = Number(event);
     if (idtipo === 6){
       this.visible = true;
+      this.visiblenombres = false;
+      this.visiblerazonsocial=true;
+      this.visibleresponsabilidadtributaria=true;
+      this.visiblemunicipio=true;
+      this.visibledepartamento=true;
+      this.visiblecodigodv=true;
+
+    }
+    else if (idtipo === 4 || idtipo === 5 || idtipo === 8){
+
+      this.visible = false;
+      this.visiblenombres = true;
+      this.visiblerazonsocial=false;
+      this.visibleresponsabilidadtributaria=false;
+      this.visiblemunicipio=false;
+      this.visibledepartamento=false;
+      this.visiblecodigodv=false;
+
     }
     else{
       this.visible = false;
+      this.visiblenombres = true;
+      this.visiblerazonsocial=false;
+      this.visibleresponsabilidadtributaria=false;
+      this.visiblemunicipio=true;
+      this.visibledepartamento=true;
+      this.visiblecodigodv=false;
     }
 
   }
@@ -278,9 +321,13 @@ export class CrearContactoComponent implements OnInit {
     const idtipo = Number(event);
     if (idtipo === 1){
       this.visiblenombres = true;
+      this.visiblerazonsocial=false;
+      this.visibleresponsabilidadtributaria=false;
     }
     else{
       this.visiblenombres = false;
+      this.visiblerazonsocial=true;
+      this.visibleresponsabilidadtributaria=true;
     }
 
   }
@@ -290,29 +337,37 @@ export class CrearContactoComponent implements OnInit {
       codtipocontibuyente: [null, [Validators.required]],
       codtipoidentificacion: [null, [Validators.required]],
       numeroidentificacion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      nombreprimero: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      nombresegundo: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      apellidoprimero: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      apellidosegundo: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      razonsocial: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombreprimero: ['', [Validators.pattern(this.parrterobservaciones)]],
+      nombresegundo: ['', [Validators.pattern(this.parrterobservaciones)]],
+      apellidoprimero: ['', [Validators.pattern(this.parrterobservaciones)]],
+      apellidosegundo: ['', [Validators.pattern(this.parrterobservaciones)]],
+      razonsocial: ['', [Validators.pattern(this.parrterobservaciones)]],
       telefonomovil: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofijo1: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofijo2: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofax: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
       direccionfiscal: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      correoe: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      correoe: ['', [Validators.pattern(this.parrterobservaciones)]],
       fecharegistro: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
       codtipocontacto: [0, [Validators.required]],
-      codvendedor: [0, [Validators.required]],
-      codformapago: [0, [Validators.required]],
-      codtipopersona:[null, [Validators.required]],
-      codpais:[null, [Validators.required]],
-      coddepartamento:[null, [Validators.required]],
-      codmunicipio:[null, [Validators.required]],
+      codvendedor: [this.vendedorxdefecto, [Validators.required]],
+      codformapago: [this.plazocreditoxdefecto, [Validators.required]],
+      codtipopersona:[this.tipopersonaxdefecto, [Validators.required]],
+      codpais:[this.paisxdefecto],
+      coddepartamento:[null],
+      codmunicipio:[null],
       lugarenvio: ['', [Validators.pattern(this.parrterobservaciones)]],
       cupo: ['', [ Validators.pattern(this.parrterobservaciones)]],
-      codlistaprecio:[null, [Validators.required]],
+      codlistaprecio:[this.listaprecioxdefecto, [Validators.required]],
       direccionexogena:['', [Validators.pattern(this.parrterobservaciones)]],
+      paginaweb: ['', [Validators.pattern(this.parrterobservaciones)]],
+      limitecreditohasta: ['', [ Validators.pattern(this.parrterobservaciones)]],
+      fechacreditodesde:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
+      fechacreditohasta:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
+      observaciones: ['', [Validators.pattern(this.parrterobservaciones)]],
+      descuentocondicionado: ['No', [Validators.pattern(this.parrterobservaciones)]],
+      codigodv:[this.condicionadoxdefecto, [Validators.pattern(this.paterhombre)]],
+      responsableiva: ['No', [Validators.required]],
       status: ['1', [Validators.required]]
     });
   }
@@ -359,8 +414,8 @@ export class CrearContactoComponent implements OnInit {
   get razonsocial(){
     return this.formcontacto.get('razonsocial');
   }
-  get cupo(){
-    return this.formcontacto.get('cupo');
+  get limitecreditohasta(){
+    return this.formcontacto.get('limitecreditohasta');
   }
   
   get lugarenvio(){
@@ -368,5 +423,11 @@ export class CrearContactoComponent implements OnInit {
   }
   get direccionexogena(){
     return this.formcontacto.get('direccionexogena');
+  }
+  get observaciones(){
+    return this.formcontacto.get('observaciones');
+  }
+  get paginaweb(){
+    return this.formcontacto.get('paginaweb');
   }
 }

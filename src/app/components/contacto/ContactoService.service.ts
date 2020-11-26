@@ -51,9 +51,16 @@ export class ContactoService{
       coddepartamento:Number(contacto.coddepartamento),
       codmunicipio:Number(contacto.codmunicipio),
       lugarenvio:contacto.lugarenvio,
-      cupo:contacto.cupo,
       codlistaprecio:Number(contacto.codlistaprecio),
       direccionexogena:contacto.direccionexogena,
+      paginaweb:contacto.paginaweb,
+      limitecreditohasta:Number(contacto.limitecreditohasta),
+      fechacreditodesde:new Date(contacto.fechacreditodesde),
+      fechacreditohasta:new Date(contacto.fechacreditohasta),
+      observaciones:contacto.observaciones,
+      descuentocondicionado:contacto.descuentocondicionado,
+      codigodv:contacto.codigodv,
+      responsableiva:contacto.responsableiva,
       status: contacto.status === '1' ? 'ACTIVO' : 'INACTIVO'
 
     };
