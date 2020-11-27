@@ -1,5 +1,5 @@
+import { FormaPagoService } from './../../formapago/FormaPagoService.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mensaje-eliminar',
@@ -8,17 +8,15 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class MensajeEliminarComponent implements OnInit {
 
-  constructor(public dialogo: MatDialogRef<MensajeEliminarComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) { }
+  constructor(private formapagoservice: FormaPagoService) { }
 
-    cerrarDialogo(): void {
-      this.dialogo.close(false);
-    }
-    confirmado(): void {
-      this.dialogo.close(true);
-    }
+
   ngOnInit(): any {
 
+  }
+
+  aceptar(){
+    this.formapagoservice.Eliminar.emit(true);
   }
 
 }

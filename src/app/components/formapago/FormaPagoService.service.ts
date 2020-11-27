@@ -10,6 +10,7 @@ export class FormaPagoService{
   uriapi: string = Api.url;
   value: any;
 
+  Eliminar = new EventEmitter<boolean>();
   constructor(private httpClient: HttpClient){
 
   }
@@ -35,12 +36,7 @@ export class FormaPagoService{
     console.log('asi se le envia al servicio ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/formapago';
-    /*if (operacion === 'GUARDAR'){*/
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
-    /*}
-    else if (operacion === 'MODIFICAR'){
-      return this.httpClient.put(endpoint, JSON.stringify(body), {headers: httpHeaders});
-    }*/
   }
 
   mostrarFormaPago(id: number){

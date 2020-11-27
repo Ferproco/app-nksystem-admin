@@ -143,7 +143,7 @@
                     <th mat-header-cell *matHeaderCellDef> Acción </th>
                     <td mat-cell *matCellDef="let element" class="datatable-ct">
                       <div class="btn-group project-list-add">
-                        <button type="button" (click)="Ver(element.id)" class="btn btn-white btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> </button>
+                        <button type="button" (click)="Ver(element.id)" class="btn btn-white btn-xs"><i class="fa fa-eye" aria-hidden="true" data-toggle="modal" data-target="#app-mensaje-eliminar"></i> </button>
                       </div>
                       |
                       <div class="btn-group project-list-add">
@@ -152,7 +152,8 @@
                       </div>
                       |
                       <div class="btn-group project-list-add">
-                        <button type="button" (click)="Eliminar(element.id)" class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                        <button type="button" (click)="Eliminar(element.id)" class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#app-mensaje-eliminar"></i></button>
+
                       </div>
                     </td>
                   </ng-container>
@@ -176,6 +177,7 @@
       </div>
     </div>
   </div>
+  <app-mensaje-eliminar></app-mensaje-eliminar>
 </div>
 
 

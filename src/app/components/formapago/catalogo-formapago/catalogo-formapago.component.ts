@@ -9,7 +9,6 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {SelectionModel} from '@angular/cdk/collections';
-import { MatDialog } from '@angular/material/dialog';
 import { MensajeEliminarComponent } from '../../mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 
 @Component({
@@ -27,6 +26,9 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   sortedData;
   idnegocio: number;
 
+  showModalBox: boolean = false;
+  PuedeEliminar: boolean;
+
   displayedColumns: string[] = ['select', 'Codigo', 'Nombre',  'Dias Plazo' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<FormaPago>;
   selection = new SelectionModel<FormaPago>(true, []);
@@ -36,8 +38,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   constructor(private formaPagoService: FormaPagoService,
               private router: Router,
-              private toastr: ToastrService,
-              public dialogo: MatDialog) {
+              private toastr: ToastrService,) {
                 this.idnegocio = 1;
               }
 
@@ -119,6 +120,13 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   Ver(id: number){
 
+    if (0){
+      // Dont open the modal
+      this.showModalBox = false;
+    } else {
+       // Open the modal
+       this.showModalBox = true;
+    }
   }
 
   Modificar(id: number){
@@ -128,17 +136,22 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   Eliminar(id: number) {
 
-    const dialogRef = this.dialogo.open(MensajeEliminarComponent, {
-      width: '390px',
-      data: { mensaje: '¿Esta seguro de Eliminmar el registro?'}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result){
-        console.log('The dialog was closed ' + result);
+    if (0){
+      // Dont open the modal
+      this.showModalBox = false;
+    } else {
+       // Open the modal
+       this.showModalBox = true;
+    }
+    this.formaPagoService.Eliminar.subscribe(
+      (respuesta: boolean) => {
+        this.PuedeEliminar = respuesta;
+        this.PuedeEliminar = false;
       }
-    });
-
+    );
+    if ( this.showModalBox){
+      this.showModalBox = false;
+    }
   }
 
   ExportarExcel(){
