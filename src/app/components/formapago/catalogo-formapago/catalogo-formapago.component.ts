@@ -53,6 +53,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   listarFormaPagos() {
     this.loading = true;
+    this.lstFormaPagos = [];
     let status = 0;
     this.formaPagoService.listarFormaPagos('')
       .subscribe(response => {
@@ -146,12 +147,34 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
     this.formaPagoService.Eliminar.subscribe(
       (respuesta: boolean) => {
         this.PuedeEliminar = respuesta;
+        this.eliminarporcodigo(id);
         this.PuedeEliminar = false;
+        this.listarFormaPagos();
       }
     );
     if ( this.showModalBox){
       this.showModalBox = false;
     }
+  }
+
+  eliminarporcodigo(id: number){
+    this.loading = true;
+    this.formaPagoService.eliminarFormaPago(id)
+      .subscribe(response => {
+        const respuesta = response as any;
+        console.log('Al eliminar ' + respuesta);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   ExportarExcel(){

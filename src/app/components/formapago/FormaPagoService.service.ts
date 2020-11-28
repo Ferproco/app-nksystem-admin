@@ -46,4 +46,13 @@ export class FormaPagoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
+  eliminarFormaPago(id: number){
+    const body = {
+      id: Number(id)
+    };
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/formapago/' + id;
+    return this.httpClient.delete(endpoint, {headers: httpHeaders});
+  }
+
 }
