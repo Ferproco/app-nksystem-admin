@@ -160,7 +160,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     ArticuloService,

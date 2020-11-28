@@ -117,10 +117,16 @@
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="password3">Vigente Desde</label>
-                        <input matInput [matDatepicker]="fechaini" type="text" formControlName="fechaini"
-                          class="form-control">
-                        <mat-datepicker-toggle matSuffix [for]="fechaini"></mat-datepicker-toggle>
-                        <mat-datepicker #fechaini></mat-datepicker>
+                        <div class="input-group date">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input
+                        class="form-control"
+                        bsDatepicker
+                        #dp="bsDatepicker"
+                        formControlName="fechaini"
+                        [bsConfig]="bsConfig">
+                        </div>
+
                       </div>
                     </div>
 
@@ -128,145 +134,7 @@
                 </div>
 
 
-
-
-                <div class="row">
-                  <div class="col-lg-6">
-                      <div class="sparkline16-list shadow-reset mg-t-30">
-                          <div class="sparkline16-hd">
-                              <div class="main-sparkline16-hd">
-                                  <h1>Data picker</h1>
-                                  <div class="sparkline16-outline-icon">
-                                      <span class="sparkline16-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                      <span><i class="fa fa-wrench"></i></span>
-                                      <span class="sparkline16-collapse-close"><i class="fa fa-times"></i></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="sparkline16-graph">
-                              <div class="date-picker-inner">
-                                  <div class="form-group data-custon-pick" id="data_1">
-                                      <label>Simple data input format</label>
-                                      <div class="input-group date">
-                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                          <input type="text" class="form-control" value="10/04/2018">
-                                      </div>
-                                  </div>
-                                  <div class="form-group data-custon-pick" id="data_2">
-                                      <label>One Year view</label>
-                                      <div class="input-group date">
-                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                          <input type="text" class="form-control" value="08/09/2018">
-                                      </div>
-                                  </div>
-                                  <div class="form-group data-custon-pick" id="data_3">
-                                      <label>Decade view</label>
-                                      <div class="input-group date">
-                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                          <input type="text" class="form-control" value="10/11/2013">
-                                      </div>
-                                  </div>
-                                  <div class="form-group data-custon-pick" id="data_4">
-                                      <label>Month select</label>
-                                      <div class="input-group date">
-                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                          <input type="text" class="form-control" value="07/01/2018">
-                                      </div>
-                                  </div>
-                                  <div class="form-group data-custon-pick data-custom-mg" id="data_5">
-                                      <label>Range select</label>
-                                      <div class="input-daterange input-group" id="datepicker">
-                                          <input type="text" class="form-control" name="start" value="05/14/2018" />
-                                          <span class="input-group-addon">to</span>
-                                          <input type="text" class="form-control" name="end" value="05/22/2018" />
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                      <div class="sparkline14-list shadow-reset mg-t-30">
-                          <div class="sparkline14-hd">
-                              <div class="main-sparkline14-hd">
-                                  <h1>Color Picker</h1>
-                                  <div class="sparkline14-outline-icon">
-                                      <span class="sparkline14-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                      <span><i class="fa fa-wrench"></i></span>
-                                      <span class="sparkline14-collapse-close"><i class="fa fa-times"></i></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="sparkline14-graph">
-                              <div class="row">
-                                  <div class="col-lg-12">
-                                      <div class="colorpicker-inner ts-forms mg-b-23">
-                                          <div class="tsbox">
-                                              <label class="label">HEX</label>
-                                              <label class="color-group" for="hex">
-                                                  <input type="text" placeholder="#ff0000" id="hex">
-                                              </label>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-12">
-                                      <div class="colorpicker-inner ts-forms mg-b-23">
-                                          <div class="tsbox">
-                                              <label class="label">RGB</label>
-                                              <label class="color-group" for="rgb">
-                                                  <input type="text" placeholder="rgb(219, 199, 94)" id="rgb">
-                                              </label>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-12">
-                                      <div class="colorpicker-inner ts-forms mg-b-23">
-                                          <div class="tsbox">
-                                              <label class="label">Palette</label>
-                                              <label class="color-group" for="palette1">
-                                                  <input type="text" placeholder="#9257b4" id="palette1">
-                                              </label>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-12">
-                                      <div class="colorpicker-inner ts-forms mg-b-23">
-                                          <div class="tsbox">
-                                              <label class="label">Alpha HSL</label>
-                                              <label class="color-group" for="a-hsl">
-                                                  <input type="text" placeholder="hsl(104, 37%, 61%)" id="a-hsl">
-                                              </label>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-12">
-                                      <div class="colorpicker-inner ts-forms">
-                                          <div class="tsbox">
-                                              <label class="label">Palette only</label>
-                                              <label class="color-group" for="palette2">
-                                                  <input type="text" placeholder="hsv(0, 94%, 47%)" id="palette2">
-                                              </label>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-
-
-
-                <div class="row">
+               <div class="row">
                   <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
@@ -303,7 +171,7 @@
 
               <div class="sparkline10-graph">
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Cuenta Contable Ventas</label>
@@ -315,7 +183,7 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Cuenta Contable Compras</label>

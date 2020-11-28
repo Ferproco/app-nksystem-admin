@@ -8,6 +8,7 @@ import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-crear-impuesto',
@@ -22,6 +23,10 @@ export class CrearImpuestoComponent implements OnInit {
   formimpuesto: FormGroup;
   idnegocio: number;
 
+  colorTheme = 'theme-orange';
+  bsConfig: Partial<BsDatepickerConfig>;
+  currentDate = new Date();
+
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
@@ -35,6 +40,7 @@ export class CrearImpuestoComponent implements OnInit {
 
     this.buildForm();
     this.idnegocio = 1;
+    this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
   }
 
   ngOnInit(): void {
@@ -82,7 +88,7 @@ export class CrearImpuestoComponent implements OnInit {
     this.formimpuesto = this.formbuilder.group({
       nombreimpuesto: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       normal: ['0', [Validators.required, Validators.pattern(this.paterhombre)]],
-      fechaini: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
+      fechaini: [new Date(this.currentDate.setDate(this.currentDate.getDate())), [Validators.required]],
       idtipoimpuesto: [null, [Validators.required]],
       status: ['1', [Validators.required]]
 
