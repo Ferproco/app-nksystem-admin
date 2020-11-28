@@ -3,18 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CategoriaService } from '../CategoriaService.service';
+import { MarcaService } from '../MarcaService.service';
 
 @Component({
-  selector: 'app-crear-categoria',
-  templateUrl: './crear-categoria.component.html',
-  styleUrls: ['./crear-categoria.component.css']
+  selector: 'app-crear-marca',
+  templateUrl: './crear-marca.component.html',
+  styleUrls: ['./crear-marca.component.css']
 })
-export class CrearCategoriaComponent implements OnInit {
+export class CrearMarcaComponent implements OnInit {
   id = 0;
 
   loading = false;
-  formcategoria: FormGroup;
+  formmarca: FormGroup;
   idnegocio: number;
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
@@ -22,7 +22,7 @@ export class CrearCategoriaComponent implements OnInit {
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
-  constructor(private categoriaService: CategoriaService,
+  constructor(private marcaService: MarcaService,
     private formbuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router) {
@@ -33,16 +33,15 @@ export class CrearCategoriaComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  guardarCategoria(event: Event) {
+  guardarMarca(event: Event) {
     event.preventDefault();
     this.loading = true;
-    const value = this.formcategoria.value;
-    this.categoriaService.guardarCategoria(this.id, this.idnegocio, value)
+    const value = this.formmarca.value;
+    this.marcaService.guardarMarca(this.id, this.idnegocio, value)
       .subscribe(response => {
         this.loading = false;
         this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.router.navigate(['inventario/listarcategorias']);
+        this.router.navigate(['inventario/listarmarcas']);
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -54,15 +53,15 @@ export class CrearCategoriaComponent implements OnInit {
 
 
   private buildForm() {
-    this.formcategoria = this.formbuilder.group({
-      nomfamilia: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+    this.formmarca = this.formbuilder.group({
+      nommarca: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       status: ['1', [Validators.required]]
 
     });
   }
 
-  get nomfamilia() {
-    return this.formcategoria.get('nomfamilia');
+  get nommarca() {
+    return this.formmarca.get('nommarca');
   }
 
 }
