@@ -2,10 +2,6 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="wrapper-pro">
-  <app-menu></app-menu>
-  <app-header></app-header>
-</div>
 
 <form [formGroup]="formimpuesto" (ngSubmit)="guardarImpuesto($event)">
   <div class="content-inner-all">
@@ -60,20 +56,23 @@
 
               <div class="sparkline10-graph">
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
-                      <div class="form-group">
-                        <label for="username">Tipo Impuesto</label>
+                      <label for="username">Tipo Impuesto</label>
+                      <div class="input-group">
+
+                        <span class="input-group-btn"><button type="button" class="btn btn-primary">+</button></span>
                         <select class="select2_demo_3 form-control" formControlName="idtipoimpuesto">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{tipoimpuesto.id}}" *ngFor="let tipoimpuesto of lstTipoImpuestos">
                             {{tipoimpuesto.nombretipoimpuesto}}</option>
                         </select>
-                      </div>
+                    </div>
                     </div>
                   </div>
 
-                  <div class="col-lg-4">
+
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="password3">Nombre</label>
@@ -94,7 +93,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="password3">% Tarifa</label>
@@ -114,21 +113,29 @@
                   </div>
 
 
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="password3">Vigente Desde</label>
-                        <input matInput [matDatepicker]="fechaini" type="text" formControlName="fechaini"
-                          class="form-control">
-                        <mat-datepicker-toggle matSuffix [for]="fechaini"></mat-datepicker-toggle>
-                        <mat-datepicker #fechaini></mat-datepicker>
+                        <div class="input-group date">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input
+                        class="form-control"
+                        bsDatepicker
+                        #dp="bsDatepicker"
+                        formControlName="fechaini"
+                        [bsConfig]="bsConfig">
+                        </div>
+
                       </div>
                     </div>
+
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-lg-4">
+
+               <div class="row">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label>
@@ -164,7 +171,7 @@
 
               <div class="sparkline10-graph">
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Cuenta Contable Ventas</label>
@@ -176,7 +183,7 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-4">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Cuenta Contable Compras</label>

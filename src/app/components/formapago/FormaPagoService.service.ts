@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, ɵConsole } from '@angular/core';
 import { Api } from 'src/app/config';
 import { FormaPago } from '../model/FormaPago.model';
 
@@ -10,8 +10,7 @@ export class FormaPagoService{
   uriapi: string = Api.url;
   value: any;
 
-  idformapago = new EventEmitter<number>();
-
+  Eliminar = new EventEmitter<boolean>();
   constructor(private httpClient: HttpClient){
 
   }
@@ -25,15 +24,16 @@ export class FormaPagoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarFormaPago(idp: number, idnegocio: number, formapago: FormaPago){
+  guardarFormaPago(idp: number, idnegocio: number, formapago: FormaPago, operacion: string){
     console.log(JSON.stringify(formapago));
     const body = {
-      id: idp,
+      id: Number(idp),
       nombre: formapago.nombre,
-      dias: formapago.dias,
-      codnegocio: idnegocio,
-      status: formapago.status === '1' ? 'ACTIVO' : 'INACTIVO',
+      dias: Number(formapago.dias),
+      codnegocio: Number(idnegocio),
+      status: formapago.status === 1 ? 'ACTIVO' : 'INACTIVO'
     };
+    console.log('asi se le envia al servicio ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/formapago';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
@@ -44,6 +44,15 @@ export class FormaPagoService{
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/formapago/' + id;
     return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+
+  eliminarFormaPago(id: number){
+    const body = {
+      id: Number(id)
+    };
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/formapago/' + id;
+    return this.httpClient.delete(endpoint, {headers: httpHeaders});
   }
 
 }

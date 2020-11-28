@@ -1,12 +1,7 @@
 <div class="loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
   </div>
-  
-  <div class="wrapper-pro">
-    <app-menu></app-menu>
-    <app-header></app-header>
-  </div>
-  
+
   <div class="content-inner-all">
             <!-- Breadcome start-->
             <div class="breadcome-area mg-b-30 small-dn">
@@ -42,7 +37,7 @@
               </div>
           </div>
       </div>
-  
+
   <!-- Static Table Start -->
   <div class="content-inner-all">
       <div class="data-table-area mg-b-15">
@@ -61,12 +56,12 @@
                             <div class="static-table-list">
                               <mat-toolbar class="toolmenu">
                                 <mat-toolbar-row>
-  
+
                                   <div class="breadcome-heading">
                                     <input type="text" (keyup)="applyFilter($event)" name="filtrarclientes" placeholder="Buscar..." class="form-control">
                                     <a href=""><i class="fa fa-search"></i></a>
                                   </div>
-  
+
                                   <span class="example-spacer"></span>
                                   <button class="botonmenu" mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon">
                                     <mat-icon>save_alt</mat-icon>
@@ -75,7 +70,7 @@
                                     <button (click)="ExportarExcel()" mat-menu-item>Excel</button>
                                     <button mat-menu-item (click)="ExportarTxt()">TXT</button>
                                   </mat-menu>
-  
+
                                   <button mat-icon-button class="example-icon favorite-icon botonmenu" aria-label="Example icon-button with heart icon">
                                     <mat-icon (click)="Refrescar()">refresh</mat-icon>
                                   </button>
@@ -92,24 +87,24 @@
                                   </th>
                                   <td mat-cell *matCellDef="let element"> {{element.idalmacen}} </td>
                                 </ng-container>
-  
+
                                 <!-- Name Column -->
                                 <ng-container matColumnDef="Nombre">
                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
                                   <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                                 </ng-container>
-  
+
                                 <!-- Weight Column -->
                                 <ng-container matColumnDef="Direccion">
                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Dirección </th>
                                   <td mat-cell *matCellDef="let element"> {{element.direccion}} </td>
                                 </ng-container>
-  
+
                                 <ng-container matColumnDef="Principal">
                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Principal </th>
                                   <td mat-cell *matCellDef="let element"> {{element.principal}} </td>
                                 </ng-container>
-  
+
                                 <ng-container matColumnDef="Status">
                                   <th mat-header-cell *matHeaderCellDef> Status </th>
                                   <td mat-cell *matCellDef="let element">
@@ -123,7 +118,7 @@
                                     </ng-template>
                                   </td>
                                 </ng-container>
-  
+
                                 <ng-container matColumnDef="Acción">
                                   <th mat-header-cell *matHeaderCellDef> Acción </th>
                                   <td mat-cell *matCellDef="let element" class="datatable-ct">
@@ -141,10 +136,10 @@
                                     </div>
                                   </td>
                                 </ng-container>
-  
+
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
                                 <tr class="mat-row" *matNoDataRow>
                                   <td class="mat-cell" colspan="8">No hay resultados para busqueda</td>
                                 </tr>
@@ -153,9 +148,9 @@
                                 <mat-paginator [length]="LengthTable" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
                                 </mat-paginator>
                               </div>
-  
+
                             </div>
-  
+
                           </div>
                       </div>
                   </div>
@@ -164,8 +159,7 @@
       </div>
   </div>
   <!-- Static Table End -->
-  
-  
-  
-  
-  
+
+
+
+

@@ -8,6 +8,8 @@ import { FormaPagoService } from '../FormaPagoService.service';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {SelectionModel} from '@angular/cdk/collections';
+import { MensajeEliminarComponent } from '../../mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 
 @Component({
   selector: 'app-catalogo-formapago',
@@ -22,16 +24,23 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   filtrarformapago = '';
   LengthTable = 0;
   sortedData;
+  idnegocio: number;
 
-  displayedColumns: string[] = ['Codigo', 'Nombre',  'Dias Plazo' , 'Status', 'Acción'];
+  showModalBox: boolean = false;
+  PuedeEliminar: boolean;
+
+  displayedColumns: string[] = ['select', 'Codigo', 'Nombre',  'Dias Plazo' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<FormaPago>;
+  selection = new SelectionModel<FormaPago>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private formaPagoService: FormaPagoService,
               private router: Router,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,) {
+                this.idnegocio = 1;
+              }
 
   ngOnInit(): void {
     this.listarFormaPagos();
@@ -42,28 +51,39 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   }
 
-  listarFormaPagos(){
+  listarFormaPagos() {
     this.loading = true;
+    this.lstFormaPagos = [];
+    let status = 0;
     this.formaPagoService.listarFormaPagos('')
-   .subscribe(response => {
-     this.lstFormaPagos = response as FormaPago[];
-     this.dataSource = new MatTableDataSource(this.lstFormaPagos);
-     this.dataSource.paginator = this.paginator;
-     this.LengthTable = this.lstFormaPagos.length;
-     this.sortedData = this.lstFormaPagos.slice();
-     this.loading = false;
-   },
-   ((error: HttpErrorResponse) => {
-    this.loading = false;
-    if (error.status === 404){
+      .subscribe(response => {
+        const listaformas = response as any[];
+        listaformas.forEach(element => {
+          if (element.status === 'ACTIVO') {
+            status = 1;
+          }
+          else {
+            status = 0;
+          }
+          this.lstFormaPagos.push(new FormaPago(element.id, element.nombre, element.dias, this.idnegocio, status));
+        });
+        this.dataSource = new MatTableDataSource(this.lstFormaPagos);
+        this.dataSource.paginator = this.paginator;
+        this.LengthTable = this.lstFormaPagos.length;
+        this.sortedData = this.lstFormaPagos.slice();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-    }
-    else{
-      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-      { enableHtml: true, closeButton: true });
-    }
-  }));
- }
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
 
   registrarformapago() {
     this.router.navigate(['configuracion/crearformapagos']);
@@ -101,18 +121,60 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   Ver(id: number){
 
+    if (0){
+      // Dont open the modal
+      this.showModalBox = false;
+    } else {
+       // Open the modal
+       this.showModalBox = true;
+    }
   }
 
   Modificar(id: number){
 
-    this.formaPagoService.idformapago.emit(id);
-    this.router.navigate(['configuracion/crearformapagos']);
-
-
+    this.router.navigate(['configuracion/crearformapagos', id]);
   }
 
-  Eliminar(id: number){
+  Eliminar(id: number) {
 
+    if (0){
+      // Dont open the modal
+      this.showModalBox = false;
+    } else {
+       // Open the modal
+       this.showModalBox = true;
+    }
+    this.formaPagoService.Eliminar.subscribe(
+      (respuesta: boolean) => {
+        this.PuedeEliminar = respuesta;
+        this.eliminarporcodigo(id);
+        this.PuedeEliminar = false;
+        this.listarFormaPagos();
+      }
+    );
+    if ( this.showModalBox){
+      this.showModalBox = false;
+    }
+  }
+
+  eliminarporcodigo(id: number){
+    this.loading = true;
+    this.formaPagoService.eliminarFormaPago(id)
+      .subscribe(response => {
+        const respuesta = response as any;
+        console.log('Al eliminar ' + respuesta);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   ExportarExcel(){
@@ -126,6 +188,28 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   }
   Importar(){
 
+  }
+
+   /** Whether the number of selected elements matches the total number of rows. */
+   isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.LengthTable;//this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: FormaPago): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
 }

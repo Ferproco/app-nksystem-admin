@@ -92,15 +92,15 @@ export class CatalogoImpuestoComponent implements OnInit {
     });*/
   }
 
-  Ver(){
+  Ver(id: number){
 
   }
 
-  Modificar(){
-
+  Modificar(id: number){
+    this.router.navigate(['configuracion/crearformapagos', id]);
   }
 
-  Eliminar(){
+  Eliminar(id: number){
 
   }
 

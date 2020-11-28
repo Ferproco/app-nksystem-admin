@@ -76,6 +76,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
 import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
 import { ContactoService } from './components/contacto/ContactoService.service';
 import { TipoIdentificacionService } from './components/contacto/crear-contacto/TipoIdentificacionService.service';
@@ -86,10 +88,9 @@ import { MunicipioService } from './components/municipio/MunicipioService.servic
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
 import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
-import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
-import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
+import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -133,9 +134,8 @@ import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.
     CrearCategoriaComponent,
     CatalogoContactosComponent,
     CrearContactoComponent,
-    CatalogoMarcaComponent,
-    CrearMarcaComponent
-  
+    MensajeEliminarComponent
+
   ],
   imports: [
     BrowserModule,
@@ -158,8 +158,10 @@ import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.
     MatMenuModule,
     MatIconModule,
     MatToolbarModule,
-    MatProgressSpinnerModule
-
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     ArticuloService,
@@ -184,7 +186,7 @@ import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.
     PaisService,
     DepartamentoService,
     MunicipioService,
-    ListaPrecioService,
+    ListaPrecioService
   ],
   bootstrap: [AppComponent]
 })
