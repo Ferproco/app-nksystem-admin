@@ -86,6 +86,8 @@ import { MunicipioService } from './components/municipio/MunicipioService.servic
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
 import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
+import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
+import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
 
 
 
@@ -130,7 +132,9 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
     FilterTransaccionesPipe,
     CrearCategoriaComponent,
     CatalogoContactosComponent,
-    CrearContactoComponent
+    CrearContactoComponent,
+    CatalogoMarcaComponent,
+    CrearMarcaComponent
   
   ],
   imports: [

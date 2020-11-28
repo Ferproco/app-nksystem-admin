@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Api } from 'src/app/config';
+
 import { Articulo } from '../model/Articulo.model';
 
 
@@ -29,9 +30,16 @@ export class ArticuloService{
       
       codnegocio: Number(idnegocio),
       codigo: articulo.codigo,
-      nombre:articulo.nomarticulo,
-     
-      
+      nomarticulo:articulo.nomarticulo,
+      codmarca:articulo.codmarca,
+      codfamilia:articulo.codfamilia,
+      codunidadmedida: articulo.codunidadmedida,
+      codimpuesto:articulo.codimpuesto,
+      preciosugerido:articulo.preciosugerido,
+      referencia:articulo.referencia,
+      codigobarraprincipal:articulo.codigobarraprincipal,
+      serial:articulo.serial,
+      descripcionlarga:articulo.descripcionlarga,
       status: articulo.status === '1' ? 'ACTIVO' : 'INACTIVO'
 
     };

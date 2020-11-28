@@ -61,12 +61,18 @@ export class CrearArticuloComponent implements OnInit {
    
     this.formarticulo = this.formbuilder.group({
       codigo: ['',[Validators.required]],
-      nombre:['',[Validators.required]],
-      tipoproducto: ['0',[Validators.required]],
-      unidadmedida: [this.unidadmedidaxdefecto,[Validators.required]],
-      impuesto:['0',[Validators.required]],
-      marca:['0',[Validators.required]],
-      grupoarticulo:['0',[Validators.required]]
+      nomarticulo:['',[Validators.required]],
+      tipoproducto: [1,[Validators.required]],
+      codmarca:[0,[Validators.required]],
+      codfamilia:[0,[Validators.required]],
+      codunidadmedida: [this.unidadmedidaxdefecto,[Validators.required]],
+      codimpuesto:[0,[Validators.required]],
+      preciosugerido:[0],
+      referencia:[''],
+      serial:[''],
+      codigobarraprincipal:[''],
+      descripcionlarga:[''],
+      
     })
   }
 
@@ -191,7 +197,23 @@ export class CrearArticuloComponent implements OnInit {
   get codigo(){
     return this.formarticulo.get('codigo');
   }
-  get nombre(){
-    return this.formarticulo.get('nombre');
+  get nomarticulo(){
+    return this.formarticulo.get('nomarticulo');
+  }
+  get referencia(){
+    return this.formarticulo.get('referencia');
+  }
+  get serial(){
+    return this.formarticulo.get('serial');
+  }
+  get codigobarraprincipal(){
+    return this.formarticulo.get('codigobarraprincipal');
+  }
+  
+  get descripcionlarga(){
+    return this.formarticulo.get('descripcionlarga');
+  }
+  get preciosugerido(){
+    return this.formarticulo.get('preciosugerido');
   }
 }

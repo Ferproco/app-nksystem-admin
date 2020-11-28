@@ -65,6 +65,25 @@
               </div>
 
               <div class="sparkline10-graph">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="i-checks pull-left">
+                      <label>
+                        <input type="radio" formControlName="tipoproducto" checked="" value="1" name="tipoproducto">
+                        <i></i> Producto
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="i-checks pull-left">
+                      <label>
+                        <input type="radio" formControlName="tipoproducto" checked="" value="2" name="tipoproducto">
+                        <i></i> Servicio
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <br>
 
                 <div class="row">
                   <div class="col-lg-5">
@@ -73,8 +92,8 @@
                       <div class="form-group">
                         <label for="username">Codigo</label>
                         <input formControlName="codigo"
-                          [ngClass]="{'invalid-data': codigo.invalid && (codigo.touched || codigo.dirty)}" 
-                          type="text" class="form-control" placeholder="Ingrese el Codigo" />
+                          [ngClass]="{'invalid-data': codigo.invalid && (codigo.touched || codigo.dirty)}" type="text"
+                          class="form-control" placeholder="Ingrese el Codigo" />
                         <div *ngIf="codigo.invalid  && (codigo.dirty || codigo.touched)">
                           <div *ngIf="codigo.errors.required">
                             Codigo Requerido
@@ -88,152 +107,152 @@
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Nombre</label>
-                        <input formControlName="nombre"
-                          [ngClass]="{'invalid-data': nombre.invalid && (nombre.touched || nombre.dirty)}" type="text"
-                          class="form-control" placeholder="Ingrese el  Nombre del Articulo" />
-                        <div *ngIf="nombre.invalid  && (nombre.dirty || nombre.touched)">
-                          <div *ngIf="nombre.errors.required">
+                        <input formControlName="nomarticulo"
+                          [ngClass]="{'invalid-data': nomarticulo.invalid && (nomarticulo.touched || nomarticulo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el  Nombre del Articulo" />
+                        <div *ngIf="nomarticulo.invalid  && (nomarticulo.dirty || nomarticulo.touched)">
+                          <div *ngIf="nomarticulo.errors.required">
                             Nombre Requerido
                           </div>
-                          <div class="invalid-mensaje" *ngIf="nombre.errors.pattern">
+                          <div class="invalid-mensaje" *ngIf="nomarticulo.errors.pattern">
                             Nombre Incorrecto
                           </div>
                         </div>
                       </div>
                     </div>
+                    
+                   
                     <div id="pwd-container3">
                       <div class="form-group">
-                        <label for="username">Tipo Producto:</label>
-                        <select class="select2_demo_3 form-control" formControlName="tipoproducto">
+                        <label for="username">Impuesto</label>
+                        <select class="select2_demo_3 form-control" formControlName="codimpuesto">
+
                           <option value="0">--Seleccione--</option>
-                          <option value="Bahamas">Almacenable</option>
-                          <option value="Bahrain">Servicio</option>
-                          <option value="Bangladesh">Consumible</option>
+                          <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
+                            {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
+
+                        </select>
+                      </div>
+                    </div>
+                   
+
+                    <div class="bt-df-checkbox pull-left">
+                    
+                   
+                      <div class="col-lg-12">
+                        <div class="i-checks pull-left">
+                          <label>
+                            <input type="checkbox" value="" checked="">
+                            <i></i> Maneja
+                            Existencia </label>
+                        </div>
+                      </div>
+                    
+                  </div>
+
+                  </div>
+                  <div class="col-lg-5">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Categoria</label>
+                        <select class="select2_demo_3 form-control" formControlName="codfamilia">
+                          <option>--Seleccione--</option>
+                          <option value="{{familias.codfamilia}}" *ngFor="let familias of lstFamilias">
+                            {{familias.nomfamilia}}</option>
                         </select>
                       </div>
                     </div>
 
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Precio Venta:</label>
+                        <input formControlName="preciosugerido"
+                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
+                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
+                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
+                            Precio Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
 
-                   
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Descripción Larga</label>
+                        <textarea formControlName="descripcionlarga"
+                          [ngClass]="{'invalid-data': descripcionlarga.invalid && (descripcionlarga.touched || descripcionlarga.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese la Descripción Larga"></textarea>
+                      </div>
+                    </div>
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label>
+                          <input type="checkbox" formControlName="status" value="">
+                          <i></i> Activo</label>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+        
+                
+                <div class="row">
+                  <div class="col-lg-2">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Unidad Medida</label>
-                    
-                    
-                        <select class="select2_demo_3 form-control" formControlName="unidadmedida">
+                
+                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
                           <option value="null">--Seleccione--</option>
-                          <option value="{{unidad.abrevunidadmedida}}" *ngFor="let unidad of lstUnidades">
+                          <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
                             {{unidad.nomunidadmedida}}</option>
                         </select>
                       </div>
                     </div>
-                     
-                    <div class="project-details-mg">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                          <div class="col-lg-4">
-                            <span><strong>Impuesto:</strong></span>
-                          </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                          <div class="input-knob-dial-wrap">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="chosen-select-single mg-b-20">
-
-
-                                  <select class="select2_demo_3 form-control" formControlName="impuesto">
-
-                                    <option value="0">--Seleccione--</option>
-                                    <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
-                                      {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
-
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="project-details-mg">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                          <div class="col-lg-4">
-                            <span><strong>Categoria:</strong></span>
-                          </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                          <div class="input-knob-dial-wrap">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="chosen-select-single mg-b-20">
-                                  <select class="select2_demo_3 form-control">
-                                    <option>--Seleccione--</option>
-                                    <option value="{{familias.codfamilia}}" *ngFor="let familias of lstFamilias">
-                                      {{familias.nomfamilia}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
+                  <div class="col-lg-3">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Costo X Unidad</label>
+                        <input formControlName="preciosugerido"
+                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
+                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
+                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
+                            Precio Incorrecto
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="project-details-mg">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                          <div class="col-lg-4">
-                            <span><strong>Cuenta Contable:</strong></span>
-                          </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                          <div class="input-knob-dial-wrap">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="chosen-select-single mg-b-20">
-                                  <select class="select2_demo_3 form-control">
-                                    <option>--Seleccione--</option>
-                                    <option value="Bahamas">Ventas</option>
-                                    <option value="Bahamas">Devolución en Ventas</option>
-                                    <option value="Bahamas">Otros Ingresos</option>
-                                    <option value="Bahamas">Ingresos Financieros</option>
-                                    <option value="Bahamas">Otros Ingresos Diversos</option>
-                                  </select>
-                                </div>
 
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Bodega</label>
+                        <select class="select2_demo_3 form-control" formControlName="codimpuesto">
+
+                          <option value="0">--Seleccione--</option>
+                          <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
+                            {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
+
+                        </select>
                       </div>
                     </div>
-                    <div class="project-details-mg">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                          <div class="col-lg-4">
-                            <span><strong>Precio Venta:</strong></span>
-                          </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                          <div class="project-details-dt">
-                            <span><input type="email" class="form-control" placeholder="Ingrese Referencia" /></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="project-details-mg">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                          <div class="col-lg-4">
-                            <span><strong>Status:</strong></span>
-                          </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                          <div class="btn-group project-list-ad">
-                            <button class="btn btn-white btn-xs">Active</button>
+                   
+                  </div>
+                  <div class="col-lg-2">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Cantidad Inicial</label>
+                        <input formControlName="preciosugerido"
+                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
+                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
+                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
+                            Precio Incorrecto
                           </div>
                         </div>
                       </div>
@@ -241,7 +260,40 @@
 
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-2">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Cantidad Minima</label>
+                        <input formControlName="preciosugerido"
+                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
+                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
+                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
+                            Precio Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
+                  </div>
+                  <div class="col-lg-3">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Cantidad Maxima</label>
+                        <input formControlName="preciosugerido"
+                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
+                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
+                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
+                            Precio Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="project-details-tab">
@@ -256,388 +308,338 @@
                         </li>
                         <li><a data-toggle="tab" href="#menu4">Movimientos de Almacén</a>
                         </li>
+                        <li><a data-toggle="tab" href="#menu5">Contabilidad</a>
+                        </li>
                       </ul>
                       <div class="tab-content res-tab-content-project">
                         <div id="home" class="tab-pane fade in active animated zoomInLeft">
+                          <br>
                           <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-lg-5">
 
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Referencia:</strong></span>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="project-details-dt">
-                                      <span><input type="email" class="form-control"
-                                          placeholder="Ingrese Referencia" /></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Serial:</strong></span>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="project-details-dt">
-                                      <span><input type="email" class="form-control"
-                                          placeholder="Ingrese Serial" /></span>
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Referencia</label>
+                                  <input formControlName="referencia"
+                                    [ngClass]="{'invalid-data': referencia.invalid && (referencia.touched || referencia.dirty)}"
+                                    type="text" class="form-control" placeholder="Ingrese la referencia del Articulo" />
+                                  <div *ngIf="referencia.invalid  && (referencia.dirty || referencia.touched)">
+                                    <div class="invalid-mensaje" *ngIf="referencia.errors.pattern">
+                                      Referencia Incorrecto
                                     </div>
                                   </div>
                                 </div>
                               </div>
 
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Codigo Barra:</strong></span>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="project-details-dt">
-                                      <span><input type="email" class="form-control"
-                                          placeholder="Ingrese Codigo de Barra" /></span>
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Serial</label>
+                                  <input formControlName="serial"
+                                    [ngClass]="{'invalid-data': serial.invalid && (serial.touched || serial.dirty)}"
+                                    type="text" class="form-control" placeholder="Ingrese el Serial del Articulo" />
+                                  <div *ngIf="serial.invalid  && (serial.dirty || serial.touched)">
+                                    <div class="invalid-mensaje" *ngIf="referencia.errors.pattern">
+                                      Serial Incorrecto
                                     </div>
                                   </div>
                                 </div>
                               </div>
 
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Grupo:</strong></span>
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Codigo de Barra</label>
+                                  <input formControlName="codigobarraprincipal"
+                                    [ngClass]="{'invalid-data': codigobarraprincipal.invalid && (codigobarraprincipal.touched || codigobarraprincipal.dirty)}"
+                                    type="text" class="form-control"
+                                    placeholder="Ingrese el Codigo de Barra del Articulo" />
+                                  <div
+                                    *ngIf="codigobarraprincipal.invalid  && (codigobarraprincipal.dirty || codigobarraprincipal.touched)">
+                                    <div class="invalid-mensaje" *ngIf="codigobarraprincipal.errors.pattern">
+                                      Codigo de Barra Incorrecto
                                     </div>
                                   </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="input-knob-dial-wrap">
-                                      <div class="row">
-                                        <div class="col-lg-12">
-                                          <div class="chosen-select-single mg-b-20">
-
-                                            <select class="select2_demo_3 form-control" formControlName="grupoarticulo">
-
-                                              <option value="0">--Seleccione--</option>
-                                              <option value="{{grupoarticulo.codgrupoarticulo}}"
-                                                *ngFor="let grupoarticulo of lstGrupoArticulos">
-                                                {{grupoarticulo.nomgrupoarticulo}}</option>
+                                </div>
+                              </div>
 
 
+                                <div id="pwd-container3">
+                                  <div class="form-group">
+                                    <label for="username">Marca</label>
 
-                                            </select>
-                                          </div>
-                                        </div>
+                                    <select class="select2_demo_3 form-control" formControlName="codmarca">
+
+                                      <option value="0">--Seleccione--</option>
+                                      <option value="{{marca.codmarca}}" *ngFor="let marca of lstMarcas">
+                                        {{marca.nommarca}}</option>
+
+
+                                    </select>
+                                  </div>
+
+                                </div>
+
+
+                           
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                <br>
+                                <div class="bt-df-checkbox pull-left">
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="i-checks pull-left">
+                                        <label>
+                                          <input type="checkbox" value="" checked="">
+                                          <i></i> Maneja
+                                          Existencia </label>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Marca:</strong></span>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="input-knob-dial-wrap">
-                                      <div class="row">
-                                        <div class="col-lg-12">
-                                          <div class="chosen-select-single mg-b-20">
 
-                                            <select class="select2_demo_3 form-control" formControlName="marca">
-
-                                              <option value="0">--Seleccione--</option>
-                                              <option value="{{marca.codmarca}}" *ngFor="let marca of lstMarcas">
-                                                {{marca.nommarca}}</option>
-
-
-                                            </select>
-                                          </div>
-
-                                        </div>
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="i-checks pull-left">
+                                        <label>
+                                          <input type="checkbox" value="" checked="">
+                                          <i></i>
+                                          Compuesto</label>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>
-
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Presentacion:</strong></span>
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="i-checks pull-left">
+                                        <label>
+                                          <input type="checkbox" value="" checked="">
+                                          <i></i> Maneja
+                                          Seriales</label>
+                                      </div>
                                     </div>
                                   </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="input-knob-dial-wrap">
-                                      <div class="row">
-                                        <div class="col-lg-12">
-                                          <div class="chosen-select-single mg-b-20">
-
-                                            <select class="select2_demo_3 form-control">
-                                              <option>--Seleccione--
-                                              </option>
-                                              <option value="Bahamas">
-                                                Bahamas</option>
-                                              <option value="Bahrain">
-                                                Bahrain</option>
-                                              <option value="Bangladesh">
-                                                Bangladesh</option>
-
-                                            </select>
-                                          </div>
-                                        </div>
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="i-checks pull-left">
+                                        <label>
+                                          <input type="checkbox" value="" checked="">
+                                          <i></i>
+                                          Facturable</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="i-checks pull-left">
+                                        <label>
+                                          <input type="checkbox" value="" checked="">
+                                          <i></i> Usa Empaque
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="i-checks pull-left">
+                                        <label>
+                                          <input type="checkbox" value="" checked="">
+                                          <i></i> Precio X
+                                          Empaque</label>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          </div>
+                          <!-- TERMINA PESTAÑA HOME -->
+                          <div id="menu1" class="tab-pane fade animated zoomInLeft">
+                            <div class="row">
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="project-details-mg">
+                                  <div class="static-table-list">
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th></th>
+                                          <th>Unidad</th>
+                                          <th>Cantidad</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div class="i-checks pull-left">
+                                              <label>
+                                                <input type="checkbox" value="" checked=""> <i></i> </label>
+                                            </div>
+                                          </td>
+                                          <td>Caja</td>
+                                          <td>
 
-                              <div class="project-details-mg">
-                                <div class="row">
-                                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <div class="col-lg-4">
-                                      <span><strong>Peso:</strong></span>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <div class="project-details-dt">
-                                      <span><input type="email" class="form-control"
-                                          placeholder="Ingrese Referencia" /></span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="bt-df-checkbox pull-left">
+                                          </td>
 
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Maneja
-                                        Existencia </label>
-                                    </div>
-                                  </div>
-                                </div>
 
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i>
-                                        Compuesto</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Maneja
-                                        Seriales</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i>
-                                        Facturable</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Usa Empaque
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Precio X
-                                        Empaque</label>
-                                    </div>
+                                        </tr>
+                                      </tbody>
+                                    </table>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <!-- TERMINA PESTAÑA HOME -->
-                        <div id="menu1" class="tab-pane fade animated zoomInLeft">
-                          <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                              <div class="project-details-mg">
-                                <div class="static-table-list">
-                                  <table class="table">
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                        <th>Unidad</th>
-                                        <th>Cantidad</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div class="i-checks pull-left">
-                                            <label>
-                                              <input type="checkbox" value="" checked=""> <i></i> </label>
+
+                          <div id="menu2" class="tab-pane fade animated zoomInLeft">
+                            <div class="row">
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="project-details-mg">
+                                  <div class="static-table-list">
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th></th>
+                                          <th>Fecha</th>
+                                          <th>Proveedor</th>
+                                          <th>Cant. Comprada</th>
+                                          <th>Precio</th>
+                                          <th>Total</th>
+                                          <th>Status</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div class="i-checks pull-left">
+                                              <label>
+                                                <input type="checkbox" value="" checked=""> <i></i> </label>
+                                            </div>
+                                          </td>
+                                          <td></td>
+                                          <td>
+
+                                          </td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="menu3" class="tab-pane fade animated zoomInLeft">
+                            <div class="row">
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="project-details-mg">
+                                  <div class="static-table-list">
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+
+                                          <th>Fecha</th>
+                                          <th>Movimiento</th>
+                                          <th>Entrada</th>
+                                          <th>Salida</th>
+                                          <th>Precio/Costo</th>
+                                          <th>Total</th>
+                                          <th>Numero Documento</th>
+                                          <th>Cliente/Proveedor</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="menu4" class="tab-pane fade animated zoomInLeft">
+                            <div class="row">
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="project-details-mg">
+                                  <div class="static-table-list">
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th></th>
+                                          <th>Fecha</th>
+                                          <th>Proveedor</th>
+                                          <th>Cant. Comprada</th>
+                                          <th>Precio</th>
+                                          <th>Total</th>
+                                          <th>Status</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div class="i-checks pull-left">
+                                              <label>
+                                                <input type="checkbox" value="" checked=""> <i></i> </label>
+                                            </div>
+                                          </td>
+                                          <td></td>
+                                          <td>
+
+                                          </td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div id="menu5" class="tab-pane fade animated zoomInLeft">
+                            <div class="row">
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                               <br>
+                                <div class="project-details-mg">
+                                  <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                      <div class="col-lg-4">
+                                        <span><strong>Cuenta Contable:</strong></span>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                      <div class="input-knob-dial-wrap">
+                                        <div class="row">
+                                          <div class="col-lg-12">
+                                            <div class="chosen-select-single mg-b-20">
+                                              <select class="select2_demo_3 form-control">
+                                                <option>--Seleccione--</option>
+                                                <option value="Bahamas">Ventas</option>
+                                                <option value="Bahamas">Devolución en Ventas</option>
+                                                <option value="Bahamas">Otros Ingresos</option>
+                                                <option value="Bahamas">Ingresos Financieros</option>
+                                                <option value="Bahamas">Otros Ingresos Diversos</option>
+                                              </select>
+                                            </div>
+            
                                           </div>
-                                        </td>
-                                        <td>Caja</td>
-                                        <td>
-
-                                        </td>
-
-
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="menu2" class="tab-pane fade animated zoomInLeft">
-                          <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                              <div class="project-details-mg">
-                                <div class="static-table-list">
-                                  <table class="table">
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                        <th>Fecha</th>
-                                        <th>Proveedor</th>
-                                        <th>Cant. Comprada</th>
-                                        <th>Precio</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div class="i-checks pull-left">
-                                            <label>
-                                              <input type="checkbox" value="" checked=""> <i></i> </label>
-                                          </div>
-                                        </td>
-                                        <td></td>
-                                        <td>
-
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div id="menu3" class="tab-pane fade animated zoomInLeft">
-                          <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                              <div class="project-details-mg">
-                                <div class="static-table-list">
-                                  <table class="table">
-                                    <thead>
-                                      <tr>
-
-                                        <th>Fecha</th>
-                                        <th>Movimiento</th>
-                                        <th>Entrada</th>
-                                        <th>Salida</th>
-                                        <th>Precio/Costo</th>
-                                        <th>Total</th>
-                                        <th>Numero Documento</th>
-                                        <th>Cliente/Proveedor</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div id="menu4" class="tab-pane fade animated zoomInLeft">
-                          <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                              <div class="project-details-mg">
-                                <div class="static-table-list">
-                                  <table class="table">
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                        <th>Fecha</th>
-                                        <th>Proveedor</th>
-                                        <th>Cant. Comprada</th>
-                                        <th>Precio</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div class="i-checks pull-left">
-                                            <label>
-                                              <input type="checkbox" value="" checked=""> <i></i> </label>
-                                          </div>
-                                        </td>
-                                        <td></td>
-                                        <td>
-
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -646,23 +648,23 @@
                       </div>
                     </div>
                   </div>
-                </div>
 
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-lg-3">
-            <div class="sparkline8-list basic-res-b-30 shadow-reset">
-              <div class="sparkline8-hd">
-                <div class="main-sparkline8-hd">
-                  <h1>
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                    Imagen <span class="table-project-n"></span></h1>
-                  <div class="sparkline8-outline-icon">
-                    <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                    <span><i class="fa fa-wrench"></i></span>
-                    <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+            <div class="col-lg-3">
+              <div class="sparkline8-list basic-res-b-30 shadow-reset">
+                <div class="sparkline8-hd">
+                  <div class="main-sparkline8-hd">
+                    <h1>
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                      Imagen <span class="table-project-n"></span></h1>
+                    <div class="sparkline8-outline-icon">
+                      <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                      <span><i class="fa fa-wrench"></i></span>
+                      <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -671,5 +673,4 @@
         </div>
       </div>
     </div>
-  </div>
 </form>

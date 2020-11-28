@@ -1,27 +1,32 @@
 export class Articulo {
+    id:number;
     codigo: string;
+    nomarticulo: string;
     codmarca: number;
     codfamilia: number;
-    pro_codigo: string;
-    abrevunidadmedida: string;
-    codgrupoarticulo: string;
-    nomarticulo: string;
+    codunidadmedida:number;
+    codimpuesto:number;
     preciosugerido: number;
+    codigobarraprincipal: string;
+    referencia:string;
+    serial: string;
+    status: string;
+    descripcionlarga:string;   
     stockminimo: number;
     stockmaximo: number;
     puntoreorden: number;
-    codigobarraprincipal: string;
+    
+
     origen: string;
     imagen: string;
     nombimagen: string;
-    status: string;
+   
     alto: number;
     ancho: number;
     compuesto: boolean;
     costodirecto: number;
     costoreferencial: number;
     costoreposicion: number;
-    descripcionlarga: string;
     empacado: boolean;
     fraccionado: boolean;
     facturable: boolean;
@@ -56,27 +61,25 @@ export class Articulo {
     merma: number;
     cantreorden: number;
     despostable: boolean;
-    serial: string;
     fechaultcompra: string;
     color: string;
-    nombrefamilia: string;
-    nombregrupoarticulo: string;
-    nombreunidadmedida: string;
-    nombremarca: string;
-
+    
     constructor(
+      id:number,
       codigo: string,
+      nomarticulo: string,
       codmarca: number,
       codfamilia: number,
-      pro_codigo: string,
-      abrevunidadmedida: string,
-      codgrupoarticulo: string,
-      nomarticulo: string,
+      codunidadmedida:number,
+      codimpuesto:number,
+      pro_codigo: string,      
       preciosugerido: number,
+      codigobarraprincipal: string,
+      referencia:string,
+      serial: string,
       stockminimo: number,
       stockmaximo: number,
       puntoreorden: number,
-      codigobarraprincipal: string,
       origen: string,
       imagen: string,
       nombimagen: string,
@@ -122,23 +125,26 @@ export class Articulo {
       merma: number,
       cantreorden: number,
       despostable: boolean,
-      serial: string,
       fechaultcompra: string,
-      color: string,
-      nombrefamilia: string,
-      nombregrupoarticulo: string,
-      nombreunidadmedida: string,
-      nombremarca: string) {
+      color: string
+      ) {
 
-
+        this.id=id;
         this.codigo=codigo;
-        this.codmarca= codmarca;
-        this.codfamilia=codfamilia;
-        this.pro_codigo=pro_codigo;
-        this.abrevunidadmedida=abrevunidadmedida;
-        this.codgrupoarticulo=codgrupoarticulo;
         this.nomarticulo=nomarticulo;
+        this.codmarca= codmarca;
+        this.codfamilia= codfamilia;
+        this.codunidadmedida=codunidadmedida;
+        this.codimpuesto=codimpuesto;
         this.preciosugerido=preciosugerido;
+        this.codigobarraprincipal= codigobarraprincipal;
+        this.referencia=referencia;
+        this.serial=serial;
+        this.status=status;
+        this.codmarca= codmarca;
+        this.codfamilia=codfamilia;       
+        
+        
         this.stockminimo=stockminimo;
         this.stockmaximo=stockmaximo;
         this.puntoreorden=puntoreorden;
@@ -146,7 +152,7 @@ export class Articulo {
         this.origen=origen;
         this.imagen=imagen;
         this.nombimagen=nombimagen;
-        this.status=status;
+        
         this.alto=alto;
         this.ancho=ancho;
         this.compuesto=compuesto;
@@ -191,10 +197,6 @@ export class Articulo {
         this.serial=serial;
         this.fechaultcompra=fechaultcompra;
         this.color=color;
-        this. nombrefamilia=nombrefamilia;
-        this.nombregrupoarticulo=nombregrupoarticulo;
-        this.nombreunidadmedida=nombreunidadmedida;
-        this.nombremarca=nombremarca;
-
+        
     }
 }
