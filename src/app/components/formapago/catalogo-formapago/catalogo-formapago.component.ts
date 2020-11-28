@@ -27,7 +27,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   idnegocio: number;
 
   showModalBox: boolean = false;
-  PuedeEliminar: boolean;
+  PuedeEliminar: boolean = false;
 
   displayedColumns: string[] = ['select', 'Codigo', 'Nombre',  'Dias Plazo' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<FormaPago>;
@@ -137,22 +137,29 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   Eliminar(id: number) {
 
-    if (0){
+    if (0) {
       // Dont open the modal
       this.showModalBox = false;
     } else {
-       // Open the modal
-       this.showModalBox = true;
+      // Open the modal
+      this.showModalBox = true;
     }
+
     this.formaPagoService.Eliminar.subscribe(
       (respuesta: boolean) => {
         this.PuedeEliminar = respuesta;
-        this.eliminarporcodigo(id);
-        this.PuedeEliminar = false;
-        this.listarFormaPagos();
+        console.log('Al eliminar ' + this.PuedeEliminar);
+
       }
+
     );
-    if ( this.showModalBox){
+    console.log('DESPUES DEL SUSCRIBE ' + this.PuedeEliminar);
+    if (this.PuedeEliminar){
+      console.log('ENTRO A ELIMINAR' + this.PuedeEliminar);
+      this.eliminarporcodigo(id);
+      this.PuedeEliminar = false;
+    }
+    if (this.showModalBox) {
       this.showModalBox = false;
     }
   }
@@ -161,9 +168,9 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
     this.loading = true;
     this.formaPagoService.eliminarFormaPago(id)
       .subscribe(response => {
-        const respuesta = response as any;
-        console.log('Al eliminar ' + respuesta);
+        const respuesta = response;
         this.loading = false;
+        this.listarFormaPagos();
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
