@@ -89,10 +89,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
 import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
-
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { CrearTipoImpuestoModalComponent } from './components/tipoimpuesto/crear-tipo-impuesto-modal/crear-tipo-impuesto-modal.component';
+
 
 @NgModule({
   declarations: [
