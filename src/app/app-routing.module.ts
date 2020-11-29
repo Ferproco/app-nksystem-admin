@@ -1,4 +1,3 @@
-
 import { MainComponent } from './components/main/main.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
@@ -29,6 +28,8 @@ import { CatalogoContactosComponent } from './components/contacto/catalogo-conta
 import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
 import { CrearFormapagoComponent } from './components/formapago/crear-formapago/crear-formapago.component';
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
+import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
+import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 
 
 const routes: Routes = [
@@ -55,10 +56,14 @@ const routes: Routes = [
   { path: 'configuracion/listarformaspagos', component: CatalogoFormapagoComponent},
   { path: 'configuracion/crearformapagos', component: CrearFormapagoComponent},
   { path: 'configuracion/crearformapagos/:id', component: CrearFormapagoComponent},
+  { path: 'configuracion/listartipoimpuesto', component: CatalogoTipoImpuestoComponentComponent},
+  { path: 'configuracion/creartipoimpuesto', component: CrearTipoImpuestoComponentComponent},
+  { path: 'configuracion/creartipoimpuesto/:id', component: CrearTipoImpuestoComponentComponent},
   { path: 'compras/listarproveedores', component: CatalogoProveedorComponent},
   { path: 'compras/crearproveedor', component: CrearProveedorComponent},
   { path: 'contactos/listarcontactos', component: CatalogoContactosComponent},
   { path: 'contactos/crearcontacto', component: CrearContactoComponent}
+
 ];
 
 @NgModule({
