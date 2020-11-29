@@ -10,7 +10,6 @@ export class FormaPagoService{
   uriapi: string = Api.url;
   value: any;
 
-  Eliminar = new EventEmitter<boolean>();
   constructor(private httpClient: HttpClient){
 
   }

@@ -1,5 +1,6 @@
+
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormaPago } from '../../model/FormaPago.model';
@@ -10,6 +11,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {SelectionModel} from '@angular/cdk/collections';
 import { MensajeEliminarComponent } from '../../mensajeria/mensaje-eliminar/mensaje-eliminar.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-catalogo-formapago',
@@ -26,8 +28,8 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   sortedData;
   idnegocio: number;
 
-  showModalBox: boolean = false;
-  PuedeEliminar: boolean = false;
+
+  bsModalRef: BsModalRef;
 
   displayedColumns: string[] = ['select', 'Codigo', 'Nombre',  'Dias Plazo' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<FormaPago>;
@@ -38,7 +40,8 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   constructor(private formaPagoService: FormaPagoService,
               private router: Router,
-              private toastr: ToastrService,) {
+              private toastr: ToastrService,
+              private modalService: BsModalService) {
                 this.idnegocio = 1;
               }
 
@@ -121,13 +124,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   Ver(id: number){
 
-    if (0){
-      // Dont open the modal
-      this.showModalBox = false;
-    } else {
-       // Open the modal
-       this.showModalBox = true;
-    }
+
   }
 
   Modificar(id: number){
@@ -136,32 +133,14 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   }
 
   Eliminar(id: number) {
-
-    if (0) {
-      // Dont open the modal
-      this.showModalBox = false;
-    } else {
-      // Open the modal
-      this.showModalBox = true;
-    }
-
-    this.formaPagoService.Eliminar.subscribe(
-      (respuesta: boolean) => {
-        this.PuedeEliminar = respuesta;
-        console.log('Al eliminar ' + this.PuedeEliminar);
-
+    this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+        this.eliminarporcodigo(id);
       }
+    });
 
-    );
-    console.log('DESPUES DEL SUSCRIBE ' + this.PuedeEliminar);
-    if (this.PuedeEliminar){
-      console.log('ENTRO A ELIMINAR' + this.PuedeEliminar);
-      this.eliminarporcodigo(id);
-      this.PuedeEliminar = false;
-    }
-    if (this.showModalBox) {
-      this.showModalBox = false;
-    }
   }
 
   eliminarporcodigo(id: number){
