@@ -127,14 +127,6 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   }
 
-  openModal() {
-
-    this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
-    this.bsModalRef.content.onClose.subscribe(result => {
-      console.log('results', result);
-    });
-  }
-
   Modificar(id: number){
 
     this.router.navigate(['configuracion/crearformapagos', id]);
