@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Api } from 'src/app/config';
 
@@ -12,6 +12,9 @@ export class ArticuloService{
 
   lstArticulos: Articulo[] = [];
   uriapi: string = Api.url;
+  value: any;
+
+  Eliminar = new EventEmitter<boolean>();
 
   constructor(private httpClient: HttpClient){ }
 
@@ -24,7 +27,7 @@ export class ArticuloService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarArticlo(id: number, idnegocio: number, articulo: Articulo){
+  guardarArticulo(id: number, idnegocio: number, articulo: Articulo){
     console.log('el articulo enviado es ' + JSON.stringify(articulo));
     const body = {
       
@@ -47,5 +50,8 @@ export class ArticuloService{
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
+  }
+  eliminarArticulo(id: number){
+   
   }
 }

@@ -80,7 +80,7 @@ export class CrearArticuloComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.formarticulo.value;
-    this.articuloservice.guardarArticlo(this.id, this.idnegocio, value)
+    this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
     .subscribe(response => {
       this.loading = false;
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
