@@ -8,6 +8,7 @@ import { ImpuestoService } from '../ImpuestoService.service';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-catalogo-impuesto',
@@ -22,8 +23,9 @@ export class CatalogoImpuestoComponent implements OnInit {
   LengthTable = 0;
   sortedData;
 
-  displayedColumns: string[] = ['Codigo', 'Nombre', 'Tarifa', 'Tipo Impuesto' , 'Status', 'Acción'];
+  displayedColumns: string[] = ['select', 'Codigo', 'Nombre', 'Tarifa', 'Tipo Impuesto' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<Impuesto>;
+  selection = new SelectionModel<Impuesto>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -116,7 +118,27 @@ export class CatalogoImpuestoComponent implements OnInit {
   Importar(){
 
   }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.LengthTable;//this.dataSource.data.length;
+    return numSelected === numRows;
+  }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Impuesto): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.idimpuesto + 1}`;
+  }
 
 }
 

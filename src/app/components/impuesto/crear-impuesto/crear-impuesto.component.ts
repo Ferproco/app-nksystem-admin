@@ -1,3 +1,4 @@
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TipoImpuesto } from './../../model/TipoImpuesto.model';
 import { ImpuestoService } from './../ImpuestoService.service';
 import { Component, OnInit, ɵCodegenComponentFactoryResolver } from '@angular/core';
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { CrearTipoImpuestoModalComponent } from '../../tipoimpuesto/crear-tipo-impuesto-modal/crear-tipo-impuesto-modal.component';
 
 @Component({
   selector: 'app-crear-impuesto',
@@ -27,6 +29,8 @@ export class CrearImpuestoComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
 
+  bsModalRef: BsModalRef;
+
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
@@ -36,7 +40,8 @@ export class CrearImpuestoComponent implements OnInit {
               private impuestoService: ImpuestoService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
 
     this.buildForm();
     this.idnegocio = 1;
@@ -100,6 +105,14 @@ export class CrearImpuestoComponent implements OnInit {
   }
   get nombreimpuesto() {
     return this.formimpuesto.get('nombreimpuesto');
+  }
+
+  onCrearTipoImpuesto(){
+    this.bsModalRef = this.modalService.show(CrearTipoImpuestoModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+
+    });
   }
 
 }

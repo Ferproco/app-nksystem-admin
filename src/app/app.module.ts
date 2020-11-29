@@ -91,6 +91,8 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { CrearTipoImpuestoModalComponent } from './components/tipoimpuesto/crear-tipo-impuesto-modal/crear-tipo-impuesto-modal.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +136,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     CrearCategoriaComponent,
     CatalogoContactosComponent,
     CrearContactoComponent,
-    MensajeEliminarComponent
+    MensajeEliminarComponent,
+    CrearTipoImpuestoModalComponent
 
   ],
   imports: [
@@ -161,7 +164,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatDialogModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     ArticuloService,
@@ -186,7 +190,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PaisService,
     DepartamentoService,
     MunicipioService,
-    ListaPrecioService
+    ListaPrecioService,
+    BsModalRef
   ],
   bootstrap: [AppComponent]
 })
