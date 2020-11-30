@@ -21,47 +21,49 @@ export class CrearAlmacenComponent implements OnInit {
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
-  constructor(private almacenServicio:AlmacenService,
+  constructor(private almacenServicio: AlmacenService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
-              private router: Router) { 
+              private router: Router) {
       this.buildForm();
     }
 
   ngOnInit(): void {
   }
 
-  guardarAlmacen(event: Event){
+  guardarAlmacen(event: Event) {
     event.preventDefault();
     const value = this.formalmacen.value;
     console.log(value);
 
     this.almacenServicio.guardarAlmacen(this.id, value)
-    .subscribe(response => {
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.router.navigate(['inventario/listaralmacenes']);
-      console.log(response);
-    },
-    error => {
-      this.loading = false;
-      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-    { enableHtml: true, closeButton: true });
-    });
+      .subscribe(response => {
+        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        this.router.navigate(['inventario/listaralmacenes']);
+        console.log(response);
+      },
+        error => {
+          this.loading = false;
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        });
   }
-  private buildForm(){
-   
-    
+
+  private buildForm() {
+
     this.formalmacen = this.formbuilder.group({
       nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       direccion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      principal:['1',[Validators.required]],
+      principal: ['1', [Validators.required]],
       status: ['1', [Validators.required]]
 
     });
   }
+
   get nombre() {
     return this.formalmacen.get('nombre');
   }
+
   get direccion() {
     return this.formalmacen.get('direccion');
   }

@@ -537,3 +537,13 @@
 .header-color-modal h4{
 	font-size:20px;
 }
+
+.invalid-data {
+  color:  red;
+  border: solid 1px  red;
+  box-shadow: 0 0 0 0.2rem rgba(0, 210, 0, 0.25);
+}
+
+.invalid-mensaje {
+  color: #FF0000;
+}

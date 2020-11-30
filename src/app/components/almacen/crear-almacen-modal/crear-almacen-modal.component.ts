@@ -30,75 +30,79 @@ export class CrearAlmacenModalComponent implements OnInit {
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
   constructor(private bsModalRef: BsModalRef,
-              private almacenServicio:AlmacenService,
+              private almacenServicio: AlmacenService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router,
               private route: ActivatedRoute) {
                 this.idnegocio = 1;
+                this.buildForm();
                }
 
   ngOnInit(): void {
-    this.buildForm();
     this.onClose = new Subject();
   }
+
+  private buildForm() {
+
+    this.formalmacen = this.formbuilder.group({
+      nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      direccion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      principal: ['1', [Validators.required]],
+      status: ['1', [Validators.required]]
+    });
+  }
+
   public onCancel(): void {
     this.onClose.next(false);
     this.bsModalRef.hide();
   }
+
   onChange($event) {
     console.log($event.target.checked + ' esto es lo que se chequeo');
     this.formalmacen.get('status').setValue($event.target.checked === true ? 1 : 0);
   }
-  guardarAlmacen(event: Event){
+
+  guardarAlmacen(event: Event) {
     event.preventDefault();
     const value = this.formalmacen.value;
     console.log(value);
 
     this.almacenServicio.guardarAlmacen(this.id, value)
-    .subscribe(response => {
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.router.navigate(['inventario/listaralmacenes']);
-      console.log(response);
-    },
-    error => {
-      this.loading = false;
-      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-    { enableHtml: true, closeButton: true });
-    });
-  }
-  private buildForm(){
-   
-    
-    this.formalmacen = this.formbuilder.group({
-      nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      direccion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      principal:['1',[Validators.required]],
-      status: ['1', [Validators.required]]
-
-    });
+      .subscribe(response => {
+        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        this.router.navigate(['inventario/listaralmacenes']);
+        console.log(response);
+      },
+        error => {
+          this.loading = false;
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        });
   }
 
   public onConfirm(): void {
     const value = this.formalmacen.value;
     console.log(value);
     this.almacenServicio.guardarAlmacen(this.id, value)
-    .subscribe(response => {
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.onClose.next(true);
-      this.bsModalRef.hide();
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      console.log('Error ' + JSON.stringify(error));
-      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
-      { enableHtml: true, closeButton: true });
-    }));
-   
+      .subscribe(response => {
+        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        this.onClose.next(true);
+        this.bsModalRef.hide();
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          console.log('Error ' + JSON.stringify(error));
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }));
+
   }
+
   get nombre() {
     return this.formalmacen.get('nombre');
   }
+
   get direccion() {
     return this.formalmacen.get('direccion');
   }

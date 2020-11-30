@@ -31,18 +31,18 @@ export class CrearFormapagoModalComponent implements OnInit {
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
   constructor(private bsModalRef: BsModalRef,
               private formapagoService: FormaPagoService,
-               private formbuilder: FormBuilder,
-               private toastr: ToastrService,
-               private router: Router,
-               private route: ActivatedRoute) {
+              private formbuilder: FormBuilder,
+              private toastr: ToastrService,
+              private router: Router,
+              private route: ActivatedRoute) {
 
                 this.idnegocio = 1;
                 this.formapago = new FormaPago(0, '', 0, this.idnegocio, 1);
-                
+                this.buildForm(this.formapago);
+
                 }
 
   ngOnInit(): void {
-    this.buildForm(this.formapago);
     this.onClose = new Subject();
   }
 
@@ -70,29 +70,30 @@ export class CrearFormapagoModalComponent implements OnInit {
       this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
       { enableHtml: true, closeButton: true });
     }));
-   
+
   }
 
   public onCancel(): void {
     this.onClose.next(false);
     this.bsModalRef.hide();
   }
-  guardarFormaPago(event: Event){
+
+  guardarFormaPago(event: Event) {
     event.preventDefault();
     const value = this.formformapago.value;
     console.log(value);
     this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value, this.operacion)
-    .subscribe(response => {
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.onClose.next(true);
-      this.bsModalRef.hide();
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      console.log('Error ' + JSON.stringify(error));
-      this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
-      { enableHtml: true, closeButton: true });
-    }));
+      .subscribe(response => {
+        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        this.onClose.next(true);
+        this.bsModalRef.hide();
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          console.log('Error ' + JSON.stringify(error));
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }));
   }
 
   get nombre() {
