@@ -13,6 +13,9 @@ import { PaisService } from './PaisService.service';
 import { DepartamentoService } from '../../departamento/DepartamentoService.service';
 import { MunicipioService } from '../../municipio/MunicipioService.service';
 import { ListaPrecioService } from '../../listapeccio/ListaPrecioService.service';
+import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 export interface Tipopersona{
   id: number;
@@ -26,6 +29,10 @@ export interface Tipopersona{
   styleUrls: ['./crear-contacto.component.css']
 })
 export class CrearContactoComponent implements OnInit {
+  
+  colorTheme = 'theme-orange';
+  bsConfig: Partial<BsDatepickerConfig>;
+  currentDate = new Date();
   
   id = 0;
   loading = false;
@@ -72,6 +79,7 @@ export class CrearContactoComponent implements OnInit {
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  bsModalRef: any;
 
   constructor(private contactoServicio: ContactoService,
               private tipoidentificacionServicio: TipoIdentificacionService,
@@ -84,9 +92,11 @@ export class CrearContactoComponent implements OnInit {
               private listaprecioServicio:ListaPrecioService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
       this.buildForm();
       this.idnegocio = 1;
+      this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
     }
 
   ngOnInit(): void {
@@ -429,5 +439,16 @@ export class CrearContactoComponent implements OnInit {
   }
   get paginaweb(){
     return this.formcontacto.get('paginaweb');
+  }
+
+  onCrearPlazoCredito(){
+    this.bsModalRef = this.modalService.show(CrearFormapagoModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if (result){
+        this.listarFormasdepago();
+      }
+      console.log('results', result);
+
+    });
   }
 }

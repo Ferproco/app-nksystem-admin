@@ -2,7 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { AlmacenService } from '../../almacen/AlmacenService.service';
+import { CrearAlmacenModalComponent } from '../../almacen/crear-almacen-modal/crear-almacen-modal.component';
 import { FamiliaService } from '../../familia/FamiliaService.service';
 import { GrupoArticuloService } from '../../grupoarticulo/GrupoArticuloService.service';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
@@ -23,17 +27,24 @@ export class CrearArticuloComponent implements OnInit {
   lstUnidades: any [] = [];
   lstImpuestos: any [] = [];
   lstMarcas: any[]=[];
+  lstAlmacenes: any[]=[];
   lstGrupoArticulos:any[]=[];
   
   idnegocio: number;
   formarticulo: FormGroup;
 
   unidadmedidaxdefecto:2;
-
+  bsModalRef: any;
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  
+  visiblecostoxproducto = false;
+  visiblecantidad= false;
+  visiblecantidadminima=false;
+  visiblecantidadmaxima=false;
+  visiblebodega=false;
 
   constructor(private articuloservice:ArticuloService,
               private familiaserive: FamiliaService,
@@ -41,9 +52,11 @@ export class CrearArticuloComponent implements OnInit {
               private impuestoservice:ImpuestoService,
               private marcaservice:MarcaService,
               private grupoarticuloservice:GrupoArticuloService,
+              private almacenServicio:AlmacenService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService) {
 
     this.buildForm();
     this.idnegocio = 1;
@@ -55,6 +68,7 @@ export class CrearArticuloComponent implements OnInit {
     this.listarImpuestos();
     this.listarMarcas();
     this.listarGrupoArticulos();
+    this.listarBodegas();
   }
 
   private buildForm(){
@@ -72,6 +86,7 @@ export class CrearArticuloComponent implements OnInit {
       serial:[''],
       codigobarraprincipal:[''],
       descripcionlarga:[''],
+      codbodega:[0],
       
     })
   }
@@ -104,6 +119,26 @@ export class CrearArticuloComponent implements OnInit {
       .subscribe(response => {
         this.lstFamilias = response as any[];
         console.log(this.lstFamilias);
+        this.loading = false;
+      },
+       ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+  }
+
+  listarBodegas(){
+    this.loading = true;
+    this.almacenServicio.listarAlmacenes('')
+      .subscribe(response => {
+        this.lstAlmacenes = response as any[];
+        console.log(this.lstAlmacenes);
         this.loading = false;
       },
        ((error: HttpErrorResponse) => {
@@ -193,6 +228,38 @@ export class CrearArticuloComponent implements OnInit {
             { enableHtml: true, closeButton: true });
         }
       }));
+  }
+
+  MostrarCamposTipoProducto(event){
+    const idtipo = Number(event);
+    if (idtipo === 1){
+      this.visiblecostoxproducto = true;
+      this.visiblecantidad= true;
+      this.visiblecantidadminima=true;
+      this.visiblecantidadmaxima=true;
+      this.visiblebodega=true;
+     
+
+    }
+    else if (idtipo === 2){
+
+      this.visiblecostoxproducto = false;
+      this.visiblecantidad= false;
+      this.visiblecantidadminima=false;
+      this.visiblecantidadmaxima=false;
+      this.visiblebodega=false;
+    }
+  
+  }
+  onCrearBodega(){
+    this.bsModalRef = this.modalService.show(CrearAlmacenModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if (result){
+        this.listarBodegas();
+      }
+      console.log('results', result);
+
+    });
   }
   get codigo(){
     return this.formarticulo.get('codigo');
