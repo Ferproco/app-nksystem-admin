@@ -92,8 +92,8 @@ import { MensajeEliminarComponent } from './components/mensajeria/mensaje-elimin
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { CrearTipoImpuestoModalComponent } from './components/tipoimpuesto/crear-tipo-impuesto-modal/crear-tipo-impuesto-modal.component';
-import { CrearFormapagoModalComponent } from './components/formapago/crear-formapago-modal/crear-formapago-modal.component';
-import { CrearAlmacenModalComponent } from './components/almacen/crear-almacen-modal/crear-almacen-modal.component';
+import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
+import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 
 
 @NgModule({
@@ -140,8 +140,8 @@ import { CrearAlmacenModalComponent } from './components/almacen/crear-almacen-m
     CrearContactoComponent,
     MensajeEliminarComponent,
     CrearTipoImpuestoModalComponent,
-    CrearFormapagoModalComponent,
-    CrearAlmacenModalComponent
+    CatalogoTipoImpuestoComponentComponent,
+    CrearTipoImpuestoComponentComponent
 
   ],
   imports: [
