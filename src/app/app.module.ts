@@ -19,6 +19,9 @@ import { RegistrarseComponent } from './components/login/registrarse/registrarse
 import { MainComponent } from './components/main/main.component';
 import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filter-articulo.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+// RECOMMENDED
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { ClienteService } from './components/cliente/ClienteService.service';
 import { FamiliaService } from './components/familia/FamiliaService.service';
@@ -91,10 +94,11 @@ import { CrearArticuloComponent } from './components/articulo/crear-articulo/cre
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import * as accordion from 'ngx-bootstrap/accordion';
 import { CrearTipoImpuestoModalComponent } from './components/tipoimpuesto/crear-tipo-impuesto-modal/crear-tipo-impuesto-modal.component';
 import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
 import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -142,6 +146,7 @@ import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/c
     CrearTipoImpuestoModalComponent,
     CatalogoTipoImpuestoComponentComponent,
     CrearTipoImpuestoComponentComponent
+   
 
   ],
   imports: [
@@ -169,7 +174,13 @@ import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/c
     MatCheckboxModule,
     MatDialogModule,
     BsDatepickerModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    AccordionModule.forRoot(),
+    ButtonsModule.forRoot(),
+    MatSlideToggleModule,
+   
+    
   ],
   providers: [
     ArticuloService,

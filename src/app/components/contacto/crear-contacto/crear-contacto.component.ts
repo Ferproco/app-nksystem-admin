@@ -17,6 +17,7 @@ import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-mo
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
+
 export interface Tipopersona{
   id: number;
   nombre: string;
@@ -28,8 +29,12 @@ export interface Tipopersona{
   templateUrl: './crear-contacto.component.html',
   styleUrls: ['./crear-contacto.component.css']
 })
+
 export class CrearContactoComponent implements OnInit {
   
+  radioModel = 'Middle';
+  uncheckableRadioModel = 'Middle';
+
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
@@ -46,6 +51,7 @@ export class CrearContactoComponent implements OnInit {
   lstMunicipios: any [] = [];
   idnegocio: number;
   lstListaprecios: any [] = [];
+  arreglonumeros:number [] = [41,37, 29, 23, 19,17, 13, 7,3];
 
   paisxdefecto = 48;
   vendedorxdefecto=1;
@@ -53,14 +59,16 @@ export class CrearContactoComponent implements OnInit {
   plazocreditoxdefecto=1;
   tipopersonaxdefecto=2;
   condicionadoxdefecto=0;
-  
-  visible = false;
+    
+  visible = true;
   visiblenombres=false;
   visiblerazonsocial=true;
-  visibleresponsabilidadtributaria=false;
+  visibleresponsabilidadtributaria=true;
   visibledepartamento=true;
   visiblemunicipio=true;
   visiblecodigodv=false;
+
+  
   
 
   tipopersona: Tipopersona[] = [
@@ -80,6 +88,9 @@ export class CrearContactoComponent implements OnInit {
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
   bsModalRef: any;
+
+  customClass = 'customClass';
+  isFirstOpen = true;
 
   constructor(private contactoServicio: ContactoService,
               private tipoidentificacionServicio: TipoIdentificacionService,
@@ -307,20 +318,20 @@ export class CrearContactoComponent implements OnInit {
     }
     else if (idtipo === 4 || idtipo === 5 || idtipo === 8){
 
-      this.visible = false;
+      this.visible = true;
       this.visiblenombres = true;
       this.visiblerazonsocial=false;
-      this.visibleresponsabilidadtributaria=false;
+      this.visibleresponsabilidadtributaria=true;
       this.visiblemunicipio=false;
       this.visibledepartamento=false;
       this.visiblecodigodv=false;
 
     }
     else{
-      this.visible = false;
+      this.visible = true;
       this.visiblenombres = true;
       this.visiblerazonsocial=false;
-      this.visibleresponsabilidadtributaria=false;
+      this.visibleresponsabilidadtributaria=true;
       this.visiblemunicipio=true;
       this.visibledepartamento=true;
       this.visiblecodigodv=false;
@@ -332,7 +343,7 @@ export class CrearContactoComponent implements OnInit {
     if (idtipo === 1){
       this.visiblenombres = true;
       this.visiblerazonsocial=false;
-      this.visibleresponsabilidadtributaria=false;
+      this.visibleresponsabilidadtributaria=true;
     }
     else{
       this.visiblenombres = false;
@@ -382,6 +393,48 @@ export class CrearContactoComponent implements OnInit {
     });
   }
 
+  CalcularDigitoVerficacion(event){
+    
+    const arreglonumeroidentificacion = event;
+    let resultadomultiplicacion = 0;  
+    let sumaresultadomultiplicacion = 0; 
+    const divisionnumero=11;
+    let resultadodivision = 0;
+    let posicionarreglo1=0; 
+    let posicionarreglo2=0;
+
+         for (let numero of this.arreglonumeros){
+          console.log('Primer arreglo ' + numero);
+          posicionarreglo1= posicionarreglo1 + 1;
+          posicionarreglo2=0;
+           for (let element of arreglonumeroidentificacion){
+
+             posicionarreglo2=posicionarreglo2 + 1;;
+             console.log('Primera posicion ' + posicionarreglo1);
+             console.log('Segunda posicion ' + posicionarreglo2);
+             console.log('Segundo for ' + Number(element));
+             if(posicionarreglo1===posicionarreglo2){
+              resultadomultiplicacion=numero * element;
+              console.log('Resultado de la multiplicacion es ' + Number(resultadomultiplicacion));
+              sumaresultadomultiplicacion=sumaresultadomultiplicacion+resultadomultiplicacion;
+             }
+             console.log('Resultado de la suma es ' + Number(sumaresultadomultiplicacion));
+           };
+           
+        }
+        resultadodivision=sumaresultadomultiplicacion/divisionnumero;
+        console.log('Resultado de la suma es ' + Number(resultadodivision));
+        let parteDecimal = resultadodivision % 1; // Lo que sobra de dividir al número entre 1
+        let parteEntera = resultadodivision - parteDecimal; 
+        console.log('Resultado de la parteDecimal es ' + Number(parteDecimal));
+        console.log('Resultado de la parteEntera es ' + Number(parteEntera));
+        let resultado=parteDecimal * divisionnumero;
+        console.log('Resultado  es ' + Number(resultado));
+        let resultadofinal = Math.round(resultado);
+        console.log('Resultado final  es ' + Number(resultadofinal));
+        this.formcontacto.get('codigodv').setValue(Number(resultadofinal));
+        this.condicionadoxdefecto=resultadofinal;
+  }
   get codtipocontibuyente(){
     return this.formcontacto.get('codtipocontibuyente');
   }
@@ -451,4 +504,9 @@ export class CrearContactoComponent implements OnInit {
 
     });
   }
+  
+ 
+
+  
+
 }

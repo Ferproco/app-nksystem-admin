@@ -43,3 +43,8 @@
 .invalid-mensaje {
   color: #FF0000;
 }
+
+.example-form mat-slide-toggle {
+  margin: 8px 0;
+  display: block;
+}
