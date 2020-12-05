@@ -118,13 +118,82 @@ export class CrearContactoComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.buildForm(this.ContactoModel);
+
     this.listarTipoIdentificacion();
     this.listarTipoContribuyente();
     this. listarVendedores();
     this.listarFormasdepago();
     this.listarPais();
     this.listarListaPrecios();
+    this.buildForm(this.ContactoModel);
+  }
+
+  private buildForm(contacto: Contacto){
+
+    this.formcontacto = this.formbuilder.group({
+      codtipocontibuyente: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
+      codtipoidentificacion: [this.ContactoModel.codtipoidentificacion, [Validators.required]],
+      numeroidentificacion: [this.ContactoModel.numeroidentificacion, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombreprimero: [this.ContactoModel.nombreprimero, [Validators.pattern(this.parrterobservaciones)]],
+      nombresegundo: [this.ContactoModel.nombresegundo, [Validators.pattern(this.parrterobservaciones)]],
+      apellidoprimero: [this.ContactoModel.apellidoprimero, [Validators.pattern(this.parrterobservaciones)]],
+      apellidosegundo: [this.ContactoModel.apellidosegundo, [Validators.pattern(this.parrterobservaciones)]],
+      razonsocial: [this.ContactoModel.razonsocial, [Validators.pattern(this.parrterobservaciones)]],
+      telefonomovil: [this.ContactoModel.telefonomovil, [Validators.pattern(this.patten), Validators.maxLength(15)]],
+      telefonofijo1: [this.ContactoModel.telefonofijo1, [Validators.pattern(this.patten), Validators.maxLength(15)]],
+      telefonofijo2: [this.ContactoModel.telefonofijo2, [Validators.pattern(this.patten), Validators.maxLength(15)]],
+      telefonofax: [this.ContactoModel.telefonofax, [Validators.pattern(this.patten), Validators.maxLength(15)]],
+      direccionfiscal: [this.ContactoModel.direccionfiscal, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      correoe: [this.ContactoModel.correoe, [Validators.pattern(this.parrterobservaciones)]],
+      fecharegistro: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
+      codtipocontacto: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
+      codvendedor: [this.ContactoModel.codvendedor, [Validators.required]],
+      codformapago: [this.ContactoModel.codformapago, [Validators.required]],
+      codtipopersona: [this.ContactoModel.codtipopersona, [Validators.required]],
+      codpais: [this.ContactoModel.codpais],
+      coddepartamento: [this.ContactoModel.coddepartamento],
+      codmunicipio: [this.ContactoModel.codmunicipio],
+      lugarenvio: [this.ContactoModel.lugarenvio, [Validators.pattern(this.parrterobservaciones)]],
+      codlistaprecio: [this.ContactoModel.codlistaprecio, [Validators.required]],
+      direccionexogena: [this.ContactoModel.direccionfiscal, [Validators.pattern(this.parrterobservaciones)]],
+      paginaweb: [this.ContactoModel.paginaweb, [Validators.pattern(this.parrterobservaciones)]],
+      limitecreditohasta: [this.ContactoModel.limitecreditohasta, [ Validators.pattern(this.parrterobservaciones)]],
+      fechacreditodesde: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
+      fechacreditohasta: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
+      observaciones: [this.ContactoModel.observaciones, [Validators.pattern(this.parrterobservaciones)]],
+      descuentocondicionado: [this.ContactoModel.descuentocondicionado, [Validators.pattern(this.parrterobservaciones)]],
+      codigodv: [this.ContactoModel.codigodv, [Validators.pattern(this.paterhombre)]],
+      responsableiva: [this.ContactoModel.responsableiva, [Validators.required]],
+      status: [this.ContactoModel.status]
+    });
+  }
+
+  buscarContacto(id: number) {
+    let status = 0;
+    this.loading = true;
+    const obj = this.contactoServicio.mostrarContactos(id)
+      .subscribe(response => {
+        this.ContactoModel = response as any;
+        if (this.ContactoModel.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        this.buildForm(this.ContactoModel);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
   }
 
   guardarContacto(event: Event){
@@ -188,6 +257,7 @@ export class CrearContactoComponent implements OnInit {
         }
       }));
   }
+
   listarDepartamentos(event) {
     this.loading = true;
     this.lstDepartamentos = [];
@@ -356,77 +426,6 @@ export class CrearContactoComponent implements OnInit {
       this.visiblerazonsocial = true;
       this.visibleresponsabilidadtributaria = true;
     }
-
-  }
-
-  private buildForm(contacto: Contacto){
-
-    this.formcontacto = this.formbuilder.group({
-      codtipocontibuyente: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
-      codtipoidentificacion: [null, [Validators.required]],
-      numeroidentificacion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      nombreprimero: ['', [Validators.pattern(this.parrterobservaciones)]],
-      nombresegundo: ['', [Validators.pattern(this.parrterobservaciones)]],
-      apellidoprimero: ['', [Validators.pattern(this.parrterobservaciones)]],
-      apellidosegundo: ['', [Validators.pattern(this.parrterobservaciones)]],
-      razonsocial: ['', [Validators.pattern(this.parrterobservaciones)]],
-      telefonomovil: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
-      telefonofijo1: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
-      telefonofijo2: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
-      telefonofax: ['', [Validators.pattern(this.patten), Validators.maxLength(15)]],
-      direccionfiscal: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      correoe: ['', [Validators.pattern(this.parrterobservaciones)]],
-      fecharegistro: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      codtipocontacto: [0, [Validators.required]],
-      codvendedor: [this.vendedorxdefecto, [Validators.required]],
-      codformapago: [this.plazocreditoxdefecto, [Validators.required]],
-      codtipopersona: [this.tipopersonaxdefecto, [Validators.required]],
-      codpais: [this.paisxdefecto],
-      coddepartamento: [null],
-      codmunicipio: [null],
-      lugarenvio: ['', [Validators.pattern(this.parrterobservaciones)]],
-      cupo: ['', [ Validators.pattern(this.parrterobservaciones)]],
-      codlistaprecio: [this.listaprecioxdefecto, [Validators.required]],
-      direccionexogena: ['', [Validators.pattern(this.parrterobservaciones)]],
-      paginaweb: ['', [Validators.pattern(this.parrterobservaciones)]],
-      limitecreditohasta: ['', [ Validators.pattern(this.parrterobservaciones)]],
-      fechacreditodesde: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
-      fechacreditohasta: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
-      observaciones: ['', [Validators.pattern(this.parrterobservaciones)]],
-      descuentocondicionado: ['No', [Validators.pattern(this.parrterobservaciones)]],
-      codigodv: [this.condicionadoxdefecto, [Validators.pattern(this.paterhombre)]],
-      responsableiva: ['No', [Validators.required]],
-      status: ['1']
-    });
-  }
-
-  buscarContacto(id: number) {
-    let status = 0;
-    this.loading = true;
-    const obj = this.contactoServicio.mostrarContactos(id)
-      .subscribe(response => {
-        const contacto = response as any;
-        if (contacto.status === 'ACTIVO') {
-          status = 1;
-        }
-        else {
-          status = 0;
-        }
-        contacto.status = status;
-        /*this.formapago = new FormaPago(forma.id, forma.nombre, forma.dias, this.idnegocio, status);
-        this.buildForm(this.formapago);*/
-        this.loading = false;
-      },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          if (error.status === 404) {
-
-          }
-          else {
-            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-              { enableHtml: true, closeButton: true });
-          }
-        }));
 
   }
 

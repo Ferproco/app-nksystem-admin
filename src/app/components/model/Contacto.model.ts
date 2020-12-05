@@ -4,10 +4,10 @@ export class Contacto {
 
    public id: number;
    public codgrupo: number;
-   public codvendedor: number;
+   public codvendedor: number = null;
    public codnegocio: number;
-   public codtipoidentificacion: number;
-   public numeroidentificacion: string;
+   public codtipoidentificacion: number = null;
+   public numeroidentificacion: string = '';
    public codigodv: number;
    public nombreprimero: string;
    public nombresegundo: string;
@@ -21,8 +21,8 @@ export class Contacto {
    public direccionfiscal: string;
    public direccionexogena: string;
    public correoe: string;
-   public codtipocontacto: number;
-   public codformapago: number;
+   public codtipocontacto: number = null;
+   public codformapago: number = null;
    public codtipocontibuyente: number = null;
    public status: string;
    public regimeniva: string;
@@ -30,22 +30,22 @@ export class Contacto {
    public tarifa: string;
    public contribuyente: string;
    public codcontable: number;
-   public codtipopersona: number;
+   public codtipopersona: number = null;
    public codpais: number;
-   public coddepartamento: number;
-   public codmunicipio: number;
+   public coddepartamento: number = null;
+   public codmunicipio: number = null;
    public lugarenvio: string;
-   public codlistaprecio: number;
+   public codlistaprecio: number = null;
    public paginaweb: string;
-   public limitecreditohasta: number;
+   public limitecreditohasta: number = 0;
    public fechacreditodesde: string;
    public fechacreditohasta: string;
    public observaciones: string;
-   public descuentocondicionado: string;
+   public descuentocondicionado: string = 'No';
    public responsableiva: string;
    public declaranterenta: string;
    public autorretenedor: string;
-   public responsabilidadfiscal: string;
+   public responsabilidadfiscal: string = 'No';
    public actividadmercantil: string;
    public tipotributo: string;
 

@@ -5,7 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { MensajeEliminarComponent } from '../../mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { Contacto } from '../../model/Contacto.model';
 import { ContactoService } from '../ContactoService.service';
 
@@ -22,6 +24,8 @@ export class CatalogoContactosComponent implements OnInit {
   sortedData;
   LengthTable = 0;
 
+  bsModalRef: BsModalRef;
+
   displayedColumns: string[] = ['select', 'Tipo Identificacion', 'N° Identificacion', 'Nombre', 'Telefono', 'Email', 'Estatus', 'Acción'];
   dataSource: MatTableDataSource<Contacto>;
   selection = new SelectionModel<Contacto>(true, []);
@@ -31,7 +35,8 @@ export class CatalogoContactosComponent implements OnInit {
 
   constructor(private contactoServicio: ContactoService,
               private router: Router,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.listarContactos();
@@ -115,8 +120,35 @@ export class CatalogoContactosComponent implements OnInit {
     this.router.navigate(['contactos/crearcontacto', id]);
   }
 
-  Eliminar() {
+  Eliminar(id: number) {
+    this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+        this.eliminarporcodigo(id);
+      }
+    });
 
+  }
+
+  eliminarporcodigo(id: number){
+    this.loading = true;
+    this.contactoServicio.eliminarFormaPago(id)
+      .subscribe(response => {
+        const respuesta = response;
+        this.loading = false;
+        this.listarContactos();
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   ExportarExcel() {
