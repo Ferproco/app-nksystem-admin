@@ -51,7 +51,8 @@ export class CrearContactoComponent implements OnInit {
   lstMunicipios: any [] = [];
   idnegocio: number;
   lstListaprecios: any [] = [];
-  arreglonumeros:number [] = [41,37, 29, 23, 19,17, 13, 7,3];
+  
+  
 
   paisxdefecto = 48;
   vendedorxdefecto=1;
@@ -393,26 +394,60 @@ export class CrearContactoComponent implements OnInit {
     });
   }
 
+
   CalcularDigitoVerficacion(event){
-    
-    const arreglonumeroidentificacion = event;
+    const arreglonumeros:number [] = [71,67,59,53,47,43,41,37,29,23,19,17,13,7,3];
+    let arreglonumeroidentificacion = event as any[];
     let resultadomultiplicacion = 0;  
     let sumaresultadomultiplicacion = 0; 
     const divisionnumero=11;
     let resultadodivision = 0;
     let posicionarreglo1=0; 
     let posicionarreglo2=0;
+    let contador=0;
 
-         for (let numero of this.arreglonumeros){
-          console.log('Primer arreglo ' + numero);
+    
+
+     // arreglonumeroidentificacion.replace('', '.');
+     console.log('longitud del arregloconstante ' +arreglonumeros.length);
+     console.log('longitud del numero de identificacion ' +arreglonumeroidentificacion.length);
+      for (let num of arreglonumeroidentificacion){
+      
+       // console.log('valor de posicion' +arreglonumeroidentificacion[contador]);
+        //if(arreglonumeroidentificacion[contador]==='.')
+       // arreglonumeroidentificacion.splice(contador,1);
+      //  console.log('valor de posicion modificado1' +arreglonumeroidentificacion);
+      //arreglonumeroidentificacion.splice(contador,contador);
+      contador=contador + 1;
+     
+
+     //var i = arreglonumeroidentificacion.indexOf('.');
+ 
+     //if ( i !== -1 ) {
+      //arreglonumeroidentificacion.splice( i, 1 );
+     //for (let nume of arreglonumeroidentificacion){
+      
+      //console.log('valor de posicion modificado' +arreglonumeroidentificacion[nume]);
+      console.log('valor de posicion modificado' +arreglonumeroidentificacion[contador]);
+      
+       //}
+    // }
+    
+    
+    }
+
+    console.log('longitud del arregloconstante' +arreglonumeros.length);
+    console.log('longitud del numero de identificacion' +arreglonumeroidentificacion.length);
+         for (let numero of arreglonumeros){
+          console.log('arreglo constante' + numero);
           posicionarreglo1= posicionarreglo1 + 1;
           posicionarreglo2=0;
            for (let element of arreglonumeroidentificacion){
 
              posicionarreglo2=posicionarreglo2 + 1;;
-             console.log('Primera posicion ' + posicionarreglo1);
-             console.log('Segunda posicion ' + posicionarreglo2);
-             console.log('Segundo for ' + Number(element));
+             console.log(' posicion arreglo contasnte' + posicionarreglo1);
+             console.log(' posicion numero identificacion' + posicionarreglo2);
+             console.log('Arreglo numero iden for ' + Number(element));
              if(posicionarreglo1===posicionarreglo2){
               resultadomultiplicacion=numero * element;
               console.log('Resultado de la multiplicacion es ' + Number(resultadomultiplicacion));
@@ -428,13 +463,32 @@ export class CrearContactoComponent implements OnInit {
         let parteEntera = resultadodivision - parteDecimal; 
         console.log('Resultado de la parteDecimal es ' + Number(parteDecimal));
         console.log('Resultado de la parteEntera es ' + Number(parteEntera));
+        
         let resultado=parteDecimal * divisionnumero;
         console.log('Resultado  es ' + Number(resultado));
+        
         let resultadofinal = Math.round(resultado);
+        let digitoverificacion=0;
+        if(resultadofinal===0) {
+          
+          digitoverificacion=0;
+
+        }
+        else if(resultadofinal===1)
+        {
+          
+          digitoverificacion=1;
+
+        }
+         else {
+
+          digitoverificacion= 11 - resultadofinal;
+        }
         console.log('Resultado final  es ' + Number(resultadofinal));
-        this.formcontacto.get('codigodv').setValue(Number(resultadofinal));
-        this.condicionadoxdefecto=resultadofinal;
+        this.formcontacto.get('codigodv').setValue(Number(digitoverificacion));
+        this.condicionadoxdefecto=digitoverificacion;
   }
+  
   get codtipocontibuyente(){
     return this.formcontacto.get('codtipocontibuyente');
   }

@@ -6,6 +6,7 @@ export class Contacto {
    codnegocio: number;
    codtipoidentificacion: number;
    numeroidentificacion: string;
+   codigodv:number;
    nombreprimero:string;   
    nombresegundo:string;
    apellidoprimero:string;
@@ -38,9 +39,14 @@ export class Contacto {
    fechacreditodesde:string;
    fechacreditohasta:string;
    observaciones:string;
-   descuentocondicionado:string;
-   codigodv:number;
+   descuentocondicionado:string;   
    responsableiva:string;
+   declaranterenta:string;
+   autorretenedor:string;
+   responsabilidadfiscal :string;
+   actividadmercantil:string;
+   tipotributo:string;
+
 
   constructor(id: number, codgrupo: number, codvendedor: number, codnegocio: number, codtipoidentificacion: number,
     numeroidentificacion: string, nombreprimero:string, nombresegundo:string, apellidoprimero:string,
@@ -49,7 +55,8 @@ export class Contacto {
     codtipocontibuyente: number, status: string, regimeniva: string, fecharegistro: Date, tarifa: string, contribuyente: string,
     codcontable: number,codtipopersona:number,codpais:number,coddepartamento:number,codmunicipio:number,lugarenvio:string,
     codlistaprecio:number, paginaweb:string ,limitecreditohasta:number, fechacreditodesde:string,
-     fechacreditohasta:string, observaciones:string,descuentocondicionado:string,codigodv:number,responsableiva:string) {
+     fechacreditohasta:string, observaciones:string,descuentocondicionado:string,codigodv:number,responsableiva:string,declaranterenta:string,
+     autorretenedor:string, responsabilidadfiscal :string,actividadmercantil:string, tipotributo:string ) {
 
     this.id = id;
     this.codgrupo = codgrupo;
@@ -92,6 +99,11 @@ export class Contacto {
     this.descuentocondicionado=descuentocondicionado;
     this.codigodv=codigodv;
     this.responsableiva=responsableiva;
+    this.declaranterenta=declaranterenta;
+    this.autorretenedor=autorretenedor;
+    this.responsabilidadfiscal=responsabilidadfiscal;
+    this.actividadmercantil=actividadmercantil;
+    this.tipotributo=tipotributo;
 
   }
 
