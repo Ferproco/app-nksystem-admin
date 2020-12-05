@@ -33,7 +33,9 @@ import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/c
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent},
+  { path: 'login', component: LoginComponent},
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  /*{ path: '', component: LoginComponent},*/
   { path: 'main/dashboard', component: MainComponent},
   { path: 'inventario/listararticulos', component: CatalogoArticuloComponent},
   { path: 'inventario/creararticulo', component: CrearArticuloComponent},
@@ -62,7 +64,8 @@ const routes: Routes = [
   { path: 'compras/listarproveedores', component: CatalogoProveedorComponent},
   { path: 'compras/crearproveedor', component: CrearProveedorComponent},
   { path: 'contactos/listarcontactos', component: CatalogoContactosComponent},
-  { path: 'contactos/crearcontacto', component: CrearContactoComponent}
+  { path: 'contactos/crearcontacto', component: CrearContactoComponent},
+  { path: 'contactos/crearcontacto/:id', component: CrearContactoComponent}
 
 ];
 

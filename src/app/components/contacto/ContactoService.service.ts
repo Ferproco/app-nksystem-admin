@@ -15,6 +15,13 @@ export class ContactoService{
 
   }
 
+  mostrarContactos(id: number){
+
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/contacto/' + id;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+
   listarContactos(codnegocio: string){
     const body = {
 
@@ -32,9 +39,9 @@ export class ContactoService{
       codnegocio: Number(idnegocio),
       numeroidentificacion: contacto.numeroidentificacion,
       nombreprimero: contacto.nombreprimero,
-      nombresegundo:contacto.nombresegundo,
-      apellidoprimero:contacto.apellidoprimero,
-      apellidosegundo:contacto.apellidosegundo,
+      nombresegundo: contacto.nombresegundo,
+      apellidoprimero: contacto.apellidoprimero,
+      apellidosegundo: contacto.apellidosegundo,
       razonsocial: contacto.razonsocial,
       telefonomovil: contacto.telefonomovil,
       telefonofijo1: contacto.telefonofijo1,
@@ -47,20 +54,20 @@ export class ContactoService{
       codvendedor: Number(contacto.codvendedor),
       codformapago: Number(contacto.codformapago),
       codtipopersona: Number(contacto.codtipopersona),
-      codpais:Number(contacto.codpais),
-      coddepartamento:Number(contacto.coddepartamento),
-      codmunicipio:Number(contacto.codmunicipio),
-      lugarenvio:contacto.lugarenvio,
-      codlistaprecio:Number(contacto.codlistaprecio),
-      direccionexogena:contacto.direccionexogena,
-      paginaweb:contacto.paginaweb,
-      limitecreditohasta:Number(contacto.limitecreditohasta),
-      fechacreditodesde:new Date(contacto.fechacreditodesde),
-      fechacreditohasta:new Date(contacto.fechacreditohasta),
-      observaciones:contacto.observaciones,
-      descuentocondicionado:contacto.descuentocondicionado,
-      codigodv:contacto.codigodv,
-      responsableiva:contacto.responsableiva,
+      codpais: Number(contacto.codpais),
+      coddepartamento: Number(contacto.coddepartamento),
+      codmunicipio: Number(contacto.codmunicipio),
+      lugarenvio: contacto.lugarenvio,
+      codlistaprecio: Number(contacto.codlistaprecio),
+      direccionexogena: contacto.direccionexogena,
+      paginaweb: contacto.paginaweb,
+      limitecreditohasta: Number(contacto.limitecreditohasta),
+      fechacreditodesde: new Date(contacto.fechacreditodesde),
+      fechacreditohasta: new Date(contacto.fechacreditohasta),
+      observaciones: contacto.observaciones,
+      descuentocondicionado: contacto.descuentocondicionado,
+      codigodv: contacto.codigodv,
+      responsableiva: contacto.responsableiva,
       status: contacto.status === '1' ? 'ACTIVO' : 'INACTIVO'
 
     };

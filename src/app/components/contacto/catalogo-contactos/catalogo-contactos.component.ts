@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,8 +22,9 @@ export class CatalogoContactosComponent implements OnInit {
   sortedData;
   LengthTable = 0;
 
-  displayedColumns: string[] = ['Tipo Identificacion', 'N° Identificacion', 'Nombre', 'Telefono' , 'Email', 'Status', 'Acción'];
+  displayedColumns: string[] = ['select', 'Tipo Identificacion', 'N° Identificacion', 'Nombre', 'Telefono', 'Email', 'Estatus', 'Acción'];
   dataSource: MatTableDataSource<Contacto>;
+  selection = new SelectionModel<Contacto>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -41,11 +43,14 @@ export class CatalogoContactosComponent implements OnInit {
       .subscribe(response => {
         const listacontacto = response as Contacto[];
         listacontacto.forEach(element => {
-          if (element.nombreprimero === ''){
+          if (element.nombreprimero === '') {
             element.nombreprimero = element.razonsocial;
           }
-          else{
-            element.nombreprimero = element.nombreprimero + '' + element.nombresegundo + '' + element.apellidoprimero + '' + element.apellidosegundo;
+          else {
+            element.nombreprimero = element.nombreprimero   + ' ' +
+                                    element.nombresegundo   + ' ' +
+                                    element.apellidoprimero + ' ' +
+                                    element.apellidosegundo;
           }
           this.lstContactos.push(element);
         });
@@ -57,12 +62,12 @@ export class CatalogoContactosComponent implements OnInit {
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
-          if (error.status === 404){
+          if (error.status === 404) {
 
           }
-          else{
+          else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
+              { enableHtml: true, closeButton: true });
           }
         }));
   }
@@ -101,29 +106,52 @@ export class CatalogoContactosComponent implements OnInit {
     });*/
   }
 
-  Ver(){
+  Ver() {
 
   }
 
-  Modificar(){
+  Modificar(id: number){
+
+    this.router.navigate(['contactos/crearcontacto', id]);
+  }
+
+  Eliminar() {
 
   }
 
-  Eliminar(){
+  ExportarExcel() {
 
   }
-
-  ExportarExcel(){
-
-  }
-  ExportarTxt(){
+  ExportarTxt() {
 
   }
-  Refrescar(){
+  Refrescar() {
     this.listarContactos();
   }
-  Importar(){
+  Importar() {
 
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.LengthTable;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Contacto): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
 

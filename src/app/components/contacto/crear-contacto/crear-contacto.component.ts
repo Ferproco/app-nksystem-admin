@@ -4,7 +4,7 @@ import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ContactoService } from '../ContactoService.service';
 import { TipoIdentificacionService } from './TipoIdentificacionService.service';
@@ -16,6 +16,8 @@ import { ListaPrecioService } from '../../listapeccio/ListaPrecioService.service
 import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Contacto } from '../../model/Contacto.model';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 
 export interface Tipopersona{
@@ -31,14 +33,14 @@ export interface Tipopersona{
 })
 
 export class CrearContactoComponent implements OnInit {
-  
+
   radioModel = 'Middle';
   uncheckableRadioModel = 'Middle';
 
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
-  
+
   id = 0;
   loading = false;
   formcontacto: FormGroup;
@@ -50,38 +52,35 @@ export class CrearContactoComponent implements OnInit {
   lstDepartamentos: any [] = [];
   lstMunicipios: any [] = [];
   idnegocio: number;
+  idpais: number;
   lstListaprecios: any [] = [];
-  
-  
 
-  paisxdefecto = 48;
-  vendedorxdefecto=1;
-  listaprecioxdefecto=1;
-  plazocreditoxdefecto=1;
-  tipopersonaxdefecto=2;
-  condicionadoxdefecto=0;
-    
+  ContactoModel: Contacto;
+
+
+  paisxdefecto = 0;
+  vendedorxdefecto = 1 ;
+  listaprecioxdefecto = 1;
+  plazocreditoxdefecto = 1;
+  tipopersonaxdefecto = 2;
+  condicionadoxdefecto = 0;
+
   visible = true;
-  visiblenombres=false;
-  visiblerazonsocial=true;
-  visibleresponsabilidadtributaria=true;
-  visibledepartamento=true;
-  visiblemunicipio=true;
-  visiblecodigodv=false;
-
-  
-  
+  visiblenombres = false;
+  visiblerazonsocial = true;
+  visibleresponsabilidadtributaria = true;
+  visibledepartamento = true;
+  visiblemunicipio = true;
+  visiblecodigodv = false;
 
   tipopersona: Tipopersona[] = [
     {id: 1, nombre: 'Persona Natural'},
     {id: 2, nombre: 'Persona Juridica'}
-  ]
-
-  
+  ];
 
   saleData = [
-    { name: "Compras", value: 105000 },
-    { name: "Ventas", value: 55000 }
+    { name: 'Compras', value: 105000 },
+    { name: 'Ventas', value: 55000 }
   ];
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
@@ -101,25 +100,31 @@ export class CrearContactoComponent implements OnInit {
               private paisService: PaisService,
               private departamentoService: DepartamentoService,
               private municipioServicio: MunicipioService,
-              private listaprecioServicio:ListaPrecioService,
+              private listaprecioServicio: ListaPrecioService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router,
+              private route: ActivatedRoute,
               private modalService: BsModalService) {
-      this.buildForm();
+
+      this.ContactoModel = new Contacto();
       this.idnegocio = 1;
+      this.idpais = 48;
       this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+      if (this.route.snapshot.params.id){
+        this.id = this.route.snapshot.params.id;
+        this.buscarContacto(this.id);
+      }
     }
 
   ngOnInit(): void {
+    this.buildForm(this.ContactoModel);
     this.listarTipoIdentificacion();
     this.listarTipoContribuyente();
     this. listarVendedores();
     this.listarFormasdepago();
-    this.listarPais();   
-    
+    this.listarPais();
     this.listarListaPrecios();
-
   }
 
   guardarContacto(event: Event){
@@ -206,11 +211,11 @@ export class CrearContactoComponent implements OnInit {
       }));
   }
 
- 
+
   listarMunicipios (event) {
     this.loading = true;
     this.lstMunicipios = [];
-    
+
     console.log('el id del departamento ' + event );
     this.municipioServicio.listarMunicipiosporDepartamento('', Number(event))
       .subscribe(response => {
@@ -285,6 +290,7 @@ export class CrearContactoComponent implements OnInit {
         }
       }));
   }
+
   listarListaPrecios() {
     this.loading = true;
     this.listaprecioServicio.listarListaPrecios('')
@@ -307,35 +313,34 @@ export class CrearContactoComponent implements OnInit {
 
   MostrarCampos(event){
     const idtipo = Number(event);
-    if (idtipo === 6){
+    if (idtipo === 6)
+    {
       this.visible = true;
       this.visiblenombres = false;
-      this.visiblerazonsocial=true;
-      this.visibleresponsabilidadtributaria=true;
-      this.visiblemunicipio=true;
-      this.visibledepartamento=true;
-      this.visiblecodigodv=true;
-
+      this.visiblerazonsocial = true;
+      this.visibleresponsabilidadtributaria = true;
+      this.visiblemunicipio = true;
+      this.visibledepartamento = true;
+      this.visiblecodigodv = true;
     }
-    else if (idtipo === 4 || idtipo === 5 || idtipo === 8){
-
+    else if (idtipo === 4 || idtipo === 5 || idtipo === 8)
+    {
       this.visible = true;
       this.visiblenombres = true;
-      this.visiblerazonsocial=false;
-      this.visibleresponsabilidadtributaria=true;
-      this.visiblemunicipio=false;
-      this.visibledepartamento=false;
-      this.visiblecodigodv=false;
-
+      this.visiblerazonsocial = false;
+      this.visibleresponsabilidadtributaria = true;
+      /*this.visiblemunicipio = false;
+      this.visibledepartamento = false;*/
+      this.visiblecodigodv = false;
     }
     else{
       this.visible = true;
       this.visiblenombres = true;
-      this.visiblerazonsocial=false;
-      this.visibleresponsabilidadtributaria=true;
-      this.visiblemunicipio=true;
-      this.visibledepartamento=true;
-      this.visiblecodigodv=false;
+      this.visiblerazonsocial = false;
+      this.visibleresponsabilidadtributaria = true;
+      this.visiblemunicipio = true;
+      this.visibledepartamento = true;
+      this.visiblecodigodv = false;
     }
 
   }
@@ -343,20 +348,21 @@ export class CrearContactoComponent implements OnInit {
     const idtipo = Number(event);
     if (idtipo === 1){
       this.visiblenombres = true;
-      this.visiblerazonsocial=false;
-      this.visibleresponsabilidadtributaria=true;
+      this.visiblerazonsocial = false;
+      this.visibleresponsabilidadtributaria = true;
     }
     else{
       this.visiblenombres = false;
-      this.visiblerazonsocial=true;
-      this.visibleresponsabilidadtributaria=true;
+      this.visiblerazonsocial = true;
+      this.visibleresponsabilidadtributaria = true;
     }
 
   }
 
-  private buildForm(){
+  private buildForm(contacto: Contacto){
+
     this.formcontacto = this.formbuilder.group({
-      codtipocontibuyente: [null, [Validators.required]],
+      codtipocontibuyente: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
       codtipoidentificacion: [null, [Validators.required]],
       numeroidentificacion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       nombreprimero: ['', [Validators.pattern(this.parrterobservaciones)]],
@@ -374,121 +380,146 @@ export class CrearContactoComponent implements OnInit {
       codtipocontacto: [0, [Validators.required]],
       codvendedor: [this.vendedorxdefecto, [Validators.required]],
       codformapago: [this.plazocreditoxdefecto, [Validators.required]],
-      codtipopersona:[this.tipopersonaxdefecto, [Validators.required]],
-      codpais:[this.paisxdefecto],
-      coddepartamento:[null],
-      codmunicipio:[null],
+      codtipopersona: [this.tipopersonaxdefecto, [Validators.required]],
+      codpais: [this.paisxdefecto],
+      coddepartamento: [null],
+      codmunicipio: [null],
       lugarenvio: ['', [Validators.pattern(this.parrterobservaciones)]],
       cupo: ['', [ Validators.pattern(this.parrterobservaciones)]],
-      codlistaprecio:[this.listaprecioxdefecto, [Validators.required]],
-      direccionexogena:['', [Validators.pattern(this.parrterobservaciones)]],
+      codlistaprecio: [this.listaprecioxdefecto, [Validators.required]],
+      direccionexogena: ['', [Validators.pattern(this.parrterobservaciones)]],
       paginaweb: ['', [Validators.pattern(this.parrterobservaciones)]],
       limitecreditohasta: ['', [ Validators.pattern(this.parrterobservaciones)]],
-      fechacreditodesde:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
-      fechacreditohasta:[formatDate(new Date(), 'yyyy-MM-dd', 'en')],
+      fechacreditodesde: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
+      fechacreditohasta: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
       observaciones: ['', [Validators.pattern(this.parrterobservaciones)]],
       descuentocondicionado: ['No', [Validators.pattern(this.parrterobservaciones)]],
-      codigodv:[this.condicionadoxdefecto, [Validators.pattern(this.paterhombre)]],
+      codigodv: [this.condicionadoxdefecto, [Validators.pattern(this.paterhombre)]],
       responsableiva: ['No', [Validators.required]],
-      status: ['1', [Validators.required]]
+      status: ['1']
     });
   }
 
+  buscarContacto(id: number) {
+    let status = 0;
+    this.loading = true;
+    const obj = this.contactoServicio.mostrarContactos(id)
+      .subscribe(response => {
+        const contacto = response as any;
+        if (contacto.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        contacto.status = status;
+        /*this.formapago = new FormaPago(forma.id, forma.nombre, forma.dias, this.idnegocio, status);
+        this.buildForm(this.formapago);*/
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-  CalcularDigitoVerficacion(event){
-    const arreglonumeros:number [] = [71,67,59,53,47,43,41,37,29,23,19,17,13,7,3];
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
+  }
+
+  CalcularDigitoVerficacion(event) {
+
+    const arreglonumeros: number[] = [71, 67, 59, 53, 47, 43, 41, 37, 29, 23, 19, 17, 13, 7, 3];
     let arreglonumeroidentificacion = event as any[];
-    let resultadomultiplicacion = 0;  
-    let sumaresultadomultiplicacion = 0; 
-    const divisionnumero=11;
+    let resultadomultiplicacion = 0;
+    let sumaresultadomultiplicacion = 0;
+    const divisionnumero = 11;
     let resultadodivision = 0;
-    let posicionarreglo1=0; 
-    let posicionarreglo2=0;
-    let contador=0;
+    let posicionarreglo1 = 0;
+    let posicionarreglo2 = 0;
+    let contador = 0;
 
-    
+    // arreglonumeroidentificacion.replace('', '.');
+    console.log('longitud del arregloconstante ' + arreglonumeros.length);
+    console.log('longitud del numero de identificacion ' + arreglonumeroidentificacion.length);
+    for (let num of arreglonumeroidentificacion) {
 
-     // arreglonumeroidentificacion.replace('', '.');
-     console.log('longitud del arregloconstante ' +arreglonumeros.length);
-     console.log('longitud del numero de identificacion ' +arreglonumeroidentificacion.length);
-      for (let num of arreglonumeroidentificacion){
-      
-       // console.log('valor de posicion' +arreglonumeroidentificacion[contador]);
-        //if(arreglonumeroidentificacion[contador]==='.')
-       // arreglonumeroidentificacion.splice(contador,1);
+      // console.log('valor de posicion' +arreglonumeroidentificacion[contador]);
+      //if(arreglonumeroidentificacion[contador]==='.')
+      // arreglonumeroidentificacion.splice(contador,1);
       //  console.log('valor de posicion modificado1' +arreglonumeroidentificacion);
       //arreglonumeroidentificacion.splice(contador,contador);
-      contador=contador + 1;
-     
+      contador = contador + 1;
 
-     //var i = arreglonumeroidentificacion.indexOf('.');
- 
-     //if ( i !== -1 ) {
+
+      //var i = arreglonumeroidentificacion.indexOf('.');
+
+      //if ( i !== -1 ) {
       //arreglonumeroidentificacion.splice( i, 1 );
-     //for (let nume of arreglonumeroidentificacion){
-      
+      //for (let nume of arreglonumeroidentificacion){
+
       //console.log('valor de posicion modificado' +arreglonumeroidentificacion[nume]);
-      console.log('valor de posicion modificado' +arreglonumeroidentificacion[contador]);
-      
-       //}
-    // }
-    
-    
+      console.log('valor de posicion modificado' + arreglonumeroidentificacion[contador]);
+
+      //}
+      // }
     }
 
-    console.log('longitud del arregloconstante' +arreglonumeros.length);
-    console.log('longitud del numero de identificacion' +arreglonumeroidentificacion.length);
-         for (let numero of arreglonumeros){
-          console.log('arreglo constante' + numero);
-          posicionarreglo1= posicionarreglo1 + 1;
-          posicionarreglo2=0;
-           for (let element of arreglonumeroidentificacion){
+    console.log('longitud del arregloconstante' + arreglonumeros.length);
+    console.log('longitud del numero de identificacion' + arreglonumeroidentificacion.length);
+    for (let numero of arreglonumeros) {
+      console.log('arreglo constante' + numero);
+      posicionarreglo1 = posicionarreglo1 + 1;
+      posicionarreglo2 = 0;
+      for (let element of arreglonumeroidentificacion) {
 
-             posicionarreglo2=posicionarreglo2 + 1;;
-             console.log(' posicion arreglo contasnte' + posicionarreglo1);
-             console.log(' posicion numero identificacion' + posicionarreglo2);
-             console.log('Arreglo numero iden for ' + Number(element));
-             if(posicionarreglo1===posicionarreglo2){
-              resultadomultiplicacion=numero * element;
-              console.log('Resultado de la multiplicacion es ' + Number(resultadomultiplicacion));
-              sumaresultadomultiplicacion=sumaresultadomultiplicacion+resultadomultiplicacion;
-             }
-             console.log('Resultado de la suma es ' + Number(sumaresultadomultiplicacion));
-           };
-           
+        posicionarreglo2 = posicionarreglo2 + 1;;
+        console.log(' posicion arreglo contasnte' + posicionarreglo1);
+        console.log(' posicion numero identificacion' + posicionarreglo2);
+        console.log('Arreglo numero iden for ' + Number(element));
+        if (posicionarreglo1 === posicionarreglo2) {
+          resultadomultiplicacion = numero * element;
+          console.log('Resultado de la multiplicacion es ' + Number(resultadomultiplicacion));
+          sumaresultadomultiplicacion = sumaresultadomultiplicacion + resultadomultiplicacion;
         }
-        resultadodivision=sumaresultadomultiplicacion/divisionnumero;
-        console.log('Resultado de la suma es ' + Number(resultadodivision));
-        let parteDecimal = resultadodivision % 1; // Lo que sobra de dividir al número entre 1
-        let parteEntera = resultadodivision - parteDecimal; 
-        console.log('Resultado de la parteDecimal es ' + Number(parteDecimal));
-        console.log('Resultado de la parteEntera es ' + Number(parteEntera));
-        
-        let resultado=parteDecimal * divisionnumero;
-        console.log('Resultado  es ' + Number(resultado));
-        
-        let resultadofinal = Math.round(resultado);
-        let digitoverificacion=0;
-        if(resultadofinal===0) {
-          
-          digitoverificacion=0;
+        console.log('Resultado de la suma es ' + Number(sumaresultadomultiplicacion));
+      };
 
-        }
-        else if(resultadofinal===1)
-        {
-          
-          digitoverificacion=1;
+    }
+    resultadodivision = sumaresultadomultiplicacion / divisionnumero;
+    console.log('Resultado de la suma es ' + Number(resultadodivision));
+    let parteDecimal = resultadodivision % 1; // Lo que sobra de dividir al número entre 1
+    let parteEntera = resultadodivision - parteDecimal;
+    console.log('Resultado de la parteDecimal es ' + Number(parteDecimal));
+    console.log('Resultado de la parteEntera es ' + Number(parteEntera));
 
-        }
-         else {
+    let resultado = parteDecimal * divisionnumero;
+    console.log('Resultado  es ' + Number(resultado));
 
-          digitoverificacion= 11 - resultadofinal;
-        }
-        console.log('Resultado final  es ' + Number(resultadofinal));
-        this.formcontacto.get('codigodv').setValue(Number(digitoverificacion));
-        this.condicionadoxdefecto=digitoverificacion;
+    let resultadofinal = Math.round(resultado);
+    let digitoverificacion = 0;
+    if (resultadofinal === 0) {
+
+      digitoverificacion = 0;
+
+    }
+    else if (resultadofinal === 1) {
+
+      digitoverificacion = 1;
+
+    }
+    else {
+
+      digitoverificacion = 11 - resultadofinal;
+    }
+    console.log('Resultado final  es ' + Number(resultadofinal));
+    this.formcontacto.get('codigodv').setValue(Number(digitoverificacion));
+    this.condicionadoxdefecto = digitoverificacion;
   }
-  
+
   get codtipocontibuyente(){
     return this.formcontacto.get('codtipocontibuyente');
   }
@@ -534,7 +565,7 @@ export class CrearContactoComponent implements OnInit {
   get limitecreditohasta(){
     return this.formcontacto.get('limitecreditohasta');
   }
-  
+
   get lugarenvio(){
     return this.formcontacto.get('lugarenvio');
   }
@@ -558,9 +589,11 @@ export class CrearContactoComponent implements OnInit {
 
     });
   }
-  
- 
 
-  
+  onChange(event: MatSlideToggleChange) {
+    console.log(event.checked + ' esto es lo que se chequeo');
+    this.formcontacto.get('status').setValue(event.checked === true ? 1 : 0);
+    console.log(this.formcontacto.get('status').value + ' EL VALOR DEL STATUS');
+  }
 
 }
