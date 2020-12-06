@@ -13,7 +13,9 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="breadcome-heading">
-                    <button type="submit" class="form-control" [disabled]="formcontacto.invalid"><i class="fa fa-save"
+                    <button type="submit" (mouseover)="cargarRequeridos($event)"
+                    matTooltip="{{camposrequeridos}}"
+                    class="form-control" [disabled]="formcontacto.invalid"><i class="fa fa-save"
                         aria-hidden="true"></i> Guardar
                     </button>
                   </div>
@@ -56,44 +58,24 @@
               <div class="sparkline10-graph">
 
                 <div class="row">
-                  <div class="col-lg-3">
+                  <div class="col-lg-4" *ngFor="let tipo of codtipocontacto;">
                     <div class="i-checks pull-left">
                       <label>
-                        <input type="radio" formControlName="codtipocontacto" checked="" value="1"
-                          name="codtipocontacto"> <i></i> Cliente
+                        <input type="radio" formControlName="codtipocontacto"
+                        (change)="onChangeTipo($event)"
+                        name="codtipocontacto" [value]="tipo.id">
+                        {{tipo.nombre}}
                       </label>
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <div class="i-checks pull-left">
-                      <label>
-                        <input type="radio" formControlName="codtipocontacto" checked="" value="2"
-                          name="codtipocontacto"> <i></i> Proveedor
-                      </label>
-                    </div>
+                    <mat-slide-toggle (change)="onChange($event)" formControlName="status">Activo
+                    </mat-slide-toggle>
                   </div>
-                  <div class="col-lg-4">
-                    <mat-slide-toggle (change)="onChange($event)" formControlName="status">Activo</mat-slide-toggle>
-                 </div>
                 </div>
                 <br>
-              <!--  <div class="row">
-                  <div class="col-lg-10">
-                    <div id="pwd-container3">
-                      <div class="form-group">
-                        <label>
-                          <input type="checkbox" formControlName="status" value="">
-                          <i></i> Activo</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>-->
-
-
-
                 <div class="row">
                   <div class="col-lg-5">
-
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Tipo Identificacion</label>
@@ -106,7 +88,6 @@
                         </select>
                       </div>
                     </div>
-
                     <div class="row">
                       <div class="col-lg-8">
                         <div id="pwd-container3">
@@ -261,7 +242,7 @@
                         <label for="username">Departamento</label>
                         <select class="select2_demo_3 form-control" formControlName="coddepartamento"
                           (change)="listarMunicipios($event.target.value)">
-                          <option [value]="null">Departamento</option>
+                          <option [value]="null">--Seleccione--</option>
                           <option value="{{departamento.id}}" *ngFor="let departamento of lstDepartamentos">
                             {{departamento.nombre}}</option>
                         </select>
@@ -271,7 +252,7 @@
                       <div class="form-group">
                         <label for="username">Municipio</label>
                         <select class="select2_demo_3 form-control" formControlName="codmunicipio">
-                          <option [value]="null">Municipio</option>
+                          <option [value]="null">--Seleccione--</option>
                           <option value="{{municipio.id}}" *ngFor="let municipio of lstMunicipios">
                             {{municipio.nombre}}</option>
                         </select>
@@ -370,7 +351,7 @@
                           <span class="input-group-btn"><button type="button" (click)="onCrearPlazoCredito()"
                               class="btn btn-primary">+</button></span>
                           <select class="select2_demo_3 form-control" formControlName="codformapago">
-                            <option value="{{formapago.id}}" *ngFor="let formapago of lstformaspago">
+                            <option [value]="formapago.id" *ngFor="let formapago of lstformaspago">
                               {{formapago.nombre}}</option>
                           </select>
                         </div>
@@ -382,7 +363,7 @@
                         <div class="input-group">
                           <span class="input-group-btn"><button type="button" class="btn btn-primary">+</button></span>
                           <select class="select2_demo_3 form-control" formControlName="codvendedor">
-                            <option value="{{vendedor.id}}" *ngFor="let vendedor of lstVendedores">
+                            <option [value]="vendedor.id" *ngFor="let vendedor of lstVendedores">
                               {{vendedor.nombre}}</option>
                           </select>
                         </div>
@@ -392,7 +373,7 @@
                       <div class="form-group">
                         <label for="username">Lista Precios</label>
                         <select class="select2_demo_3 form-control" formControlName="codlistaprecio">
-                          <option value="{{listaprecio.id}}" *ngFor="let listaprecio of lstListaprecios">
+                          <option [value]="listaprecio.id" *ngFor="let listaprecio of lstListaprecios">
                             {{listaprecio.numerolista}}</option>
                         </select>
                       </div>
@@ -533,8 +514,6 @@
                             </div>
 
                             <div class="col-lg-5">
-
-
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Dirección Exogena</label>

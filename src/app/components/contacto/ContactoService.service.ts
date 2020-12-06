@@ -77,5 +77,12 @@ export class ContactoService{
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
 
-
+  eliminarContacto(id: number){
+    const body = {
+      id: Number(id)
+    };
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/contacto/' + id;
+    return this.httpClient.delete(endpoint, {headers: httpHeaders});
+  }
 }

@@ -99,6 +99,7 @@ import { CrearTipoImpuestoModalComponent } from './components/tipoimpuesto/crear
 import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
 import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -146,7 +147,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     CrearTipoImpuestoModalComponent,
     CatalogoTipoImpuestoComponentComponent,
     CrearTipoImpuestoComponentComponent
-   
+
 
   ],
   imports: [
@@ -173,14 +174,15 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatTooltipModule,
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     BrowserAnimationsModule,
     AccordionModule.forRoot(),
     ButtonsModule.forRoot(),
     MatSlideToggleModule,
-   
-    
+
+
   ],
   providers: [
     ArticuloService,
