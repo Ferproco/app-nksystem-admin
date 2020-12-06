@@ -4,7 +4,7 @@ export class Contacto {
 
    public id: number;
    public codgrupo: number;
-   public codvendedor: number = null;
+   public codvendedor: number = 1;
    public codnegocio: number;
    public codtipoidentificacion: number = null;
    public numeroidentificacion: string = '';
@@ -21,21 +21,21 @@ export class Contacto {
    public direccionfiscal: string;
    public direccionexogena: string;
    public correoe: string;
-   public codtipocontacto: number = null;
-   public codformapago: number = null;
+   public codtipocontacto: number;
+   public codformapago: number = 1;
    public codtipocontibuyente: number = null;
-   public status: string;
+   public status: string = 'ACTIVO';
    public regimeniva: string;
    public fecharegistro: Date;
    public tarifa: string;
    public contribuyente: string;
    public codcontable: number;
    public codtipopersona: number = null;
-   public codpais: number;
+   public codpais: number = null;
    public coddepartamento: number = null;
    public codmunicipio: number = null;
    public lugarenvio: string;
-   public codlistaprecio: number = null;
+   public codlistaprecio: number = 1;
    public paginaweb: string;
    public limitecreditohasta: number = 0;
    public fechacreditodesde: string;

@@ -50,7 +50,13 @@
               <div class="main-sparkline13-hd">
                 <h1>
                   <i class="fa fa-server" aria-hidden="true"></i>
-                  Listado <span class="table-project-n">de</span> Contactos</h1>
+                  Listado <span class="table-project-n">de</span> Contactos
+                </h1>
+                <div class="view-mail-action view-mail-ov-d-n">
+                  <a href="#"><i class="fa fa-user login-user"></i> Clientes</a>
+                  <a class="compose-draft-bt" href="#"><i class="fa fa-print"></i> Proveedores</a>
+                  <a class="compose-discard-bt" href="#"><i class="fa fa-trash-o"></i> Todos</a>
+              </div>
               </div>
             </div>
             <div class="sparkline8-graph">
@@ -101,37 +107,37 @@
                     </td>
                   </ng-container>
                   <!-- Position Column -->
-                  <ng-container matColumnDef="Tipo Identificacion">
+                  <ng-container matColumnDef="TIPO IDENTIFICACION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                      Tipo Identificacion
+                      TIPO IDENTIFICACION
                     </th>
                     <td mat-cell *matCellDef="let element"> {{element.tipoidentificacion.nombre}} </td>
                   </ng-container>
 
                   <!-- Name Column -->
-                  <ng-container matColumnDef="N° Identificacion">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> N° Identificacion </th>
+                  <ng-container matColumnDef="N° IDENTIFICACION">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> N° IDENTIFICACION </th>
                     <td mat-cell *matCellDef="let element"> {{element.numeroidentificacion}} </td>
                   </ng-container>
 
                   <!-- Weight Column -->
-                  <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+                  <ng-container matColumnDef="NOMBRE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
                     <td mat-cell *matCellDef="let element"> {{element.nombreprimero}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="Telefono">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+                  <ng-container matColumnDef="TELEFONO">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TELEFONO </th>
                     <td mat-cell *matCellDef="let element"> {{element.telefonofijo1}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="Email">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                  <ng-container matColumnDef="EMAIL">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> EMAIL </th>
                     <td mat-cell *matCellDef="let element"> {{element.correoe}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="Estatus">
-                    <th mat-header-cell *matHeaderCellDef> Estatus </th>
+                  <ng-container matColumnDef="ESTATUS">
+                    <th mat-header-cell *matHeaderCellDef> ESTATUS </th>
                     <td mat-cell *matCellDef="let element">
                       <div *ngIf="element.status === 'ACTIVO'; else inactivo" class="btn-group project-list-add">
                         <button class="btn btn-white btn-xs">Activo </button>
@@ -144,8 +150,20 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="Acción">
-                    <th mat-header-cell *matHeaderCellDef> Acción </th>
+                  <ng-container matColumnDef="TIPO PERSONA">
+                    <th mat-header-cell *matHeaderCellDef> TIPO PERSONA </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div *ngIf="element.codtipocontacto === 1; else proveedor">
+                          <i class="fa fa-reply"></i> C
+                      </div>
+                      <ng-template #proveedor>
+                          <i class="fa fa-reply"></i> P
+                      </ng-template>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ACCION">
+                    <th mat-header-cell *matHeaderCellDef> ACCION </th>
                     <td mat-cell *matCellDef="let element" class="datatable-ct">
                       <div class="btn-group project-list-add">
                         <button (click)="Ver()" class="btn btn-white btn-xs"><i class="fa fa-eye"

@@ -52,17 +52,12 @@ export class CrearContactoComponent implements OnInit {
   lstDepartamentos: any [] = [];
   lstMunicipios: any [] = [];
   idnegocio: number;
-  idpais: number;
+  idpais: number = null;
   lstListaprecios: any [] = [];
 
   ContactoModel: Contacto;
 
 
-  paisxdefecto = 0;
-  vendedorxdefecto = 1 ;
-  listaprecioxdefecto = 1;
-  plazocreditoxdefecto = 1;
-  tipopersonaxdefecto = 2;
   condicionadoxdefecto = 0;
 
   visible = true;
@@ -73,9 +68,16 @@ export class CrearContactoComponent implements OnInit {
   visiblemunicipio = true;
   visiblecodigodv = false;
 
+  camposrequeridos: string;
+
   tipopersona: Tipopersona[] = [
     {id: 1, nombre: 'Persona Natural'},
     {id: 2, nombre: 'Persona Juridica'}
+  ];
+
+  codtipocontacto = [
+    { id: 1, nombre: 'Cliente' },
+    { id: 2, nombre: 'Proveedor' }
   ];
 
   saleData = [
@@ -107,6 +109,7 @@ export class CrearContactoComponent implements OnInit {
               private route: ActivatedRoute,
               private modalService: BsModalService) {
 
+
       this.ContactoModel = new Contacto();
       this.idnegocio = 1;
       this.idpais = 48;
@@ -126,11 +129,14 @@ export class CrearContactoComponent implements OnInit {
     this.listarPais();
     this.listarListaPrecios();
     this.buildForm(this.ContactoModel);
+    this.listarDepartamentos(this.ContactoModel.codpais);
   }
 
   private buildForm(contacto: Contacto){
 
+    console.log(JSON.stringify(contacto));
     this.formcontacto = this.formbuilder.group({
+      codtipocontacto: [this.ContactoModel.codtipocontacto, [Validators.required]],
       codtipocontibuyente: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
       codtipoidentificacion: [this.ContactoModel.codtipoidentificacion, [Validators.required]],
       numeroidentificacion: [this.ContactoModel.numeroidentificacion, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
@@ -144,15 +150,14 @@ export class CrearContactoComponent implements OnInit {
       telefonofijo2: [this.ContactoModel.telefonofijo2, [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofax: [this.ContactoModel.telefonofax, [Validators.pattern(this.patten), Validators.maxLength(15)]],
       direccionfiscal: [this.ContactoModel.direccionfiscal, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      correoe: [this.ContactoModel.correoe, [Validators.pattern(this.parrterobservaciones)]],
+      correoe: [this.ContactoModel.correoe, [Validators.pattern('^([^\\s]|\\s[^\\s])+$')]],
       fecharegistro: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      codtipocontacto: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
       codvendedor: [this.ContactoModel.codvendedor, [Validators.required]],
       codformapago: [this.ContactoModel.codformapago, [Validators.required]],
       codtipopersona: [this.ContactoModel.codtipopersona, [Validators.required]],
-      codpais: [this.ContactoModel.codpais],
-      coddepartamento: [this.ContactoModel.coddepartamento],
-      codmunicipio: [this.ContactoModel.codmunicipio],
+      codpais: [this.ContactoModel.codpais = this.idpais],
+      coddepartamento: [this.ContactoModel.coddepartamento, [Validators.required]],
+      codmunicipio: [this.ContactoModel.codmunicipio, [Validators.required]],
       lugarenvio: [this.ContactoModel.lugarenvio, [Validators.pattern(this.parrterobservaciones)]],
       codlistaprecio: [this.ContactoModel.codlistaprecio, [Validators.required]],
       direccionexogena: [this.ContactoModel.direccionfiscal, [Validators.pattern(this.parrterobservaciones)]],
@@ -163,8 +168,8 @@ export class CrearContactoComponent implements OnInit {
       observaciones: [this.ContactoModel.observaciones, [Validators.pattern(this.parrterobservaciones)]],
       descuentocondicionado: [this.ContactoModel.descuentocondicionado, [Validators.pattern(this.parrterobservaciones)]],
       codigodv: [this.ContactoModel.codigodv, [Validators.pattern(this.paterhombre)]],
-      responsableiva: [this.ContactoModel.responsableiva, [Validators.required]],
-      status: [this.ContactoModel.status]
+      /*responsableiva: [this.ContactoModel.responsableiva, [Validators.required]],*/
+      status: [this.ContactoModel.status === 'ACTIVO' ? 1 : 0]
     });
   }
 
@@ -590,9 +595,20 @@ export class CrearContactoComponent implements OnInit {
   }
 
   onChange(event: MatSlideToggleChange) {
-    console.log(event.checked + ' esto es lo que se chequeo');
-    this.formcontacto.get('status').setValue(event.checked === true ? 1 : 0);
-    console.log(this.formcontacto.get('status').value + ' EL VALOR DEL STATUS');
+    this.formcontacto.get('status').setValue(event.checked === true ? '1' : '0');
+  }
+
+  onChangeTipo(event) {
+    this.ContactoModel.codtipocontacto = this.formcontacto.get('codtipocontacto').value;
+  }
+
+  cargarRequeridos(e){
+    this.camposrequeridos = 'Valores Requeridos:\n';
+    Object.keys(this.formcontacto.controls).forEach(key => {
+      if (this.formcontacto.controls[key].invalid){
+        this.camposrequeridos += key + '\n';
+      }
+    });
   }
 
 }

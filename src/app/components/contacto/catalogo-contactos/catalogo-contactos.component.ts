@@ -26,7 +26,7 @@ export class CatalogoContactosComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
-  displayedColumns: string[] = ['select', 'Tipo Identificacion', 'N° Identificacion', 'Nombre', 'Telefono', 'Email', 'Estatus', 'Acción'];
+  displayedColumns: string[] = ['select', 'TIPO IDENTIFICACION', 'N° IDENTIFICACION', 'NOMBRE', 'TELEFONO', 'EMAIL', 'TIPO PERSONA', 'ESTATUS', 'ACCION'];
   dataSource: MatTableDataSource<Contacto>;
   selection = new SelectionModel<Contacto>(true, []);
 
@@ -44,6 +44,7 @@ export class CatalogoContactosComponent implements OnInit {
 
   private listarContactos(): void {
     this.loading = true;
+    this.lstContactos = [];
     this.contactoServicio.listarContactos('')
       .subscribe(response => {
         const listacontacto = response as Contacto[];
@@ -133,7 +134,7 @@ export class CatalogoContactosComponent implements OnInit {
 
   eliminarporcodigo(id: number){
     this.loading = true;
-    this.contactoServicio.eliminarFormaPago(id)
+    this.contactoServicio.eliminarContacto(id)
       .subscribe(response => {
         const respuesta = response;
         this.loading = false;
