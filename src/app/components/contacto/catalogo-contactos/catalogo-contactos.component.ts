@@ -39,13 +39,13 @@ export class CatalogoContactosComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.listarContactos();
+    this.listarContactos('T');
   }
 
-  private listarContactos(): void {
+  private listarContactos(tipo: string): void {
     this.loading = true;
     this.lstContactos = [];
-    this.contactoServicio.listarContactos('')
+    this.contactoServicio.listarContactosPorTipoCOntacto('', tipo)
       .subscribe(response => {
         const listacontacto = response as Contacto[];
         listacontacto.forEach(element => {
@@ -138,7 +138,7 @@ export class CatalogoContactosComponent implements OnInit {
       .subscribe(response => {
         const respuesta = response;
         this.loading = false;
-        this.listarContactos();
+        this.listarContactos('T');
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -159,7 +159,7 @@ export class CatalogoContactosComponent implements OnInit {
 
   }
   Refrescar() {
-    this.listarContactos();
+    this.listarContactos('T');
   }
   Importar() {
 
@@ -187,5 +187,8 @@ export class CatalogoContactosComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
+  cargarclientes(tipo){
+    this.listarContactos(tipo);
+  }
 
 }

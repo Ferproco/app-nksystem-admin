@@ -31,6 +31,22 @@ export class ContactoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
+  listarContactosPorTipoCOntacto(codnegocio: string, tipo: string){
+    let tipocontacto = 0;
+    if (tipo === 'C'){
+      tipocontacto = 1;
+    }
+    else if (tipo === 'P'){
+      tipocontacto = 2;
+    }
+    else if (tipo === 'T'){
+      tipocontacto = 3;
+    }
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/contacto/tipo/' + tipocontacto;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+
   guardarContacto(id: number, idnegocio: number, contacto: Contacto){
     console.log('el contacto enviado es ' + JSON.stringify(contacto));
     const body = {
@@ -68,7 +84,7 @@ export class ContactoService{
       descuentocondicionado: contacto.descuentocondicionado,
       codigodv: contacto.codigodv,
       responsableiva: contacto.responsableiva,
-      status: contacto.status === '1' ? 'ACTIVO' : 'INACTIVO'
+      status: Number(contacto.status) === 1 ? 'ACTIVO' : 'INACTIVO'
 
     };
     console.log('id ' + id + 'contacto ' + JSON.stringify(body));
