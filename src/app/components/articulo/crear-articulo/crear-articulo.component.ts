@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -11,6 +11,7 @@ import { FamiliaService } from '../../familia/FamiliaService.service';
 import { GrupoArticuloService } from '../../grupoarticulo/GrupoArticuloService.service';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 import { MarcaService } from '../../marca/MarcaService.service';
+import { Articulo } from '../../model/Articulo.model';
 import { UnidadService } from '../../unidadmedida/UnidadService.service';
 import { ArticuloService } from '../ArticuloService.service';
 
@@ -20,6 +21,13 @@ import { ArticuloService } from '../ArticuloService.service';
   styleUrls: ['./crear-articulo.component.css']
 })
 export class CrearArticuloComponent implements OnInit {
+
+  radioModel = 'Middle';
+  uncheckableRadioModel = 'Middle';
+
+  colorTheme = 'theme-orange';
+  bsConfig: Partial<BsDatepickerConfig>;
+  currentDate = new Date();
 
   id = 0;
   loading = false;
@@ -33,18 +41,27 @@ export class CrearArticuloComponent implements OnInit {
   idnegocio: number;
   formarticulo: FormGroup;
 
+  ArticuloModel: Articulo;
   unidadmedidaxdefecto:2;
   bsModalRef: any;
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+
+  customClass = 'customClass';
+  isFirstOpen = true;
   
   visiblecostoxproducto = false;
   visiblecantidad= false;
   visiblecantidadminima=false;
   visiblecantidadmaxima=false;
   visiblebodega=false;
+
+  tipoproducto = [
+    { id: 1, nombre: 'Producto' },
+    { id: 2, nombre: 'Servicio' }
+  ];
 
   constructor(private articuloservice:ArticuloService,
               private familiaserive: FamiliaService,
@@ -55,10 +72,19 @@ export class CrearArticuloComponent implements OnInit {
               private almacenServicio:AlmacenService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
+              private route: ActivatedRoute,
               private router: Router,
               private modalService: BsModalService) {
 
-    this.buildForm();
+                this.ArticuloModel = new Articulo();
+                this.idnegocio = 1;
+              
+                this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+                if (this.route.snapshot.params.id){
+                  this.id = this.route.snapshot.params.id;
+                  this.buscarArticulo(this.id);
+                }
+    this.buildForm(this.ArticuloModel);
     this.idnegocio = 1;
    }
 
@@ -71,22 +97,22 @@ export class CrearArticuloComponent implements OnInit {
     this.listarBodegas();
   }
 
-  private buildForm(){
-   
-    this.formarticulo = this.formbuilder.group({
-      codigo: ['',[Validators.required]],
-      nomarticulo:['',[Validators.required]],
-      tipoproducto: [1,[Validators.required]],
-      codmarca:[0,[Validators.required]],
-      codfamilia:[0,[Validators.required]],
-      codunidadmedida: [this.unidadmedidaxdefecto,[Validators.required]],
-      codimpuesto:[0,[Validators.required]],
-      preciosugerido:[0],
-      referencia:[''],
-      serial:[''],
-      codigobarraprincipal:[''],
-      descripcionlarga:[''],
-      codbodega:[0],
+  private buildForm(articulo:Articulo){
+      console.log(JSON.stringify(articulo));
+      this.formarticulo = this.formbuilder.group({
+      codigo: [this.ArticuloModel.codigo,[Validators.required]],
+      nomarticulo:[this.ArticuloModel.nomarticulo,[Validators.required]],
+      tipoproducto: [this.ArticuloModel.tipoproducto,[Validators.required]],
+      codfamilia:[this.ArticuloModel.codfamilia,[Validators.required]],
+      codunidadmedida: [this.ArticuloModel.codunidadmedida=this.unidadmedidaxdefecto,[Validators.required]],
+      codimpuesto:[this.ArticuloModel.codimpuesto,[Validators.required]],
+      preciosugerido:[this.ArticuloModel.preciosugerido],
+      referencia:[this.ArticuloModel.referencia],
+      serial:[this.ArticuloModel.serial],
+      codigobarraprincipal:[this.ArticuloModel.codigobarraprincipal],
+      descripcionlarga:[this.ArticuloModel.descripcionlarga],
+      status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0]
+      
       
     })
   }
@@ -260,6 +286,34 @@ export class CrearArticuloComponent implements OnInit {
       console.log('results', result);
 
     });
+  }
+
+  buscarArticulo(id: number) {
+    let status = 0;
+    this.loading = true;
+    const obj = this.articuloservice.mostrarArticulo(id)
+      .subscribe(response => {
+        this.ArticuloModel = response as any;
+        if (this.ArticuloModel.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        this.buildForm(this.ArticuloModel);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
   }
   get codigo(){
     return this.formarticulo.get('codigo');

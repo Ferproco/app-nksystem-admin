@@ -34,7 +34,7 @@ export class ArticuloService{
       codnegocio: Number(idnegocio),
       codigo: articulo.codigo,
       nomarticulo:articulo.nomarticulo,
-      codmarca:articulo.codmarca,
+      
       codfamilia:articulo.codfamilia,
       codunidadmedida: articulo.codunidadmedida,
       codimpuesto:articulo.codimpuesto,
@@ -52,6 +52,18 @@ export class ArticuloService{
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
   eliminarArticulo(id: number){
-   
+    const body = {
+      id: Number(id)
+    };
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/articulo/' + id;
+    return this.httpClient.delete(endpoint, {headers: httpHeaders});
+  }
+
+  mostrarArticulo(id: number){
+
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/articulo/' + id;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 }
