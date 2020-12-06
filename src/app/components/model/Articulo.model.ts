@@ -19,7 +19,7 @@ export class Articulo {
   public puntoreorden: number;
   public codnegocio: string;
   public familia: Categoria;
-
+  public tipoproducto:number;
 
   constructor(json: any = null)
   {
@@ -43,6 +43,7 @@ export class Articulo {
     this.descripcionlarga = json.descripcionlarga;
     this.serial = json.serial;
     this.familia = json.familia;
+    this.tipoproducto=json.tipoproducto;
 
   }
 }

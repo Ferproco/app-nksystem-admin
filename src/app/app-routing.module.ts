@@ -39,6 +39,7 @@ const routes: Routes = [
   { path: 'main/dashboard', component: MainComponent},
   { path: 'inventario/listararticulos', component: CatalogoArticuloComponent},
   { path: 'inventario/creararticulo', component: CrearArticuloComponent},
+  { path: 'inventario/creararticulo/:id', component: CrearArticuloComponent},
   { path: 'inventario/listaralmacenes', component: CatalogoAlmacenComponent},
   { path: 'inventario/crearalmacen', component: CrearAlmacenComponent},
   { path: 'inventario/listarunidades', component: CatalogoUnidadmedidaComponent},
