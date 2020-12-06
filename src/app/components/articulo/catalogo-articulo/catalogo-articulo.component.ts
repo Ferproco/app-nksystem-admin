@@ -19,7 +19,7 @@ export class CatalogoArticuloComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Articulos';
   lstArticulos: Articulo[] = [];
-
+  sortedData;
   filtrararticulos = '';
 
   POSTS: any;
@@ -29,7 +29,6 @@ export class CatalogoArticuloComponent implements OnInit {
   tableSizes = [3, 6, 9, 12];
 
   LengthTable = 0;
-  sortedData;
   idnegocio: number;
 
   showModalBox: boolean = false;
@@ -60,7 +59,7 @@ export class CatalogoArticuloComponent implements OnInit {
     let status = 0;
     this.articuloServicio.listarArticulos('')
       .subscribe(response => {
-        const listaarticulos = response as any[];
+        const listaarticulos = response as Articulo[];
         listaarticulos.forEach(element => {
           if (element.status === 'ACTIVO') {
             status = 1;
@@ -68,7 +67,7 @@ export class CatalogoArticuloComponent implements OnInit {
           else {
             status = 0;
           }
-          this.lstArticulos.push(new Articulo(element.id,element.codigo,element.nomarticulo,element.codmarca,element.codfamilia,element.codunidadmedida,element.codimpuesto,element.preciosugerido,element.codigobarraprincipal,element.referencia,element.serial,element.status,element.descripcionlarga,this.idnegocio,element.familia));
+          this.lstArticulos.push(element);
         });
         this.dataSource = new MatTableDataSource(this.lstArticulos);
         this.dataSource.paginator = this.paginator;
