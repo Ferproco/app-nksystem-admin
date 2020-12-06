@@ -57,7 +57,6 @@ export class CrearContactoComponent implements OnInit {
 
   ContactoModel: Contacto;
 
-
   condicionadoxdefecto = 0;
 
   visible = true;
@@ -113,10 +112,11 @@ export class CrearContactoComponent implements OnInit {
       this.ContactoModel = new Contacto();
       this.idnegocio = 1;
       this.idpais = 48;
+      this.ContactoModel.codpais = this.idpais;
       this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+      this.buildForm();
       if (this.route.snapshot.params.id){
         this.id = this.route.snapshot.params.id;
-        this.buscarContacto(this.id);
       }
     }
 
@@ -124,20 +124,17 @@ export class CrearContactoComponent implements OnInit {
 
     this.listarTipoIdentificacion();
     this.listarTipoContribuyente();
-    this. listarVendedores();
+    this.listarVendedores();
     this.listarFormasdepago();
     this.listarPais();
     this.listarListaPrecios();
-    this.listarDepartamentos(this.idpais);
-    this.buildForm();
-
-
+    this.listarDepartamentos(this.ContactoModel.codpais);
+    this.listarMunicipios(this.ContactoModel.coddepartamento);
+    this.buscarContacto(this.id);
   }
 
   private buildForm(){
 
-    this.listarDepartamentos(this.ContactoModel.codpais);
-    this.listarMunicipios(this.ContactoModel.coddepartamento);
     this.formcontacto = this.formbuilder.group({
       codtipocontacto: [this.ContactoModel.codtipocontacto, [Validators.required]],
       codtipocontibuyente: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
@@ -158,7 +155,7 @@ export class CrearContactoComponent implements OnInit {
       codvendedor: [this.ContactoModel.codvendedor, [Validators.required]],
       codformapago: [this.ContactoModel.codformapago, [Validators.required]],
       codtipopersona: [this.ContactoModel.codtipopersona, [Validators.required]],
-      codpais: [this.ContactoModel.codpais = this.idpais],
+      codpais: [this.ContactoModel.codpais],
       coddepartamento: [this.ContactoModel.coddepartamento, [Validators.required]],
       codmunicipio: [this.ContactoModel.codmunicipio, [Validators.required]],
       lugarenvio: [this.ContactoModel.lugarenvio, [Validators.pattern(this.parrterobservaciones)]],
@@ -190,6 +187,9 @@ export class CrearContactoComponent implements OnInit {
         else {
           status = 0;
         }
+        this.listarDepartamentos(this.ContactoModel.codpais);
+        this.listarMunicipios(this.ContactoModel.coddepartamento);
+        console.log('el departamentgo de build form ' + this.ContactoModel.coddepartamento);
         this.buildForm();
         this.loading = false;
       },
