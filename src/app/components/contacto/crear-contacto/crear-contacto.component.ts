@@ -128,13 +128,16 @@ export class CrearContactoComponent implements OnInit {
     this.listarFormasdepago();
     this.listarPais();
     this.listarListaPrecios();
-    this.buildForm(this.ContactoModel);
-    this.listarDepartamentos(this.ContactoModel.codpais);
+    this.listarDepartamentos(this.idpais);
+    this.buildForm();
+
+
   }
 
-  private buildForm(contacto: Contacto){
+  private buildForm(){
 
-    console.log(JSON.stringify(contacto));
+    this.listarDepartamentos(this.ContactoModel.codpais);
+    this.listarMunicipios(this.ContactoModel.coddepartamento);
     this.formcontacto = this.formbuilder.group({
       codtipocontacto: [this.ContactoModel.codtipocontacto, [Validators.required]],
       codtipocontibuyente: [this.ContactoModel.codtipocontibuyente, [Validators.required]],
@@ -171,6 +174,8 @@ export class CrearContactoComponent implements OnInit {
       /*responsableiva: [this.ContactoModel.responsableiva, [Validators.required]],*/
       status: [this.ContactoModel.status === 'ACTIVO' ? 1 : 0]
     });
+
+
   }
 
   buscarContacto(id: number) {
@@ -185,7 +190,7 @@ export class CrearContactoComponent implements OnInit {
         else {
           status = 0;
         }
-        this.buildForm(this.ContactoModel);
+        this.buildForm();
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
