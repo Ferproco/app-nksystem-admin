@@ -243,7 +243,7 @@
                         <select class="select2_demo_3 form-control" formControlName="coddepartamento"
                           (change)="listarMunicipios($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
-                          <option value="{{departamento.id}}" *ngFor="let departamento of lstDepartamentos">
+                          <option [value]="departamento.id" *ngFor="let departamento of lstDepartamentos">
                             {{departamento.nombre}}</option>
                         </select>
                       </div>
@@ -253,7 +253,7 @@
                         <label for="username">Municipio</label>
                         <select class="select2_demo_3 form-control" formControlName="codmunicipio">
                           <option [value]="null">--Seleccione--</option>
-                          <option value="{{municipio.id}}" *ngFor="let municipio of lstMunicipios">
+                          <option [value]="municipio.id" *ngFor="let municipio of lstMunicipios">
                             {{municipio.nombre}}</option>
                         </select>
                       </div>
@@ -372,10 +372,13 @@
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Lista Precios</label>
-                        <select class="select2_demo_3 form-control" formControlName="codlistaprecio">
-                          <option [value]="listaprecio.id" *ngFor="let listaprecio of lstListaprecios">
-                            {{listaprecio.numerolista}}</option>
-                        </select>
+                        <div class="input-group">
+                          <span class="input-group-btn"><button type="button" class="btn btn-primary">+</button></span>
+                          <select class="select2_demo_3 form-control" formControlName="codlistaprecio">
+                            <option [value]="listaprecio.id" *ngFor="let listaprecio of lstListaprecios">
+                              {{listaprecio.numerolista}}</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>

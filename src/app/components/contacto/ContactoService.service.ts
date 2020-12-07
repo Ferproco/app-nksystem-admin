@@ -47,9 +47,10 @@ export class ContactoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarContacto(id: number, idnegocio: number, contacto: Contacto){
+  guardarContacto(idIn: number, idnegocio: number, contacto: Contacto){
     console.log('el contacto enviado es ' + JSON.stringify(contacto));
     const body = {
+      id: Number(idIn),
       codtipocontibuyente: Number(contacto.codtipocontibuyente),
       codtipoidentificacion: Number(contacto.codtipoidentificacion),
       codnegocio: Number(idnegocio),
@@ -87,7 +88,7 @@ export class ContactoService{
       status: Number(contacto.status) === 1 ? 'ACTIVO' : 'INACTIVO'
 
     };
-    console.log('id ' + id + 'contacto ' + JSON.stringify(body));
+    console.log('id ' + idIn + 'contacto ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/contacto';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});

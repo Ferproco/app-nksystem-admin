@@ -24,6 +24,8 @@ export class CatalogoContactosComponent implements OnInit {
   sortedData;
   LengthTable = 0;
 
+  tipopersonaconfig = 'T';
+
   bsModalRef: BsModalRef;
 
   displayedColumns: string[] = ['select', 'TIPO IDENTIFICACION', 'N° IDENTIFICACION', 'NOMBRE', 'TELEFONO', 'EMAIL', 'TIPO PERSONA', 'ESTATUS', 'ACCION'];
@@ -39,7 +41,7 @@ export class CatalogoContactosComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.listarContactos('T');
+    this.listarContactos(this.tipopersonaconfig);
   }
 
   private listarContactos(tipo: string): void {
@@ -122,6 +124,7 @@ export class CatalogoContactosComponent implements OnInit {
   }
 
   Eliminar(id: number) {
+
     this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
@@ -138,7 +141,7 @@ export class CatalogoContactosComponent implements OnInit {
       .subscribe(response => {
         const respuesta = response;
         this.loading = false;
-        this.listarContactos('T');
+        this.listarContactos(this.tipopersonaconfig);
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -159,7 +162,8 @@ export class CatalogoContactosComponent implements OnInit {
 
   }
   Refrescar() {
-    this.listarContactos('T');
+    this.tipopersonaconfig = 'T';
+    this.listarContactos(this.tipopersonaconfig);
   }
   Importar() {
 
@@ -188,7 +192,8 @@ export class CatalogoContactosComponent implements OnInit {
   }
 
   cargarclientes(tipo){
-    this.listarContactos(tipo);
+    this.tipopersonaconfig = tipo;
+    this.listarContactos(this.tipopersonaconfig);
   }
 
 }
