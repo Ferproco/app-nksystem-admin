@@ -16,7 +16,9 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="breadcome-heading">
-                    <button type="submit" class="form-control" [disabled]="formarticulo.invalid"><i class="fa fa-save"
+                    <button type="submit" (mouseover)="cargarRequeridos($event)"
+                    matTooltip="{{camposrequeridos}}"
+                    class="form-control" [disabled]="formarticulo.invalid"><i class="fa fa-save"
                         aria-hidden="true"></i> Guardar
                     </button>
                   </div>

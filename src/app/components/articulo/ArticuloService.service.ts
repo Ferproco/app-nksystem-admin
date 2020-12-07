@@ -34,7 +34,7 @@ export class ArticuloService{
       codnegocio: Number(idnegocio),
       codigo: articulo.codigo,
       nomarticulo:articulo.nomarticulo,
-      
+      codmarca:articulo.codmarca,
       codfamilia:articulo.codfamilia,
       codunidadmedida: articulo.codunidadmedida,
       codimpuesto:articulo.codimpuesto,

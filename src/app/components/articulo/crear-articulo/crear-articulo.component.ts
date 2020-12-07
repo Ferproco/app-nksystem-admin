@@ -25,6 +25,8 @@ export class CrearArticuloComponent implements OnInit {
   radioModel = 'Middle';
   uncheckableRadioModel = 'Middle';
 
+  camposrequeridos: string;
+
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
@@ -106,6 +108,7 @@ export class CrearArticuloComponent implements OnInit {
       codfamilia:[this.ArticuloModel.codfamilia,[Validators.required]],
       codunidadmedida: [this.ArticuloModel.codunidadmedida=this.unidadmedidaxdefecto,[Validators.required]],
       codimpuesto:[this.ArticuloModel.codimpuesto,[Validators.required]],
+      codmarca:[this.ArticuloModel.codmarca],
       preciosugerido:[this.ArticuloModel.preciosugerido],
       referencia:[this.ArticuloModel.referencia],
       serial:[this.ArticuloModel.serial],
@@ -137,6 +140,12 @@ export class CrearArticuloComponent implements OnInit {
           { enableHtml: true, closeButton: true });
       }
     }));
+  }
+
+
+  agregarTransacciones(idunidadmedida: number, costo: number, bodega: number){
+
+    HRNHFNNNNNNVJJFGDFJHKLD
   }
 
   listarFamilias(){
@@ -314,6 +323,15 @@ export class CrearArticuloComponent implements OnInit {
           }
         }));
 
+  }
+
+  cargarRequeridos(e){
+    this.camposrequeridos = 'Valores Requeridos:\n';
+    Object.keys(this.formarticulo.controls).forEach(key => {
+      if (this.formarticulo.controls[key].invalid){
+        this.camposrequeridos += key + '\n';
+      }
+    });
   }
   get codigo(){
     return this.formarticulo.get('codigo');
