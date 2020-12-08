@@ -43,7 +43,15 @@ export class ArticuloService{
       codigobarraprincipal:articulo.codigobarraprincipal,
       serial:articulo.serial,
       descripcionlarga:articulo.descripcionlarga,
-      status: articulo.status === '1' ? 'ACTIVO' : 'INACTIVO'
+      status: articulo.status === '1' ? 'ACTIVO' : 'INACTIVO',
+      stockminimo:articulo.stockminimo,
+      stockmaximo:articulo.stockmaximo,
+      puntoreorden:articulo.puntoreorden,
+      peso:articulo.peso,
+      talla:articulo.talla,
+      color:articulo.color,
+      codtipoproducto: articulo.codtipoproducto
+      
 
     };
     console.log('id ' + id + 'contacto ' + JSON.stringify(body));

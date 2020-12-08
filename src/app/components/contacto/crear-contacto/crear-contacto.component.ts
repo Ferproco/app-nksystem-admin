@@ -442,6 +442,7 @@ export class CrearContactoComponent implements OnInit {
   CalcularDigitoVerficacion(event) {
 
     const arreglonumeros: number[] = [71, 67, 59, 53, 47, 43, 41, 37, 29, 23, 19, 17, 13, 7, 3];
+    let sinpuntos = event.replace(/\./g, '');
     let arreglonumeroidentificacion = event as any[];
     let resultadomultiplicacion = 0;
     let sumaresultadomultiplicacion = 0;
@@ -450,10 +451,17 @@ export class CrearContactoComponent implements OnInit {
     let posicionarreglo1 = 0;
     let posicionarreglo2 = 0;
     let contador = 0;
-
+    let arreglontemporal: any[] = [];
     // arreglonumeroidentificacion.replace('', '.');
-    console.log('longitud del arregloconstante ' + arreglonumeros.length);
-    console.log('longitud del numero de identificacion ' + arreglonumeroidentificacion.length);
+    let longnumero = 0;
+    if (sinpuntos.length < 15){
+       longnumero = 15 - sinpuntos.length;
+       
+    }
+    console.log('Los valores que necesito ' + sinpuntos);
+    //console.log('longitud del arregloconstante ' + arreglonumeros.length);
+    //console.log('longitud del numero de identificacion ' + arreglonumeroidentificacion.length);
+    
     for (let num of arreglonumeroidentificacion) {
 
       // console.log('valor de posicion' +arreglonumeroidentificacion[contador]);
@@ -461,7 +469,7 @@ export class CrearContactoComponent implements OnInit {
       // arreglonumeroidentificacion.splice(contador,1);
       //  console.log('valor de posicion modificado1' +arreglonumeroidentificacion);
       //arreglonumeroidentificacion.splice(contador,contador);
-      contador = contador + 1;
+      
 
 
       //var i = arreglonumeroidentificacion.indexOf('.');
@@ -471,14 +479,15 @@ export class CrearContactoComponent implements OnInit {
       //for (let nume of arreglonumeroidentificacion){
 
       //console.log('valor de posicion modificado' +arreglonumeroidentificacion[nume]);
-      console.log('valor de posicion modificado' + arreglonumeroidentificacion[contador]);
-
+      //console.log('valor de posicion modificado' + arreglonumeroidentificacion[contador]);
+  
+      contador = contador + 1;
       //}
       // }
     }
-
-    console.log('longitud del arregloconstante' + arreglonumeros.length);
-    console.log('longitud del numero de identificacion' + arreglonumeroidentificacion.length);
+    
+    //console.log('longitud del arregloconstante' + arreglonumeros.length);
+    //console.log('longitud del numero de identificacion' + arreglonumeroidentificacion.length);
     for (let numero of arreglonumeros) {
       console.log('arreglo constante' + numero);
       posicionarreglo1 = posicionarreglo1 + 1;
@@ -486,15 +495,15 @@ export class CrearContactoComponent implements OnInit {
       for (let element of arreglonumeroidentificacion) {
 
         posicionarreglo2 = posicionarreglo2 + 1;;
-        console.log(' posicion arreglo contasnte' + posicionarreglo1);
-        console.log(' posicion numero identificacion' + posicionarreglo2);
-        console.log('Arreglo numero iden for ' + Number(element));
+       // console.log(' posicion arreglo contasnte' + posicionarreglo1);
+       // console.log(' posicion numero identificacion' + posicionarreglo2);
+       // console.log('Arreglo numero iden for ' + Number(element));
         if (posicionarreglo1 === posicionarreglo2) {
           resultadomultiplicacion = numero * element;
           console.log('Resultado de la multiplicacion es ' + Number(resultadomultiplicacion));
           sumaresultadomultiplicacion = sumaresultadomultiplicacion + resultadomultiplicacion;
         }
-        console.log('Resultado de la suma es ' + Number(sumaresultadomultiplicacion));
+        //console.log('Resultado de la suma es ' + Number(sumaresultadomultiplicacion));
       };
 
     }

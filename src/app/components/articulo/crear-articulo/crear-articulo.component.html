@@ -64,21 +64,19 @@
 
               <div class="sparkline10-graph">
                 <div class="row">
-                  <div class="col-lg-3">
+                  <div class="col-lg-2" *ngFor="let tipo of codtipoproducto;">
                     <div class="i-checks pull-left">
                       <label>
-                        <input type="radio" formControlName="tipoproducto" checked="" value="1" name="tipoproducto" (change)="MostrarCamposTipoProducto($event.target.value)">
-                        <i></i> Producto
+                        <input type="radio" formControlName="codtipoproducto"
+                        (change)="onChangeTipo($event)"
+                        name="codtipoproducto" [value]="tipo.id">
+                        {{tipo.nombre}}
                       </label>
                     </div>
                   </div>
-                  <div class="col-lg-3">
-                    <div class="i-checks pull-left">
-                      <label>
-                        <input type="radio" formControlName="tipoproducto" checked="" value="2" name="tipoproducto" (change)="MostrarCamposTipoProducto($event.target.value)">
-                        <i></i> Servicio
-                      </label>
-                    </div>
+                  <div class="col-lg-4">
+                    <mat-slide-toggle (change)="onChange($event)" formControlName="status">Activo
+                    </mat-slide-toggle>
                   </div>
                 </div>
                 <br>
@@ -172,14 +170,7 @@
                           type="text" class="form-control" placeholder="Ingrese la Descripción Larga"></textarea>
                       </div>
                     </div>
-                    <div id="pwd-container3">
-                      <div class="form-group">
-                        <label>
-                          <input type="checkbox" formControlName="status" value="">
-                          <i></i> Activo</label>
-                      </div>
-                    </div>
-
+                   
                   </div>
                 </div>
         
@@ -255,12 +246,12 @@
                     <div id="pwd-container3" *ngIf="visiblecantidadminima">
                       <div class="form-group">
                         <label for="username">Cantidad Minima</label>
-                        <input formControlName="preciosugerido"
-                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
-                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
-                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
-                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
-                            Precio Incorrecto
+                        <input formControlName="stockminimo"
+                          [ngClass]="{'invalid-data': stockminimo.invalid && (stockminimo.touched || stockminimo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese la Cantidad Minima " />
+                        <div *ngIf="stockminimo.invalid  && (stockminimo.dirty || stockminimo.touched)">
+                          <div class="invalid-mensaje" *ngIf="stockminimo.errors.pattern">
+                            Cantidad Incorrecto
                           </div>
                         </div>
                       </div>
@@ -271,12 +262,12 @@
                     <div id="pwd-container3" *ngIf="visiblecantidadmaxima">
                       <div class="form-group">
                         <label for="username">Cantidad Maxima</label>
-                        <input formControlName="preciosugerido"
-                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
-                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
-                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
-                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
-                            Precio Incorrecto
+                        <input formControlName="stockmaximo"
+                          [ngClass]="{'invalid-data': stockmaximo.invalid && (stockmaximo.touched || stockmaximo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese la Cantidad Maxima" />
+                        <div *ngIf="stockmaximo.invalid  && (stockmaximo.dirty || stockmaximo.touched)">
+                          <div class="invalid-mensaje" *ngIf="stockmaximo.errors.pattern">
+                            Cantidad Incorrecto
                           </div>
                         </div>
                       </div>
@@ -374,6 +365,48 @@
                               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                                 <br>
+                                <div id="pwd-container3">
+                                  <div class="form-group">
+                                    <label for="username">Peso:</label>
+                                    <input formControlName="peso"
+                                      [ngClass]="{'invalid-data': peso.invalid && (peso.touched || peso.dirty)}"
+                                      type="text" class="form-control" placeholder="Ingrese el Peso" />
+                                    <div *ngIf="peso.invalid  && (peso.dirty || peso.touched)">
+                                      <div class="invalid-mensaje" *ngIf="peso.errors.pattern">
+                                        Peso Incorrecto
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div id="pwd-container3">
+                                  <div class="form-group">
+                                    <label for="username">Talla:</label>
+                                    <input formControlName="talla"
+                                      [ngClass]="{'invalid-data': talla.invalid && (talla.touched || talla.dirty)}"
+                                      type="text" class="form-control" placeholder="Ingrese la Talla" />
+                                    <div *ngIf="talla.invalid  && (talla.dirty || talla.touched)">
+                                      <div class="invalid-mensaje" *ngIf="talla.errors.pattern">
+                                        Peso Incorrecto
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div id="pwd-container3">
+                                  <div class="form-group">
+                                    <label for="username">Color</label>
+
+                                    <select class="select2_demo_3 form-control" formControlName="color">
+
+                                      <option value="0">--Seleccione--</option>
+                                      
+
+
+                                    </select>
+                                  </div>
+
+                                </div>
+
                                 <div class="bt-df-checkbox pull-left">
 
                                   <div class="row">
@@ -647,13 +680,20 @@
               <div class="sparkline8-list basic-res-b-30 shadow-reset">
                 <div class="sparkline8-hd">
                   <div class="main-sparkline8-hd">
-                    <h1>
-                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    <h1><i class="fa fa-eye" aria-hidden="true"></i>
                       Imagen <span class="table-project-n"></span></h1>
-                    <div class="sparkline8-outline-icon">
-                      <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                      <span><i class="fa fa-wrench"></i></span>
-                      <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                    <div class="sparkline8-outline-icon"></div>
+                  </div>
+                </div>
+                <div class="sparkline8-graph project-details-price-hd">
+                  <div class="project-details-files">
+                    <div class="view-mail-file-list">
+                      <div class="view-file-in">
+                        <i class="fa fa-file"></i>
+                      </div>
+                      <div class="file-type-view">
+                        <h5><a href="#">Document-file.jpg</a></h5>
+                      </div>
                     </div>
                   </div>
                 </div>

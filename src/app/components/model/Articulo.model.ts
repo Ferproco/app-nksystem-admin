@@ -14,11 +14,11 @@ export class Articulo {
   public codigobarraprincipal: string;
   public referencia: string;
   public serial: string;
-  public status: string;
+  public status: string = 'ACTIVO';
  
   public codnegocio: string;
   public familia: Categoria;
-  public tipoproducto:number;
+  public codtipoproducto:number;
   public descripcionlarga: string;
   public stockminimo: number;
   public stockmaximo: number;
@@ -63,7 +63,7 @@ export class Articulo {
     this.descripcionlarga = json.descripcionlarga;
     this.serial = json.serial;
     this.familia = json.familia;
-    this.tipoproducto=json.tipoproducto;
+    this.codtipoproducto=json.tipoproducto;
     
     this.stockminimo = json.stockminimo;
     this.stockmaximo = json.stockmaximo;

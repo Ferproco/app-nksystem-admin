@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -60,11 +61,13 @@ export class CrearArticuloComponent implements OnInit {
   visiblecantidadmaxima=false;
   visiblebodega=false;
 
-  tipoproducto = [
+ 
+  codtipoproducto = [
     { id: 1, nombre: 'Producto' },
-    { id: 2, nombre: 'Servicio' }
+    { id: 2, nombre: 'Servicio' },
+    { id: 3, nombre: 'Materia Prima' },
+    { id: 4, nombre: 'Gastos' },
   ];
-
   constructor(private articuloservice:ArticuloService,
               private familiaserive: FamiliaService,
               private unidadservice: UnidadService,
@@ -104,7 +107,7 @@ export class CrearArticuloComponent implements OnInit {
       this.formarticulo = this.formbuilder.group({
       codigo: [this.ArticuloModel.codigo,[Validators.required]],
       nomarticulo:[this.ArticuloModel.nomarticulo,[Validators.required]],
-      tipoproducto: [this.ArticuloModel.tipoproducto,[Validators.required]],
+      codtipoproducto: [this.ArticuloModel.codtipoproducto,[Validators.required]],
       codfamilia:[this.ArticuloModel.codfamilia,[Validators.required]],
       codunidadmedida: [this.ArticuloModel.codunidadmedida=this.unidadmedidaxdefecto,[Validators.required]],
       codimpuesto:[this.ArticuloModel.codimpuesto,[Validators.required]],
@@ -114,7 +117,13 @@ export class CrearArticuloComponent implements OnInit {
       serial:[this.ArticuloModel.serial],
       codigobarraprincipal:[this.ArticuloModel.codigobarraprincipal],
       descripcionlarga:[this.ArticuloModel.descripcionlarga],
-      status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0]
+      status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0],
+      stockminimo:[this.ArticuloModel.stockminimo],
+      stockmaximo:[this.ArticuloModel.stockmaximo],
+      puntoreorden:[this.ArticuloModel.puntoreorden],
+      peso:[this.ArticuloModel.peso],
+      talla:[this.ArticuloModel.talla],
+      color:[this.ArticuloModel.color]
       
       
     })
@@ -145,7 +154,7 @@ export class CrearArticuloComponent implements OnInit {
 
   agregarTransacciones(idunidadmedida: number, costo: number, bodega: number){
 
-    HRNHFNNNNNNVJJFGDFJHKLD
+    
   }
 
   listarFamilias(){
@@ -354,5 +363,17 @@ export class CrearArticuloComponent implements OnInit {
   }
   get preciosugerido(){
     return this.formarticulo.get('preciosugerido');
+  }
+    get talla(){
+    return this.formarticulo.get('talla');
+  }
+  get peso(){
+    return this.formarticulo.get('peso');
+  }
+  onChangeTipo(event) {
+    this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
+  }
+  onChange(event: MatSlideToggleChange) {
+    this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
   }
 }
