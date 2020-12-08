@@ -152,10 +152,7 @@ export class CrearArticuloComponent implements OnInit {
   }
 
 
-  agregarTransacciones(idunidadmedida: number, costo: number, bodega: number){
-
-    
-  }
+  
 
   listarFamilias(){
     this.loading = true;
