@@ -1,3 +1,4 @@
+import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
 import { MainComponent } from './components/main/main.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
@@ -48,7 +49,7 @@ const routes: Routes = [
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/crearcliente', component: CrearClienteComponent},
-  { path: 'ventas/facturas', component: CatalogoFacturaComponent},
+  { path: 'ventas/facturas', component: DocumentoVentasComponent},
   { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent},
   { path: 'ventas/listarvendedores', component: CatalogoVendedorComponent},
   { path: 'ventas/crearvendedores', component: CrearVendedorComponent},

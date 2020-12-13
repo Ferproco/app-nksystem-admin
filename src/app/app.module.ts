@@ -100,6 +100,8 @@ import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuest
 import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ModalClienteComponent } from './components/contacto/modal-cliente/modal-cliente.component';
+import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +148,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MensajeEliminarComponent,
     CrearTipoImpuestoModalComponent,
     CatalogoTipoImpuestoComponentComponent,
-    CrearTipoImpuestoComponentComponent
+    CrearTipoImpuestoComponentComponent,
+    ModalClienteComponent,
+    DocumentoVentasComponent
 
 
   ],
