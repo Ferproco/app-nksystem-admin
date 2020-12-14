@@ -1,3 +1,4 @@
+import { Almacen } from './Almacen.model';
 import { Categoria } from './Categoria.model';
 import { Kardex } from './Kardex.model';
 import { UnidadMedidaAlterna } from './UnidadMedidaAlterna.model';
@@ -40,6 +41,7 @@ export class Articulo {
   public fechacreacion:Date;
   public listakardex: Array<Kardex> = [];
   public listaunidadesalternas: Array<UnidadMedidaAlterna> = [];
+  public listabodegas: Array<Almacen>=[];
 
   constructor(json: any = null)
   {
@@ -84,6 +86,7 @@ export class Articulo {
     this.fechacreacion = json.fechacreacion;
     this.listakardex = json.listakardex;
     this.listaunidadesalternas = json.listaunidadesalternas;
+    this.listabodegas=json.listabodegas;
 
 
   }

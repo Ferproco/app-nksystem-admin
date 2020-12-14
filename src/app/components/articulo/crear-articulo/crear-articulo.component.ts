@@ -124,6 +124,7 @@ export class CrearArticuloComponent implements OnInit {
       peso:[this.ArticuloModel.peso],
       talla:[this.ArticuloModel.talla],
       color:[this.ArticuloModel.color]
+     // codbodega::[this.ArticuloModel.listabodegas.co]
       
       
     })

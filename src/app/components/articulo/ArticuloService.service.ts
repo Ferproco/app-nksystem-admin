@@ -26,7 +26,27 @@ export class ArticuloService{
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
-
+  listarArticulosPorTipo(codnegocio: string, tipo: string){
+    let tipoitems = 0;
+    if (tipo === 'P'){
+      tipoitems = 1;
+    }
+    else if (tipo === 'S'){
+      tipoitems = 2;
+    }
+    else if (tipo === 'M'){
+      tipoitems = 3;
+    }
+    else if (tipo === 'G'){
+      tipoitems = 4;
+    }
+    else if (tipo === 'T'){
+      tipoitems = 5;
+    }
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/articulo/tipo/' + tipoitems;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
   guardarArticulo(id: number, idnegocio: number, articulo: Articulo){
     console.log('el articulo enviado es ' + JSON.stringify(articulo));
     const body = {
@@ -68,6 +88,7 @@ export class ArticuloService{
     return this.httpClient.delete(endpoint, {headers: httpHeaders});
   }
 
+  
   mostrarArticulo(id: number){
 
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

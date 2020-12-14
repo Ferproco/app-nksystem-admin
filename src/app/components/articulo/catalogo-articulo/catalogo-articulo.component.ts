@@ -22,6 +22,8 @@ export class CatalogoArticuloComponent implements OnInit {
   sortedData;
   filtrararticulos = '';
 
+  tipoproductoconfig = 'T';
+
   POSTS: any;
   page = 1;
   count = 0;
@@ -48,7 +50,8 @@ export class CatalogoArticuloComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    this.listarArticulos();
+    this.listarArticulosPorTipo(this.tipoproductoconfig);
+    
   }
   ngAfterViewInit() {
 
@@ -86,7 +89,41 @@ export class CatalogoArticuloComponent implements OnInit {
           }
         }));
   }
-  
+  private listarArticulosPorTipo(tipo: string): void {
+    this.loading = true;
+    this.lstArticulos = [];
+    let status = 0;
+    this.articuloServicio.listarArticulosPorTipo('', tipo)
+      .subscribe(response => {
+        const listaarticulo = response as Articulo[];
+        listaarticulo.forEach(element => {
+          if (element.status === 'ACTIVO') {
+            status = 1;
+          }
+          else {
+            status = 0;
+          }
+          this.lstArticulos.push(element);
+        });
+      
+
+        this.dataSource = new MatTableDataSource(this.lstArticulos);
+        this.dataSource.paginator = this.paginator;
+        this.LengthTable = this.lstArticulos.length;
+        this.sortedData = this.lstArticulos.slice();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
 
   registrararticulos() {
     this.router.navigate(['inventario/creararticulo']);
@@ -167,8 +204,25 @@ export class CatalogoArticuloComponent implements OnInit {
   }
 
   eliminarporcodigo(id: number){
-   
+    this.loading = true;
+    this.articuloServicio.eliminarArticulo(id)
+      .subscribe(response => {
+        const respuesta = response;
+        this.loading = false;
+        this.listarArticulosPorTipo(this.tipoproductoconfig);
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
+ 
 
   ExportarExcel(){
 
@@ -176,8 +230,10 @@ export class CatalogoArticuloComponent implements OnInit {
   ExportarTxt(){
 
   }
-  Refrescar(){
-    this.listarArticulos();
+  
+  Refrescar() {
+    this.tipoproductoconfig = 'T';
+    this.listarArticulosPorTipo(this.tipoproductoconfig);
   }
   Importar(){
 
@@ -204,4 +260,11 @@ export class CatalogoArticuloComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
+
+  cargararticulos(tipo){
+    this.tipoproductoconfig = tipo;
+    this.listarArticulosPorTipo(this.tipoproductoconfig);
+  }
+
+  
 }

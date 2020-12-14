@@ -1,23 +1,24 @@
 export class Almacen{
-    codalmacen: string;
-	codnegocio: string;
-    nombre: string;
-	principal: string;
-    tipoalmacen: string;
-    direccion: string;
-    idalmacen: number;
-    status:string;
+    public idalmacen: number;
+    public codalmacen: string;
+	public codnegocio: string;
+    public nombre: string;
+	public principal: string;
+    public tipoalmacen: string;
+    public direccion: string;   
+    public status:string;
 
-    constructor( codalmacen: string,codnegocio: string,nombre: string, principal: string,tipoalmacen: string, direccion: string,idalmacen: number,status:string){
+    constructor( json: any = null){
 
-
-        this.codalmacen=codalmacen;
-        this.codnegocio=codnegocio;
-        this.nombre=nombre;
-        this.principal=principal;
-        this.tipoalmacen=tipoalmacen;
-        this.direccion=direccion;
-        this.idalmacen=idalmacen;
-        this.status=status;
+        if(json !== null) {
+        this.codalmacen=json.codalmacen;
+        this.codnegocio=json.codnegocio;
+        this.nombre=json.nombre;
+        this.principal=json.principal;
+        this.tipoalmacen=json.tipoalmacen;
+        this.direccion=json.direccion;
+        this.idalmacen=json.idalmacen;
+        this.status=json.status;
+      }
     }
 }
