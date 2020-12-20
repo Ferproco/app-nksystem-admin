@@ -1,3 +1,4 @@
+import { CatalogoDocumentoVentasComponent } from './components/ventas/catalogo-documento-ventas/catalogo-documento-ventas.component';
 import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
 import { MainComponent } from './components/main/main.component';
 import { LoginComponent } from './components/login/login.component';
@@ -16,7 +17,6 @@ import { CrearAlmacenComponent } from './components/almacen/crear-almacen/crear-
 import { CatalogoUsuarioComponent } from './components/configuracion/catalogo-usuario/catalogo-usuario.component';
 import { CatalogoFormapagoComponent } from './components/formapago/catalogo-formapago/catalogo-formapago.component';
 import { CatalogoMovimientoscajaComponent } from './components/movimientoscaja/catalogo-movimientoscaja/catalogo-movimientoscaja.component';
-import { CatalogoFacturaComponent } from './components/factura/catalogo-factura/catalogo-factura.component';
 import { CatalogoProveedorComponent } from './components/proveedor/catalogo-proveedor/catalogo-proveedor.component';
 import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
 import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vendedor/catalogo-vendedor.component';
@@ -49,7 +49,10 @@ const routes: Routes = [
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/crearcliente', component: CrearClienteComponent},
-  { path: 'ventas/facturas', component: DocumentoVentasComponent},
+  { path: 'ventas/catalogodocumentodeventa-factura/:tipodocumento', component: CatalogoDocumentoVentasComponent},
+  { path: 'ventas/documentodeventa-factura/:tipodocumento', component: DocumentoVentasComponent},
+  { path: 'ventas/catalogodocumentodeventa-cotizacion/:tipodocumento', component: CatalogoDocumentoVentasComponent},
+  { path: 'ventas/documentodeventa-cotizacion/:tipodocumento', component: DocumentoVentasComponent},
   { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent},
   { path: 'ventas/listarvendedores', component: CatalogoVendedorComponent},
   { path: 'ventas/crearvendedores', component: CrearVendedorComponent},

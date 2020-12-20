@@ -48,8 +48,6 @@ import { CrearFormapagoComponent } from './components/formapago/crear-formapago/
 import { FilterFormapagoPipe } from './components/formapago/catalogo-formapago/filter-formapago.pipe';
 import { MovimientosCajaService } from './components/movimientoscaja/MovimientosCajaService.service';
 import { CatalogoMovimientoscajaComponent } from './components/movimientoscaja/catalogo-movimientoscaja/catalogo-movimientoscaja.component';
-import { FacturaService } from './components/factura/FacturaService.service';
-import { CatalogoFacturaComponent } from './components/factura/catalogo-factura/catalogo-factura.component';
 import { ProveedorService } from './components/proveedor/ProveedorService.service';
 import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
 import { CatalogoProveedorComponent } from './components/proveedor/catalogo-proveedor/catalogo-proveedor.component';
@@ -102,6 +100,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ModalClienteComponent } from './components/contacto/modal-cliente/modal-cliente.component';
 import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
+import { CatalogoDocumentoVentasComponent } from './components/ventas/catalogo-documento-ventas/catalogo-documento-ventas.component';
+import { DocumentosVentasService } from './components/ventas/documentos-ventas.service';
 
 @NgModule({
   declarations: [
@@ -130,7 +130,6 @@ import { DocumentoVentasComponent } from './components/ventas/documento-ventas/d
     CrearFormapagoComponent,
     FilterFormapagoPipe,
     CatalogoMovimientoscajaComponent,
-    CatalogoFacturaComponent,
     CrearProveedorComponent,
     CatalogoProveedorComponent,
     FilterProveedorPipe,
@@ -150,7 +149,8 @@ import { DocumentoVentasComponent } from './components/ventas/documento-ventas/d
     CatalogoTipoImpuestoComponentComponent,
     CrearTipoImpuestoComponentComponent,
     ModalClienteComponent,
-    DocumentoVentasComponent
+    DocumentoVentasComponent,
+    CatalogoDocumentoVentasComponent
 
 
   ],
@@ -201,7 +201,6 @@ import { DocumentoVentasComponent } from './components/ventas/documento-ventas/d
     CategoriaService,
     FormaPagoService,
     MovimientosCajaService,
-    FacturaService,
     ProveedorService,
     VendedorService,
     TransaccionesService,
@@ -212,6 +211,7 @@ import { DocumentoVentasComponent } from './components/ventas/documento-ventas/d
     DepartamentoService,
     MunicipioService,
     ListaPrecioService,
+    DocumentosVentasService,
     BsModalRef
   ],
   bootstrap: [AppComponent]
