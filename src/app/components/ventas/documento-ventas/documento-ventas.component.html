@@ -2,7 +2,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<form>
+<form [formGroup]="DocumentoVentaForm" (ngSubmit)="onFormSubmit($event)">
   <div class="content-inner-all">
     <!-- Breadcome start-->
     <div class="breadcome-area mg-b-30 small-dn">
@@ -24,8 +24,8 @@
                       <span class="bread-slash">/ Ventas /</span>
                     </li>
                     <li>
-                      <a routerLink="/contactos/listarcontactos"><span class="bread-blod">Listado de
-                          Contactos /</span></a>
+                      <a routerLink="{{url}}"><span class="bread-blod">Listado de
+                          {{titulo}} /</span></a>
                     </li>
                     <li><span class="bread-blod">Crear</span>
                     </li>
@@ -48,7 +48,7 @@
               <div class="row">
                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                   <div class="project-details-title">
-                    <h2><span class="profile-details-name-nn">Documento</span> de Venta</h2>
+                    <h2><span class="profile-details-name-nn">{{titulo}}</span></h2>
                   </div>
                   <ul id="adminpro-demo2" class="comment-action-st collapse">
                     <li><a href="#">Add</a>
@@ -70,7 +70,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                   <div class="project-details-mg">
                     <div class="row">
                       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -89,7 +89,6 @@
                     </div>
                   </div>
                   <div class="project-details-mg">
-
                   </div>
                   <div class="project-details-mg">
                     <div class="row">
@@ -142,18 +141,30 @@
                     <div class="row">
                       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="project-details-st">
+                          <span><strong>N° Documento:</strong></span>
+                        </div>
+                      </div>
+                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="project-details-dt">
+                          <div class="project-details-dt">
+                            <input formControlName="numerodocumento" type="text" class="form-control" placeholder="Numero de Documento" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="project-details-mg">
+                    <div class="row">
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="project-details-st">
                           <span><strong>Fecha:</strong></span>
                         </div>
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="input-group date">
                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input
-                        class="form-control"
-                        bsDatepicker
-                        #dp="bsDatepicker"
-                        formControlName="fechaini"
-                        [bsConfig]="bsConfig">
+                          <input class="form-control" bsDatepicker #dp="bsDatepicker"
+                          formControlName="fechaemision" [bsConfig]="bsConfig">
                         </div>
                       </div>
                     </div>
@@ -187,12 +198,8 @@
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="input-group date">
                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input
-                        class="form-control"
-                        bsDatepicker
-                        #dp="bsDatepicker"
-                        formControlName="fechaini"
-                        [bsConfig]="bsConfig">
+                          <input class="form-control" bsDatepicker #dp="bsDatepicker"
+                          formControlName="fechavence" [bsConfig]="bsConfig">
                         </div>
                       </div>
                     </div>
@@ -238,43 +245,46 @@
             <div class="income-dashone-total income-monthly shadow-reset nt-mg-b-30 res-mg-t-30">
               <div class="income-title">
                 <div class="main-income-head">
-                  <h2>Total</h2>
-                  <div class="main-income-phara">
-                    <p>Monthly</p>
+                  <h2>Precio Total</h2>
+                  <div class="income-rate-total">
+                    <div class="price-adminpro-rate">
+                      <h3><span>$</span><span class="counter">0.00</span></h3>
+                    </div>
+
                   </div>
                 </div>
+              </div>
+              <div class="income-title">
+                <div class="main-income-head">
+                  <h2>Precio Total Neto</h2>
+                  <div class="income-rate-total">
+                    <div class="price-adminpro-rate">
+                      <h3><span>$</span><span class="counter">0.00</span></h3>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="income-range">
+
+                  <span class="income-percentange">Dcto 10% </span>
+                </div>
+                <div class="clear"></div>
               </div>
               <div class="income-dashone-pro">
                 <div class="income-rate-total">
                   <div class="price-adminpro-rate">
-                    <h3><span>$</span><span class="counter">6,08,88,200</span></h3>
+                    <h3><span>$</span><span class="counter">0.00</span></h3>
                   </div>
 
                 </div>
                 <div class="income-range">
                   <p>Total</p>
-                  <span class="income-percentange">98% <i class="fa fa-bolt"></i></span>
+                  <span class="income-percentange">Dcto 10% </span>
                 </div>
                 <div class="clear"></div>
               </div>
             </div>
-            <div class="income-dashone-total visitor-monthly shadow-reset nt-mg-b-30">
-              <div class="income-title">
-                <div class="main-income-head">
-                  <h2>Visitor</h2>
-                  <div class="main-income-phara visitor-cl">
-                    <p>Today</p>
-                  </div>
-                </div>
-              </div>
-              <div class="income-dashone-pro">
-                <div class="income-rate-total">
-                  <div class="price-adminpro-rate">
-                    <h3><span class="counter">8,88,200</span></h3>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -292,45 +302,51 @@
               <div class="row">
                 <div class="col-lg-12">
 
-
+                  <button type="button" (click)="addItem()">Add</button>
                   <div class="sparkline10-graph">
                     <div class="static-table-list">
                       <table class="table border-table">
                         <thead>
                           <tr>
                             <th>Item</th>
-                            <th>Referencia</th>
-                            <th>Impuesto</th>
-                            <th>Precio</th>
-                            <th>Dcto (%)</th>
+                            <th>Descripción</th>
+                            <th>U Medida</th>
                             <th>Cantidad</th>
+                            <th>Moneda</th>
+                            <th>Precio Uni.</th>
+                            <th>Dcto (%)</th>
+                            <th>Monto Dcto</th>
+                            <th>Impuestos</th>
+                            <th>Precio Total</th>
+                            <th></th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td>Caja de Herramientas</td>
+                        <tbody formArrayName="itemDetails">
+                          <tr *ngFor="let itemDetails of ListItems.controls; let i = index" [formGroup]="ListItems.controls[i]">
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-btn"><button type="button" (click)="onListarClientes()" class="btn btn-primary">+</button></span>
+                                <input type="text" class="form-control" formControlName="codigo" placeholder="Codigo Items" />
+                                <span class="input-group-btn"><button type="button" (click)="onListarClientes()" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
+                            </div>
+                            </td>
+                            <td><input type="text" class="form-control" formControlName="descripcion" placeholder="Descripcion Items" /></td>
                             <td></td>
-                            <td></td>
-                            <td>150.000,00</td>
                             <td>0,00</td>
                             <td>0,00</td>
+                            <td>0,00</td>
+                            <td>0,00</td>
+                            <td>0,00</td>
+                            <td>0,00</td>
+                            <td>0,00</td>
+                            <td>
+                              <div class="btn-group project-list-add">
+                                <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
+                                    aria-hidden="true"></i></button>
+                              </div>
+                            </td>
                           </tr>
-                          <tr>
-                            <td>Camara de CCTV</td>
-                            <td></td>
-                            <td></td>
-                            <td>150.000,00</td>
-                            <td>0,00</td>
-                            <td>0,00</td>
-                          </tr>
-                          <tr>
-                            <td>Monitor Pantalla Plana 17 PUL</td>
-                            <td></td>
-                            <td></td>
-                            <td>150.000,00</td>
-                            <td>0,00</td>
-                            <td>0,00</td>
-                          </tr>
+
                         </tbody>
                       </table>
                     </div>

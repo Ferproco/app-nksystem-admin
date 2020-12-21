@@ -458,35 +458,22 @@ export class CrearContactoComponent implements OnInit {
     let longnumero = 0;
     if (sinpuntos.length < 15){
        longnumero = 15 - sinpuntos.length;
-       
+
     let ceros='0';
-    for (let i=1;i<longnumero;i++) { 
+    for (let i=1;i<longnumero;i++) {
       ceros+='0';
     }
     sinpuntos = ceros+sinpuntos;
-       
-    console.log('longitud primer valor con puntos' + sinpuntos.length);
-    console.log('numero final con ceros' + sinpuntos);
     arreglonumeroidentificacion = sinpuntos;
-    console.log('arreglo final del numero con ceros' + arreglonumeroidentificacion);
-       
+
     }
-    
-    //console.log('longitud del arregloconstante ' + arreglonumeros.length);
-    //console.log('longitud del numero de identificacion ' + arreglonumeroidentificacion.length);
-    
-    //console.log('longitud del arregloconstante' + arreglonumeros.length);
-    //console.log('longitud del numero de identificacion' + arreglonumeroidentificacion.length);
     for (let numero of arreglonumeros) {
       console.log('arreglo constante' + numero);
       posicionarreglo1 = posicionarreglo1 + 1;
       posicionarreglo2 = 0;
       for (let element of arreglonumeroidentificacion) {
 
-        posicionarreglo2 = posicionarreglo2 + 1;;
-       // console.log(' posicion arreglo contasnte' + posicionarreglo1);
-       // console.log(' posicion numero identificacion' + posicionarreglo2);
-       // console.log('Arreglo numero iden for ' + Number(element));
+        posicionarreglo2 = posicionarreglo2 + 1;
         if (posicionarreglo1 === posicionarreglo2) {
           resultadomultiplicacion = numero * element;
           console.log('Resultado de la multiplicacion de este numero * ' + Number(numero));
