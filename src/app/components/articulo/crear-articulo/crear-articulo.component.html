@@ -189,57 +189,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-3">
-                    <div id="pwd-container3" *ngIf="visiblecostoxproducto">
-                      <div class="form-group">
-                        <label for="username">Costo X Unidad</label>
-                        <input formControlName="preciosugerido"
-                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
-                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
-                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
-                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
-                            Precio Incorrecto
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="col-lg-3">
-                    <div id="pwd-container3" *ngIf="visiblebodega">
-                      <div class="form-group">
-                        <label for="username">Bodega</label>
-                        <div class="input-group">
-                          <span class="input-group-btn"><button type="button" (click)="onCrearBodega()"
-                              class="btn btn-primary">+</button></span>
-                          <select class="select2_demo_3 form-control" formControlName="codbodega">
                   
-                            <option value="0">--Seleccione--</option>
-                            <option value="{{bodega.idalmacen}}" *ngFor="let bodega of lstAlmacenes">
-                              {{bodega.nombre}}</option>
                   
-                          </select>
-                        </div>
-                      </div>
-                    </div>
                   
-                  </div>
-                  <div class="col-lg-2">
-                    <div id="pwd-container3" *ngIf="visiblecantidad">
-                      <div class="form-group">
-                        <label for="username">Cantidad Inicial</label>
-                        <input formControlName="preciosugerido"
-                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
-                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
-                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
-                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
-                            Precio Incorrecto
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-2">
@@ -268,6 +220,22 @@
                         <div *ngIf="stockmaximo.invalid  && (stockmaximo.dirty || stockmaximo.touched)">
                           <div class="invalid-mensaje" *ngIf="stockmaximo.errors.pattern">
                             Cantidad Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-lg-3">
+                    <div id="pwd-container3" *ngIf="visiblepuntoreorden">
+                      <div class="form-group">
+                        <label for="username">Punto de reorden</label>
+                        <input formControlName="cantidadreorden"
+                          [ngClass]="{'invalid-data': cantidadreorden.invalid && (cantidadreorden.touched || cantidadreorden.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el punto de Reorden" />
+                        <div *ngIf="cantidadreorden.invalid  && (cantidadreorden.dirty || cantidadreorden.touched)">
+                          <div class="invalid-mensaje" *ngIf="cantidadreorden.errors.pattern">
+                            Punto Reorden Incorrecto
                           </div>
                         </div>
                       </div>
@@ -349,8 +317,8 @@
 
                                     <select class="select2_demo_3 form-control" formControlName="codmarca">
 
-                                      <option value="0">--Seleccione--</option>
-                                      <option value="{{marca.codmarca}}" *ngFor="let marca of lstMarcas">
+                                      <option value="null">--Seleccione--</option>
+                                      <option value="{{marca.id}}" *ngFor="let marca of lstMarcas">
                                         {{marca.nommarca}}</option>
 
 
@@ -393,16 +361,20 @@
                                 </div>
                                 
                                 <div id="pwd-container3">
-                                  <div class="colorpicker-inner ts-forms mg-b-23">
-                                    <div class="tsbox">
-                                        <label class="label">Palette</label>
-                                        <label class="color-group" for="palette1">
-                                            <input type="text" placeholder="#9257b4" id="palette1">
-                                        </label>
+                                  <div class="form-group">
+                                    <label for="username">Color</label>
+                                    <input formControlName="color"
+                                      [ngClass]="{'invalid-data': color.invalid && (color.touched || color.dirty)}"
+                                      type="text" class="form-control"
+                                      placeholder="Ingrese el Color" />
+                                    <div
+                                      *ngIf="color.invalid  && (color.dirty || color.touched)">
+                                      <div class="invalid-mensaje" *ngIf="color.errors.pattern">
+                                        Codigo de Barra Incorrecto
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
-                                </div>
-
                                 <div class="bt-df-checkbox pull-left">
 
                                   <div class="row">

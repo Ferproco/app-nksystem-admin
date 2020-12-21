@@ -31,6 +31,9 @@ import { CrearFormapagoComponent } from './components/formapago/crear-formapago/
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
 import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
+import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
+import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
+
 
 
 const routes: Routes = [
@@ -46,6 +49,8 @@ const routes: Routes = [
   { path: 'inventario/listarunidades', component: CatalogoUnidadmedidaComponent},
   { path: 'inventario/listarcategorias', component: CatalogoCategoriaComponent},
   { path: 'inventario/crearcategoria', component: CrearCategoriaComponent},
+  {path: 'inventario/crearmarca',component: CrearMarcaComponent},
+  {path: 'inventario/listarmarcas', component:CatalogoMarcaComponent},
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/crearcliente', component: CrearClienteComponent},

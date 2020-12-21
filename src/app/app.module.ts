@@ -102,6 +102,9 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ModalClienteComponent } from './components/contacto/modal-cliente/modal-cliente.component';
 import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
+import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
+import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
+import { CatalogoArticuloModalComponent } from './components/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 
 @NgModule({
   declarations: [
@@ -149,8 +152,11 @@ import { DocumentoVentasComponent } from './components/ventas/documento-ventas/d
     CrearTipoImpuestoModalComponent,
     CatalogoTipoImpuestoComponentComponent,
     CrearTipoImpuestoComponentComponent,
+    CrearMarcaComponent,
+    CatalogoMarcaComponent,
     ModalClienteComponent,
-    DocumentoVentasComponent
+    DocumentoVentasComponent,
+    CatalogoArticuloModalComponent
 
 
   ],

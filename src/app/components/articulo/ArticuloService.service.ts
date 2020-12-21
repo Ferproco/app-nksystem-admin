@@ -47,10 +47,10 @@ export class ArticuloService{
     const endpoint: any = this.uriapi + 'api/articulo/tipo/' + tipoitems;
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
-  guardarArticulo(id: number, idnegocio: number, articulo: Articulo){
+  guardarArticulo(idIn: number, idnegocio: number, articulo: Articulo){
     console.log('el articulo enviado es ' + JSON.stringify(articulo));
     const body = {
-      
+      id: Number(idIn),
       codnegocio: Number(idnegocio),
       codigo: articulo.codigo,
       nomarticulo:articulo.nomarticulo,
@@ -66,7 +66,7 @@ export class ArticuloService{
       status: articulo.status === '1' ? 'ACTIVO' : 'INACTIVO',
       stockminimo:articulo.stockminimo,
       stockmaximo:articulo.stockmaximo,
-      puntoreorden:articulo.puntoreorden,
+      cantidadreorden:articulo.cantidadreorden,
       peso:articulo.peso,
       talla:articulo.talla,
       color:articulo.color,
@@ -74,7 +74,7 @@ export class ArticuloService{
       
 
     };
-    console.log('id ' + id + 'contacto ' + JSON.stringify(body));
+    console.log('id ' + idIn + 'articulo ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});

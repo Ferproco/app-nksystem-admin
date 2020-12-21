@@ -23,7 +23,7 @@ export class Articulo {
   public descripcionlarga: string;
   public stockminimo: number;
   public stockmaximo: number;
-  public puntoreorden: number;
+  public cantidadreorden: number;
  
 	public clasificacioniva:string;
 	public esimpoconsumo:string;
@@ -65,11 +65,11 @@ export class Articulo {
     this.descripcionlarga = json.descripcionlarga;
     this.serial = json.serial;
     this.familia = json.familia;
-    this.codtipoproducto=json.tipoproducto;
+    this.codtipoproducto=json.codtipoproducto;
     
     this.stockminimo = json.stockminimo;
     this.stockmaximo = json.stockmaximo;
-    this.puntoreorden = json.puntoreorden;   
+    this.cantidadreorden = json.cantidadreorden;   
     this.clasificacioniva = json.clasificacioniva;
     this.esimpoconsumo = json.esimpoconsumo;
     this.valorimpoconsumo = json.valorimpoconsumo;

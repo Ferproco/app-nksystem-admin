@@ -28,7 +28,7 @@ export class MarcaService{
   guardarMarca(id: number, idnegocio: number, marca: Marca){
 
     const body = {
-      codmarca: id,
+      id: id,
       nommarca: marca.nommarca,
      
       status: marca.status === '1' ? 'ACTIVO' : 'INACTIVO',

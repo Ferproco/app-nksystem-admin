@@ -58,7 +58,7 @@ export class CatalogoMarcaComponent implements OnInit {
   }
 
   registrarmarcas() {
-    this.router.navigate(['inventario/crearmarcas']);
+    this.router.navigate(['inventario/crearmarca']);
   }
 
   applyFilter(event: Event) {

@@ -59,6 +59,7 @@ export class CrearArticuloComponent implements OnInit {
   visiblecantidad= false;
   visiblecantidadminima=false;
   visiblecantidadmaxima=false;
+  visiblepuntoreorden=false;
   visiblebodega=false;
 
  
@@ -89,8 +90,8 @@ export class CrearArticuloComponent implements OnInit {
                   this.id = this.route.snapshot.params.id;
                   this.buscarArticulo(this.id);
                 }
-    this.buildForm(this.ArticuloModel);
-    this.idnegocio = 1;
+    this.buildForm();
+    
    }
 
   ngOnInit(): void {
@@ -98,32 +99,32 @@ export class CrearArticuloComponent implements OnInit {
     this.listarUnidades();
     this.listarImpuestos();
     this.listarMarcas();
-    this.listarGrupoArticulos();
-    this.listarBodegas();
+   // this.listarGrupoArticulos();
+   // this.listarBodegas();
   }
 
-  private buildForm(articulo:Articulo){
-      console.log(JSON.stringify(articulo));
+  private buildForm(){
+      
       this.formarticulo = this.formbuilder.group({
       codigo: [this.ArticuloModel.codigo,[Validators.required]],
       nomarticulo:[this.ArticuloModel.nomarticulo,[Validators.required]],
       codtipoproducto: [this.ArticuloModel.codtipoproducto,[Validators.required]],
       codfamilia:[this.ArticuloModel.codfamilia,[Validators.required]],
-      codunidadmedida: [this.ArticuloModel.codunidadmedida=this.unidadmedidaxdefecto,[Validators.required]],
+      codunidadmedida: [this.ArticuloModel.codunidadmedida,[Validators.required]],
       codimpuesto:[this.ArticuloModel.codimpuesto,[Validators.required]],
-      codmarca:[this.ArticuloModel.codmarca],
-      preciosugerido:[this.ArticuloModel.preciosugerido],
-      referencia:[this.ArticuloModel.referencia],
-      serial:[this.ArticuloModel.serial],
-      codigobarraprincipal:[this.ArticuloModel.codigobarraprincipal],
-      descripcionlarga:[this.ArticuloModel.descripcionlarga],
+      codmarca:[this.ArticuloModel.codmarca,[Validators.required]],
+      preciosugerido:[this.ArticuloModel.preciosugerido, [Validators.pattern(this.parrterobservaciones)]],
+      referencia:[this.ArticuloModel.referencia, [Validators.pattern(this.parrterobservaciones)]],
+      serial:[this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
+      codigobarraprincipal:[this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.parrterobservaciones)]],
+      descripcionlarga:[this.ArticuloModel.descripcionlarga, [Validators.pattern(this.parrterobservaciones)]],
       status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0],
-      stockminimo:[this.ArticuloModel.stockminimo],
-      stockmaximo:[this.ArticuloModel.stockmaximo],
-      puntoreorden:[this.ArticuloModel.puntoreorden],
-      peso:[this.ArticuloModel.peso],
-      talla:[this.ArticuloModel.talla],
-      color:[this.ArticuloModel.color]
+      stockminimo:[this.ArticuloModel.stockminimo, [Validators.pattern(this.parrterobservaciones)]],
+      stockmaximo:[this.ArticuloModel.stockmaximo, [Validators.pattern(this.parrterobservaciones)]],
+      cantidadreorden:[this.ArticuloModel.cantidadreorden, [Validators.pattern(this.parrterobservaciones)]],
+      peso:[this.ArticuloModel.peso, [Validators.pattern(this.parrterobservaciones)]],
+      talla:[this.ArticuloModel.talla, [Validators.pattern(this.parrterobservaciones)]],
+      color:[this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]]
      // codbodega::[this.ArticuloModel.listabodegas.co]
       
       
@@ -279,6 +280,7 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidad= true;
       this.visiblecantidadminima=true;
       this.visiblecantidadmaxima=true;
+     this.visiblepuntoreorden=true;
       this.visiblebodega=true;
      
 
@@ -290,6 +292,7 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadminima=false;
       this.visiblecantidadmaxima=false;
       this.visiblebodega=false;
+      this.visiblepuntoreorden=false;
     }
   
   }
@@ -316,7 +319,7 @@ export class CrearArticuloComponent implements OnInit {
         else {
           status = 0;
         }
-        this.buildForm(this.ArticuloModel);
+        this.buildForm();
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -362,14 +365,46 @@ export class CrearArticuloComponent implements OnInit {
   get preciosugerido(){
     return this.formarticulo.get('preciosugerido');
   }
+  get stockminimo(){
+    return this.formarticulo.get('stockminimo');
+  }
+  get stockmaximo(){
+    return this.formarticulo.get('stockmaximo');
+  }
+  get cantidadreorden(){
+    return this.formarticulo.get('cantidadreorden');
+  }
     get talla(){
     return this.formarticulo.get('talla');
   }
   get peso(){
     return this.formarticulo.get('peso');
   }
+  get color(){
+    return this.formarticulo.get('color');
+  }
+ 
+  get codfamilia(){
+    return this.formarticulo.get('codfamilia');
+  }
+  get codunidadmedida(){
+    return this.formarticulo.get('codunidadmedida');
+  }
+  get codmarca(){
+    return this.formarticulo.get('codmarca');
+  }
+ 
+  get codimpuesto(){
+    return this.formarticulo.get('codimpuesto');
+  }
+  get status(){
+    return this.formarticulo.get('status');
+  }  
+      
+     
   onChangeTipo(event) {
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
+    this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
   onChange(event: MatSlideToggleChange) {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');

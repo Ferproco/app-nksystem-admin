@@ -1,11 +1,11 @@
 export class Marca {
-    codmarca: number;
+    id: number;
     nommarca: string;
     codnegocio: string;
     status:string;
 
-    constructor(codmarca: number, nommarca: string, codnegocio: string,status:string) {
-        this.codmarca = codmarca;
+    constructor(id: number, nommarca: string, codnegocio: string,status:string) {
+        this.id = id;
         this.nommarca = nommarca;
         this.codnegocio = codnegocio;
         this.status=status;
