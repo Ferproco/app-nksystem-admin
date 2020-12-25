@@ -102,6 +102,8 @@ import { ModalClienteComponent } from './components/contacto/modal-cliente/modal
 import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
 import { CatalogoDocumentoVentasComponent } from './components/ventas/catalogo-documento-ventas/catalogo-documento-ventas.component';
 import { DocumentosVentasService } from './components/ventas/documentos-ventas.service';
+import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
+import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
 
 @NgModule({
   declarations: [
@@ -150,9 +152,10 @@ import { DocumentosVentasService } from './components/ventas/documentos-ventas.s
     CrearTipoImpuestoComponentComponent,
     ModalClienteComponent,
     DocumentoVentasComponent,
-    CatalogoDocumentoVentasComponent
-
-
+    CatalogoDocumentoVentasComponent,
+    CrearMarcaComponent,
+    CatalogoMarcaComponent
+   
   ],
   imports: [
     BrowserModule,

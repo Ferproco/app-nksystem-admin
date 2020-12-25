@@ -34,18 +34,18 @@ export class CrearArticuloComponent implements OnInit {
 
   id = 0;
   loading = false;
-  lstFamilias: any [] = [];
-  lstUnidades: any [] = [];
-  lstImpuestos: any [] = [];
-  lstMarcas: any[]=[];
-  lstAlmacenes: any[]=[];
-  lstGrupoArticulos:any[]=[];
-  
+  lstFamilias: any[] = [];
+  lstUnidades: any[] = [];
+  lstImpuestos: any[] = [];
+  lstMarcas: any[] = [];
+  lstAlmacenes: any[] = [];
+  lstGrupoArticulos: any[] = [];
+
   idnegocio: number;
   formarticulo: FormGroup;
 
   ArticuloModel: Articulo;
-  unidadmedidaxdefecto:2;
+  unidadmedidaxdefecto: 2;
   bsModalRef: any;
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -54,109 +54,110 @@ export class CrearArticuloComponent implements OnInit {
 
   customClass = 'customClass';
   isFirstOpen = true;
-  
-  visiblecostoxproducto = false;
-  visiblecantidad= false;
-  visiblecantidadminima=false;
-  visiblecantidadmaxima=false;
-  visiblepuntoreorden=false;
-  visiblebodega=false;
 
- 
+  visiblecostoxproducto = false;
+  visiblecantidad = false;
+  visiblecantidadminima = false;
+  visiblecantidadmaxima = false;
+  visiblepuntoreorden = false;
+  visiblebodega = false;
+
+
   codtipoproducto = [
     { id: 1, nombre: 'Producto' },
     { id: 2, nombre: 'Servicio' },
     { id: 3, nombre: 'Materia Prima' },
-    { id: 4, nombre: 'Gastos' },
+    { id: 4, nombre: 'Gasto' },
   ];
-  constructor(private articuloservice:ArticuloService,
-              private familiaserive: FamiliaService,
-              private unidadservice: UnidadService,
-              private impuestoservice:ImpuestoService,
-              private marcaservice:MarcaService,
-              private grupoarticuloservice:GrupoArticuloService,
-              private almacenServicio:AlmacenService,
-              private formbuilder: FormBuilder,
-              private toastr: ToastrService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private modalService: BsModalService) {
+  constructor(private articuloservice: ArticuloService,
+    private familiaserive: FamiliaService,
+    private unidadservice: UnidadService,
+    private impuestoservice: ImpuestoService,
+    private marcaservice: MarcaService,
+    private grupoarticuloservice: GrupoArticuloService,
+    private almacenServicio: AlmacenService,
+    private formbuilder: FormBuilder,
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private modalService: BsModalService) {
 
-                this.ArticuloModel = new Articulo();
-                this.idnegocio = 1;
-              
-                this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
-                if (this.route.snapshot.params.id){
-                  this.id = this.route.snapshot.params.id;
-                  this.buscarArticulo(this.id);
-                }
+    this.ArticuloModel = new Articulo();
+    this.idnegocio = 1;
+
+    this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+    if (this.route.snapshot.params.id) {
+      this.id = this.route.snapshot.params.id;
+     // this.buscarArticulo(this.id);
+    }
     this.buildForm();
-    
-   }
+
+  }
 
   ngOnInit(): void {
     this.listarFamilias();
     this.listarUnidades();
     this.listarImpuestos();
     this.listarMarcas();
-   // this.listarGrupoArticulos();
-   // this.listarBodegas();
+    this.buscarArticulo(this.id);
+    // this.listarGrupoArticulos();
+    // this.listarBodegas();
   }
 
-  private buildForm(){
-      
-      this.formarticulo = this.formbuilder.group({
-      codigo: [this.ArticuloModel.codigo,[Validators.required]],
-      nomarticulo:[this.ArticuloModel.nomarticulo,[Validators.required]],
-      codtipoproducto: [this.ArticuloModel.codtipoproducto,[Validators.required]],
-      codfamilia:[this.ArticuloModel.codfamilia,[Validators.required]],
-      codunidadmedida: [this.ArticuloModel.codunidadmedida,[Validators.required]],
-      codimpuesto:[this.ArticuloModel.codimpuesto,[Validators.required]],
-      codmarca:[this.ArticuloModel.codmarca,[Validators.required]],
-      preciosugerido:[this.ArticuloModel.preciosugerido, [Validators.pattern(this.parrterobservaciones)]],
-      referencia:[this.ArticuloModel.referencia, [Validators.pattern(this.parrterobservaciones)]],
-      serial:[this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
-      codigobarraprincipal:[this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.parrterobservaciones)]],
-      descripcionlarga:[this.ArticuloModel.descripcionlarga, [Validators.pattern(this.parrterobservaciones)]],
+  private buildForm() {
+
+    this.formarticulo = this.formbuilder.group({
+      codigo: [this.ArticuloModel.codigo, [Validators.required]],
+      nomarticulo: [this.ArticuloModel.nomarticulo, [Validators.required]],
+      codtipoproducto: [this.ArticuloModel.codtipoproducto, [Validators.required]],
+      codfamilia: [this.ArticuloModel.codfamilia, [Validators.required]],
+      codunidadmedida: [this.ArticuloModel.codunidadmedida, [Validators.required]],
+      codimpuesto: [this.ArticuloModel.codimpuesto, [Validators.required]],
+      codmarca: [this.ArticuloModel.codmarca, [Validators.required]],
+      preciosugerido: [this.ArticuloModel.preciosugerido, [Validators.pattern(this.parrterobservaciones)]],
+      referencia: [this.ArticuloModel.referencia, [Validators.pattern(this.parrterobservaciones)]],
+      serial: [this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
+      codigobarraprincipal: [this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.parrterobservaciones)]],
+      descripcionlarga: [this.ArticuloModel.descripcionlarga, [Validators.pattern(this.parrterobservaciones)]],
       status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0],
-      stockminimo:[this.ArticuloModel.stockminimo, [Validators.pattern(this.parrterobservaciones)]],
-      stockmaximo:[this.ArticuloModel.stockmaximo, [Validators.pattern(this.parrterobservaciones)]],
-      cantidadreorden:[this.ArticuloModel.cantidadreorden, [Validators.pattern(this.parrterobservaciones)]],
-      peso:[this.ArticuloModel.peso, [Validators.pattern(this.parrterobservaciones)]],
-      talla:[this.ArticuloModel.talla, [Validators.pattern(this.parrterobservaciones)]],
-      color:[this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]]
-     // codbodega::[this.ArticuloModel.listabodegas.co]
-      
-      
+      stockminimo: [this.ArticuloModel.stockminimo, [Validators.pattern(this.parrterobservaciones)]],
+      stockmaximo: [this.ArticuloModel.stockmaximo, [Validators.pattern(this.parrterobservaciones)]],
+      cantidadreorden: [this.ArticuloModel.cantidadreorden, [Validators.pattern(this.parrterobservaciones)]],
+      peso: [this.ArticuloModel.peso, [Validators.pattern(this.parrterobservaciones)]],
+      talla: [this.ArticuloModel.talla, [Validators.pattern(this.parrterobservaciones)]],
+      color: [this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]]
+      // codbodega::[this.ArticuloModel.listabodegas.co]
+
+
     })
   }
 
-  guardarArticulo(event: Event){
+  guardarArticulo(event: Event) {
     event.preventDefault();
     this.loading = true;
     const value = this.formarticulo.value;
     this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
-    .subscribe(response => {
-      this.loading = false;
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.router.navigate(['inventario/listararticulos']);
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      if (error.status === 404) {
+      .subscribe(response => {
+        this.loading = false;
+        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        this.router.navigate(['inventario/listararticulos']);
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-      }
-      else {
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-          { enableHtml: true, closeButton: true });
-      }
-    }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
 
-  
 
-  listarFamilias(){
+
+  listarFamilias() {
     this.loading = true;
     this.familiaserive.listarFamilias('')
       .subscribe(response => {
@@ -164,19 +165,19 @@ export class CrearArticuloComponent implements OnInit {
         console.log(this.lstFamilias);
         this.loading = false;
       },
-       ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
-  listarBodegas(){
+  listarBodegas() {
     this.loading = true;
     this.almacenServicio.listarAlmacenes('')
       .subscribe(response => {
@@ -184,19 +185,19 @@ export class CrearArticuloComponent implements OnInit {
         console.log(this.lstAlmacenes);
         this.loading = false;
       },
-       ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
-  listarUnidades(){
+  listarUnidades() {
     this.loading = true;
     this.unidadservice.listarUnidades('')
       .subscribe(response => {
@@ -204,18 +205,18 @@ export class CrearArticuloComponent implements OnInit {
         console.log(this.lstUnidades);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
-  listarImpuestos(){
+  listarImpuestos() {
     this.loading = true;
     this.impuestoservice.listarImpuestos('')
       .subscribe(response => {
@@ -223,18 +224,18 @@ export class CrearArticuloComponent implements OnInit {
         console.log(this.lstImpuestos);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
-  listarMarcas(){
+  listarMarcas() {
     this.loading = true;
     this.marcaservice.listarMarcas('')
       .subscribe(response => {
@@ -242,64 +243,64 @@ export class CrearArticuloComponent implements OnInit {
         console.log(this.lstMarcas);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
-  listarGrupoArticulos(){
+  listarGrupoArticulos() {
     this.loading = true;
     this.grupoarticuloservice.listarGrupoArticulos('')
       .subscribe(response => {
         this.lstGrupoArticulos = response as any[];
         console.log(this.lstGrupoArticulos);
         this.loading = false;
-      }, 
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
-  MostrarCamposTipoProducto(event){
+  MostrarCamposTipoProducto(event) {
     const idtipo = Number(event);
-    if (idtipo === 1){
+    if (idtipo === 1) {
       this.visiblecostoxproducto = true;
-      this.visiblecantidad= true;
-      this.visiblecantidadminima=true;
-      this.visiblecantidadmaxima=true;
-     this.visiblepuntoreorden=true;
-      this.visiblebodega=true;
-     
+      this.visiblecantidad = true;
+      this.visiblecantidadminima = true;
+      this.visiblecantidadmaxima = true;
+      this.visiblepuntoreorden = true;
+      this.visiblebodega = true;
+
 
     }
-    else if (idtipo === 2){
+    else if (idtipo === 2) {
 
       this.visiblecostoxproducto = false;
-      this.visiblecantidad= false;
-      this.visiblecantidadminima=false;
-      this.visiblecantidadmaxima=false;
-      this.visiblebodega=false;
-      this.visiblepuntoreorden=false;
+      this.visiblecantidad = false;
+      this.visiblecantidadminima = false;
+      this.visiblecantidadmaxima = false;
+      this.visiblebodega = false;
+      this.visiblepuntoreorden = false;
     }
-  
+
   }
-  onCrearBodega(){
+  onCrearBodega() {
     this.bsModalRef = this.modalService.show(CrearAlmacenModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
-      if (result){
+      if (result) {
         this.listarBodegas();
       }
       console.log('results', result);
@@ -335,73 +336,73 @@ export class CrearArticuloComponent implements OnInit {
 
   }
 
-  cargarRequeridos(e){
+  cargarRequeridos(e) {
     this.camposrequeridos = 'Valores Requeridos:\n';
     Object.keys(this.formarticulo.controls).forEach(key => {
-      if (this.formarticulo.controls[key].invalid){
+      if (this.formarticulo.controls[key].invalid) {
         this.camposrequeridos += key + '\n';
       }
     });
   }
-  get codigo(){
+  get codigo() {
     return this.formarticulo.get('codigo');
   }
-  get nomarticulo(){
+  get nomarticulo() {
     return this.formarticulo.get('nomarticulo');
   }
-  get referencia(){
+  get referencia() {
     return this.formarticulo.get('referencia');
   }
-  get serial(){
+  get serial() {
     return this.formarticulo.get('serial');
   }
-  get codigobarraprincipal(){
+  get codigobarraprincipal() {
     return this.formarticulo.get('codigobarraprincipal');
   }
-  
-  get descripcionlarga(){
+
+  get descripcionlarga() {
     return this.formarticulo.get('descripcionlarga');
   }
-  get preciosugerido(){
+  get preciosugerido() {
     return this.formarticulo.get('preciosugerido');
   }
-  get stockminimo(){
+  get stockminimo() {
     return this.formarticulo.get('stockminimo');
   }
-  get stockmaximo(){
+  get stockmaximo() {
     return this.formarticulo.get('stockmaximo');
   }
-  get cantidadreorden(){
+  get cantidadreorden() {
     return this.formarticulo.get('cantidadreorden');
   }
-    get talla(){
+  get talla() {
     return this.formarticulo.get('talla');
   }
-  get peso(){
+  get peso() {
     return this.formarticulo.get('peso');
   }
-  get color(){
+  get color() {
     return this.formarticulo.get('color');
   }
- 
-  get codfamilia(){
+
+  get codfamilia() {
     return this.formarticulo.get('codfamilia');
   }
-  get codunidadmedida(){
+  get codunidadmedida() {
     return this.formarticulo.get('codunidadmedida');
   }
-  get codmarca(){
+  get codmarca() {
     return this.formarticulo.get('codmarca');
   }
- 
-  get codimpuesto(){
+
+  get codimpuesto() {
     return this.formarticulo.get('codimpuesto');
   }
-  get status(){
+  get status() {
     return this.formarticulo.get('status');
-  }  
-      
-     
+  }
+
+
   onChangeTipo(event) {
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);

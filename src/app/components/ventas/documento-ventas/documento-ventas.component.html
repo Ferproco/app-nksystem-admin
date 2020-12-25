@@ -70,12 +70,12 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div class="project-details-mg">
                     <div class="row">
                       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="project-details-st">
-                          <span><strong>Cliente:</strong></span>
+                          <span><strong>Contacto:</strong></span>
                         </div>
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -99,7 +99,21 @@
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
-                          <input formControlName="nombreprimero" type="text" class="form-control" placeholder="Primer Nombre" />
+                          <input value="{{ nombreprimero }}" type="text" class="form-control" placeholder="Primer Nombre" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="project-details-mg">
+                    <div class="row">
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="project-details-st">
+                          <span><strong>Identificación:</strong></span>
+                        </div>
+                      </div>
+                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="project-details-dt">
+                          <input value="{{ numeroidentificacion }}" type="text" class="form-control" />
                         </div>
                       </div>
                     </div>
@@ -114,7 +128,23 @@
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
                           <div class="project-details-dt">
-                            <input formControlName="nombreprimero" type="text" class="form-control" placeholder="Primer Nombre" />
+                            <input value="{{telefono}}" type="text" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="project-details-mg">
+                    <div class="row">
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="project-details-st">
+                          <span><strong>Tipo Persona:</strong></span>
+                        </div>
+                      </div>
+                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="project-details-dt">
+                          <div class="project-details-dt">
+                            <input value="{{tipopersona}}" type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -129,8 +159,8 @@
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
-                          <textarea formControlName="direccionfiscal"
-                           type="text" class="form-control" placeholder="Ingrese la Dirección"></textarea>
+                          <textarea value="{{direccionfiscal}}"
+                           type="text" class="form-control" ></textarea>
                         </div>
                       </div>
                     </div>
@@ -199,7 +229,7 @@
                         <div class="input-group date">
                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                           <input class="form-control" bsDatepicker #dp="bsDatepicker"
-                          formControlName="fechavence" [bsConfig]="bsConfig">
+                          formControlName="fechavencimiento" [bsConfig]="bsConfig">
                         </div>
                       </div>
                     </div>
@@ -245,7 +275,7 @@
             <div class="income-dashone-total income-monthly shadow-reset nt-mg-b-30 res-mg-t-30">
               <div class="income-title">
                 <div class="main-income-head">
-                  <h2>Precio Total</h2>
+                  <h2>Sub Total</h2>
                   <div class="income-rate-total">
                     <div class="price-adminpro-rate">
                       <h3><span>$</span><span class="counter">0.00</span></h3>
@@ -256,6 +286,18 @@
               </div>
               <div class="income-title">
                 <div class="main-income-head">
+                  <h2>Descuento</h2>
+                  <div class="income-rate-total">
+                    <div class="price-adminpro-rate">
+                      <h3><span>$</span><span class="counter">0.00</span></h3>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+             
+              <div class="income-title">
+                <div class="main-income-head">
                   <h2>Precio Total Neto</h2>
                   <div class="income-rate-total">
                     <div class="price-adminpro-rate">
@@ -264,25 +306,10 @@
 
                   </div>
                 </div>
-                <div class="income-range">
-
-                  <span class="income-percentange">Dcto 10% </span>
-                </div>
-                <div class="clear"></div>
+                
+               
               </div>
-              <div class="income-dashone-pro">
-                <div class="income-rate-total">
-                  <div class="price-adminpro-rate">
-                    <h3><span>$</span><span class="counter">0.00</span></h3>
-                  </div>
-
-                </div>
-                <div class="income-range">
-                  <p>Total</p>
-                  <span class="income-percentange">Dcto 10% </span>
-                </div>
-                <div class="clear"></div>
-              </div>
+              
             </div>
 
           </div>

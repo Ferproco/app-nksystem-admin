@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ModalClienteComponent implements OnInit {
 
   public onClose: Subject<boolean>;
+  public onSelect: Subject<number>;
   loading = false;
   lstContactos: Contacto[] = [];
   sortedData;
@@ -37,11 +38,17 @@ export class ModalClienteComponent implements OnInit {
   ngOnInit(): void {
     this.listarContactos(this.tipopersonaconfig);
     this.onClose = new Subject();
+    this.onSelect = new Subject();
   }
 
   cargarclientes(tipo){
     this.tipopersonaconfig = tipo;
     this.listarContactos(this.tipopersonaconfig);
+  }
+
+  Seleccionar(id: number){
+    this.onSelect.next(id);
+    this.bsModalRef.hide();
   }
 
   private listarContactos(tipo: string): void {
