@@ -81,7 +81,7 @@
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="input-group">
                           <span class="input-group-btn"><button type="button" (click)="onListarClientes()" class="btn btn-primary">+</button></span>
-                          <input formControlName="nombreprimero" type="text" class="form-control" placeholder="Primer Nombre" />
+                          <input value="{{nombreprimero}}" type="text" class="form-control" placeholder="Seleccione Contacto" />
                           <span class="input-group-btn"><button type="button" (click)="onListarClientes()" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
                       </div>
 
@@ -90,20 +90,7 @@
                   </div>
                   <div class="project-details-mg">
                   </div>
-                  <div class="project-details-mg">
-                    <div class="row">
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="project-details-st">
-                          <span><strong>Nombre:</strong></span>
-                        </div>
-                      </div>
-                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                        <div class="project-details-dt">
-                          <input value="{{ nombreprimero }}" type="text" class="form-control" placeholder="Primer Nombre" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
                   <div class="project-details-mg">
                     <div class="row">
                       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -113,7 +100,7 @@
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
-                          <input value="{{ numeroidentificacion }}" type="text" class="form-control" />
+                          <input value="{{ numeroidentificacion }}" disabled type="text" class="form-control" />
                         </div>
                       </div>
                     </div>
@@ -128,7 +115,7 @@
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
                           <div class="project-details-dt">
-                            <input value="{{telefono}}" type="text" class="form-control" />
+                            <input value="{{telefono}}" disabled type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -144,7 +131,7 @@
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
                           <div class="project-details-dt">
-                            <input value="{{tipopersona}}" type="text" class="form-control" />
+                            <input value="{{tipopersona}}" disabled type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -159,7 +146,7 @@
                       </div>
                       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                         <div class="project-details-dt">
-                          <textarea value="{{direccionfiscal}}"
+                          <textarea value="{{direccionfiscal}}" disabled
                            type="text" class="form-control" ></textarea>
                         </div>
                       </div>
@@ -211,6 +198,7 @@
                           <span class="input-group-btn"><button type="button" (click)="onCrearPlazoCredito()"
                               class="btn btn-primary">+</button></span>
                           <select class="select2_demo_3 form-control" formControlName="codformapago">
+
                             <option [value]="formapago.id" *ngFor="let formapago of lstformaspago">
                               {{formapago.nombre}}</option>
                           </select>
@@ -295,7 +283,7 @@
                   </div>
                 </div>
               </div>
-             
+
               <div class="income-title">
                 <div class="main-income-head">
                   <h2>Precio Total Neto</h2>
@@ -306,10 +294,10 @@
 
                   </div>
                 </div>
-                
-               
+
+
               </div>
-              
+
             </div>
 
           </div>
@@ -348,7 +336,7 @@
                             <th></th>
                           </tr>
                         </thead>
-                        <tbody formArrayName="itemDetails">
+                        <!--<tbody formArrayName="itemDetails">
                           <tr *ngFor="let itemDetails of ListItems.controls; let i = index" [formGroup]="ListItems.controls[i]">
                             <td>
                               <div class="input-group">
@@ -374,7 +362,7 @@
                             </td>
                           </tr>
 
-                        </tbody>
+                        </tbody>-->
                       </table>
                     </div>
                   </div>

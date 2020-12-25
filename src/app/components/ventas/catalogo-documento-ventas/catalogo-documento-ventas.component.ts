@@ -56,6 +56,7 @@ export class CatalogoDocumentoVentasComponent implements OnInit {
   ngOnInit(): void {
 
     this.onTipoDocumento();
+    this.listarDocumento(this.tipodocumento);
   }
 
   onTipoDocumento(){
@@ -72,9 +73,9 @@ export class CatalogoDocumentoVentasComponent implements OnInit {
     this.lstDocumentos = [];
     this.documentoServicio.listarDocumentosPorTipo('', tipo)
       .subscribe(response => {
-        const listadocumentos = response as DocumentoVenta[];
-        listadocumentos.forEach(element => {
-         /* if (element.nombreprimero === '') {
+        this.lstDocumentos = response as DocumentoVenta[];
+        this.lstDocumentos.forEach(element => {
+          /*if (element.nombreprimero === '') {
             element.nombreprimero = element.razonsocial;
           }
           else {
@@ -82,8 +83,8 @@ export class CatalogoDocumentoVentasComponent implements OnInit {
                                     element.nombresegundo   + ' ' +
                                     element.apellidoprimero + ' ' +
                                     element.apellidosegundo;
-          }
-          this.lstContactos.push(element);*/
+          }*/
+          //this.lstContactos.push(element);
         });
         this.dataSource = new MatTableDataSource(this.lstDocumentos);
         this.dataSource.paginator = this.paginator;

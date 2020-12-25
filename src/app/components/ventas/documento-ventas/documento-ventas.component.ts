@@ -54,16 +54,16 @@ export class DocumentoVentasComponent implements OnInit {
   nombreprimero: string;
   numeroidentificacion:string;
   direccionfiscal:string;
-  
+
   tipopersona:string;
-  telefono:string;  
+  telefono:string;
   ContactoModel: Contacto;
   DocumentoVentaModel:DocumentoVenta;
 
- 
+
 
   constructor(private contactoServicio: ContactoService,
-              private documentoventaServicio:DocumentosVentasService,
+              private documentoventaServicio: DocumentosVentasService,
               private modalService: BsModalService,
               private formaPagoService: FormaPagoService,
               private vendedorService: VendedorService,
@@ -89,7 +89,8 @@ export class DocumentoVentasComponent implements OnInit {
   ngOnInit(): void {
 
     this.onTipoDocumento(this.tipodocumento);
-    this.DocumentoVentaForm = this.formBuilder.group({
+    this. buildForm();
+    /*this.DocumentoVentaForm = this.formBuilder.group({
       numerodocumento: ['00001', [Validators.required, Validators.maxLength(10)]],
       fechaemision: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
       fechavence: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -97,7 +98,7 @@ export class DocumentoVentasComponent implements OnInit {
       codformapago: [null, [Validators.required, Validators.maxLength(10)]],
       direccionfiscal:  ['', [Validators.required, Validators.maxLength(100)]],
       itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
-    });
+    });*/
 
     this.listarVendedores();
     this.listarFormasdepago();
@@ -106,14 +107,16 @@ export class DocumentoVentasComponent implements OnInit {
 
   private buildForm(){
 
+    this.DocumentoVentaModel.tipodocumento = this.tipodocumento;
+    this.DocumentoVentaModel.codnegocio = this.idnegocio;
     this.DocumentoVentaForm = this.formBuilder.group({
-      numerodocumento:[this.DocumentoVentaModel.numerodocumento],
+      numerodocumento:[this.DocumentoVentaModel.numerodocumento, [Validators.required]],
       codformapago: [this.DocumentoVentaModel.codformapago, [Validators.required]],
       codcontacto: [this.DocumentoVentaModel.codcontacto, [Validators.required]],
-      codvendedor:[this.DocumentoVentaModel.codvendedor],
-      fechaemision:[formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      fechavencimiento:[formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      fecha:[formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
+      codvendedor:[this.DocumentoVentaModel.codvendedor, [Validators.required]],
+      fechaemision:[formatDate(this.DocumentoVentaModel.fechaemision, 'dd-MM-yyyy', 'en'), [Validators.required]],
+      fechavencimiento:[formatDate(this.DocumentoVentaModel.fechavencimiento, 'dd-MM-yyyy', 'en'), [Validators.required]],
+      fecha:[formatDate(this.DocumentoVentaModel.fecha, 'dd-MM-yyyy', 'en'), [Validators.required]],
       referencia:[this.DocumentoVentaModel.referencia],
       status: [this.DocumentoVentaModel.status === 'ACTIVO' ? 1 : 0],
       baseimp:[this.DocumentoVentaModel.baseimp],
@@ -133,34 +136,14 @@ export class DocumentoVentasComponent implements OnInit {
       numeroz: [this.DocumentoVentaModel.numeroz],
       status_impresion: [this.DocumentoVentaModel.status_impresion],
       codruta: [this.DocumentoVentaModel.codruta],
-         
-      itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
-     
+
+      //itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
+
     });
 
 
   }
-  guardarDocumentoVenta(event: Event){
-    event.preventDefault();
-    this.loading = true;
-    const value = this.DocumentoVentaForm.value;
-    this. documentoventaServicio.guardarDocumentoVenta(this.id, this.idnegocio, value)
-    .subscribe(response => {
-      this.loading = false;
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.router.navigate(['contactos/listarcontactos']);
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      if (error.status === 404) {
 
-      }
-      else {
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-          { enableHtml: true, closeButton: true });
-      }
-    }));
-  }
   createItem(): FormGroup {
     return this.formBuilder.group({
       codigo: '',
@@ -186,14 +169,36 @@ export class DocumentoVentasComponent implements OnInit {
     let data = JSON.stringify(this.DocumentoVentaForm.value);
     console.log('-----Team in JSON Format-----');
     console.log(data);
+
+    console.log('entro al guardar de ventas');
+    event.preventDefault();
+    this.loading = true;
+    const value = this.DocumentoVentaForm.value;
+    this. documentoventaServicio.guardarDocumentoVenta(this.id, this.idnegocio, value)
+    .subscribe(response => {
+      this.loading = false;
+      this.toastr.info('El Documento se guardo correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+      this.onRedireccionar(this.tipodocumento);
+    },
+    ((error: HttpErrorResponse) => {
+      this.loading = false;
+      if (error.status === 404) {
+
+      }
+      else {
+        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+          { enableHtml: true, closeButton: true });
+      }
+    }));
+
   }
- 
+
   buscarContacto(id: number) {
-    
+
     const obj = this.contactoServicio.mostrarContactos(id)
       .subscribe(response => {
         this.ContactoModel = response as any;
-        
+
         if (this.nombreprimero === '') {
           this.nombreprimero =this.ContactoModel.razonsocial;
         }
@@ -203,7 +208,8 @@ export class DocumentoVentasComponent implements OnInit {
                                this.ContactoModel.apellidoprimero + ' ' +
                                this.ContactoModel.apellidosegundo;
         }
-        this.nombreprimero = this.ContactoModel.nombreprimero;
+        this.DocumentoVentaForm.controls['codcontacto'].setValue(this.ContactoModel.id);
+        //this.nombreprimero = this.ContactoModel
         this.numeroidentificacion=this.ContactoModel.numeroidentificacion;
         this.telefono=this.ContactoModel.telefonofijo1;
         this.direccionfiscal=this.ContactoModel.direccionfiscal;
@@ -214,13 +220,13 @@ export class DocumentoVentasComponent implements OnInit {
         else {
           this.tipopersona = 'Persona Juridica';
         }
-       
+
 
        // direccionfiscal: this.ContactoModel.direccionfiscal,
         console.log('el cliente es de build form ' + this.ContactoModel.numeroidentificacion);
         console.log('el codigo tipo persona es de build form ' + this.ContactoModel.codtipopersona);
        // this.buildForm();
-        
+
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -306,6 +312,17 @@ export class DocumentoVentasComponent implements OnInit {
     else if (tipo === 'cotizacion'){
       this.titulo = 'Cotizaciones';
       this.url = '/ventas/catalogodocumentodeventa-cotizacion/cotizacion';
+    }
+  }
+
+  onRedireccionar(tipo){
+    if (tipo === 'factura'){
+      this.router.navigate(['ventas/catalogodocumentodeventa-factura/factura']);
+
+    }
+    else if (tipo === 'cotizacion'){
+      this.router.navigate(['ventas/catalogodocumentodeventa-cotizacion/cotizacion']);
+
     }
   }
 

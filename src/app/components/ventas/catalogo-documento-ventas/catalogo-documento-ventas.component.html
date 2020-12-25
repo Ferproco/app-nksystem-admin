@@ -111,34 +111,34 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                       N° DOCUMENTO
                     </th>
-                    <td mat-cell *matCellDef="let element"> {{element.tipoidentificacion.nombre}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.numerodocumento}} </td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="CONTACTO">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> CONTACTO </th>
-                    <td mat-cell *matCellDef="let element"> {{element.numeroidentificacion}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.contacto?.nombreprimero}} </td>
                   </ng-container>
 
                   <!-- Weight Column -->
                   <ng-container matColumnDef="FECHA EMISION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA EMISION </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombreprimero}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fechaemision | date:'dd-MM-yyyy'}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="FECHA VENCE">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA VENCE </th>
-                    <td mat-cell *matCellDef="let element"> {{element.telefonofijo1}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fechavencimiento | date:'dd-MM-yyyy'}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="VENDEDOR">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> VENDEDOR </th>
-                    <td mat-cell *matCellDef="let element"> {{element.correoe}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.vendedor?.nombre}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="FORMA PAGO">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> FORMA PAGO </th>
-                    <td mat-cell *matCellDef="let element"> {{element.correoe}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.formapago?.nombre}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="ESTATUS">
@@ -173,12 +173,6 @@
                       <div class="btn-group project-list-add">
                         <button (click)="Ver()" class="btn btn-white btn-xs"><i class="fa fa-eye"
                             aria-hidden="true"></i> </button>
-                      </div>
-                      |
-                      <div class="btn-group project-list-add">
-                        <button (click)="Modificar(element.id)" class="btn btn-white btn-xs"><i class="fa fa-pencil-square-o"
-                            aria-hidden="true"></i>
-                        </button>
                       </div>
                       |
                       <div class="btn-group project-list-add">
