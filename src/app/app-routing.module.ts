@@ -33,6 +33,8 @@ import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuest
 import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
 import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
+import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
+import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 
 
 
@@ -75,7 +77,9 @@ const routes: Routes = [
   { path: 'compras/crearproveedor', component: CrearProveedorComponent},
   { path: 'contactos/listarcontactos', component: CatalogoContactosComponent},
   { path: 'contactos/crearcontacto', component: CrearContactoComponent},
-  { path: 'contactos/crearcontacto/:id', component: CrearContactoComponent}
+  { path: 'contactos/crearcontacto/:id', component: CrearContactoComponent},
+  { path: 'compras/catalogodocumentodecompra-factura/:tipodocumento', component: CatalogoDocumentosComprasComponent},
+  { path: 'compras/documentodecompra-factura/:tipodocumento', component: DocumentosComprasComponent}
 
 ];
 

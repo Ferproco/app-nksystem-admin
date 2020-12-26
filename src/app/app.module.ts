@@ -104,6 +104,9 @@ import { CatalogoDocumentoVentasComponent } from './components/ventas/catalogo-d
 import { DocumentosVentasService } from './components/ventas/documentos-ventas.service';
 import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
 import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
+import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
+import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
+import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
 
 @NgModule({
   declarations: [
@@ -154,7 +157,9 @@ import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalo
     DocumentoVentasComponent,
     CatalogoDocumentoVentasComponent,
     CrearMarcaComponent,
-    CatalogoMarcaComponent
+    CatalogoMarcaComponent,
+    DocumentosComprasComponent,
+    CatalogoDocumentosComprasComponent
    
   ],
   imports: [
@@ -215,6 +220,7 @@ import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalo
     MunicipioService,
     ListaPrecioService,
     DocumentosVentasService,
+    DocumentoCompraService,
     BsModalRef
   ],
   bootstrap: [AppComponent]
