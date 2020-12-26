@@ -36,7 +36,7 @@ export class CatalogoArticuloComponent implements OnInit {
   showModalBox: boolean = false;
   PuedeEliminar: boolean = false;
 
-  displayedColumns: string[] = ['select', 'Codigo', 'Nombre',  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'];
+  displayedColumns: string[] = ['Codigo', 'Nombre',  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'];
   dataSource: MatTableDataSource<Articulo>;
   selection = new SelectionModel<Articulo>(true, []);
 
@@ -45,13 +45,13 @@ export class CatalogoArticuloComponent implements OnInit {
 
   constructor(private articuloServicio: ArticuloService,
               private toastr: ToastrService,
-              private router: Router) { 
+              private router: Router) {
                 this.idnegocio = 1;
               }
 
   ngOnInit(): void {
     this.listarArticulosPorTipo(this.tipoproductoconfig);
-    
+
   }
   ngAfterViewInit() {
 
@@ -105,7 +105,7 @@ export class CatalogoArticuloComponent implements OnInit {
           }
           this.lstArticulos.push(element);
         });
-      
+
 
         this.dataSource = new MatTableDataSource(this.lstArticulos);
         this.dataSource.paginator = this.paginator;
@@ -222,7 +222,7 @@ export class CatalogoArticuloComponent implements OnInit {
           }
         }));
   }
- 
+
 
   ExportarExcel(){
 
@@ -230,7 +230,7 @@ export class CatalogoArticuloComponent implements OnInit {
   ExportarTxt(){
 
   }
-  
+
   Refrescar() {
     this.tipoproductoconfig = 'T';
     this.listarArticulosPorTipo(this.tipoproductoconfig);
@@ -266,5 +266,5 @@ export class CatalogoArticuloComponent implements OnInit {
     this.listarArticulosPorTipo(this.tipoproductoconfig);
   }
 
-  
+
 }

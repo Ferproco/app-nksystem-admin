@@ -53,25 +53,24 @@ export class ArticuloService{
       id: Number(idIn),
       codnegocio: Number(idnegocio),
       codigo: articulo.codigo,
-      nomarticulo:articulo.nomarticulo,
-      codmarca:Number(articulo.codmarca),
-      codfamilia:Number(articulo.codfamilia),
+      nomarticulo: articulo.nomarticulo,
+      codmarca: Number(articulo.codmarca),
+      codfamilia: Number(articulo.codfamilia),
       codunidadmedida: Number(articulo.codunidadmedida),
-      codimpuesto:Number(articulo.codimpuesto),
-      preciosugerido:articulo.preciosugerido,
-      referencia:articulo.referencia,
+      codimpuesto: Number(articulo.codimpuesto),
+      preciosugerido: Number(articulo.preciosugerido),
+      referencia: articulo.referencia,
       codigobarraprincipal:articulo.codigobarraprincipal,
       serial:articulo.serial,
       descripcionlarga:articulo.descripcionlarga,
       status: Number(articulo.status) === 1 ? 'ACTIVO' : 'INACTIVO',
-      stockminimo:articulo.stockminimo,
-      stockmaximo:articulo.stockmaximo,
-      cantidadreorden:articulo.cantidadreorden,
-      peso:articulo.peso,
-      talla:articulo.talla,
-      color:articulo.color,
-      codtipoproducto: articulo.codtipoproducto
-      
+      stockminimo: Number(articulo.stockminimo),
+      stockmaximo: Number(articulo.stockmaximo),
+      cantidadreorden: Number(articulo.cantidadreorden),
+      peso: Number(articulo.peso),
+      talla: Number(articulo.talla),
+      color: Number(articulo.color),
+      codtipoproducto: Number(articulo.codtipoproducto)
 
     };
     console.log('id ' + idIn + 'articulo ' + JSON.stringify(body));
@@ -88,7 +87,7 @@ export class ArticuloService{
     return this.httpClient.delete(endpoint, {headers: httpHeaders});
   }
 
-  
+
   mostrarArticulo(id: number){
 
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

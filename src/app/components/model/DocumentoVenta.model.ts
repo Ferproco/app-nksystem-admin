@@ -1,3 +1,4 @@
+import { DetallesDocumentoVenta } from './DetallesDocumentoVenta.model';
 import { FormaPago } from './FormaPago.model';
 import { Vendedor } from './Vendedor.model';
 import { Contacto } from './Contacto.model';
@@ -35,6 +36,7 @@ export class DocumentoVenta {
   public contacto: Contacto;
   public vendedor: Vendedor;
   public formapago: FormaPago;
+  public lstdetallesdocumentoventas: DetallesDocumentoVenta[]=[];
 
   constructor(json: any = null) {
     if (json !== null) {

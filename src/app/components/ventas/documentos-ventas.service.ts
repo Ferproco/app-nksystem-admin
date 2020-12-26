@@ -62,8 +62,8 @@ export class DocumentosVentasService {
       contable: documento.contable,
       numeroz: documento.numeroz,
       status_impresion:documento.status_impresion,
-      codruta: documento.codruta
-
+      codruta: documento.codruta,
+      lstdetallesdocumentoventas: documento.lstdetallesdocumentoventas
     };
     console.log('id ' + idIn + 'documento ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

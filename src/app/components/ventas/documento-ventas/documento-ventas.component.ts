@@ -14,6 +14,8 @@ import { ContactoService } from '../../contacto/ContactoService.service';
 import { Contacto } from '../../model/Contacto.model';
 import { DocumentoVenta } from '../../model/DocumentoVenta.model';
 import { DocumentosVentasService } from '../documentos-ventas.service';
+import { UnidadService } from '../../unidadmedida/UnidadService.service';
+import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 
 @Component({
   selector: 'app-documento-ventas',
@@ -37,13 +39,15 @@ export class DocumentoVentasComponent implements OnInit {
 
   lstformaspago: any [] = [];
   lstVendedores: any [] = [];
+  lstUnidades: any[] = [];
+  lstImpuestos: any[] = [];
 
   allTeamDetails: any [] = [
     {coditem: '00001', nombre: 'Elemento 1'}
   ];
 
   DocumentoVentaForm: FormGroup;
-  itemDetails: FormArray;
+  lstdetallesdocumentoventas: FormArray;
 
   tipodocumento: string = '';
   titulo: string = '';
@@ -71,7 +75,9 @@ export class DocumentoVentasComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient,
+              private unidadservice: UnidadService,
+              private impuestoservice: ImpuestoService,) {
 
 
     this.DocumentoVentaModel = new DocumentoVenta();
@@ -90,18 +96,11 @@ export class DocumentoVentasComponent implements OnInit {
 
     this.onTipoDocumento(this.tipodocumento);
     this. buildForm();
-    /*this.DocumentoVentaForm = this.formBuilder.group({
-      numerodocumento: ['00001', [Validators.required, Validators.maxLength(10)]],
-      fechaemision: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      fechavence: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      codvendedor: [null, [Validators.required, Validators.maxLength(10)]],
-      codformapago: [null, [Validators.required, Validators.maxLength(10)]],
-      direccionfiscal:  ['', [Validators.required, Validators.maxLength(100)]],
-      itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
-    });*/
 
     this.listarVendedores();
     this.listarFormasdepago();
+    this.onListarImpuestos();
+    this.onListarUnidades();
   }
 
 
@@ -137,30 +136,57 @@ export class DocumentoVentasComponent implements OnInit {
       status_impresion: [this.DocumentoVentaModel.status_impresion],
       codruta: [this.DocumentoVentaModel.codruta],
 
-      //itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
-
+      //lstdetallesdocumentoventas: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
+      lstdetallesdocumentoventas: this.formBuilder.array([this.createItem()])
     });
 
 
   }
 
   createItem(): FormGroup {
-    return this.formBuilder.group({
-      codigo: '',
-      descripcion: '',
-      price: ''
+        return this.formBuilder.group({
+      codarticulo: [0, [Validators.required]],
+      codimpuesto: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+      preciounitariosiniva: [0, [Validators.required]],
+      montototalconiva: [0, [Validators.required]],
+      baseimponible: [0, [Validators.required]],
+      porcentajedescuento: [0, [Validators.required]],
+      montodescuento: [0, [Validators.required]],
+      porcentajeimpuesto: [0, [Validators.required]],
+      montoimpuesto: [0, [Validators.required]],
+      islr: [0, [Validators.required]],
+      porcentajeislr: [0, [Validators.required]],
+      status: ['A', [Validators.required]],
+      tipoarticulo: ['A', [Validators.required]]
+
     });
   }
 
   addItem(): void {
-    /*this.itemDetails = this.DocumentoVentaForm.get('itemDetails') as FormArray;
-    this.itemDetails.push(this.createItem());*/
-    let fg = this.formBuilder.group(this.createItem());
-    this.ListItems.push(this.formBuilder.group({codigo: '', descripcion: '', price: ''}));
+
+    this.ListItems.push(this.formBuilder.group({ codarticulo: [0, [Validators.required]],
+      codimpuesto: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+      preciounitariosiniva: [0, [Validators.required]],
+      montototalconiva: [0, [Validators.required]],
+      baseimponible: [0, [Validators.required]],
+      porcentajedescuento: [0, [Validators.required]],
+      montodescuento: [0, [Validators.required]],
+      porcentajeimpuesto: [0, [Validators.required]],
+      montoimpuesto: [0, [Validators.required]],
+      islr: [0, [Validators.required]],
+      porcentajeislr: [0, [Validators.required]],
+      status: ['A', [Validators.required]],
+      tipoarticulo: ['A', [Validators.required]]}));
   }
 
   get ListItems() : FormArray {
-    return this.DocumentoVentaForm.get("itemDetails") as FormArray
+    return this.DocumentoVentaForm.get("lstdetallesdocumentoventas") as FormArray
   }
 
 
@@ -220,8 +246,6 @@ export class DocumentoVentasComponent implements OnInit {
         else {
           this.tipopersona = 'Persona Juridica';
         }
-
-
        // direccionfiscal: this.ContactoModel.direccionfiscal,
         console.log('el cliente es de build form ' + this.ContactoModel.numeroidentificacion);
         console.log('el codigo tipo persona es de build form ' + this.ContactoModel.codtipopersona);
@@ -253,6 +277,11 @@ export class DocumentoVentasComponent implements OnInit {
       console.log('results', result);
 
     });*/
+  }
+
+  onListarArticulos(){
+
+
   }
 
   onCrearPlazoCredito(){
@@ -326,10 +355,43 @@ export class DocumentoVentasComponent implements OnInit {
     }
   }
 
-}
+  onListarUnidades() {
+    this.loading = true;
+    this.unidadservice.listarUnidades('')
+      .subscribe(response => {
+        this.lstUnidades = response as any[];
+        console.log(this.lstUnidades);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-export class Item {
-  coditem = '';
-  NomItem = '';
-  Precio = 0;
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+  onListarImpuestos() {
+    this.loading = true;
+    this.impuestoservice.listarImpuestos('')
+      .subscribe(response => {
+        this.lstImpuestos = response as any[];
+        console.log(this.lstImpuestos);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
 }
