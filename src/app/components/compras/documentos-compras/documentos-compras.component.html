@@ -336,23 +336,37 @@
                               <th></th>
                             </tr>
                           </thead>
-                          <!--<tbody formArrayName="itemDetails">
-                            <tr *ngFor="let itemDetails of ListItems.controls; let i = index" [formGroup]="ListItems.controls[i]">
+                          <tbody formArrayName="lstdetallesdocumentocompras">
+                            <tr *ngFor="let lstdetallesdocumentocompras of ListItems.controls; let i = index" [formGroup]="ListItems.controls[i]">
                               <td>
                                 <div class="input-group">
-                                  <span class="input-group-btn"><button type="button" (click)="onListarClientes()" class="btn btn-primary">+</button></span>
-                                  <input type="text" class="form-control" formControlName="codigo" placeholder="Codigo Items" />
-                                  <span class="input-group-btn"><button type="button" (click)="onListarClientes()" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
+                                  <span class="input-group-btn"><button type="button" (click)="onListarArticulos()" class="btn btn-primary">+</button></span>
+                                  <input type="text" class="form-control" formControlName="codarticulo" placeholder="Codigo Items" />
+                                  <span class="input-group-btn"><button type="button" (click)="onListarArticulos()" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
                               </div>
                               </td>
-                              <td><input type="text" class="form-control" formControlName="descripcion" placeholder="Descripcion Items" /></td>
-                              <td></td>
+                              <td><input type="text" class="form-control" /></td>
+                              <td>
+                                <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
+                                  <option value="0">--Seleccione--</option>
+                                  <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
+                                    {{unidad.nomunidadmedida}}</option>
+                                </select>
+                              </td>
+                              <td><input type="number" class="form-control" formControlName="cantidad" /></td>
+                              <td>
+  
+                              </td>
                               <td>0,00</td>
-                              <td>0,00</td>
-                              <td>0,00</td>
-                              <td>0,00</td>
-                              <td>0,00</td>
-                              <td>0,00</td>
+                              <td><input type="number" class="form-control" formControlName="porcentajedescuento" /></td>
+                              <td><input type="number" class="form-control" formControlName="montodescuento" /></td>
+                              <td>
+                                <select class="select2_demo_3 form-control" formControlName="codimpuesto">
+                                  <option value="0">--Seleccione--</option>
+                                  <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
+                                    {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
+                                </select>
+                              </td>
                               <td>0,00</td>
                               <td>
                                 <div class="btn-group project-list-add">
@@ -362,7 +376,7 @@
                               </td>
                             </tr>
   
-                          </tbody>-->
+                          </tbody>
                         </table>
                       </div>
                     </div>

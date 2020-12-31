@@ -6,10 +6,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { ArticuloService } from '../../articulo/ArticuloService.service';
+import { CatalogoArticuloModalComponent } from '../../articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { ContactoService } from '../../contacto/ContactoService.service';
 import { ModalClienteComponent } from '../../contacto/modal-cliente/modal-cliente.component';
 import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
 import { FormaPagoService } from '../../formapago/FormaPagoService.service';
+import { Articulo } from '../../model/Articulo.model';
 import { Contacto } from '../../model/Contacto.model';
 import { DocumentoCompra } from '../../model/DocumentoCompra.model';
 import { VendedorService } from '../../vendedor/VendedorService.service';
@@ -34,13 +37,15 @@ export class DocumentosComprasComponent implements OnInit {
 
   lstformaspago: any [] = [];
   lstVendedores: any [] = [];
+  lstUnidades: any[] = [];
+  lstImpuestos: any[] = [];
 
   allTeamDetails: any [] = [
     {coditem: '00001', nombre: 'Elemento 1'}
   ];
 
   DocumentoCompraForm: FormGroup;
-  itemDetails: FormArray;
+  lstdetallesdocumentocompras: FormArray;
 
   tipodocumento: string = '';
   titulo: string = '';
@@ -55,9 +60,11 @@ export class DocumentosComprasComponent implements OnInit {
   tipopersona:string;
   telefono:string;
   ContactoModel: Contacto;
+  ArticuloModel:Articulo;
   DocumentoCompraModel:DocumentoCompra;
   
   constructor(private contactoServicio: ContactoService,
+    private articuloServicio: ArticuloService,
     private documentocompraServicio: DocumentoCompraService,
     private modalService: BsModalService,
     private formaPagoService: FormaPagoService,
@@ -120,7 +127,7 @@ export class DocumentosComprasComponent implements OnInit {
       numeroz: [this.DocumentoCompraModel.numeroz],
       status_impresion: [this.DocumentoCompraModel.status_impresion],
       codruta: [this.DocumentoCompraModel.codruta],
-
+      lstdetallesdocumentocompras: this.formBuilder.array([this.createItem()])
       //itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
 
     });
@@ -143,10 +150,11 @@ export class DocumentosComprasComponent implements OnInit {
     this.ListItems.push(this.formBuilder.group({codigo: '', descripcion: '', price: ''}));
   }
 
-  get ListItems() : FormArray {
-    return this.DocumentoCompraForm.get("itemDetails") as FormArray
-  }
+  
 
+  get ListItems() : FormArray {
+    return this.DocumentoCompraForm.get("lstdetallesdocumentocompras") as FormArray
+  }
 
   onFormSubmit(event: Event){
     event.preventDefault();
@@ -176,7 +184,51 @@ export class DocumentosComprasComponent implements OnInit {
     }));
 
   }
+  buscarArticulo(id: number) {
+    let status = 0;
+    const obj = this.articuloServicio.mostrarArticulo(id)
+      .subscribe(response => {
+        this.ArticuloModel = response as any;
 
+        if (this.ArticuloModel.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        
+        this.DocumentoCompraForm.controls['codarticulo'].setValue(this.ArticuloModel.id);
+        //this.nombreprimero = this.ContactoModel
+        /*this.numeroidentificacion=this.ContactoModel.numeroidentificacion;
+        this.telefono=this.ContactoModel.telefonofijo1;
+        this.direccionfiscal=this.ContactoModel.direccionfiscal;
+        if(this.ContactoModel.codtipopersona===1)
+        if (this.ContactoModel.codtipopersona === 1) {
+          this.tipopersona = 'Persona Natural';
+        }
+        else {
+          this.tipopersona = 'Persona Juridica';
+        }
+*/
+
+       // direccionfiscal: this.ContactoModel.direccionfiscal,
+        console.log('el cliente es de build form ' + this.ArticuloModel.nomarticulo);
+        console.log('el codigo tipo articulo es de build form ' + this.ArticuloModel.codtipoproducto);
+       // this.buildForm();
+
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
+  }
   buscarContacto(id: number) {
 
     const obj = this.contactoServicio.mostrarContactos(id)
@@ -224,6 +276,9 @@ export class DocumentosComprasComponent implements OnInit {
         }));
 
   }
+
+  
+ 
   onListarClientes(){
 
     const config: ModalOptions = { class: 'modal-lg' };
@@ -238,7 +293,20 @@ export class DocumentosComprasComponent implements OnInit {
 
     });*/
   }
+  onListarArticulos(){
+    const config: ModalOptions = { class: 'modal-lg' };
+    this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
+    this.bsModalRef.content.onSelect.subscribe(result => {
+      console.log('results', result);
+      this.buscarArticulo(result);
 
+    });
+    /*this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+
+    });*/
+
+  }
   onCrearPlazoCredito(){
     this.bsModalRef = this.modalService.show(CrearFormapagoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -289,9 +357,9 @@ export class DocumentosComprasComponent implements OnInit {
   }
 
   onTipoDocumento(tipo){
-    if (tipo === 'factura'){
+    if (tipo === 'facturacompra'){
       this.titulo = 'Factura de Compra';
-      this.url = '/compras/catalogodocumentodecompra-factura/factura';
+      this.url = '/compras/catalogodocumentodecompra-factura/facturacompra';
     }
     else if (tipo === 'cotizacion'){
       this.titulo = 'Cotizaciones';
@@ -300,8 +368,8 @@ export class DocumentosComprasComponent implements OnInit {
   }
 
   onRedireccionar(tipo){
-    if (tipo === 'factura'){
-      this.router.navigate(['compras/catalogodocumentodecompra-factura/factura']);
+    if (tipo === 'facturacompra'){
+      this.router.navigate(['compras/catalogodocumentodecompra-factura/facturacompra']);
 
     }
     else if (tipo === 'cotizacion'){

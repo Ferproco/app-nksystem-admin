@@ -43,7 +43,13 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+      this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+      if (this.route.snapshot.params.tipodocumento) {
+        this.tipodocumento = this.route.snapshot.params.tipodocumento;
+  
+      }
+     }
 
   ngOnInit(): void {
     this.onTipoDocumento();
@@ -51,8 +57,10 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
   }
 
   onTipoDocumento(){
-    if (this.tipodocumento === 'factura'){
-      this.titulo = 'Factura Venta';
+    console.log('el tipo de dcumento es' + this.tipodocumento);
+    
+    if (this.tipodocumento === 'facturacompra'){
+      this.titulo = 'Factura Compra';
     }
     else if (this.tipodocumento === 'cotizacion'){
       this.titulo = 'Cotizaciones';
@@ -96,7 +104,7 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
   }
 
   registrardocumento() {
-    if (this.tipodocumento === 'factura'){
+    if (this.tipodocumento === 'facturacompra'){
       this.router.navigate(['compras/documentodecompra-factura',this.tipodocumento]);
     }
     else if (this.tipodocumento === 'cotizacion'){

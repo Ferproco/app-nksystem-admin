@@ -107,6 +107,7 @@ import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalo
 import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
+import { CatalogoArticuloModalComponent } from './components/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 
 @NgModule({
   declarations: [
@@ -159,7 +160,8 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     CrearMarcaComponent,
     CatalogoMarcaComponent,
     DocumentosComprasComponent,
-    CatalogoDocumentosComprasComponent
+    CatalogoDocumentosComprasComponent,
+    CatalogoArticuloModalComponent
    
   ],
   imports: [

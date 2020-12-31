@@ -144,7 +144,9 @@ export class DocumentoVentasComponent implements OnInit {
   }
 
   createItem(): FormGroup {
-        return this.formBuilder.group({
+    return this.formBuilder.group({
+      codnegocio:[this.idnegocio],
+      coddocumentoventa:  [0],
       codarticulo: [0, [Validators.required]],
       codimpuesto: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
@@ -160,14 +162,20 @@ export class DocumentoVentasComponent implements OnInit {
       islr: [0, [Validators.required]],
       porcentajeislr: [0, [Validators.required]],
       status: ['A', [Validators.required]],
-      tipoarticulo: ['A', [Validators.required]]
-
+      tipoarticulo: ['A', [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+      serial: [''],
+      garantia: [''],
+      tipodocumento:[this.tipodocumento]
     });
   }
 
   addItem(): void {
 
-    this.ListItems.push(this.formBuilder.group({ codarticulo: [0, [Validators.required]],
+    this.ListItems.push(this.formBuilder.group({ 
+      codnegocio:[this.idnegocio],
+      coddocumentoventa:  [0],
+      codarticulo: [0, [Validators.required]],
       codimpuesto: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
       codalmacen: [0, [Validators.required]],
@@ -182,7 +190,12 @@ export class DocumentoVentasComponent implements OnInit {
       islr: [0, [Validators.required]],
       porcentajeislr: [0, [Validators.required]],
       status: ['A', [Validators.required]],
-      tipoarticulo: ['A', [Validators.required]]}));
+      tipoarticulo: ['A', [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+      serial: [''],
+      garantia: [''],
+      tipodocumento:[this.tipodocumento]
+    }));
   }
 
   get ListItems() : FormArray {

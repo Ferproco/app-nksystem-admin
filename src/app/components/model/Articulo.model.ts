@@ -37,6 +37,7 @@ export class Articulo {
   public ivaincluido: number;
   public aplicaimpuestoconsumo: number;
   public fechacreacion: Date;
+  
   //public listakardex: Array<Kardex> = [];
   //public listaunidadesalternas: Array<UnidadMedidaAlterna> = [];
  // public listabodegas: Array<Almacen> = [];

@@ -20,7 +20,7 @@ export class DocumentosVentasService {
     return this.httpClient.get(endpoint, {headers: httpHeaders});  }
 
   guardarDocumentoVenta(idIn: number, idnegocio: number, documento: DocumentoVenta){
-    console.log('el documento enviado es ' + JSON.stringify(documento));
+    console.log('el documento enviado es ' + JSON.stringify(documento.lstdetallesdocumentoventas));
 
     const fechastr = documento.fechaemision.toString().split('-');
     console.log('la fecha '+ fechastr);
@@ -34,6 +34,7 @@ export class DocumentosVentasService {
     const monthvence = Number(fechastrvence[1]) - 1;
     const datevence = Number(fechastrvence[0]);
 
+    
     const body = {
       id: Number(idIn),
       codnegocio: Number(idnegocio),
