@@ -140,10 +140,6 @@
                         </div>
                       </div>
                     </div>
-
-                  </div>
-                  <div class="col-lg-5">
-
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Impuesto</label>
@@ -156,7 +152,73 @@
                         </select>
                       </div>
                     </div>
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Clasificación IVA</label>
+                        <select class="select2_demo_3 form-control" formControlName="tipoiva">
+
+                          <option value="0">--Seleccione--</option>
+                          <option value="1">Gravado</option>
+                          <option value="2">Exento</option>
+                          <option value="2">Excluido</option>
+
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-lg-5">
+
                     
+
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">IVA Incluido</label>
+                        <select class="select2_demo_3 form-control" formControlName="ivaincluido">
+
+                          <option value="0">--Seleccione--</option>
+                          <option value="1">Si</option>
+                          <option value="1">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Es Impoconsumo</label>
+                        <select class="select2_demo_3 form-control" formControlName="esimpoconsumo">
+
+                          <option value="0">--Seleccione--</option>
+                          <option value="1">Si</option>
+                          <option value="1">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Valor Impoconsumo</label>
+                        <input formControlName="valorimpoconsumo"
+                          [ngClass]="{'invalid-data': valorimpoconsumo.invalid && (valorimpoconsumo.touched || valorimpoconsumo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el valor de Impoconsumo " />
+                        <div *ngIf="valorimpoconsumo.invalid  && (valorimpoconsumo.dirty || valorimpoconsumo.touched)">
+                          <div class="invalid-mensaje" *ngIf="valorimpoconsumo.errors.pattern">
+                            Valor Impoconsumo Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">% Impoconsumo</label>
+                        <input formControlName="porcentajeimpoconsumo"
+                          [ngClass]="{'invalid-data': porcentajeimpoconsumo.invalid && (porcentajeimpoconsumo.touched || porcentajeimpoconsumo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el porcentaje de Impoconsumo " />
+                        <div *ngIf="porcentajeimpoconsumo.invalid  && (porcentajeimpoconsumo.dirty || porcentajeimpoconsumo.touched)">
+                          <div class="invalid-mensaje" *ngIf="porcentajeimpoconsumo.errors.pattern">
+                            Porcentaje Impoconsumo Incorrecto
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Descripción Larga</label>
@@ -281,7 +343,7 @@
                           <div class="row">
                             <div class="col-lg-5">
 
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visiblereferencia">
                                 <div class="form-group">
                                   <label for="username">Referencia</label>
                                   <input formControlName="referencia"
@@ -295,7 +357,7 @@
                                 </div>
                               </div>
 
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visibleserial">
                                 <div class="form-group">
                                   <label for="username">Serial</label>
                                   <input formControlName="serial"
@@ -309,7 +371,7 @@
                                 </div>
                               </div>
 
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visiblecodigobarra">
                                 <div class="form-group">
                                   <label for="username">Codigo de Barra</label>
                                   <input formControlName="codigobarraprincipal"
@@ -326,7 +388,7 @@
                               </div>
 
 
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visiblemarca">
                                 <div class="form-group">
                                   <label for="username">Marca</label>
 
@@ -348,7 +410,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                               <br>
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visiblepeso">
                                 <div class="form-group">
                                   <label for="username">Peso:</label>
                                   <input formControlName="peso"
@@ -361,7 +423,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visibletalla">
                                 <div class="form-group">
                                   <label for="username">Talla:</label>
                                   <input formControlName="talla"
@@ -375,7 +437,7 @@
                                 </div>
                               </div>
 
-                              <div id="pwd-container3">
+                              <div id="pwd-container3" *ngIf="visiblecolor">
                                 <div class="form-group">
                                   <label for="username">Color</label>
                                   <input formControlName="color"
@@ -388,70 +450,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="bt-df-checkbox pull-left">
-
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Maneja
-                                        Existencia </label>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i>
-                                        Compuesto</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Maneja
-                                        Seriales</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i>
-                                        Facturable</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Usa Empaque
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="i-checks pull-left">
-                                      <label>
-                                        <input type="checkbox" value="" checked="">
-                                        <i></i> Precio X
-                                        Empaque</label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                             
                             </div>
                           </div>
                         </div>
