@@ -43,13 +43,15 @@
 	color:#ff9966;
 }
 
-
 .modal-adminpro-general .modal-content{
 	border-radius:0px;
 }
 .modal-adminpro-general .modal-footer{
 	border-top:0px solid #fff;
 }
+
+
+
 .modal-adminpro-general .modal-body{
 	text-align:center;
 	padding:50px 70px;

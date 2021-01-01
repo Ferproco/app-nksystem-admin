@@ -111,6 +111,9 @@ export class CrearImpuestoComponent implements OnInit {
     this.bsModalRef = this.modalService.show(CrearTipoImpuestoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
+      if (result){
+        this.listarTipoImpuestos();
+      }
 
     });
   }

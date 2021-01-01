@@ -23,9 +23,9 @@ export class CrearMarcaComponent implements OnInit {
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
   constructor(private marcaService: MarcaService,
-    private formbuilder: FormBuilder,
-    private toastr: ToastrService,
-    private router: Router) {
+              private formbuilder: FormBuilder,
+              private toastr: ToastrService,
+              private router: Router) {
 
     this.buildForm();
     this.idnegocio = 1;

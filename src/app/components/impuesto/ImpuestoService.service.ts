@@ -43,5 +43,12 @@ export class ImpuestoService{
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
 
-
+  eliminarImpuesto(id: number){
+    const body = {
+      id: Number(id)
+    };
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/impuesto/' + id;
+    return this.httpClient.delete(endpoint, {headers: httpHeaders});
+  }
 }

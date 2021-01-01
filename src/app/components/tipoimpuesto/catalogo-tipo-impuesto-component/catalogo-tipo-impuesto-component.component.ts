@@ -52,19 +52,19 @@ export class CatalogoTipoImpuestoComponentComponent implements OnInit {
   listarTipoImpuesto() {
     this.loading = true;
     this.lstTipoImpuesto = [];
-    let status = 0;
+    let status = '';
     this.tipoImpuestoService.listarTipoImpuestos('')
       .subscribe(response => {
-        const listatipos = response as any[];
-        listatipos.forEach(element => {
-          if (element.status === 'ACTIVO') {
+        this.lstTipoImpuesto = response as any[];
+        //listatipos.forEach(element => {
+          /*if (element.status === 'ACTIVO') {
             status = 1;
           }
           else {
             status = 0;
-          }
-          this.lstTipoImpuesto.push(new TipoImpuesto(element.id, element.nombretipoimpuesto, this.idnegocio, status));
-        });
+          }*/
+          //this.lstTipoImpuesto.push(new TipoImpuesto(element.id, element.nombretipoimpuesto, this.idnegocio, status));
+        //});
         this.dataSource = new MatTableDataSource(this.lstTipoImpuesto);
         this.dataSource.paginator = this.paginator;
         this.LengthTable = this.lstTipoImpuesto.length;

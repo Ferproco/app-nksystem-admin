@@ -9,6 +9,8 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { MensajeEliminarComponent } from '../../mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 
 @Component({
   selector: 'app-catalogo-impuesto',
@@ -23,6 +25,8 @@ export class CatalogoImpuestoComponent implements OnInit {
   LengthTable = 0;
   sortedData;
 
+  bsModalRef: BsModalRef;
+
   displayedColumns: string[] = ['select', 'Codigo', 'Nombre', 'Tarifa', 'Tipo Impuesto' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<Impuesto>;
   selection = new SelectionModel<Impuesto>(true, []);
@@ -32,7 +36,8 @@ export class CatalogoImpuestoComponent implements OnInit {
 
   constructor(private impuestoServicio: ImpuestoService,
               private router: Router,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.listarImpuestos();
@@ -103,7 +108,33 @@ export class CatalogoImpuestoComponent implements OnInit {
   }
 
   Eliminar(id: number){
+    this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result + ' Y EL CODIGO ' + id);
+      if (result){
+        this.eliminarporcodigo(id);
+      }
+    });
+  }
 
+  eliminarporcodigo(id: number){
+    this.loading = true;
+    this.impuestoServicio.eliminarImpuesto(id)
+      .subscribe(response => {
+        const respuesta = response;
+        this.loading = false;
+        this.listarImpuestos();
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   ExportarExcel(){
