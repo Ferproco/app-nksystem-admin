@@ -24,7 +24,7 @@ import { DocumentoCompraService } from '../DocumentoCompraService.service';
   styleUrls: ['./documentos-compras.component.css']
 })
 export class DocumentosComprasComponent implements OnInit {
-  
+
   loading = false;
   bsModalRef: BsModalRef;
 
@@ -62,7 +62,7 @@ export class DocumentosComprasComponent implements OnInit {
   ContactoModel: Contacto;
   ArticuloModel:Articulo;
   DocumentoCompraModel:DocumentoCompra;
-  
+
   constructor(private contactoServicio: ContactoService,
     private articuloServicio: ArticuloService,
     private documentocompraServicio: DocumentoCompraService,
@@ -91,7 +91,7 @@ export class DocumentosComprasComponent implements OnInit {
 
     this.onTipoDocumento(this.tipodocumento);
     this. buildForm();
-   
+
     this.listarVendedores();
     this.listarFormasdepago();
   }
@@ -150,7 +150,7 @@ export class DocumentosComprasComponent implements OnInit {
     this.ListItems.push(this.formBuilder.group({codigo: '', descripcion: '', price: ''}));
   }
 
-  
+
 
   get ListItems() : FormArray {
     return this.DocumentoCompraForm.get("lstdetallesdocumentocompras") as FormArray
@@ -196,7 +196,7 @@ export class DocumentosComprasComponent implements OnInit {
         else {
           status = 0;
         }
-        
+
         this.DocumentoCompraForm.controls['codarticulo'].setValue(this.ArticuloModel.id);
         //this.nombreprimero = this.ContactoModel
         /*this.numeroidentificacion=this.ContactoModel.numeroidentificacion;
@@ -229,6 +229,8 @@ export class DocumentosComprasComponent implements OnInit {
         }));
 
   }
+
+
   buscarContacto(id: number) {
 
     const obj = this.contactoServicio.mostrarContactos(id)
@@ -277,8 +279,8 @@ export class DocumentosComprasComponent implements OnInit {
 
   }
 
-  
- 
+
+
   onListarClientes(){
 
     const config: ModalOptions = { class: 'modal-lg' };
@@ -293,6 +295,7 @@ export class DocumentosComprasComponent implements OnInit {
 
     });*/
   }
+
   onListarArticulos(){
     const config: ModalOptions = { class: 'modal-lg' };
     this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);

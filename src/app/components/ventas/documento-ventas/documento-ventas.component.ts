@@ -1,3 +1,4 @@
+import { AlmacenService } from './../../almacen/AlmacenService.service';
 import { ModalClienteComponent } from '../../contacto/modal-cliente/modal-cliente.component';
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -16,6 +17,9 @@ import { DocumentoVenta } from '../../model/DocumentoVenta.model';
 import { DocumentosVentasService } from '../documentos-ventas.service';
 import { UnidadService } from '../../unidadmedida/UnidadService.service';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
+import { CatalogoArticuloModalComponent } from '../../articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
+import { ArticuloService } from '../../articulo/ArticuloService.service';
+import { Articulo } from '../../model/Articulo.model';
 
 @Component({
   selector: 'app-documento-ventas',
@@ -41,10 +45,9 @@ export class DocumentoVentasComponent implements OnInit {
   lstVendedores: any [] = [];
   lstUnidades: any[] = [];
   lstImpuestos: any[] = [];
+  lstAlmacenes: any[] = [];
 
-  allTeamDetails: any [] = [
-    {coditem: '00001', nombre: 'Elemento 1'}
-  ];
+
 
   DocumentoVentaForm: FormGroup;
   lstdetallesdocumentoventas: FormArray;
@@ -63,21 +66,24 @@ export class DocumentoVentasComponent implements OnInit {
   telefono:string;
   ContactoModel: Contacto;
   DocumentoVentaModel:DocumentoVenta;
+  ArticuloModel: Articulo;
 
-
+  nombrearticulo: string[] = [];
 
   constructor(private contactoServicio: ContactoService,
-              private documentoventaServicio: DocumentosVentasService,
+              private DocumentoventaServicio: DocumentosVentasService,
               private modalService: BsModalService,
-              private formaPagoService: FormaPagoService,
-              private vendedorService: VendedorService,
+              private FormaPagoService: FormaPagoService,
+              private VendedorService: VendedorService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
               private httpClient: HttpClient,
-              private unidadservice: UnidadService,
-              private impuestoservice: ImpuestoService,) {
+              private Unidadservice: UnidadService,
+              private Impuestoservice: ImpuestoService,
+              private Almacenservice: AlmacenService,
+              private Articuloservicio: ArticuloService,) {
 
 
     this.DocumentoVentaModel = new DocumentoVenta();
@@ -101,6 +107,7 @@ export class DocumentoVentasComponent implements OnInit {
     this.listarFormasdepago();
     this.onListarImpuestos();
     this.onListarUnidades();
+    this.onListarAlmacen();
   }
 
 
@@ -146,7 +153,7 @@ export class DocumentoVentasComponent implements OnInit {
   createItem(): FormGroup {
     return this.formBuilder.group({
       codnegocio:[this.idnegocio],
-      coddocumentoventa:  [0],
+      documentoid:  [0],
       codarticulo: [0, [Validators.required]],
       codimpuesto: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
@@ -172,9 +179,8 @@ export class DocumentoVentasComponent implements OnInit {
 
   addItem(): void {
 
-    this.ListItems.push(this.formBuilder.group({ 
+    this.ListItems.push(this.formBuilder.group({
       codnegocio:[this.idnegocio],
-      coddocumentoventa:  [0],
       codarticulo: [0, [Validators.required]],
       codimpuesto: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
@@ -213,7 +219,7 @@ export class DocumentoVentasComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.DocumentoVentaForm.value;
-    this. documentoventaServicio.guardarDocumentoVenta(this.id, this.idnegocio, value)
+    this. DocumentoventaServicio.guardarDocumentoVenta(this.id, this.idnegocio, value)
     .subscribe(response => {
       this.loading = false;
       this.toastr.info('El Documento se guardo correctamente', 'Informacion', { enableHtml: true, closeButton: true });
@@ -286,14 +292,51 @@ export class DocumentoVentasComponent implements OnInit {
       this.buscarContacto(result);
 
     });
-    /*this.bsModalRef.content.onClose.subscribe(result => {
-      console.log('results', result);
 
-    });*/
   }
 
-  onListarArticulos(){
+  onListarArticulos(pos: number){
+    console.log('la posicion ' + pos);
+    const config: ModalOptions = { class: 'modal-lg' };
+    this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
+    this.bsModalRef.content.onSelect.subscribe(result => {
+      console.log('results', result);
+      this.buscarArticulo(result, pos);
 
+    });
+  }
+
+  buscarArticulo(id: number, pos: number) {
+    let status = 0;
+    const obj = this.Articuloservicio.mostrarArticulo(id)
+      .subscribe(response => {
+        this.ArticuloModel = response as any;
+
+        if (this.ArticuloModel.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+
+        //this.DocumentoCompraForm.controls['codarticulo'].setValue(this.ArticuloModel.id);
+        this.ListItems.controls[pos].get('codarticulo').setValue(this.ArticuloModel.id);
+        this.nombrearticulo[pos] = this.ArticuloModel.nomarticulo;
+
+        console.log('el cliente es de build form ' + this.ArticuloModel.nomarticulo);
+        console.log('el codigo tipo articulo es de build form ' + this.ArticuloModel.codtipoproducto);
+
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
 
   }
 
@@ -310,7 +353,7 @@ export class DocumentoVentasComponent implements OnInit {
 
   listarFormasdepago() {
     this.loading = true;
-    this.formaPagoService.listarFormaPagos('')
+    this.FormaPagoService.listarFormaPagos('')
       .subscribe(response => {
         this.lstformaspago = response as any[];
         this.loading = false;
@@ -329,7 +372,7 @@ export class DocumentoVentasComponent implements OnInit {
 
   listarVendedores() {
     this.loading = true;
-    this.vendedorService.listarVendedores('')
+    this.VendedorService.listarVendedores('')
       .subscribe(response => {
         this.lstVendedores = response as any[];
         this.loading = false;
@@ -370,7 +413,7 @@ export class DocumentoVentasComponent implements OnInit {
 
   onListarUnidades() {
     this.loading = true;
-    this.unidadservice.listarUnidades('')
+    this.Unidadservice.listarUnidades('')
       .subscribe(response => {
         this.lstUnidades = response as any[];
         console.log(this.lstUnidades);
@@ -387,12 +430,33 @@ export class DocumentoVentasComponent implements OnInit {
           }
         }));
   }
+
   onListarImpuestos() {
     this.loading = true;
-    this.impuestoservice.listarImpuestos('')
+    this.Impuestoservice.listarImpuestos('')
       .subscribe(response => {
         this.lstImpuestos = response as any[];
         console.log(this.lstImpuestos);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
+  onListarAlmacen() {
+    this.loading = true;
+    this.Almacenservice.listarAlmacenes('')
+      .subscribe(response => {
+        this.lstAlmacenes = response as any[];
+        console.log(this.lstAlmacenes);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {

@@ -5,7 +5,7 @@ import { Contacto } from './Contacto.model';
 
 export class DocumentoVenta {
 
-  public id: number = 0;
+  public documentoid: number = 0;
   public numerodocumento: string = null;
   public codnegocio: number;
   public codformapago: number = 1;
@@ -40,7 +40,7 @@ export class DocumentoVenta {
 
   constructor(json: any = null) {
     if (json !== null) {
-      this.id = json.id;
+      this.documentoid = json.documentoid;
       this.numerodocumento = json.numerodocumento;
       this.codnegocio = json.codnegocio;
       this.codformapago = json.codformapago;

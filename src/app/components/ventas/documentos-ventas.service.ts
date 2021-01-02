@@ -1,3 +1,4 @@
+import { DetallesDocumentoVenta } from './../model/DetallesDocumentoVenta.model';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,6 +12,8 @@ import { DocumentoVenta } from '../model/DocumentoVenta.model';
 export class DocumentosVentasService {
 
   uriapi: string = Api.url;
+  lstdetallesventas: DetallesDocumentoVenta[]=[];
+
   constructor(private httpClient: HttpClient) { }
 
   listarDocumentosPorTipo(codnegocio: string, tipodocumento: string){
@@ -21,6 +24,7 @@ export class DocumentosVentasService {
 
   guardarDocumentoVenta(idIn: number, idnegocio: number, documento: DocumentoVenta){
     console.log('el documento enviado es ' + JSON.stringify(documento.lstdetallesdocumentoventas));
+
 
     const fechastr = documento.fechaemision.toString().split('-');
     console.log('la fecha '+ fechastr);
@@ -34,9 +38,13 @@ export class DocumentosVentasService {
     const monthvence = Number(fechastrvence[1]) - 1;
     const datevence = Number(fechastrvence[0]);
 
-    
+    documento.lstdetallesdocumentoventas.forEach(element => {
+     console.log('Entro al for de articulos '+ JSON.stringify(element));
+     element.fecha= new Date(year, month, date);
+   });
+
     const body = {
-      id: Number(idIn),
+      documentoid: Number(idIn),
       codnegocio: Number(idnegocio),
       numerodocumento:documento.numerodocumento,
       codformapago: Number(documento.codformapago),
