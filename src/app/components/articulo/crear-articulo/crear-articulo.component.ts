@@ -8,8 +8,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AlmacenService } from '../../almacen/AlmacenService.service';
 import { CrearAlmacenModalComponent } from '../../almacen/crear-almacen-modal/crear-almacen-modal.component';
+import { CrearCategoriaModalComponent } from '../../categoria/crear-categoria-modal/crear-categoria-modal.component';
 import { FamiliaService } from '../../familia/FamiliaService.service';
 import { GrupoArticuloService } from '../../grupoarticulo/GrupoArticuloService.service';
+import { CrearImpuestoModalComponent } from '../../impuesto/crear-impuesto-modal/crear-impuesto-modal.component';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 import { MarcaService } from '../../marca/MarcaService.service';
 import { Articulo } from '../../model/Articulo.model';
@@ -61,6 +63,13 @@ export class CrearArticuloComponent implements OnInit {
   visiblecantidadmaxima = false;
   visiblepuntoreorden = false;
   visiblebodega = false;
+  visiblereferencia=false;
+  visibleserial=false;
+  visiblecodigobarra=false;
+  visiblemarca=false;
+  visiblepeso=false;
+  visibletalla=false;
+  visiblecolor=false;
 
 
   codtipoproducto = [
@@ -125,7 +134,12 @@ export class CrearArticuloComponent implements OnInit {
       cantidadreorden: [this.ArticuloModel.cantidadreorden, [Validators.pattern(this.parrterobservaciones)]],
       peso: [this.ArticuloModel.peso, [Validators.pattern(this.parrterobservaciones)]],
       talla: [this.ArticuloModel.talla, [Validators.pattern(this.parrterobservaciones)]],
-      color: [this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]]
+      color: [this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]],
+      tipoiva: [this.ArticuloModel.tipoiva, [Validators.pattern(this.parrterobservaciones)]],
+      ivaincluido: [this.ArticuloModel.ivaincluido, [Validators.pattern(this.parrterobservaciones)]],
+      esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
+      valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
+      porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]]
       // codbodega::[this.ArticuloModel.listabodegas.co]
 
 
@@ -283,7 +297,13 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadmaxima = true;
       this.visiblepuntoreorden = true;
       this.visiblebodega = true;
-
+      this.visiblereferencia=true;
+      this.visibleserial=true;
+      this.visiblecodigobarra=true;
+      this.visiblemarca=true;
+      this.visiblepeso=true;
+      this.visibletalla=true;
+      this.visiblecolor=true;
 
     }
     else if (idtipo === 2) {
@@ -294,8 +314,48 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadmaxima = false;
       this.visiblebodega = false;
       this.visiblepuntoreorden = false;
+      this.visiblereferencia=false;
+      this.visibleserial=false;
+      this.visiblecodigobarra=false;
+      this.visiblemarca=false;
+      this.visiblepeso=false;
+      this.visibletalla=false;
+      this.visiblecolor=false;
     }
 
+    else if (idtipo === 3) {
+
+      this.visiblecostoxproducto = false;
+      this.visiblecantidad = false;
+      this.visiblecantidadminima = false;
+      this.visiblecantidadmaxima = false;
+      this.visiblebodega = false;
+      this.visiblepuntoreorden = false;
+      this.visiblereferencia=false;
+      this.visibleserial=false;
+      this.visiblecodigobarra=false;
+      this.visiblemarca=false;
+      this.visiblepeso=false;
+      this.visibletalla=false;
+      this.visiblecolor=false;
+    }
+    else if (idtipo === 4) {
+
+      this.visiblecostoxproducto = false;
+      this.visiblecantidad = false;
+      this.visiblecantidadminima = false;
+      this.visiblecantidadmaxima = false;
+      this.visiblebodega = false;
+      this.visiblepuntoreorden = false;
+      this.visiblereferencia=false;
+      this.visibleserial=false;
+      this.visiblecodigobarra=false;
+      this.visiblemarca=false;
+      this.visiblepeso=false;
+      this.visibletalla=false;
+      this.visiblecolor=false;
+    }
+   
   }
   onCrearBodega() {
     this.bsModalRef = this.modalService.show(CrearAlmacenModalComponent);
@@ -401,13 +461,49 @@ export class CrearArticuloComponent implements OnInit {
   get status() {
     return this.formarticulo.get('status');
   }
+ 
+  get tipoiva() {
+    return this.formarticulo.get('tipoiva');
+  }
+  get ivaincluido() {
+    return this.formarticulo.get('ivaincluido');
+  }
 
-
+  get esimpoconsumo() {
+    return this.formarticulo.get('esimpoconsumo');
+  }
+  get valorimpoconsumo() {
+    return this.formarticulo.get('valorimpoconsumo');
+  }
+  get porcentajeimpoconsumo() {
+    return this.formarticulo.get('porcentajeimpoconsumo');
+  }
   onChangeTipo(event) {
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
   onChange(event: MatSlideToggleChange) {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
+  }
+
+  onCrearCategoria(){
+    this.bsModalRef = this.modalService.show(CrearCategoriaModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+        this.listarFamilias();
+      }
+
+    });
+  }
+  onCrearImpuesto(){
+    this.bsModalRef = this.modalService.show(CrearImpuestoModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+        this.listarImpuestos();
+      }
+
+    });
   }
 }

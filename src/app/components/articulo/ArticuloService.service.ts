@@ -69,8 +69,13 @@ export class ArticuloService{
       cantidadreorden: Number(articulo.cantidadreorden),
       peso: Number(articulo.peso),
       talla: Number(articulo.talla),
-      color: Number(articulo.color),
-      codtipoproducto: Number(articulo.codtipoproducto)
+      color: articulo.color,
+      codtipoproducto: Number(articulo.codtipoproducto),
+      tipoiva: articulo.tipoiva,
+      ivaincluido: articulo.ivaincluido,
+      esimpoconsumo: articulo.esimpoconsumo,
+      valorimpoconsumo:Number(articulo.valorimpoconsumo),
+      porcentajeimpoconsumo:Number(articulo.porcentajeimpoconsumo),
 
     };
     console.log('id ' + idIn + 'articulo ' + JSON.stringify(body));

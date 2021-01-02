@@ -23,7 +23,7 @@ export class Articulo {
   public stockminimo: number;
   public stockmaximo: number;
   public cantidadreorden: number;
-  public clasificacioniva: string;
+  public tipoiva: string;
   public esimpoconsumo: string;
   public valorimpoconsumo: number;
   public porcentajeimpoconsumo: number;
@@ -67,7 +67,7 @@ export class Articulo {
       this.stockminimo = json.stockminimo;
       this.stockmaximo = json.stockmaximo;
       this.cantidadreorden = json.cantidadreorden;
-      this.clasificacioniva = json.clasificacioniva;
+      this.tipoiva = json.clasificacioniva;
       this.esimpoconsumo = json.esimpoconsumo;
       this.valorimpoconsumo = json.valorimpoconsumo;
       this.porcentajeimpoconsumo = json.porcentajeimpoconsumo;
