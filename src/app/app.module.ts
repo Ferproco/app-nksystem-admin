@@ -108,6 +108,8 @@ import { DocumentosComprasComponent } from './components/compras/documentos-comp
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
 import { CatalogoArticuloModalComponent } from './components/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
+import { CrearCategoriaModalComponent } from './components/categoria/crear-categoria-modal/crear-categoria-modal.component';
+import { CrearImpuestoModalComponent } from './components/impuesto/crear-impuesto-modal/crear-impuesto-modal.component';
 
 @NgModule({
   declarations: [
@@ -161,7 +163,9 @@ import { CatalogoArticuloModalComponent } from './components/articulo/catalogo-a
     CatalogoMarcaComponent,
     DocumentosComprasComponent,
     CatalogoDocumentosComprasComponent,
-    CatalogoArticuloModalComponent
+    CatalogoArticuloModalComponent,
+    CrearCategoriaModalComponent,
+    CrearImpuestoModalComponent
    
   ],
   imports: [

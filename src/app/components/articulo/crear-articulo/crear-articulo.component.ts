@@ -8,8 +8,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AlmacenService } from '../../almacen/AlmacenService.service';
 import { CrearAlmacenModalComponent } from '../../almacen/crear-almacen-modal/crear-almacen-modal.component';
+import { CrearCategoriaModalComponent } from '../../categoria/crear-categoria-modal/crear-categoria-modal.component';
 import { FamiliaService } from '../../familia/FamiliaService.service';
 import { GrupoArticuloService } from '../../grupoarticulo/GrupoArticuloService.service';
+import { CrearImpuestoModalComponent } from '../../impuesto/crear-impuesto-modal/crear-impuesto-modal.component';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 import { MarcaService } from '../../marca/MarcaService.service';
 import { Articulo } from '../../model/Articulo.model';
@@ -482,5 +484,26 @@ export class CrearArticuloComponent implements OnInit {
   }
   onChange(event: MatSlideToggleChange) {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
+  }
+
+  onCrearCategoria(){
+    this.bsModalRef = this.modalService.show(CrearCategoriaModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+        this.listarFamilias();
+      }
+
+    });
+  }
+  onCrearImpuesto(){
+    this.bsModalRef = this.modalService.show(CrearImpuestoModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+        this.listarImpuestos();
+      }
+
+    });
   }
 }
