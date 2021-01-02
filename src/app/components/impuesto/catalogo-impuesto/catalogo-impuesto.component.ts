@@ -130,6 +130,9 @@ export class CatalogoImpuestoComponent implements OnInit {
           if (error.status === 404) {
 
           }
+          else if (error.status === 409) {
+            this.toastr.info('Opss no puedes eliminar el registro ya que esta haciendo usado', 'Informacion', { enableHtml: true, closeButton: true });
+          }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
               { enableHtml: true, closeButton: true });
