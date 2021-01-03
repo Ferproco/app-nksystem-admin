@@ -15,7 +15,7 @@ export class DocumentoVenta {
   public fechavencimiento: Date = new Date();
   public fecha: Date = new Date();
   public referencia: string;
-  public status: string;
+  public status: string = 'ACTIVO';
   public baseimp: number = 0;
   public isrl: number = 0;
   public observacion: string = '';
