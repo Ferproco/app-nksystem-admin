@@ -110,6 +110,11 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
 import { CatalogoArticuloModalComponent } from './components/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { CrearCategoriaModalComponent } from './components/categoria/crear-categoria-modal/crear-categoria-modal.component';
 import { CrearImpuestoModalComponent } from './components/impuesto/crear-impuesto-modal/crear-impuesto-modal.component';
+import { CatalogoNumeraciondocumentoComponent } from './components/configuracion/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
+import { NumeracionDocumentoService } from './components/configuracion/NumeracionDocumentoService.service';
+import { CrearNumeraciondocumentoComponent } from './components/configuracion/crear-numeraciondocumento/crear-numeraciondocumento.component';
+import { TipoDocumentoService } from './components/tipodocumento/tipodocumentoService.service';
+import { CrearNumeraciondocumentoModalComponent } from './components/configuracion/crear-numeraciondocumento-modal/crear-numeraciondocumento-modal.component';
 
 @NgModule({
   declarations: [
@@ -165,7 +170,10 @@ import { CrearImpuestoModalComponent } from './components/impuesto/crear-impuest
     CatalogoDocumentosComprasComponent,
     CatalogoArticuloModalComponent,
     CrearCategoriaModalComponent,
-    CrearImpuestoModalComponent
+    CrearImpuestoModalComponent,
+    CatalogoNumeraciondocumentoComponent,
+    CrearNumeraciondocumentoComponent,
+    CrearNumeraciondocumentoModalComponent
    
   ],
   imports: [
@@ -227,6 +235,8 @@ import { CrearImpuestoModalComponent } from './components/impuesto/crear-impuest
     ListaPrecioService,
     DocumentosVentasService,
     DocumentoCompraService,
+    NumeracionDocumentoService,
+    TipoDocumentoService,
     BsModalRef
   ],
   bootstrap: [AppComponent]

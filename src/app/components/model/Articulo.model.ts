@@ -16,7 +16,7 @@ export class Articulo {
   public referencia: string;
   public serial: string;
   public status: string = 'ACTIVO';
-  public codnegocio: string;
+  public codnegocio: number;
   public familia: Categoria;
   public codtipoproducto: number;
   public descripcionlarga: string;
@@ -29,7 +29,7 @@ export class Articulo {
   public porcentajeimpoconsumo: number;
   public peso: number;
   public talla: number = 0;
-  public color: number = 0;
+  public color: string;
   public ancho: number = 0;
   public alto: number = 0;
   public profundidad: number = 0;

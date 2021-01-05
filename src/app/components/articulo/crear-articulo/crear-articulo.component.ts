@@ -78,6 +78,26 @@ export class CrearArticuloComponent implements OnInit {
     { id: 3, nombre: 'Materia Prima' },
     { id: 4, nombre: 'Gasto' },
   ];
+  
+  tipoiva = [
+    { id: 1, nombre: 'Gravado' },
+    { id: 2, nombre: 'Exento' },
+    { id: 3, nombre: 'Excluido' },
+   
+  ];
+
+  ivaincluido = [
+    { id: 1, nombre: 'Si' },
+    { id: 2, nombre: 'No' },
+     
+  ];
+
+  esimpoconsumo = [
+    { id: 1, nombre: 'Si' },
+    { id: 2, nombre: 'No' },
+     
+  ];
+
   constructor(private articuloservice: ArticuloService,
     private familiaserive: FamiliaService,
     private unidadservice: UnidadService,
@@ -139,7 +159,11 @@ export class CrearArticuloComponent implements OnInit {
       ivaincluido: [this.ArticuloModel.ivaincluido, [Validators.pattern(this.parrterobservaciones)]],
       esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
-      porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]]
+      porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],     
+     // MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto)
+     // this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
+     // this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
+  
       // codbodega::[this.ArticuloModel.listabodegas.co]
 
 
@@ -462,16 +486,6 @@ export class CrearArticuloComponent implements OnInit {
     return this.formarticulo.get('status');
   }
  
-  get tipoiva() {
-    return this.formarticulo.get('tipoiva');
-  }
-  get ivaincluido() {
-    return this.formarticulo.get('ivaincluido');
-  }
-
-  get esimpoconsumo() {
-    return this.formarticulo.get('esimpoconsumo');
-  }
   get valorimpoconsumo() {
     return this.formarticulo.get('valorimpoconsumo');
   }

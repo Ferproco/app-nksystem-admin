@@ -160,29 +160,21 @@
                     <div class="form-group">
                       <label for="username">Clasificación IVA</label>
                       <select class="select2_demo_3 form-control" formControlName="tipoiva">
-
-                        <option value="0">--Seleccione--</option>
-                        <option value="1">Gravado</option>
-                        <option value="2">Exento</option>
-                        <option value="2">Excluido</option>
-
+                        <option [value]="null">--Seleccione--</option>
+                        <option value="{{tipo.id}}" *ngFor="let tipo of tipoiva">
+                          {{tipo.nombre}}</option>
                       </select>
                     </div>
                   </div>
-
                 </div>
                 <div class="col-lg-5">
-
-
-
                   <div id="pwd-container3">
                     <div class="form-group">
                       <label for="username">IVA Incluido</label>
                       <select class="select2_demo_3 form-control" formControlName="ivaincluido">
-
-                        <option value="0">--Seleccione--</option>
-                        <option value="1">Si</option>
-                        <option value="1">No</option>
+                        <option [value]="null">--Seleccione--</option>
+                        <option value="{{ivainc.id}}" *ngFor="let ivainc of ivaincluido">
+                          {{ivainc.nombre}}</option>
                       </select>
                     </div>
                   </div>
@@ -190,10 +182,9 @@
                     <div class="form-group">
                       <label for="username">Es Impoconsumo</label>
                       <select class="select2_demo_3 form-control" formControlName="esimpoconsumo">
-
-                        <option value="0">--Seleccione--</option>
-                        <option value="1">Si</option>
-                        <option value="1">No</option>
+                        <option [value]="null">--Seleccione--</option>
+                        <option value="{{esimpoc.id}}" *ngFor="let esimpoc of esimpoconsumo">
+                          {{esimpoc.nombre}}</option>
                       </select>
                     </div>
                   </div>

@@ -36,6 +36,8 @@ import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 import { CrearCategoriaModalComponent } from './components/categoria/crear-categoria-modal/crear-categoria-modal.component';
+import { CatalogoNumeraciondocumentoComponent } from './components/configuracion/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
+import { CrearNumeraciondocumentoComponent } from './components/configuracion/crear-numeraciondocumento/crear-numeraciondocumento.component';
 
 
 
@@ -80,8 +82,10 @@ const routes: Routes = [
   { path: 'contactos/crearcontacto', component: CrearContactoComponent},
   { path: 'contactos/crearcontacto/:id', component: CrearContactoComponent},
   { path: 'compras/catalogodocumentodecompra-factura/:tipodocumento', component: CatalogoDocumentosComprasComponent},
-  { path: 'compras/documentodecompra-factura/:tipodocumento', component: DocumentosComprasComponent}
-
+  { path: 'compras/documentodecompra-factura/:tipodocumento', component: DocumentosComprasComponent},
+  {path: 'configuracion/crearnumeraciondocumento', component:CrearNumeraciondocumentoComponent},
+  {path: 'configuracion/crearnumeraciondocumento/:id', component:CrearNumeraciondocumentoComponent},
+  { path: 'configuracion/listarnumeraciondocumentos', component: CatalogoNumeraciondocumentoComponent}
 ];
 
 @NgModule({
