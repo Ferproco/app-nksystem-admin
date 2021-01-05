@@ -75,16 +75,7 @@ export class CatalogoDocumentoVentasComponent implements OnInit {
       .subscribe(response => {
         this.lstDocumentos = response as DocumentoVenta[];
         this.lstDocumentos.forEach(element => {
-          /*if (element.nombreprimero === '') {
-            element.nombreprimero = element.razonsocial;
-          }
-          else {
-            element.nombreprimero = element.nombreprimero   + ' ' +
-                                    element.nombresegundo   + ' ' +
-                                    element.apellidoprimero + ' ' +
-                                    element.apellidosegundo;
-          }*/
-          //this.lstContactos.push(element);
+
         });
         this.dataSource = new MatTableDataSource(this.lstDocumentos);
         this.dataSource.paginator = this.paginator;

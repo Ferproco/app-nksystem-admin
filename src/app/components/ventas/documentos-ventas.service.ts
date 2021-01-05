@@ -1,3 +1,4 @@
+import { Kardex } from './../model/Kardex.model';
 import { DetallesDocumentoVenta } from './../model/DetallesDocumentoVenta.model';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -13,6 +14,8 @@ export class DocumentosVentasService {
 
   uriapi: string = Api.url;
   lstdetallesventas: DetallesDocumentoVenta[]=[];
+  lstkardex: Kardex[]=[];
+  Kardexmodel: Kardex;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -41,6 +44,22 @@ export class DocumentosVentasService {
     documento.lstdetallesdocumentoventas.forEach(element => {
      console.log('Entro al for de articulos '+ JSON.stringify(element));
      element.fecha= new Date(year, month, date);
+
+     this.Kardexmodel = new Kardex();
+     this.Kardexmodel.id = 0;
+     this.Kardexmodel.codarticulo = element.codarticulo;
+     this.Kardexmodel.tipo = 'SAL';
+     this.Kardexmodel.fecha = new Date(year, month, date);
+     this.Kardexmodel.documentoasociado = documento.numerodocumento;
+     this.Kardexmodel.cantidad = element.cantidad;
+     this.Kardexmodel.codunidadmedida = element.codunidadmedida;
+     this.Kardexmodel.codalmacen = element.codalmacen;
+     this.Kardexmodel.concepto = 'SALIDA POR VENTAS';
+     this.Kardexmodel.origen = 'VENTAS';
+     this.Kardexmodel.codnegocio = element.codnegocio;
+
+     this.lstkardex.push(this.Kardexmodel);
+
    });
 
     const body = {
@@ -54,7 +73,7 @@ export class DocumentosVentasService {
       fechavencimiento: new Date(yearvence, monthvence, datevence),
       fecha: new Date(),
       referencia:documento.referencia,
-      status: Number(documento.status) === 1 ? 'ACTIVO' : 'INACTIVO',
+      status: documento.status,
       baseimp:Number(documento.baseimp),
       isrl: Number(documento.isrl),
       observacion: documento.observacion,
@@ -72,7 +91,8 @@ export class DocumentosVentasService {
       numeroz: documento.numeroz,
       status_impresion:documento.status_impresion,
       codruta: documento.codruta,
-      lstdetallesdocumentoventas: documento.lstdetallesdocumentoventas
+      lstdetallesdocumentoventas: documento.lstdetallesdocumentoventas,
+      lstmovimientoskardex: this.lstkardex
     };
     console.log('id ' + idIn + 'documento ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

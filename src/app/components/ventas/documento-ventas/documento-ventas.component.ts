@@ -41,8 +41,8 @@ export class DocumentoVentasComponent implements OnInit {
   customClass = 'customClass';
   isFirstOpen = true;
 
-  lstformaspago: any [] = [];
-  lstVendedores: any [] = [];
+  lstformaspago: any[] = [];
+  lstVendedores: any[] = [];
   lstUnidades: any[] = [];
   lstImpuestos: any[] = [];
   lstAlmacenes: any[] = [];
@@ -59,41 +59,41 @@ export class DocumentoVentasComponent implements OnInit {
   id = 0;
   idnegocio: number;
   nombreprimero: string;
-  numeroidentificacion:string;
-  direccionfiscal:string;
+  numeroidentificacion: string;
+  direccionfiscal: string;
 
-  tipopersona:string;
-  telefono:string;
+  tipopersona: string;
+  telefono: string;
   ContactoModel: Contacto;
-  DocumentoVentaModel:DocumentoVenta;
+  DocumentoVentaModel: DocumentoVenta;
   ArticuloModel: Articulo;
 
   nombrearticulo: string[] = [];
 
   constructor(private contactoServicio: ContactoService,
-              private DocumentoventaServicio: DocumentosVentasService,
-              private modalService: BsModalService,
-              private FormaPagoService: FormaPagoService,
-              private VendedorService: VendedorService,
-              private toastr: ToastrService,
-              private formBuilder: FormBuilder,
-              private router: Router,
-              private route: ActivatedRoute,
-              private httpClient: HttpClient,
-              private Unidadservice: UnidadService,
-              private Impuestoservice: ImpuestoService,
-              private Almacenservice: AlmacenService,
-              private Articuloservicio: ArticuloService,) {
+    private DocumentoventaServicio: DocumentosVentasService,
+    private modalService: BsModalService,
+    private FormaPagoService: FormaPagoService,
+    private VendedorService: VendedorService,
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private httpClient: HttpClient,
+    private Unidadservice: UnidadService,
+    private Impuestoservice: ImpuestoService,
+    private Almacenservice: AlmacenService,
+    private Articuloservicio: ArticuloService,) {
 
 
     this.DocumentoVentaModel = new DocumentoVenta();
     this.idnegocio = 1;
     this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
-    if (this.route.snapshot.params.tipodocumento){
+    if (this.route.snapshot.params.tipodocumento) {
       this.tipodocumento = this.route.snapshot.params.tipodocumento;
 
     }
-    if (this.route.snapshot.params.id){
+    if (this.route.snapshot.params.id) {
       this.id = this.route.snapshot.params.id;
     }
   }
@@ -101,7 +101,7 @@ export class DocumentoVentasComponent implements OnInit {
   ngOnInit(): void {
 
     this.onTipoDocumento(this.tipodocumento);
-    this. buildForm();
+    this.buildForm();
 
     this.listarVendedores();
     this.listarFormasdepago();
@@ -111,28 +111,28 @@ export class DocumentoVentasComponent implements OnInit {
   }
 
 
-  private buildForm(){
+  private buildForm() {
 
     this.DocumentoVentaModel.tipodocumento = this.tipodocumento;
     this.DocumentoVentaModel.codnegocio = this.idnegocio;
     this.DocumentoVentaForm = this.formBuilder.group({
-      numerodocumento:[this.DocumentoVentaModel.numerodocumento, [Validators.required]],
+      numerodocumento: [this.DocumentoVentaModel.numerodocumento, [Validators.required]],
       codformapago: [this.DocumentoVentaModel.codformapago, [Validators.required]],
       codcontacto: [this.DocumentoVentaModel.codcontacto, [Validators.required]],
-      codvendedor:[this.DocumentoVentaModel.codvendedor, [Validators.required]],
-      fechaemision:[formatDate(this.DocumentoVentaModel.fechaemision, 'dd-MM-yyyy', 'en'), [Validators.required]],
-      fechavencimiento:[formatDate(this.DocumentoVentaModel.fechavencimiento, 'dd-MM-yyyy', 'en'), [Validators.required]],
-      fecha:[formatDate(this.DocumentoVentaModel.fecha, 'dd-MM-yyyy', 'en'), [Validators.required]],
-      referencia:[this.DocumentoVentaModel.referencia],
+      codvendedor: [this.DocumentoVentaModel.codvendedor, [Validators.required]],
+      fechaemision: [formatDate(this.DocumentoVentaModel.fechaemision, 'dd-MM-yyyy', 'en'), [Validators.required]],
+      fechavencimiento: [formatDate(this.DocumentoVentaModel.fechavencimiento, 'dd-MM-yyyy', 'en'), [Validators.required]],
+      fecha: [formatDate(this.DocumentoVentaModel.fecha, 'dd-MM-yyyy', 'en'), [Validators.required]],
+      referencia: [this.DocumentoVentaModel.referencia],
       status: [this.DocumentoVentaModel.status === 'ACTIVO' ? 1 : 0],
-      baseimp:[this.DocumentoVentaModel.baseimp],
+      baseimp: [this.DocumentoVentaModel.baseimp],
       isrl: [this.DocumentoVentaModel.isrl],
       observacion: [this.DocumentoVentaModel.observacion],
       numcontrol: [this.DocumentoVentaModel.numcontrol],
       numretencion: [this.DocumentoVentaModel.numretencion],
       pctiva_a: [this.DocumentoVentaModel.pctiva_a],
       pctiva_b: [this.DocumentoVentaModel.pctiva_b],
-      descuento:[this.DocumentoVentaModel.descuento],
+      descuento: [this.DocumentoVentaModel.descuento],
       subtotal: [this.DocumentoVentaModel.subtotal],
       total: [this.DocumentoVentaModel.total],
       montoretenido: [this.DocumentoVentaModel.montoretenido],
@@ -145,15 +145,19 @@ export class DocumentoVentasComponent implements OnInit {
 
       //lstdetallesdocumentoventas: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
       lstdetallesdocumentoventas: this.formBuilder.array([this.createItem()])
+
+
     });
 
-
+    (this.DocumentoVentaForm.get('lstdetallesdocumentoventas') as FormArray).valueChanges.subscribe(values => {
+      console.log('Cambios en el form ' + JSON.stringify(values));
+    });
   }
 
   createItem(): FormGroup {
     return this.formBuilder.group({
-      codnegocio:[this.idnegocio],
-      documentoid:  [0],
+      codnegocio: [this.idnegocio],
+      documentoid: [0],
       codarticulo: [0, [Validators.required]],
       codimpuesto: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
@@ -173,14 +177,14 @@ export class DocumentoVentasComponent implements OnInit {
       fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
       serial: [''],
       garantia: [''],
-      tipodocumento:[this.tipodocumento]
+      tipodocumento: [this.tipodocumento]
     });
   }
 
   addItem(): void {
 
     this.ListItems.push(this.formBuilder.group({
-      codnegocio:[this.idnegocio],
+      codnegocio: [this.idnegocio],
       codarticulo: [0, [Validators.required]],
       codimpuesto: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
@@ -200,16 +204,16 @@ export class DocumentoVentasComponent implements OnInit {
       fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
       serial: [''],
       garantia: [''],
-      tipodocumento:[this.tipodocumento]
+      tipodocumento: [this.tipodocumento]
     }));
   }
 
-  get ListItems() : FormArray {
+  get ListItems(): FormArray {
     return this.DocumentoVentaForm.get("lstdetallesdocumentoventas") as FormArray
   }
 
 
-  onFormSubmit(event: Event){
+  onFormSubmit(event: Event) {
     event.preventDefault();
     let data = JSON.stringify(this.DocumentoVentaForm.value);
     console.log('-----Team in JSON Format-----');
@@ -219,57 +223,11 @@ export class DocumentoVentasComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.DocumentoVentaForm.value;
-    this. DocumentoventaServicio.guardarDocumentoVenta(this.id, this.idnegocio, value)
-    .subscribe(response => {
-      this.loading = false;
-      this.toastr.info('El Documento se guardo correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.onRedireccionar(this.tipodocumento);
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      if (error.status === 404) {
-
-      }
-      else {
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-          { enableHtml: true, closeButton: true });
-      }
-    }));
-
-  }
-
-  buscarContacto(id: number) {
-
-    const obj = this.contactoServicio.mostrarContactos(id)
+    this.DocumentoventaServicio.guardarDocumentoVenta(this.id, this.idnegocio, value)
       .subscribe(response => {
-        this.ContactoModel = response as any;
-
-        if (this.nombreprimero === '') {
-          this.nombreprimero =this.ContactoModel.razonsocial;
-        }
-        else {
-          this.nombreprimero = this.ContactoModel.nombreprimero   + ' ' +
-                               this.ContactoModel.nombresegundo   + ' ' +
-                               this.ContactoModel.apellidoprimero + ' ' +
-                               this.ContactoModel.apellidosegundo;
-        }
-        this.DocumentoVentaForm.controls['codcontacto'].setValue(this.ContactoModel.id);
-        //this.nombreprimero = this.ContactoModel
-        this.numeroidentificacion=this.ContactoModel.numeroidentificacion;
-        this.telefono=this.ContactoModel.telefonofijo1;
-        this.direccionfiscal=this.ContactoModel.direccionfiscal;
-        if(this.ContactoModel.codtipopersona===1)
-        if (this.ContactoModel.codtipopersona === 1) {
-          this.tipopersona = 'Persona Natural';
-        }
-        else {
-          this.tipopersona = 'Persona Juridica';
-        }
-       // direccionfiscal: this.ContactoModel.direccionfiscal,
-        console.log('el cliente es de build form ' + this.ContactoModel.numeroidentificacion);
-        console.log('el codigo tipo persona es de build form ' + this.ContactoModel.codtipopersona);
-       // this.buildForm();
-
+        this.loading = false;
+        this.toastr.info('El Documento se guardo correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        this.onRedireccionar(this.tipodocumento);
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -283,26 +241,62 @@ export class DocumentoVentasComponent implements OnInit {
         }));
 
   }
-  onListarClientes(){
 
+  buscarContacto(id: number) {
+    const obj = this.contactoServicio.mostrarContactos(id)
+      .subscribe(response => {
+        this.ContactoModel = response as any;
+
+        if (this.nombreprimero === '') {
+          this.nombreprimero = this.ContactoModel.razonsocial;
+        }
+        else {
+          this.nombreprimero = this.ContactoModel.nombreprimero + ' ' +
+            this.ContactoModel.nombresegundo + ' ' +
+            this.ContactoModel.apellidoprimero + ' ' +
+            this.ContactoModel.apellidosegundo;
+        }
+        this.DocumentoVentaForm.controls['codcontacto'].setValue(this.ContactoModel.id);
+        this.numeroidentificacion = this.ContactoModel.numeroidentificacion;
+        this.telefono = this.ContactoModel.telefonofijo1;
+        this.direccionfiscal = this.ContactoModel.direccionfiscal;
+        if (this.ContactoModel.codtipopersona === 1)
+          if (this.ContactoModel.codtipopersona === 1) {
+            this.tipopersona = 'Persona Natural';
+          }
+          else {
+            this.tipopersona = 'Persona Juridica';
+          }
+      },
+      ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+      }));
+
+  }
+  onListarClientes() {
     const config: ModalOptions = { class: 'modal-lg' };
     this.bsModalRef = this.modalService.show(ModalClienteComponent, config);
     this.bsModalRef.content.onSelect.subscribe(result => {
       console.log('results', result);
       this.buscarContacto(result);
-
     });
 
   }
 
-  onListarArticulos(pos: number){
+  onListarArticulos(pos: number) {
     console.log('la posicion ' + pos);
     const config: ModalOptions = { class: 'modal-lg' };
     this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
     this.bsModalRef.content.onSelect.subscribe(result => {
       console.log('results', result);
       this.buscarArticulo(result, pos);
-
     });
   }
 
@@ -311,20 +305,17 @@ export class DocumentoVentasComponent implements OnInit {
     const obj = this.Articuloservicio.mostrarArticulo(id)
       .subscribe(response => {
         this.ArticuloModel = response as any;
-
         if (this.ArticuloModel.status === 'ACTIVO') {
           status = 1;
         }
         else {
           status = 0;
         }
-
-        //this.DocumentoCompraForm.controls['codarticulo'].setValue(this.ArticuloModel.id);
         this.ListItems.controls[pos].get('codarticulo').setValue(this.ArticuloModel.id);
         this.nombrearticulo[pos] = this.ArticuloModel.nomarticulo;
-
-        console.log('el cliente es de build form ' + this.ArticuloModel.nomarticulo);
-        console.log('el codigo tipo articulo es de build form ' + this.ArticuloModel.codtipoproducto);
+        this.ListItems.controls[pos].get('preciounitariosiniva').setValue(this.ArticuloModel.preciosugerido);
+        this.ListItems.controls[pos].get('codunidadmedida').setValue(this.ArticuloModel.codunidadmedida);
+        this.ListItems.controls[pos].get('codimpuesto').setValue(this.ArticuloModel.codimpuesto);
 
       },
         ((error: HttpErrorResponse) => {
@@ -340,14 +331,13 @@ export class DocumentoVentasComponent implements OnInit {
 
   }
 
-  onCrearPlazoCredito(){
+  onCrearPlazoCredito() {
     this.bsModalRef = this.modalService.show(CrearFormapagoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
-      if (result){
+      if (result) {
         this.listarFormasdepago();
       }
       console.log('results', result);
-
     });
   }
 
@@ -358,16 +348,16 @@ export class DocumentoVentasComponent implements OnInit {
         this.lstformaspago = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   listarVendedores() {
@@ -377,35 +367,35 @@ export class DocumentoVentasComponent implements OnInit {
         this.lstVendedores = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
-  onTipoDocumento(tipo){
-    if (tipo === 'factura'){
+  onTipoDocumento(tipo) {
+    if (tipo === 'factura') {
       this.titulo = 'Factura de Venta';
       this.url = '/ventas/catalogodocumentodeventa-factura/factura';
     }
-    else if (tipo === 'cotizacion'){
+    else if (tipo === 'cotizacion') {
       this.titulo = 'Cotizaciones';
       this.url = '/ventas/catalogodocumentodeventa-cotizacion/cotizacion';
     }
   }
 
-  onRedireccionar(tipo){
-    if (tipo === 'factura'){
+  onRedireccionar(tipo) {
+    if (tipo === 'factura') {
       this.router.navigate(['ventas/catalogodocumentodeventa-factura/factura']);
 
     }
-    else if (tipo === 'cotizacion'){
+    else if (tipo === 'cotizacion') {
       this.router.navigate(['ventas/catalogodocumentodeventa-cotizacion/cotizacion']);
 
     }
