@@ -1,12 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { NumeracionDocumento } from '../../model/NumeracionDocumento.model';
+import { TipoDocumentoService } from '../../tipodocumento/tipodocumentoService.service';
 import { NumeracionDocumentoService } from '../NumeracionDocumentoService.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class CrearNumeraciondocumentoModalComponent implements OnInit {
   public onClose: Subject<boolean>;
   idnumeraciondocumento = 0;
   lstNumeracionDocumentos: any [] = [];
+  lstTipoDocumentos: any [] = [];
   loading = false;
   formnumeraciondocumento: FormGroup;
   idnegocio: number;
@@ -33,6 +36,7 @@ export class CrearNumeraciondocumentoModalComponent implements OnInit {
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
   constructor(private numeraciondocumentoService: NumeracionDocumentoService,
+    private tipodocumentoServicio: TipoDocumentoService,
     private formbuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -54,6 +58,9 @@ export class CrearNumeraciondocumentoModalComponent implements OnInit {
 
   ngOnInit(): void {
    // this.listarTipoImpuestos();
+   this.listarTipoDocumentos();
+    console.log('el numero es enviado es ' + this.idnumeraciondocumento);
+    this.buscarNumeracionDocumento(this.idnumeraciondocumento);
     this.onClose = new Subject();
   }
   guardarNumeracionDocumento(event: Event){
@@ -90,6 +97,54 @@ export class CrearNumeraciondocumentoModalComponent implements OnInit {
 
     });
   }
+  buscarNumeracionDocumento(id: number) {
+    let status = 0;
+    this.loading = true;
+    const obj = this.numeraciondocumentoService.mostrarNumeracionDocumento(id)
+      .subscribe(response => {
+        this.NumeracionDocumentoModel = response as any;
+        if (this.NumeracionDocumentoModel.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        this.buildForm();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
+  }
+  onChange(event: MatSlideToggleChange) {
+    this.formnumeraciondocumento.get('status').setValue(event.checked === true ? '1' : '0');
+  }
+  listarTipoDocumentos() {
+    this.loading = true;
+    this.tipodocumentoServicio.listarTipoDocumentos('')
+      .subscribe(response => {
+        this.lstTipoDocumentos = response as any[];
+        this.loading = false;
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+  }
   public onConfirm(): void {
     this.onClose.next(true);
     this.bsModalRef.hide();
@@ -113,4 +168,25 @@ export class CrearNumeraciondocumentoModalComponent implements OnInit {
 
     });
   }
+  get nombre() {
+    return this.formnumeraciondocumento.get('nombre');
+  }
+
+  get proximonumerodocumento(){
+    return this.formnumeraciondocumento.get('proximonumerodocumento');
+  }
+  get desdenumero(){
+    return this.formnumeraciondocumento.get('desdenumero');
+  }
+
+  get hastanumero(){
+    return this.formnumeraciondocumento.get('hastanumero');
+  }
+  get prefijo(){
+    return this.formnumeraciondocumento.get('prefijo');
+  }
+  get resolucion(){
+    return this.formnumeraciondocumento.get('resolucion');
+  }
+  
 }

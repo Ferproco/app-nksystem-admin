@@ -10,6 +10,8 @@ export class NumeracionDocumento{
 	public proximonumerodocumento:number;
 	public desdenumero:number;
     public hastanumero:number;
+    public principal:string='1';
+   
 	    
     constructor(json: any = null){
         if (json !== null) {
@@ -23,7 +25,8 @@ export class NumeracionDocumento{
             this.proximonumerodocumento=json.proximonumerodocumento;
             this.desdenumero=json.desdenumero;
             this.hastanumero=json.hastanumero;
-           
+            this.principal=json.principal;
+                      
         }
 
     }

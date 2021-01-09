@@ -45,7 +45,9 @@ export class NumeracionDocumentoService{
   }*/
   guardarNumeracionDocumento(idIn: number, idnegocio: number, numeraciondocumento: NumeracionDocumento){
     console.log('el Numero de Docuemnto enviado es ' + JSON.stringify(numeraciondocumento));
+    
     const body = {
+        
       idnumeraciondocumento: Number(idIn),
       codnegocio: Number(idnegocio),
       nombre: numeraciondocumento.nombre,
@@ -55,8 +57,10 @@ export class NumeracionDocumentoService{
       proximonumerodocumento: Number(numeraciondocumento.proximonumerodocumento),
       desdenumero: Number(numeraciondocumento.desdenumero),
       hastanumero: Number(numeraciondocumento.hastanumero),
+      principal: numeraciondocumento.principal === '1' ? true : false,
       status: Number(numeraciondocumento.status) === 1 ? 'ACTIVO' : 'INACTIVO',
-      
+
+                
 
     };
     console.log('id ' + idIn + 'numeraciondocumento ' + JSON.stringify(body));
@@ -78,6 +82,13 @@ export class NumeracionDocumentoService{
 
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/numeraciondocumento/' + id;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+
+  obtenerNumeracionDocumento(tipodocumento: string){
+
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/numeraciondocumento/' + tipodocumento;
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 }

@@ -115,6 +115,8 @@ import { NumeracionDocumentoService } from './components/configuracion/Numeracio
 import { CrearNumeraciondocumentoComponent } from './components/configuracion/crear-numeraciondocumento/crear-numeraciondocumento.component';
 import { TipoDocumentoService } from './components/tipodocumento/tipodocumentoService.service';
 import { CrearNumeraciondocumentoModalComponent } from './components/configuracion/crear-numeraciondocumento-modal/crear-numeraciondocumento-modal.component';
+import { CatalogoValorinventarioComponent } from './inventario/catalogo-valorinventario/catalogo-valorinventario.component';
+import { KardexService } from './inventario/KardexService.service';
 
 @NgModule({
   declarations: [
@@ -173,7 +175,8 @@ import { CrearNumeraciondocumentoModalComponent } from './components/configuraci
     CrearImpuestoModalComponent,
     CatalogoNumeraciondocumentoComponent,
     CrearNumeraciondocumentoComponent,
-    CrearNumeraciondocumentoModalComponent
+    CrearNumeraciondocumentoModalComponent,
+    CatalogoValorinventarioComponent
    
   ],
   imports: [
@@ -237,6 +240,7 @@ import { CrearNumeraciondocumentoModalComponent } from './components/configuraci
     DocumentoCompraService,
     NumeracionDocumentoService,
     TipoDocumentoService,
+    KardexService,
     BsModalRef
   ],
   bootstrap: [AppComponent]

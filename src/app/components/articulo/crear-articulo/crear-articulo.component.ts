@@ -160,12 +160,7 @@ export class CrearArticuloComponent implements OnInit {
       esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],     
-     // MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto)
-     // this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
-     // this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
-  
-      // codbodega::[this.ArticuloModel.listabodegas.co]
-
+     
 
     })
   }

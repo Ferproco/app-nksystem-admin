@@ -38,6 +38,7 @@ import { DocumentosComprasComponent } from './components/compras/documentos-comp
 import { CrearCategoriaModalComponent } from './components/categoria/crear-categoria-modal/crear-categoria-modal.component';
 import { CatalogoNumeraciondocumentoComponent } from './components/configuracion/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
 import { CrearNumeraciondocumentoComponent } from './components/configuracion/crear-numeraciondocumento/crear-numeraciondocumento.component';
+import { CatalogoValorinventarioComponent } from './inventario/catalogo-valorinventario/catalogo-valorinventario.component';
 
 
 
@@ -54,9 +55,10 @@ const routes: Routes = [
   { path: 'inventario/listarunidades', component: CatalogoUnidadmedidaComponent},
   { path: 'inventario/listarcategorias', component: CatalogoCategoriaComponent},
   { path: 'inventario/crearcategoria', component: CrearCategoriaComponent},
-    {path: 'inventario/crearmarca',component: CrearMarcaComponent},
+  {path: 'inventario/crearmarca',component: CrearMarcaComponent},
   {path: 'inventario/listarmarcas', component:CatalogoMarcaComponent},
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent},
+  { path: 'inventario/listarvalorinventario', component: CatalogoValorinventarioComponent},
   { path: 'ventas/clientes', component: CatalogoClienteComponent},
   { path: 'ventas/crearcliente', component: CrearClienteComponent},
   { path: 'ventas/catalogodocumentodeventa-factura/:tipodocumento', component: CatalogoDocumentoVentasComponent},

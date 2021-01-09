@@ -21,12 +21,13 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
   uncheckableRadioModel = 'Middle';
 
   camposrequeridos: string;
-  idnumeraciondocumento = 0;
+ 
+  id = 0;
   lstTipoDocumentos: any [] = [];
   loading = false;
   formnumeraciondocumento: FormGroup;
   idnegocio: number;
-
+  
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
@@ -37,6 +38,7 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+
   constructor(private tipodocumentoServicio: TipoDocumentoService,
     private numeraciondocumentoService: NumeracionDocumentoService,
     private formbuilder: FormBuilder,
@@ -50,7 +52,7 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
   
       this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
       if (this.route.snapshot.params.id) {
-        this.idnumeraciondocumento = this.route.snapshot.params.id;
+        this.id = this.route.snapshot.params.id;
        // this.buscarArticulo(this.id);
       }
       this.buildForm();
@@ -58,14 +60,14 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarTipoDocumentos();
-    console.log('el numero es enviado es ' + this.idnumeraciondocumento);
-    this.buscarNumeracionDocumento(this.idnumeraciondocumento);
+    console.log('el numero es enviado es ' + this.id);
+    this.buscarNumeracionDocumento(this.id);
   }
   guardarNumeracionDocumento(event: Event){
     event.preventDefault();
     this.loading = true;
     const value = this.formnumeraciondocumento.value;
-    this.numeraciondocumentoService.guardarNumeracionDocumento(this.idnumeraciondocumento, this.idnegocio, value)
+    this.numeraciondocumentoService.guardarNumeracionDocumento(this.id, this.idnegocio, value)
     .subscribe(response => {
       this.loading = false;
       this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
@@ -99,6 +101,8 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
   }
 
   private buildForm(){
+    
+
       this.formnumeraciondocumento = this.formbuilder.group({
       nombre: [this.NumeracionDocumentoModel.nombre, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       proximonumerodocumento: [this.NumeracionDocumentoModel.proximonumerodocumento, [Validators.required, Validators.pattern(this.paterhombre)]],
@@ -107,6 +111,7 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
       prefijo: [this.NumeracionDocumentoModel.prefijo, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       codtipodocumento: [this.NumeracionDocumentoModel.codtipodocumento, [Validators.required]],
       resolucion: [this.NumeracionDocumentoModel.resolucion, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      principal:[this.NumeracionDocumentoModel.principal],
       status: [this.NumeracionDocumentoModel.status === 'ACTIVO' ? 1 : 0]
 
     });

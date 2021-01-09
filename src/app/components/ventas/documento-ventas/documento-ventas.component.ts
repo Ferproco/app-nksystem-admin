@@ -20,6 +20,8 @@ import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 import { CatalogoArticuloModalComponent } from '../../articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { ArticuloService } from '../../articulo/ArticuloService.service';
 import { Articulo } from '../../model/Articulo.model';
+import { CrearNumeraciondocumentoModalComponent } from '../../configuracion/crear-numeraciondocumento-modal/crear-numeraciondocumento-modal.component';
+import { NumeracionDocumentoService } from '../../configuracion/NumeracionDocumentoService.service';
 
 @Component({
   selector: 'app-documento-ventas',
@@ -73,6 +75,7 @@ export class DocumentoVentasComponent implements OnInit {
   constructor(private contactoServicio: ContactoService,
     private DocumentoventaServicio: DocumentosVentasService,
     private modalService: BsModalService,
+    private numeraciondocumentoServicio:NumeracionDocumentoService,
     private FormaPagoService: FormaPagoService,
     private VendedorService: VendedorService,
     private toastr: ToastrService,
@@ -460,5 +463,32 @@ export class DocumentoVentasComponent implements OnInit {
           }
         }));
   }
+  onCrearNumeracionDocumento(){
+    this.bsModalRef = this.modalService.show(CrearNumeraciondocumentoModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result){
+       // this.listarImpuestos();
+      }
 
+    });
+  }
+  /*obtenerNumeracionDocumento() {
+    this.loading = true;
+    this.numeraciondocumentoServicio.listarFormaPagos('')
+      .subscribe(response => {
+        this.lstformaspago = response as any[];
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }*/
 }
