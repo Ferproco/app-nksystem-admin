@@ -1,35 +1,35 @@
 export class Vendedor {
+    public id:number;
+    public codigo: string;
+    public nombre: string;
+    public porcfclimp: number;
+    public porclclimp: number;
+    public porcfclexp: number;
+    public interno: string;
+    public cobrador: string;
+    public direccionfiscal: string;
+    public correoe: string;
+    public codnegocio: number;
+    public codzona: number;
+    public codusuario: string;
+    public montometa: number;
+    public status: string;
 
-    codigo: string;
-    nombre: string;
-    porcfclimp: number;
-    porclclimp: number;
-    porcfclexp: number;
-    interno: string;
-    cobrador: string;
-    direccionfiscal: string;
-    correoe: string;
-    codnegocio: string;
-    codzona: number;
-    codusuario: string;
-    montometa: number;
-    status: string;
-
-    constructor(cod: string, nombr: string, porcfcli: number, porccli: number, porcfcle: number, inter: string, cobrad: string, dir: string, corre: string, codneg: string, codzon: number, codusu: string, meta: number, stat: string) {
-
-        this.codigo = cod;
-        this.nombre = nombr;
-        this.porcfclimp = porcfcli;
-        this.porclclimp = porccli;
-        this.porcfclexp = porcfcle;
-        this.interno = inter;
-        this.cobrador = cobrad;
-        this.direccionfiscal = dir;
-        this.correoe = corre;
-        this.codnegocio = codneg;
-        this.codzona = codzon;
-        this.codusuario = codusu;
-        this.montometa = meta;
-        this.status = stat;
+    constructor(json: any = null) {
+        this.id=json.id;
+        this.codigo =json.codigo;
+        this.nombre = json.nombre;
+        this.porcfclimp = json.porcfclimp;
+        this.porclclimp =json. porclclimp;
+        this.porcfclexp = json.porcfclexp;
+        this.interno = json.interno;
+        this.cobrador = json.cobrador;
+        this.direccionfiscal =json. direccionfiscal;
+        this.correoe = json.correoe;
+        this.codnegocio = json.codnegocio;
+        this.codzona = json.codzona;
+        this.codusuario = json.codusuario;
+        this.montometa = json.montometa;
+        this.status = json.status;
     }
 }
