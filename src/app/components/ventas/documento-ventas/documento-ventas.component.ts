@@ -1,5 +1,4 @@
-import { AlmacenService } from './../../almacen/AlmacenService.service';
-import { ModalClienteComponent } from '../../contacto/modal-cliente/modal-cliente.component';
+
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -7,21 +6,23 @@ import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-mo
 import { FormaPagoService } from '../../formapago/FormaPagoService.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { VendedorService } from '../../vendedor/VendedorService.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContactoService } from '../../contacto/ContactoService.service';
 import { Contacto } from '../../model/Contacto.model';
 import { DocumentoVenta } from '../../model/DocumentoVenta.model';
 import { DocumentosVentasService } from '../documentos-ventas.service';
 import { UnidadService } from '../../unidadmedida/UnidadService.service';
 import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
-import { CatalogoArticuloModalComponent } from '../../articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
-import { ArticuloService } from '../../articulo/ArticuloService.service';
 import { Articulo } from '../../model/Articulo.model';
 import { CrearNumeraciondocumentoModalComponent } from '../../configuracion/crear-numeraciondocumento-modal/crear-numeraciondocumento-modal.component';
 import { NumeracionDocumentoService } from '../../configuracion/NumeracionDocumentoService.service';
+import { AlmacenService } from '../../portafolio/almacen/AlmacenService.service';
+import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
+import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
+import { ContactoService } from '../../portafolio/contacto/ContactoService.service';
+import { VendedorService } from '../../portafolio/vendedor/VendedorService.service';
+import { ModalClienteComponent } from '../../portafolio/contacto/modal-cliente/modal-cliente.component';
 
 @Component({
   selector: 'app-documento-ventas',

@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log('que puta pasa');
+
     this.router.navigate(['main/dashboard']);
   }
 

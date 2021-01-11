@@ -5,42 +5,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CatalogoArticuloComponent } from './components/articulo/catalogo-articulo/catalogo-articulo.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ArticuloService } from './components/articulo/ArticuloService.service';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrarseComponent } from './components/login/registrarse/registrarse.component';
-import { MainComponent } from './components/main/main.component';
-import { FilterArticuloPipe } from './components/articulo/catalogo-articulo/filter-articulo.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // RECOMMENDED
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-
-import { ClienteService } from './components/cliente/ClienteService.service';
-import { FamiliaService } from './components/familia/FamiliaService.service';
 import { GrupoArticuloService } from './components/grupoarticulo/GrupoArticuloService.service';
 import { ImpuestoService } from './components/impuesto/ImpuestoService.service';
 import { TipoImpuestoService } from './components/impuesto/TipoImpuestoService.service';
 import { UnidadService } from './components/unidadmedida/UnidadService.service';
 import { MarcaService } from './components/marca/MarcaService.service';
-import { CatalogoClienteComponent } from './components/cliente/catalogo-cliente/catalogo-cliente.component';
-import { CrearClienteComponent } from './components/cliente/crear-cliente/crear-cliente.component';
-import { FilterClientePipe } from './components/cliente/catalogo-cliente/filter-cliente.pipe';
 import { CatalogoImpuestoComponent } from './components/impuesto/catalogo-impuesto/catalogo-impuesto.component';
-import { CatalogoCategoriaComponent } from './components/categoria/catalogo-categoria/catalogo-categoria.component';
-import { CategoriaService } from './components/categoria/CategoriaService.service';
-import { FilterCategoriaPipe } from './components/categoria/catalogo-categoria/filter-categoria.pipe';
-import { AlmacenService } from './components/almacen/AlmacenService.service';
-import { FilterAlmacenPipe } from './components/almacen/catalogo-almacen/filter-almacen.pipe';
-import { CatalogoAlmacenComponent } from './components/almacen/catalogo-almacen/catalogo-almacen.component';
-import { CrearAlmacenComponent } from './components/almacen/crear-almacen/crear-almacen.component';
 import { CatalogoUsuarioComponent } from './components/configuracion/catalogo-usuario/catalogo-usuario.component';
 import { FormaPagoService } from './components/formapago/FormaPagoService.service';
 import { CatalogoFormapagoComponent } from './components/formapago/catalogo-formapago/catalogo-formapago.component';
@@ -52,18 +32,12 @@ import { ProveedorService } from './components/proveedor/ProveedorService.servic
 import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/crear-proveedor.component';
 import { CatalogoProveedorComponent } from './components/proveedor/catalogo-proveedor/catalogo-proveedor.component';
 import { FilterProveedorPipe } from './components/proveedor/catalogo-proveedor/filter-proveedor.pipe';
-import { VendedorService } from './components/vendedor/VendedorService.service';
-import { CatalogoVendedorComponent } from './components/vendedor/catalogo-vendedor/catalogo-vendedor.component';
-import { CrearVendedorComponent } from './components/vendedor/crear-vendedor/crear-vendedor.component';
-import { FilterVendedorPipe } from './components/vendedor/catalogo-vendedor/filter-vendedor.pipe';
 import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuentasxcobrar.component';
 import { CatalogoUnidadmedidaComponent } from './components/unidadmedida/catalogo-unidadmedida/catalogo-unidadmedida.component';
 import { FilterUnidadmedidaPipe } from './components/unidadmedida/catalogo-unidadmedida/filter-unidadmedida.pipe';
 import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
 import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
 import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
-import { CrearCategoriaComponent } from './components/categoria/crear-categoria/crear-categoria.component';
-import { CatalogoContactosComponent } from './components/contacto/catalogo-contactos/catalogo-contactos.component';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -79,16 +53,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
-import { CrearContactoComponent } from './components/contacto/crear-contacto/crear-contacto.component';
-import { ContactoService } from './components/contacto/ContactoService.service';
-import { TipoIdentificacionService } from './components/contacto/crear-contacto/TipoIdentificacionService.service';
-import { TipoContribuyenteService } from './components/contacto/crear-contacto/TipoContribuyenteService.service';
-import { PaisService } from './components/contacto/crear-contacto/PaisService.service';
 import { DepartamentoService } from './components/departamento/DepartamentoService.service';
 import { MunicipioService } from './components/municipio/MunicipioService.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
-import { CrearArticuloComponent } from './components/articulo/crear-articulo/crear-articulo.component';
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
@@ -98,17 +66,12 @@ import { CatalogoTipoImpuestoComponentComponent } from './components/tipoimpuest
 import { CrearTipoImpuestoComponentComponent } from './components/tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ModalClienteComponent } from './components/contacto/modal-cliente/modal-cliente.component';
-import { DocumentoVentasComponent } from './components/ventas/documento-ventas/documento-ventas.component';
-import { CatalogoDocumentoVentasComponent } from './components/ventas/catalogo-documento-ventas/catalogo-documento-ventas.component';
 import { DocumentosVentasService } from './components/ventas/documentos-ventas.service';
 import { CrearMarcaComponent } from './components/marca/crear-marca/crear-marca.component';
 import { CatalogoMarcaComponent } from './components/marca/catalogo-marca/catalogo-marca.component';
 import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
-import { CatalogoArticuloModalComponent } from './components/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
-import { CrearCategoriaModalComponent } from './components/categoria/crear-categoria-modal/crear-categoria-modal.component';
 import { CrearImpuestoModalComponent } from './components/impuesto/crear-impuesto-modal/crear-impuesto-modal.component';
 import { CatalogoNumeraciondocumentoComponent } from './components/configuracion/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
 import { NumeracionDocumentoService } from './components/configuracion/NumeracionDocumentoService.service';
@@ -121,25 +84,10 @@ import { KardexService } from './inventario/KardexService.service';
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    HeaderComponent,
-    MenuComponent,
     LoginComponent,
     RegistrarseComponent,
-    MainComponent,
-    FilterArticuloPipe,
-    CatalogoArticuloComponent,
-    CrearArticuloComponent,
-    CatalogoClienteComponent,
-    CrearClienteComponent,
-    FilterClientePipe,
     CatalogoImpuestoComponent,
     CrearImpuestoComponent,
-    CatalogoCategoriaComponent,
-    FilterCategoriaPipe,
-    CatalogoAlmacenComponent,
-    CrearAlmacenComponent,
-    FilterAlmacenPipe,
     CatalogoUsuarioComponent,
     CatalogoFormapagoComponent,
     CrearFormapagoComponent,
@@ -148,36 +96,25 @@ import { KardexService } from './inventario/KardexService.service';
     CrearProveedorComponent,
     CatalogoProveedorComponent,
     FilterProveedorPipe,
-    CatalogoVendedorComponent,
-    CrearVendedorComponent,
-    FilterVendedorPipe,
     CuentasxcobrarComponent,
     CatalogoUnidadmedidaComponent,
     FilterUnidadmedidaPipe,
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe,
-    CrearCategoriaComponent,
-    CatalogoContactosComponent,
-    CrearContactoComponent,
     MensajeEliminarComponent,
     CrearTipoImpuestoModalComponent,
     CatalogoTipoImpuestoComponentComponent,
     CrearTipoImpuestoComponentComponent,
-    ModalClienteComponent,
-    DocumentoVentasComponent,
-    CatalogoDocumentoVentasComponent,
     CrearMarcaComponent,
     CatalogoMarcaComponent,
     DocumentosComprasComponent,
     CatalogoDocumentosComprasComponent,
-    CatalogoArticuloModalComponent,
-    CrearCategoriaModalComponent,
     CrearImpuestoModalComponent,
     CatalogoNumeraciondocumentoComponent,
     CrearNumeraciondocumentoComponent,
     CrearNumeraciondocumentoModalComponent,
     CatalogoValorinventarioComponent
-   
+
   ],
   imports: [
     BrowserModule,
@@ -209,30 +146,19 @@ import { KardexService } from './inventario/KardexService.service';
     BrowserAnimationsModule,
     AccordionModule.forRoot(),
     ButtonsModule.forRoot(),
-    MatSlideToggleModule,
-
+    MatSlideToggleModule
 
   ],
   providers: [
-    ArticuloService,
-    AlmacenService,
-    ClienteService,
-    FamiliaService,
     GrupoArticuloService,
     ImpuestoService,
     TipoImpuestoService,
     MarcaService,
     UnidadService,
-    CategoriaService,
     FormaPagoService,
     MovimientosCajaService,
     ProveedorService,
-    VendedorService,
     TransaccionesService,
-    ContactoService,
-    TipoIdentificacionService,
-    TipoContribuyenteService,
-    PaisService,
     DepartamentoService,
     MunicipioService,
     ListaPrecioService,

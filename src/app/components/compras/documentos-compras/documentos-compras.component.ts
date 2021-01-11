@@ -6,16 +6,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { ArticuloService } from '../../articulo/ArticuloService.service';
-import { CatalogoArticuloModalComponent } from '../../articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
-import { ContactoService } from '../../contacto/ContactoService.service';
-import { ModalClienteComponent } from '../../contacto/modal-cliente/modal-cliente.component';
 import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
 import { FormaPagoService } from '../../formapago/FormaPagoService.service';
 import { Articulo } from '../../model/Articulo.model';
 import { Contacto } from '../../model/Contacto.model';
 import { DocumentoCompra } from '../../model/DocumentoCompra.model';
-import { VendedorService } from '../../vendedor/VendedorService.service';
+import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
+import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
+import { ContactoService } from '../../portafolio/contacto/ContactoService.service';
+import { ModalClienteComponent } from '../../portafolio/contacto/modal-cliente/modal-cliente.component';
+import { VendedorService } from '../../portafolio/vendedor/VendedorService.service';
 import { DocumentoCompraService } from '../DocumentoCompraService.service';
 
 @Component({

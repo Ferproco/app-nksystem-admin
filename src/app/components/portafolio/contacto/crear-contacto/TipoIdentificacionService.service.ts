@@ -1,0 +1,24 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Contacto } from 'src/app/components/model/Contacto.model';
+import { Api } from 'src/app/config';
+
+@Injectable()
+export class TipoIdentificacionService{
+
+  lstTipoIdentificacion: Contacto[] = [];
+  uriapi: string = Api.url;
+
+  constructor(private httpClient: HttpClient){
+
+  }
+
+  listarTipoIdentificaciones(codnegocio: string){
+    const body = {
+
+    };
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/tipoidentificacion';
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+}
