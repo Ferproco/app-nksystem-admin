@@ -127,7 +127,7 @@ export class CatalogoArticuloComponent implements OnInit {
   }
 
   registrararticulos() {
-    this.router.navigate(['inventario/creararticulo']);
+    this.router.navigate(['main/dashboard/portafolio/creararticulo']);
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

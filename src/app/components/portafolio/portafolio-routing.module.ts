@@ -10,6 +10,7 @@ import { CrearCategoriaComponent } from './categoria/crear-categoria/crear-categ
 import { CrearContactoComponent } from './contacto/crear-contacto/crear-contacto.component';
 import { CatalogoVendedorComponent } from './vendedor/catalogo-vendedor/catalogo-vendedor.component';
 import { CrearVendedorComponent } from './vendedor/crear-vendedor/crear-vendedor.component';
+import { CatalogoContactosComponent } from './contacto/catalogo-contactos/catalogo-contactos.component';
 
 const routes: Routes =
   [
@@ -37,6 +38,10 @@ const routes: Routes =
           component: CrearAlmacenComponent
         },
         {
+          path: 'crearalmacen/:id',
+          component: CrearAlmacenComponent
+        },
+        {
           path: 'listarcategorias',
           component: CatalogoCategoriaComponent
         },
@@ -54,7 +59,7 @@ const routes: Routes =
         },
         {
           path: 'listarcontactos',
-          component: CatalogoCategoriaComponent
+          component: CatalogoContactosComponent
         },
         {
           path: 'crearcontacto',

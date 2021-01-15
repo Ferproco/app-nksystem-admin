@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -24,10 +26,17 @@ export class CrearAlmacenModalComponent implements OnInit {
   bodega: Almacen;
   operacion: string = 'GUARDAR';
 
+  camposrequeridos: string;
+
+  colorTheme = 'theme-orange';
+  bsConfig: Partial<BsDatepickerConfig>;
+  currentDate = new Date();
+
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  Objetoestado: string = 'Activo';
 
   constructor(private bsModalRef: BsModalRef,
               private almacenServicio: AlmacenService,
@@ -51,16 +60,21 @@ export class CrearAlmacenModalComponent implements OnInit {
       principal: ['1', [Validators.required]],
       status: ['1', [Validators.required]]
     });
+    this.Objetoestado = this.formalmacen.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
-  public onCancel(): void {
-    this.onClose.next(false);
-    this.bsModalRef.hide();
+ 
+
+  onChange(event: MatSlideToggleChange) {
+
+    this.formalmacen.get('status').setValue(event.checked === true ? 1 : 0);
+    this.Objetoestado = this.formalmacen.get('status').value === 1 ? 'Activo' : 'Inactivo';    
   }
 
-  onChange($event) {
-    console.log($event.target.checked + ' esto es lo que se chequeo');
-    this.formalmacen.get('status').setValue($event.target.checked === true ? 1 : 0);
+
+  onChangePrincipal(event: any) {
+    console.log(event.currentTarget.checked);
+    this.formalmacen.get('principal').setValue(event.currentTarget.checked === true ? 1 : 0);
   }
 
   guardarAlmacen(event: Event) {
@@ -68,23 +82,28 @@ export class CrearAlmacenModalComponent implements OnInit {
     const value = this.formalmacen.value;
     console.log(value);
 
-    this.almacenServicio.guardarAlmacen(this.id, value)
+    this.almacenServicio.guardarAlmacen(this.id, this.idnegocio, value)
       .subscribe(response => {
         this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.router.navigate(['inventario/listaralmacenes']);
+        this.router.navigate(['main/dashboard/portafolio/listaralmacenes']);
         console.log(response);
       },
-        error => {
-          this.loading = false;
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
           this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
             { enableHtml: true, closeButton: true });
-        });
+        }
+      }));
   }
 
   public onConfirm(): void {
     const value = this.formalmacen.value;
     console.log(value);
-    this.almacenServicio.guardarAlmacen(this.id, value)
+    this.almacenServicio.guardarAlmacen(this.id, this.idnegocio,value)
       .subscribe(response => {
         this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
         this.onClose.next(true);
@@ -97,6 +116,10 @@ export class CrearAlmacenModalComponent implements OnInit {
             { enableHtml: true, closeButton: true });
         }));
 
+  }
+  public onCancel(): void {
+    this.onClose.next(false);
+    this.bsModalRef.hide();
   }
 
   get nombre() {

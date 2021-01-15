@@ -1,17 +1,19 @@
-export class Categoria{
+export class Categoria {
 
-    codfamilia:number;
-	nomfamilia:string;
-	codnegocio:number ;
-    imagen: string;
-    status:string;    
-     
-    constructor(codfamilia:number, nomfamilia:string, codnegocio:number , imagen: string,status:string){
+    public codfamilia: number;
+    public nomfamilia: string;
+    public codnegocio: number;
+    public imagen: string;
+    public status: string = 'Activo';
 
-        this.codfamilia=codfamilia;
-        this.nomfamilia=nomfamilia;
-        this.codnegocio=codnegocio;
-        this.imagen=imagen;
-        this.status=status;
+    constructor(json: any = null) {
+        if (json !== null) {
+            this.codfamilia = json.codfamilia;
+            this.nomfamilia = json.nomfamilia;
+            this.codnegocio = json.codnegocio;
+            this.imagen = json.imagen;
+            this.status = json.status;
+        }
+
     }
 }

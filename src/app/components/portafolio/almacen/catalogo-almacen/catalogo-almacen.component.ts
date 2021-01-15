@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { Almacen } from 'src/app/components/model/Almacen.model';
 import { AlmacenService } from '../AlmacenService.service';
 
@@ -26,15 +29,18 @@ export class CatalogoAlmacenComponent implements OnInit {
   LengthTable = 0;
   sortedData;
 
-  displayedColumns: string[] = ['Codigo', 'Nombre', 'Direccion', 'Principal' , 'Status', 'Acción'];
+  bsModalRef: BsModalRef;
+  displayedColumns: string[] = ['select', 'Nombre', 'Direccion', 'Principal' , 'Status', 'Acción'];
   dataSource: MatTableDataSource<Almacen>;
+  selection = new SelectionModel<Almacen>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private almacenServicio: AlmacenService,
               private router: Router,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.listarAlmacenes();
@@ -45,9 +51,10 @@ export class CatalogoAlmacenComponent implements OnInit {
     this.almacenServicio.listarAlmacenes('')
    .subscribe(response => {
         this.lstAlmacenes = response as Almacen[];
+        this.lstAlmacenes.sort();
         this.dataSource = new MatTableDataSource(this.lstAlmacenes);
         this.dataSource.paginator = this.paginator;
-        this.LengthTable = this.lstAlmacenes.length;
+        this.LengthTable = this.lstAlmacenes.length;        
         this.sortedData = this.lstAlmacenes.slice();
         this.loading = false;
    },
@@ -64,7 +71,7 @@ export class CatalogoAlmacenComponent implements OnInit {
  }
 
 registraralmacenes() {
-  this.router.navigate(['inventario/crearalmacen']);
+  this.router.navigate(['main/dashboard/portafolio/crearalmacen']);
     }
 
     applyFilter(event: Event) {
@@ -100,12 +107,43 @@ Ver(){
 
 }
 
-Modificar(){
+Modificar(id: number){
 
+  this.router.navigate(['main/dashboard/portafolio/crearalmacen', id]);
 }
 
-Eliminar(){
+Eliminar(id: number){
+  this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
+  this.bsModalRef.content.onClose.subscribe(result => {
+    console.log('results', result + ' Y EL CODIGO ' + id);
+    if (result){
+      this.eliminarporcodigo(id);
+    }
+  });
+}
 
+
+eliminarporcodigo(id: number){
+  this.loading = true;
+  this.almacenServicio.eliminarAlmacen(id)
+    .subscribe(response => {
+      const respuesta = response;
+      this.loading = false;
+      this.listarAlmacenes();
+    },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else if (error.status === 409) {
+          this.toastr.info('Opss no puedes eliminar el registro ya que esta haciendo usado', 'Informacion', { enableHtml: true, closeButton: true });
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
 }
 
 ExportarExcel(){
@@ -119,5 +157,23 @@ Refrescar(){
 }
 Importar(){
 
+}
+isAllSelected() {
+  const numSelected = this.selection.selected.length;
+  const numRows = this.LengthTable;//this.dataSource.data.length;
+  return numSelected === numRows;
+}
+
+/** Selects all rows if they are not all selected; otherwise clear selection. */
+masterToggle() {
+  this.isAllSelected() ?
+    this.selection.clear() :
+    this.dataSource.data.forEach(row => this.selection.select(row));
+}
+checkboxLabel(row?: Almacen): string {
+  if (!row) {
+    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  }
+  return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.idalmacen + 1}`;
 }
 }

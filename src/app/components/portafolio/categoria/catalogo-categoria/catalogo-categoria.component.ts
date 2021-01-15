@@ -1,10 +1,13 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { Categoria } from 'src/app/components/model/Categoria.model';
 import { CategoriaService } from '../CategoriaService.service';
 
@@ -25,16 +28,19 @@ export class CatalogoCategoriaComponent implements OnInit {
   LengthTable = 0;
   sortedData;
 
-  displayedColumns: string[] = ['Codigo', 'Nombre', 'Status', 'Acción'];
+  displayedColumns: string[] = ['Select','Codigo', 'Nombre', 'Status', 'Acción'];
   dataSource: MatTableDataSource<Categoria>;
+  selection = new SelectionModel<Categoria>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+   bsModalRef: BsModalRef;
 
 
   constructor(private categoriaServicio: CategoriaService,
               private toastr: ToastrService,
-              private router: Router) { }
+              private router: Router, 
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.listarCategorias();
@@ -101,14 +107,41 @@ Ver(){
 
 }
 
-Modificar(){
-
+Modificar(id: number){
+  this.router.navigate(['main/dashboard/portafolio/crearcategoria', id]);
 }
 
-Eliminar(){
-
+Eliminar(id: number){
+  this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
+  this.bsModalRef.content.onClose.subscribe(result => {
+    console.log('results', result + ' Y EL CODIGO ' + id);
+    if (result){
+      this.eliminarporcodigo(id);
+    }
+  });
 }
+eliminarporcodigo(id: number){
+  this.loading = true;
+  this.categoriaServicio.eliminarCategoria(id)
+    .subscribe(response => {
+      const respuesta = response;
+      this.loading = false;
+      this.listarCategorias();
+    },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
 
+        }
+        else if (error.status === 409) {
+          this.toastr.info('Opss no puedes eliminar el registro ya que esta haciendo usado', 'Informacion', { enableHtml: true, closeButton: true });
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
+}
 ExportarExcel(){
 
 }
@@ -120,5 +153,24 @@ this.listarCategorias();
 }
 Importar(){
 
+}
+
+isAllSelected() {
+  const numSelected = this.selection.selected.length;
+  const numRows = this.LengthTable;//this.dataSource.data.length;
+  return numSelected === numRows;
+}
+
+/** Selects all rows if they are not all selected; otherwise clear selection. */
+masterToggle() {
+  this.isAllSelected() ?
+    this.selection.clear() :
+    this.dataSource.data.forEach(row => this.selection.select(row));
+}
+checkboxLabel(row?: Categoria): string {
+  if (!row) {
+    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  }
+  return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.codfamilia + 1}`;
 }
 }
