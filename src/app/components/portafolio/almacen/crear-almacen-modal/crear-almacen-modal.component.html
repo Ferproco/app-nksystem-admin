@@ -22,7 +22,7 @@
             <div class="form-group">
               <label for="password3">Nombre</label>
               <input formControlName="nombre"
-                [ngClass]="{'invalid-data': nombre.invalid && (nombre.touched || nombre.dirty)}" type="text"
+                ngClass="{'invalid-data': nombre.invalid && (nombre.touched || nombre.dirty)}" type="text"
                 class="form-control" placeholder="Ingrese el Nombre de la Bodega" />
               <div *ngIf="nombre.invalid  && (nombre.dirty || nombre.touched)">
                 <div *ngIf="nombre.errors.required">
@@ -37,7 +37,7 @@
             <div class="form-group">
               <label for="password3">Dirección</label>
               <input formControlName="direccion"
-                [ngClass]="{'invalid-data': direccion.invalid && (direccion.touched || direccion.dirty)}"
+                ngClass="{'invalid-data': direccion.invalid && (direccion.touched || direccion.dirty)}"
                 type="text" class="form-control" placeholder="Ingrese la Dirección del Almacén" />
               <div *ngIf="direccion.invalid  && (direccion.dirty || direccion.touched)">
                 <div *ngIf="direccion.errors.required">

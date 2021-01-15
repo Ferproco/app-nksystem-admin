@@ -97,10 +97,10 @@ export class CatalogoDocumentoVentasComponent implements OnInit {
 
   registrardocumento() {
     if (this.tipodocumento === 'factura'){
-      this.router.navigate(['ventas/documentodeventa-factura',this.tipodocumento]);
+      this.router.navigate(['main/dashboard/ventas/documentodeventa-factura', this.tipodocumento]);
     }
     else if (this.tipodocumento === 'cotizacion'){
-      this.router.navigate(['ventas/documentodeventa-cotizacion',this.tipodocumento]);
+      this.router.navigate(['main/dashboard/ventas/documentodeventa-cotizacion', this.tipodocumento]);
     }
 
   }

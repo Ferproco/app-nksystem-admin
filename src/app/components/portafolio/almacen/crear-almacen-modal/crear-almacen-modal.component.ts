@@ -46,7 +46,7 @@ export class CrearAlmacenModalComponent implements OnInit {
               private route: ActivatedRoute) {
                 this.idnegocio = 1;
                 this.buildForm();
-               }
+  }
 
   ngOnInit(): void {
     this.onClose = new Subject();
@@ -58,17 +58,17 @@ export class CrearAlmacenModalComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       direccion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       principal: ['1', [Validators.required]],
-      status: ['1', [Validators.required]]
+      status: [1, [Validators.required]]
     });
     this.Objetoestado = this.formalmacen.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
- 
+
 
   onChange(event: MatSlideToggleChange) {
 
     this.formalmacen.get('status').setValue(event.checked === true ? 1 : 0);
-    this.Objetoestado = this.formalmacen.get('status').value === 1 ? 'Activo' : 'Inactivo';    
+    this.Objetoestado = this.formalmacen.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
 
@@ -128,6 +128,10 @@ export class CrearAlmacenModalComponent implements OnInit {
 
   get direccion() {
     return this.formalmacen.get('direccion');
+  }
+
+  get status() {
+    return this.formalmacen.get('status');
   }
 
 }
