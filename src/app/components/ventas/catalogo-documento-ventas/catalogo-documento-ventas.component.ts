@@ -96,6 +96,7 @@ export class CatalogoDocumentoVentasComponent implements OnInit {
   }
 
   registrardocumento() {
+    console.log(this.tipodocumento);
     if (this.tipodocumento === 'factura'){
       this.router.navigate(['main/dashboard/ventas/documentodeventa-factura', this.tipodocumento]);
     }
