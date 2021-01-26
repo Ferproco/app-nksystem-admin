@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Api } from 'src/app/config';
-import { Kardex } from '../components/model/Kardex.model';
+import { Kardex } from '../model/Kardex.model';
+
 
 
 

@@ -26,7 +26,7 @@ import { CatalogoDocumentosComprasComponent } from './components/compras/catalog
 import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 import { CatalogoNumeraciondocumentoComponent } from './components/configuracion/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
 import { CrearNumeraciondocumentoComponent } from './components/configuracion/crear-numeraciondocumento/crear-numeraciondocumento.component';
-import { CatalogoValorinventarioComponent } from './inventario/catalogo-valorinventario/catalogo-valorinventario.component';
+
 
 
 
@@ -42,7 +42,6 @@ const routes: Routes = [
   { path: 'inventario/crearmarca', component: CrearMarcaComponent },
   { path: 'inventario/listarmarcas', component: CatalogoMarcaComponent },
   { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent },
-  { path: 'inventario/listarvalorinventario', component: CatalogoValorinventarioComponent },
   { path: 'ventas/movimientoscaja', component: CatalogoMovimientoscajaComponent },
   { path: 'configuracion/listarimpuestos', component: CatalogoImpuestoComponent },
   { path: 'configuracion/crearimpuestos', component: CrearImpuestoComponent },
