@@ -61,6 +61,7 @@ const routes: Routes = [
   { path: 'configuracion/crearnumeraciondocumento', component: CrearNumeraciondocumentoComponent },
   { path: 'configuracion/crearnumeraciondocumento/:id', component: CrearNumeraciondocumentoComponent },
   { path: 'configuracion/listarnumeraciondocumentos', component: CatalogoNumeraciondocumentoComponent },
+  { path: 'inventarios', loadChildren: () => import('./components/inventarios/inventarios.module').then(m => m.InventariosModule) },
 
 
 ];
