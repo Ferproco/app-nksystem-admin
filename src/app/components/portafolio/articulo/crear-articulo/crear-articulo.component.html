@@ -29,7 +29,7 @@
                       <span class="bread-slash">/ Inventario /</span>
                     </li>
                     <li>
-                      <a routerLink="/inventario/listararticulos"><span class="bread-blod">Listado de
+                      <a routerLink="/main/dashboard/portafolio/listararticulos"><span class="bread-blod">Listado de
                           Items /</span></a>
                     </li>
                     <li><span class="bread-blod">Crear</span>
@@ -149,7 +149,8 @@
                       <div class="input-group">
                         <span class="input-group-btn"><button type="button" (click)="onCrearImpuesto()"
                             class="btn btn-primary">+</button></span>
-                        <select class="select2_demo_3 form-control" formControlName="codimpuesto">
+                        <select class="select2_demo_3 form-control" formControlName="codimpuesto"
+                          (change)="CalcularPrecioVenta($event.target.value)">
                           <option value="0">--Seleccione--</option>
                           <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
                             {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
@@ -167,28 +168,27 @@
                         </select>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-lg-2">
-                        <div id="pwd-container3">
-                          <div class="form-group">
-                            <label for="username">Unidad Medida</label>
-  
-                            <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
-                              <option value="null">--Seleccione--</option>
-                              <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
-                                {{unidad.nomunidadmedida}}</option>
-                            </select>
-                          </div>
-                        </div>
+
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label for="username">Unidad Medida</label>
+
+                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
+                          <option value="null">--Seleccione--</option>
+                          <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
+                            {{unidad.nomunidadmedida}}</option>
+                        </select>
                       </div>
-  
                     </div>
+
+
                   </div>
                   <div class="col-lg-5">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">IVA Incluido</label>
-                        <select class="select2_demo_3 form-control" formControlName="ivaincluido">
+                        <select class="select2_demo_3 form-control" formControlName="ivaincluido"
+                        (change)="CalcularPrecioVenta($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{ivainc.id}}" *ngFor="let ivainc of ivaincluido">
                             {{ivainc.nombre}}</option>
@@ -243,11 +243,12 @@
 
                     </div>
                   </div>
+                </div>
 
+                <div class="row">
 
-              
                   <div class="row">
-                    
+
                     <div class="col-lg-2">
                       <div id="pwd-container3" *ngIf="visiblecantidadminima">
                         <div class="form-group">
@@ -297,27 +298,117 @@
 
                     </div>
                   </div>
-                  <div class="row">
-                    <accordion [isAnimated]="false">
-                      <accordion-group heading="Configuracion Contabilidad">
-                        <div class="row">
-                          <div class="col-lg-5">
-                            <div class="chosen-select-single mg-b-20">
-                              <label> Concepto Contable</label>
-                              <select class="select2_demo_3 form-control">
-                                <option>Seleccione</option>
-                                <option value="Bahamas">Si</option>
-                                <option value="Bahamas">No</option>
+                </div>
 
-                              </select>
+                <div class="row">
+                  <accordion [isAnimated]="false">
+                    <accordion-group heading="Ingresar Inventario">
+                      <div class="row">
+                        <div class="project-details-area mg-b-15">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="project-details-wrap shadow-reset">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="sparkline10-graph">
+                                        <div class="static-table-list">
+                                          <button type="button" class="btn btn-custon-four btn-primary"
+                                            (click)="addItem()">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                            Agregar</button>
+                                          <table class="table border-table">
+                                            <thead>
+                                              <tr>
+                                                <th>Unidad Medida</th>
+                                                <th>Cantidad</th>
+                                                <th>Bodega</th>
+                                                <th>Costo X Unidad</th>
+                                                <th></th>
+                                              </tr>
+                                            </thead>
+                                            <tbody formArrayName="lstmovimientoskardex">
+                                              <tr *ngFor="let lstmovimientoskardex of ListItems.controls; let i = index"
+                                                [formGroup]="ListItems.controls[i]">
+
+
+                                                <td>
+                                                  <select class="select2_demo_3 form-control"
+                                                    formControlName="codunidadmedida">
+                                                    <option value="null">--Seleccione--</option>
+                                                    <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
+                                                      {{unidad.nomunidadmedida}}</option>
+                                                  </select>
+                                                </td>
+                                                <td>
+                                                  <input type="number" class="form-control" formControlName="cantidad"
+                                                    style="width:70px" />
+                                                </td>
+                                                <td>
+                                                  <select class="select2_demo_3 form-control"
+                                                    formControlName="codalmacen">
+                                                    <option value="0">--Seleccione--</option>
+                                                    <option value="{{almacen.idalmacen}}"
+                                                      *ngFor="let almacen of lstAlmacenes">
+                                                      {{almacen.nombre}}</option>
+                                                  </select>
+                                                </td>
+
+
+
+                                                <td>0,00</td>
+                                                <td>
+                                                  <div class="btn-group project-list-add">
+                                                    <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
+                                                        aria-hidden="true"></i></button>
+                                                  </div>
+                                                </td>
+                                              </tr>
+
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
                             </div>
                           </div>
-
                         </div>
-                      </accordion-group>
-                    </accordion>
-                  </div>
+                      </div>
+                    </accordion-group>
+                  </accordion>
+                </div>
+
+                <div class="row">
+                  <accordion [isAnimated]="false">
+                    <accordion-group heading="Configuracion Contabilidad">
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <div class="chosen-select-single mg-b-20">
+                            <label> Concepto Contable</label>
+                            <select class="select2_demo_3 form-control">
+                              <option>Seleccione</option>
+                              <option value="Bahamas">Si</option>
+                              <option value="Bahamas">No</option>
+
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                    </accordion-group>
+                  </accordion>
+                </div>
+
+
+                <div class="row">
+
                   <div class="row">
+
                     <div class="col-lg-12">
                       <div class="project-details-tab">
                         <ul class="nav nav-tabs res-pd-less-sm">
@@ -654,8 +745,9 @@
               </div>
             </div>
 
-          
+
           </div>
+
           <div class="col-lg-3">
             <div class="sparkline8-list basic-res-b-30 shadow-reset">
               <div class="sparkline8-hd">
@@ -678,8 +770,39 @@
                 </div>
               </div>
             </div>
+            <br>
+        
+            <div class="income-dashone-total income-monthly shadow-reset nt-mg-b-30 res-mg-t-30">
+              <div class="income-title">
+                <div class="main-income-head">
+                  <h4></h4>
+                  <div class="main-income-phara">
+                    <p>Precio Sugerido</p>
+                  </div>
+                </div>
+              </div>             
+
+              <div class="income-dashone-pro">
+                <div class="income-rate-total">
+                  <div class="price-adminpro-rate">
+                    <h3><span>Precio Sin Iva $</span><span class="counter">{{preciosiniva}}</span></h3>
+                    <h3><span>Impuesto       $</span><span class="counter">{{montoiva}}</span></h3>
+                    <h3><span>Precio Con Iva $</span><span class="counter">{{precioconiva}}</span></h3>
+                  </div>
+                  <div class="price-graph">
+                    <span id="sparkline1"></span>
+                  </div>
+                </div>
+               
+                <div class="clear"></div>
+              </div>
+            </div>
           </div>
+        
+          
         </div>
+       
+
       </div>
     </div>
   </div>

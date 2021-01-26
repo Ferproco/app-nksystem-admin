@@ -48,6 +48,25 @@ export class ArticuloService{
   }
   guardarArticulo(idIn: number, idnegocio: number, articulo: Articulo){
     console.log('el articulo enviado es ' + JSON.stringify(articulo));
+    console.log('el documento enviado es ' + JSON.stringify(articulo.lstmovimientoskardex));
+    
+    articulo.lstmovimientoskardex.forEach(element => {
+      const fechastr = element.fecha.toString().split('-');
+    console.log('la fecha '+ fechastr);
+    const year = Number(fechastr[2]);
+    const month = Number(fechastr[1]) - 1;
+    const date = Number(fechastr[0]);
+      console.log('Entro al for de articulos '+ JSON.stringify(element));
+      element.id = 0;
+      element.codarticulo = Number(idIn);
+      element.tipo = 'ENT';
+      element.fecha = new Date(year, month, date);
+      element.cantidad = element.cantidad;
+      element.codunidadmedida = Number(element.codunidadmedida);
+      element.codalmacen = Number(element.codalmacen);
+      element.concepto = 'ENTRADA POR INVENTARIO';
+      element.origen = 'INVENTARIO';
+    });
     const body = {
       id: Number(idIn),
       codnegocio: Number(idnegocio),
@@ -75,7 +94,7 @@ export class ArticuloService{
       esimpoconsumo: articulo.esimpoconsumo,
       valorimpoconsumo:Number(articulo.valorimpoconsumo),
       porcentajeimpoconsumo:Number(articulo.porcentajeimpoconsumo),
-
+      lstmovimientoskardex: articulo.lstmovimientoskardex
     };
     console.log('id ' + idIn + 'articulo ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

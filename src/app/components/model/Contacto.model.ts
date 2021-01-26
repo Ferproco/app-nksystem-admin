@@ -51,54 +51,7 @@ export class Contacto {
 
    public listaprecio: Array<ListaPrecio> = [];
 
-  /*constructor(
-    id: number,
-    codgrupo: number,
-    codvendedor: number,
-    codnegocio: number,
-    codtipoidentificacion: number,
-    numeroidentificacion: string,
-    nombreprimero: string,
-    nombresegundo: string,
-    apellidoprimero: string,
-    apellidosegundo: string,
-    razonsocial: string,
-    telefonomovil: string,
-    telefonofijo1: string,
-    telefonofijo2: string,
-    telefonofax: string,
-    direccionfiscal: string,
-    direccionexogena: string,
-    correoe: string,
-    codtipocontacto: number,
-    codformapago: number,
-    codtipocontibuyente: number,
-    status: string,
-    regimeniva: string,
-    fecharegistro: Date,
-    tarifa: string,
-    contribuyente: string,
-    codcontable: number,
-    codtipopersona: number,
-    codpais: number,
-    coddepartamento: number,
-    codmunicipio: number,
-    lugarenvio: string,
-    codlistaprecio: number,
-    paginaweb: string ,
-    limitecreditohasta: number,
-    fechacreditodesde: string,
-    fechacreditohasta: string,
-    observaciones: string,
-    descuentocondicionado: string,
-    codigodv: number,
-    responsableiva: string,
-    declaranterenta: string,
-    autorretenedor: string,
-    responsabilidadfiscal: string,
-    actividadmercantil: string,
-    tipotributo: string ) {*/
-  constructor(json: any = null) {
+   constructor(json: any = null) {
     if (json !== null) {
       this.id = json.id;
       this.codgrupo = json.codgrupo;

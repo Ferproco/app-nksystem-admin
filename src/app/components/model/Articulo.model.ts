@@ -1,6 +1,9 @@
 import { Almacen } from './Almacen.model';
 import { Categoria } from './Categoria.model';
+import { Impuesto } from './Impuesto.model';
 import { Kardex } from './Kardex.model';
+import { Marca } from './Marca.model';
+import { UnidadMedida } from './UnidadMedida.model';
 import { UnidadMedidaAlterna } from './UnidadMedidaAlterna.model';
 
 export class Articulo {
@@ -17,7 +20,6 @@ export class Articulo {
   public serial: string;
   public status: string = 'ACTIVO';
   public codnegocio: number;
-  public familia: Categoria;
   public codtipoproducto: number;
   public descripcionlarga: string;
   public stockminimo: number;
@@ -37,6 +39,11 @@ export class Articulo {
   public ivaincluido: number;
   public aplicaimpuestoconsumo: number;
   public fechacreacion: Date;
+  public marca: Marca;
+  public familia: Categoria;
+  public impuesto: Impuesto;
+  public unidadmedida:UnidadMedida;
+  public lstmovimientoskardex: Kardex[]=[];
   
   //public listakardex: Array<Kardex> = [];
   //public listaunidadesalternas: Array<UnidadMedidaAlterna> = [];
@@ -81,6 +88,8 @@ export class Articulo {
       this.ivaincluido = json.ivaincluido;
       this.aplicaimpuestoconsumo = json.aplicaimpuestoconsumo;
       this.fechacreacion = json.fechacreacion;
+
+      
       //this.listakardex = json.listakardex;
       //this.listaunidadesalternas = json.listaunidadesalternas;
       //this.listabodegas = json.listabodegas;

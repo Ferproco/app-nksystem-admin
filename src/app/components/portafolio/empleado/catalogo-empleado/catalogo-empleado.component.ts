@@ -5,67 +5,72 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
-import { Contacto } from 'src/app/components/model/Contacto.model';
-import { ContactoService } from '../ContactoService.service';
+import { Empleado } from 'src/app/components/model/Empleado.model';
+import { EmpleadoService } from '../EmpleadoService.service';
 
 @Component({
-  selector: 'app-catalogo-contactos',
-  templateUrl: './catalogo-contactos.component.html',
-  styleUrls: ['./catalogo-contactos.component.css']
+  selector: 'app-catalogo-empleado',
+  templateUrl: './catalogo-empleado.component.html',
+  styleUrls: ['./catalogo-empleado.component.css']
 })
-export class CatalogoContactosComponent implements OnInit {
-
+export class CatalogoEmpleadoComponent implements OnInit {
   loading = false;
-  titulo = 'Listado de Contactos';
-  lstContactos: Contacto[] = [];
+  titulo = 'Listado de Empleados';
+  lstEmpleados: Empleado[] = [];
   sortedData;
+  filtrararticulos = '';
+
+  tipoempleadoconfig = 'T';
+
+  POSTS: any;
+  page = 1;
+  count = 0;
+  tableSize = 10;
+  tableSizes = [3, 6, 9, 12];
+
   LengthTable = 0;
+  idnegocio: number;
 
-  tipopersonaconfig = 'T';
-
-  bsModalRef: BsModalRef;
+  showModalBox: boolean = false;
+  PuedeEliminar: boolean = false;
 
   displayedColumns: string[] = ['select', 'TIPO IDENTIFICACION', 'N° IDENTIFICACION', 'NOMBRE', 'TELEFONO', 'EMAIL', 'TIPO PERSONA', 'ESTATUS', 'ACCION'];
-  dataSource: MatTableDataSource<Contacto>;
-  selection = new SelectionModel<Contacto>(true, []);
+  dataSource: MatTableDataSource<Empleado>;
+  selection = new SelectionModel<Empleado>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  constructor(private contactoServicio: ContactoService,
-              private router: Router,
-              private toastr: ToastrService,
-              private modalService: BsModalService) { }
+  bsModalRef: any;
+  constructor(private empleadoServicio: EmpleadoService,
+    private router: Router,
+    private toastr: ToastrService,
+    private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.listarContactos(this.tipopersonaconfig);
+    this.listarEmpleados(this.tipoempleadoconfig);
   }
-
-  private listarContactos(tipo: string): void {
+  private listarEmpleados(tipo: string): void {
     this.loading = true;
-    this.lstContactos = [];
-    this.contactoServicio.listarContactosPorTipoCOntacto('', tipo)
+    this.lstEmpleados = [];
+    this.empleadoServicio.listarEmpleadosPorTipo('', tipo)
       .subscribe(response => {
-        const listacontacto = response as Contacto[];
-        listacontacto.forEach(element => {
-          if (element.nombreprimero === '') {
-            element.nombreprimero = element.razonsocial;
-          }
-          else {
+        const listaempleado = response as Empleado[];
+        listaempleado.forEach(element => {
+       
             element.nombreprimero = element.nombreprimero   + ' ' +
                                     element.nombresegundo   + ' ' +
                                     element.apellidoprimero + ' ' +
                                     element.apellidosegundo;
-          }
-          this.lstContactos.push(element);
+         
+          this.lstEmpleados.push(element);
         });
-        this.dataSource = new MatTableDataSource(this.lstContactos);
+        this.dataSource = new MatTableDataSource(this.lstEmpleados);
         this.dataSource.paginator = this.paginator;
-        this.LengthTable = this.lstContactos.length;
-        this.sortedData = this.lstContactos.slice();
+        this.LengthTable = this.lstEmpleados.length;
+        this.sortedData = this.lstEmpleados.slice();
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -81,8 +86,8 @@ export class CatalogoContactosComponent implements OnInit {
   }
 
 
-  registrarcontactos() {
-    this.router.navigate(['main/dashboard/portafolio/crearcontacto']);
+  registrarempleados() {
+    this.router.navigate(['main/dashboard/portafolio/crearempleado']);
   }
 
   applyFilter(event: Event) {
@@ -95,7 +100,7 @@ export class CatalogoContactosComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    const data = this.lstContactos.slice();
+    const data = this.lstEmpleados.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedData = data;
       return;
@@ -120,7 +125,7 @@ export class CatalogoContactosComponent implements OnInit {
 
   Modificar(id: number){
 
-    this.router.navigate(['contactos/crearcontacto', id]);
+    this.router.navigate(['main/dashboard/portafolio/crearempleado', id]);
   }
 
   Eliminar(id: number) {
@@ -137,11 +142,11 @@ export class CatalogoContactosComponent implements OnInit {
 
   eliminarporcodigo(id: number){
     this.loading = true;
-    this.contactoServicio.eliminarContacto(id)
+    this.empleadoServicio.eliminarEmpleado(id)
       .subscribe(response => {
         const respuesta = response;
         this.loading = false;
-        this.listarContactos(this.tipopersonaconfig);
+        this.listarEmpleados(this.tipoempleadoconfig);
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -162,8 +167,8 @@ export class CatalogoContactosComponent implements OnInit {
 
   }
   Refrescar() {
-    this.tipopersonaconfig = 'T';
-    this.listarContactos(this.tipopersonaconfig);
+    this.tipoempleadoconfig = 'T';
+    this.listarEmpleados(this.tipoempleadoconfig);
   }
   Importar() {
 
@@ -184,16 +189,16 @@ export class CatalogoContactosComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Contacto): string {
+  checkboxLabel(row?: Empleado): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  cargarclientes(tipo){
-    this.tipopersonaconfig = tipo;
-    this.listarContactos(this.tipopersonaconfig);
+  cargarempleados(tipo){
+    this.tipoempleadoconfig = tipo;
+    this.listarEmpleados(this.tipoempleadoconfig);
   }
 
 }

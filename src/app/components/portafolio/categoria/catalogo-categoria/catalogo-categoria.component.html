@@ -80,6 +80,23 @@
                               </mat-toolbar-row>
                             </mat-toolbar>
                             <table class="table" mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+                              <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                                [checked]="selection.hasValue() && isAllSelected()"
+                                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                [aria-label]="checkboxLabel()">
+                                  </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                  <mat-checkbox (click)="$event.stopPropagation()"
+                                                (change)="$event ? selection.toggle(row) : null"
+                                                [checked]="selection.isSelected(row)"
+                                                [aria-label]="checkboxLabel(row)">
+                                  </mat-checkbox>
+                                </td>
+                              </ng-container>
+                             
                               <!-- Position Column -->
                               <ng-container matColumnDef="Codigo">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -99,7 +116,7 @@
                               <ng-container matColumnDef="Status">
                                 <th mat-header-cell *matHeaderCellDef> Status </th>
                                 <td mat-cell *matCellDef="let element">
-                                  <div *ngIf="element.status === 'ACTIVO'; else inactivo" class="btn-group project-list-add">
+                                  <div *ngIf="element.status === 'Activo'; else inactivo" class="btn-group project-list-add">
                                     <button class="btn btn-white btn-xs">Activo </button>
                                   </div>
                                   <ng-template #inactivo>
@@ -118,12 +135,12 @@
                                   </div>
                                   |
                                   <div class="btn-group project-list-add">
-                                    <button (click)="Modificar()" class="btn btn-white btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <button (click)="Modificar(element.codfamilia)" class="btn btn-white btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </button>
                                   </div>
                                   |
                                   <div class="btn-group project-list-add">
-                                    <button (click)="Eliminar()" class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button (click)="Eliminar(element.codfamilia)" class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                   </div>
                                 </td>
                               </ng-container>

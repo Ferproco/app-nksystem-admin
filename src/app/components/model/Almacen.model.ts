@@ -6,7 +6,7 @@ export class Almacen {
   public principal: string;
   public tipoalmacen: string;
   public direccion: string;
-  public status: string='ACTIVO';
+  public status: string='Activo';
   
 
   constructor(json: any = null) {

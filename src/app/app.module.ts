@@ -143,7 +143,6 @@ import { KardexService } from './inventario/KardexService.service';
     MatTooltipModule,
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
-    BrowserAnimationsModule,
     AccordionModule.forRoot(),
     ButtonsModule.forRoot(),
     MatSlideToggleModule

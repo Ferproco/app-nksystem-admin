@@ -172,7 +172,7 @@ export class CatalogoArticuloComponent implements OnInit {
 
   Modificar(id: number){
 
-    this.router.navigate(['inventario/creararticulo', id]);
+    this.router.navigate(['main/dashboard/portafolio/creararticulo', id]);
   }
 
   Eliminar(id: number) {

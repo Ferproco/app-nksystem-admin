@@ -2,6 +2,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 import { PortafolioRoutingModule } from './portafolio-routing.module';
 import { PortafolioComponent } from './portafolio.component';
 import { CatalogoArticuloComponent } from './articulo/catalogo-articulo/catalogo-articulo.component';
@@ -41,6 +42,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CatalogoEmpleadoComponent } from './empleado/catalogo-empleado/catalogo-empleado.component';
+import { EmpleadoService } from './empleado/EmpleadoService.service';
+import { CrearEmpleadoComponent } from './empleado/crear-empleado/crear-empleado.component';
 
 
 @NgModule({
@@ -63,9 +67,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     FilterAlmacenPipe,
     CatalogoVendedorComponent,
     CrearVendedorComponent,
-    FilterVendedorPipe
+    FilterVendedorPipe,
+    CatalogoEmpleadoComponent,
+    CrearEmpleadoComponent
   ],
   imports: [
+    
     CommonModule,
     PortafolioRoutingModule,
     FormsModule,
@@ -91,6 +98,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     TipoIdentificacionService,
     TipoContribuyenteService,
     PaisService,
+    EmpleadoService,
     ContactoService
   ]
 })

@@ -1,7 +1,7 @@
 import { CategoriaService } from './../../categoria/CategoriaService.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -18,6 +18,7 @@ import { CrearAlmacenModalComponent } from '../../almacen/crear-almacen-modal/cr
 import { CrearCategoriaModalComponent } from '../../categoria/crear-categoria-modal/crear-categoria-modal.component';
 
 import { ArticuloService } from '../ArticuloService.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -26,6 +27,9 @@ import { ArticuloService } from '../ArticuloService.service';
 })
 export class CrearArticuloComponent implements OnInit {
 
+  precioconiva: number = 0;
+  preciosiniva: number = 0;
+  montoiva: number = 0;
   radioModel = 'Middle';
   uncheckableRadioModel = 'Middle';
 
@@ -44,11 +48,16 @@ export class CrearArticuloComponent implements OnInit {
   lstAlmacenes: any[] = [];
   lstGrupoArticulos: any[] = [];
 
+
+
+  lstmovimientoskardex: FormArray;
+
   idnegocio: number;
   formarticulo: FormGroup;
 
   ArticuloModel: Articulo;
   unidadmedidaxdefecto: 2;
+  idivaincluido: number = null;
   bsModalRef: any;
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
@@ -64,13 +73,13 @@ export class CrearArticuloComponent implements OnInit {
   visiblecantidadmaxima = false;
   visiblepuntoreorden = false;
   visiblebodega = false;
-  visiblereferencia=false;
-  visibleserial=false;
-  visiblecodigobarra=false;
-  visiblemarca=false;
-  visiblepeso=false;
-  visibletalla=false;
-  visiblecolor=false;
+  visiblereferencia = false;
+  visibleserial = false;
+  visiblecodigobarra = false;
+  visiblemarca = false;
+  visiblepeso = false;
+  visibletalla = false;
+  visiblecolor = false;
 
 
   codtipoproducto = [
@@ -110,15 +119,18 @@ export class CrearArticuloComponent implements OnInit {
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private httpClient: HttpClient,) {
 
     this.ArticuloModel = new Articulo();
     this.idnegocio = 1;
+    this.idivaincluido = 2;
+    this.ArticuloModel.ivaincluido = this.idivaincluido;
 
     this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
     if (this.route.snapshot.params.id) {
       this.id = this.route.snapshot.params.id;
-     // this.buscarArticulo(this.id);
+      // this.buscarArticulo(this.id);
     }
     this.buildForm();
 
@@ -129,6 +141,7 @@ export class CrearArticuloComponent implements OnInit {
     this.listarUnidades();
     this.listarImpuestos();
     this.listarMarcas();
+    this.listarBodegas();
     this.buscarArticulo(this.id);
     // this.listarGrupoArticulos();
     // this.listarBodegas();
@@ -161,7 +174,7 @@ export class CrearArticuloComponent implements OnInit {
       esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
-
+      lstmovimientoskardex: this.formbuilder.array([this.createItem()])
 
     })
   }
@@ -170,11 +183,12 @@ export class CrearArticuloComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.formarticulo.value;
+
     this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
       .subscribe(response => {
         this.loading = false;
         this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.router.navigate(['inventario/listararticulos']);
+        this.router.navigate(['/main/dashboard/portafolio/listararticulos']);
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -317,13 +331,13 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadmaxima = true;
       this.visiblepuntoreorden = true;
       this.visiblebodega = true;
-      this.visiblereferencia=true;
-      this.visibleserial=true;
-      this.visiblecodigobarra=true;
-      this.visiblemarca=true;
-      this.visiblepeso=true;
-      this.visibletalla=true;
-      this.visiblecolor=true;
+      this.visiblereferencia = true;
+      this.visibleserial = true;
+      this.visiblecodigobarra = true;
+      this.visiblemarca = true;
+      this.visiblepeso = true;
+      this.visibletalla = true;
+      this.visiblecolor = true;
 
     }
     else if (idtipo === 2) {
@@ -334,13 +348,13 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadmaxima = false;
       this.visiblebodega = false;
       this.visiblepuntoreorden = false;
-      this.visiblereferencia=false;
-      this.visibleserial=false;
-      this.visiblecodigobarra=false;
-      this.visiblemarca=false;
-      this.visiblepeso=false;
-      this.visibletalla=false;
-      this.visiblecolor=false;
+      this.visiblereferencia = false;
+      this.visibleserial = false;
+      this.visiblecodigobarra = false;
+      this.visiblemarca = false;
+      this.visiblepeso = false;
+      this.visibletalla = false;
+      this.visiblecolor = false;
     }
 
     else if (idtipo === 3) {
@@ -351,13 +365,13 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadmaxima = false;
       this.visiblebodega = false;
       this.visiblepuntoreorden = false;
-      this.visiblereferencia=false;
-      this.visibleserial=false;
-      this.visiblecodigobarra=false;
-      this.visiblemarca=false;
-      this.visiblepeso=false;
-      this.visibletalla=false;
-      this.visiblecolor=false;
+      this.visiblereferencia = false;
+      this.visibleserial = false;
+      this.visiblecodigobarra = false;
+      this.visiblemarca = false;
+      this.visiblepeso = false;
+      this.visibletalla = false;
+      this.visiblecolor = false;
     }
     else if (idtipo === 4) {
 
@@ -367,13 +381,13 @@ export class CrearArticuloComponent implements OnInit {
       this.visiblecantidadmaxima = false;
       this.visiblebodega = false;
       this.visiblepuntoreorden = false;
-      this.visiblereferencia=false;
-      this.visibleserial=false;
-      this.visiblecodigobarra=false;
-      this.visiblemarca=false;
-      this.visiblepeso=false;
-      this.visibletalla=false;
-      this.visiblecolor=false;
+      this.visiblereferencia = false;
+      this.visibleserial = false;
+      this.visiblecodigobarra = false;
+      this.visiblemarca = false;
+      this.visiblepeso = false;
+      this.visibletalla = false;
+      this.visiblecolor = false;
     }
 
   }
@@ -496,24 +510,106 @@ export class CrearArticuloComponent implements OnInit {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
   }
 
-  onCrearCategoria(){
+  onCrearCategoria() {
     this.bsModalRef = this.modalService.show(CrearCategoriaModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
-      if (result){
+      if (result) {
         this.listarFamilias();
       }
 
     });
   }
-  onCrearImpuesto(){
+  onCrearImpuesto() {
     this.bsModalRef = this.modalService.show(CrearImpuestoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
-      if (result){
+      if (result) {
         this.listarImpuestos();
       }
 
     });
+  }
+  addItem(): void {
+
+    this.ListItems.push(this.formbuilder.group({
+      codnegocio: [this.idnegocio],
+      // codarticulo: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+
+      status: ['A', [Validators.required]],
+
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+
+
+
+    }));
+  }
+  get ListItems(): FormArray {
+    return this.formarticulo.get("lstmovimientoskardex") as FormArray
+  }
+  createItem(): FormGroup {
+    return this.formbuilder.group({
+      codnegocio: [this.idnegocio],
+      // documentoid: [0],
+      // codarticulo: [0, [Validators.required]],
+      // codimpuesto: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+
+      status: ['A', [Validators.required]],
+
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+
+    });
+  }
+  CalcularPrecioVenta(event) {
+    var valorimpuesto: number = 0;
+    var montoimpuesto: number = 0;
+    var precio : number= 0;
+    var precioiva : number= 0;
+    var porcentajeiva : number= 0;
+    var tieneivaincluido: number;
+    var preciosinivas : number= 0;
+
+    valorimpuesto = this.lstImpuestos[event - 1].normal;
+    console.log('event' + event);
+    console.log('valorimpuesto ' + valorimpuesto);
+    tieneivaincluido = Number(this.formarticulo.get('ivaincluido').value);
+    console.log('tieneivaincluido ' + tieneivaincluido);
+    precio = Number(this.formarticulo.get('preciosugerido').value);
+
+    if (tieneivaincluido === 2) {
+      console.log('entro por 2 ' + tieneivaincluido);
+      montoimpuesto = (precio * valorimpuesto) / 100;
+      console.log('valorimpuesto ' + valorimpuesto);
+      this.preciosiniva = precio;
+      this.montoiva = montoimpuesto;
+      precioiva = precio + montoimpuesto;
+      this.precioconiva = precioiva;
+      console.log('precio ' + precio);
+      console.log('montoimpuesto ' + montoimpuesto);
+      console.log('precioconiva ' + precioiva);
+    
+    }
+    else if (tieneivaincluido === 1) {
+      console.log('entro por 1 ');
+      this.precioconiva = precio;
+
+      porcentajeiva = (valorimpuesto / 100) + 1;
+      console.log('porcentajeiva ' + porcentajeiva);
+      preciosinivas = precio / porcentajeiva;
+      console.log('preciosinivas ' + preciosinivas);
+      this.preciosiniva = preciosinivas;
+
+      montoimpuesto = (preciosinivas * valorimpuesto) / 100;
+      this.montoiva = montoimpuesto;
+
+
+    }
+    //this.formarticulo.get('precioconiva').setValue(Number(digitoverificacion));}
   }
 }

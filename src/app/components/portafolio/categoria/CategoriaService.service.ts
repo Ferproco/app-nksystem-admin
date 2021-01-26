@@ -26,10 +26,10 @@ export class CategoriaService{
   guardarCategoria(id: number, idnegocio: number, categoria: Categoria){
 
     const body = {
-      codfamilia: id,
+      codfamilia: Number(id),
       nomfamilia: categoria.nomfamilia,
 
-      status: categoria.status === '1' ? 'ACTIVO' : 'INACTIVO',
+      status: Number(categoria.status) === 1 ? 'Activo' : 'Inactivo',
       codnegocio: idnegocio,
 
     };
@@ -47,4 +47,11 @@ export class CategoriaService{
     const endpoint: any = this.uriapi + 'api/familia/' + id;
     return this.httpClient.delete(endpoint, {headers: httpHeaders});
   }
+  mostrarCategoria(id: number){
+
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/familia/' + id;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+
 }

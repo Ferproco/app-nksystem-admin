@@ -28,13 +28,14 @@ export class CatalogoCategoriaComponent implements OnInit {
   LengthTable = 0;
   sortedData;
 
-  displayedColumns: string[] = ['Select','Codigo', 'Nombre', 'Status', 'Acción'];
+  bsModalRef: BsModalRef;
+  displayedColumns: string[] = ['select','Codigo', 'Nombre', 'Status', 'Acción'];
   dataSource: MatTableDataSource<Categoria>;
   selection = new SelectionModel<Categoria>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-   bsModalRef: BsModalRef;
+   
 
 
   constructor(private categoriaServicio: CategoriaService,
@@ -71,7 +72,7 @@ export class CatalogoCategoriaComponent implements OnInit {
 
 
   registrarcategorias() {
-    this.router.navigate(['inventario/crearcategoria']);
+    this.router.navigate(['main/dashboard/portafolio/crearcategoria']);
   }
 
   applyFilter(event: Event) {

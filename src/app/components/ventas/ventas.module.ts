@@ -18,6 +18,11 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ContactoService } from '../portafolio/contacto/ContactoService.service';
+import { VendedorService } from '../portafolio/vendedor/VendedorService.service';
+import { AlmacenService } from '../portafolio/almacen/AlmacenService.service';
+import { Articulo } from '../model/Articulo.model';
+import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
 
 
 @NgModule({
@@ -40,6 +45,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatCheckboxModule
+  ],
+  providers: [
+   
+    ContactoService,
+    VendedorService,
+    AlmacenService,
+    ArticuloService
   ]
 })
 export class VentasModule { }

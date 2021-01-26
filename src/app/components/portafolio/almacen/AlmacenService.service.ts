@@ -37,7 +37,7 @@ export class AlmacenService{
       principal: Number(almacen.principal) === 1 ? true : false,
       tipoalmacen:almacen.tipoalmacen,
       direccion: almacen.direccion,
-      status: Number(almacen.status) === 1 ? 'ACTIVO' : 'INACTIVO',
+      status: Number(almacen.status) === 1 ? 'Activo' : 'Inactivo',
 
     };
     console.log('id ' + id + 'almacen ' + JSON.stringify(body));

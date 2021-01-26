@@ -27,7 +27,7 @@
                       <span class="bread-slash">/ Inventario /</span>
                     </li>
                     <li>
-                      <a routerLink="/inventario/listarcategorias"><span class="bread-blod">Listado de
+                      <a routerLink="/main/dashboard/portafolio/listarcategorias"><span class="bread-blod">Listado de
                           Categorias /</span></a>
                     </li>
                     <li><span class="bread-blod">Crear</span>
@@ -53,39 +53,51 @@
               <div class="sparkline13-hd">
                 <div class="main-sparkline13-hd">
                   <h1>
-                    <i class="fa fa-edit" aria-hidden="true"></i>
-                    Registro <span class="table-project-n">de</span> Categorias</h1>
+                    <i class="{{objetoimagen}}" aria-hidden="true"></i>
+                    {{acciondeltitulo}} <span class="table-project-n"></span> Categoria
+                  </h1>
                 </div>
               </div>
               <div class="sparkline10-graph">
-                <div class="col-lg-4">
-                  <div id="pwd-container3">
-                    <div class="form-group">
-                      <label for="password3">Nombre</label>
-                      <input formControlName="nomfamilia"
-                        [ngClass]="{'invalid-data': nomfamilia.invalid && (nomfamilia.touched || nomfamilia.dirty)}"
-                        type="text" class="form-control" placeholder="Ingrese el Nombre de la Categoria" />
-                      <div *ngIf="nomfamilia.invalid  && (nomfamilia.dirty || nomfamilia.touched)">
-                        <div *ngIf="nomfamilia.errors.required">
-                          Nombre Requerido
-                        </div>
-                        <div class="invalid-mensaje" *ngIf="nomfamilia.errors.pattern">
-                          Nombre Incorrecto
+                
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <div class="col-lg-6">
+                            <mat-slide-toggle (change)="onChange($event)" formControlName="status">{{Objetoestado}}
+                            </mat-slide-toggle>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label>
-                        <input type="checkbox" formControlName="status" value="">
-                        <i></i> Activo </label>
-                    </div>
                   </div>
-                </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div id="pwd-container3">
+                        <div class="form-group">
+                          <label for="password3">Nombre</label>
+                          <input formControlName="nomfamilia"
+                            [ngClass]="{'invalid-data': nomfamilia.invalid && (nomfamilia.touched || nomfamilia.dirty)}"
+                            type="text" class="form-control" placeholder="Ingrese el Nombre de la Categoria" />
+                          <div *ngIf="nomfamilia.invalid  && (nomfamilia.dirty || nomfamilia.touched)">
+                            <div *ngIf="nomfamilia.errors.required">
+                              Nombre Requerido
+                            </div>
+                            <div class="invalid-mensaje" *ngIf="nomfamilia.errors.pattern">
+                              Nombre Incorrecto
+                            </div>
+                          </div>
+                        </div>
 
-                <div class="row">
-                  <div class="col-lg-12">
+                      </div>
+                    </div>
+
                   </div>
-                </div>
+                
+
               </div>
             </div>
           </div>

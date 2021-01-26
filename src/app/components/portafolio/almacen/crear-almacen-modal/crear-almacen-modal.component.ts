@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { Almacen } from 'src/app/components/model/Almacen.model';
@@ -43,13 +43,38 @@ export class CrearAlmacenModalComponent implements OnInit {
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private modalService: BsModalService) {
                 this.idnegocio = 1;
                 this.buildForm();
                }
 
   ngOnInit(): void {
     this.onClose = new Subject();
+  }
+  guardarAlmacen(event: Event) {
+    event.preventDefault();
+    const value = this.formalmacen.value;
+    console.log(value);
+
+    this.almacenServicio.guardarAlmacen(this.id, this.idnegocio, value)
+      .subscribe(response => {
+        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+        //this.router.navigate(['main/dashboard/portafolio/listaralmacenes']);
+        this.onClose.next(true);
+        this.bsModalRef.hide();
+        console.log(response);
+      },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
 
   private buildForm() {
@@ -77,44 +102,10 @@ export class CrearAlmacenModalComponent implements OnInit {
     this.formalmacen.get('principal').setValue(event.currentTarget.checked === true ? 1 : 0);
   }
 
-  guardarAlmacen(event: Event) {
-    event.preventDefault();
-    const value = this.formalmacen.value;
-    console.log(value);
-
-    this.almacenServicio.guardarAlmacen(this.id, this.idnegocio, value)
-      .subscribe(response => {
-        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.router.navigate(['main/dashboard/portafolio/listaralmacenes']);
-        console.log(response);
-      },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
-
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
-  }
-
+ 
   public onConfirm(): void {
-    const value = this.formalmacen.value;
-    console.log(value);
-    this.almacenServicio.guardarAlmacen(this.id, this.idnegocio,value)
-      .subscribe(response => {
-        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.onClose.next(true);
-        this.bsModalRef.hide();
-      },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          console.log('Error ' + JSON.stringify(error));
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }));
+    this.onClose.next(true);
+    this.bsModalRef.hide();
 
   }
   public onCancel(): void {
@@ -129,5 +120,7 @@ export class CrearAlmacenModalComponent implements OnInit {
   get direccion() {
     return this.formalmacen.get('direccion');
   }
-
+get principal(){
+  return this.formalmacen.get('principal');
+}
 }

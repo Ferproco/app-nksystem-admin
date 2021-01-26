@@ -23,14 +23,14 @@ export class CrearAlmacenComponent implements OnInit {
   formalmacen: FormGroup;
   camposrequeridos: string;
   AlmacenModel: Almacen;
-  colorTheme = 'theme-orange';
-  bsConfig: Partial<BsDatepickerConfig>;
-  currentDate = new Date();
+ 
 
   acciondeltitulo: string = 'Crear';
   Objetoestado: string = 'Activo';
   objetoimagen:string= 'fa fa-plus-square-o';
-
+  colorTheme = 'theme-orange';
+  bsConfig: Partial<BsDatepickerConfig>;
+  currentDate = new Date();
   
   customClass = 'customClass';
   isFirstOpen = true;
@@ -44,6 +44,7 @@ export class CrearAlmacenComponent implements OnInit {
               private toastr: ToastrService,
               private route: ActivatedRoute,
               private router: Router) {
+               
                 this.AlmacenModel = new Almacen();
                 this.idnegocio = 1;
             
@@ -90,7 +91,7 @@ export class CrearAlmacenComponent implements OnInit {
       nombre: [this.AlmacenModel.nombre, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       direccion: [this.AlmacenModel.direccion, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       principal: [this.AlmacenModel.principal, [Validators.required]],
-      status: [this.AlmacenModel.status === 'ACTIVO' ? 1: 0, [Validators.required]]
+      status: [this.AlmacenModel.status === 'Activo' ? 1: 0, [Validators.required]]
 
     });
 
@@ -102,7 +103,7 @@ export class CrearAlmacenComponent implements OnInit {
     const obj = this.almacenServicio.mostrarAlmacen(id)
       .subscribe(response => {
         this.AlmacenModel = response as any;
-        if (this.AlmacenModel.status === 'ACTIVO') {
+        if (this.AlmacenModel.status === 'Activo') {
           status = 1;
         }
         else {

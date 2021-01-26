@@ -11,6 +11,8 @@ import { CrearContactoComponent } from './contacto/crear-contacto/crear-contacto
 import { CatalogoVendedorComponent } from './vendedor/catalogo-vendedor/catalogo-vendedor.component';
 import { CrearVendedorComponent } from './vendedor/crear-vendedor/crear-vendedor.component';
 import { CatalogoContactosComponent } from './contacto/catalogo-contactos/catalogo-contactos.component';
+import { CatalogoEmpleadoComponent } from './empleado/catalogo-empleado/catalogo-empleado.component';
+import { CrearEmpleadoComponent } from './empleado/crear-empleado/crear-empleado.component';
 
 const routes: Routes =
   [
@@ -48,7 +50,12 @@ const routes: Routes =
         {
           path: 'crearcategoria',
           component: CrearCategoriaComponent
+        }, 
+        {
+          path: 'crearcategoria/:id',
+          component: CrearCategoriaComponent
         },
+
         {
           path: 'listarvendedores',
           component: CatalogoVendedorComponent
@@ -68,6 +75,19 @@ const routes: Routes =
         {
           path: 'crearcontacto/:id',
           component: CrearContactoComponent
+        },
+
+        {
+          path: 'listarempleados',
+          component: CatalogoEmpleadoComponent
+        },
+        {
+          path: 'crearempleado',
+          component: CrearEmpleadoComponent
+        },
+        {
+          path: 'crearempleado/:id',
+          component: CrearEmpleadoComponent
         },
       ]
     }
