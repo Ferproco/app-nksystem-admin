@@ -23,6 +23,27 @@ import { VendedorService } from '../portafolio/vendedor/VendedorService.service'
 import { AlmacenService } from '../portafolio/almacen/AlmacenService.service';
 import { Articulo } from '../model/Articulo.model';
 import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
+import { NumeracionDocumentoService } from '../configuraciones/numeraciondocumento/NumeracionDocumentoService.service';
+import { ImpuestoService } from '../configuraciones/impuesto/ImpuestoService.service';
+import { TipoDocumentoService } from '../configuraciones/tipodocumento/TipoDocumentoService.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ToastrModule } from 'ngx-toastr';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormaPagoService } from '../portafolio/formapago/FormaPagoService.service';
+import { UnidadService } from '../portafolio/unidad/UnidadService.service';
+
+
 
 
 @NgModule({
@@ -30,6 +51,8 @@ import { ArticuloService } from '../portafolio/articulo/ArticuloService.service'
     VentasComponent,
     DocumentoVentasComponent,
     CatalogoDocumentoVentasComponent
+    
+     
   ],
   imports: [
     CommonModule,
@@ -38,20 +61,48 @@ import { ArticuloService } from '../portafolio/articulo/ArticuloService.service'
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
+    AccordionModule.forRoot(),
     MatMenuModule,
-    MatPaginatorModule,
-    MatTableModule,
     MatIconModule,
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    HttpClientModule,
+    NgxPaginationModule,
+    ToastrModule.forRoot(),
+    NgxChartsModule,
+    MatDatepickerModule,
+   // MatNativeDateModule,
+    MatFormFieldModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule,
+    MatTooltipModule,
+    ButtonsModule.forRoot()
+    
+    
   ],
   providers: [
    
     ContactoService,
     VendedorService,
     AlmacenService,
-    ArticuloService
+    NumeracionDocumentoService,
+    ImpuestoService,
+    ArticuloService, 
+    TipoDocumentoService,
+    FormaPagoService,
+    UnidadService
+   
   ]
 })
 export class VentasModule { }

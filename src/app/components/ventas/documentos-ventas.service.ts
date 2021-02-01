@@ -47,16 +47,18 @@ export class DocumentosVentasService {
 
      this.Kardexmodel = new Kardex();
      this.Kardexmodel.id = 0;
-     this.Kardexmodel.codarticulo = element.codarticulo;
+     this.Kardexmodel.articulo_id =element.codarticulo;
      this.Kardexmodel.tipo = 'SAL';
      this.Kardexmodel.fecha = new Date(year, month, date);
      this.Kardexmodel.documentoasociado = documento.numerodocumento;
-     this.Kardexmodel.cantidad = element.cantidad;
-     this.Kardexmodel.codunidadmedida = element.codunidadmedida;
-     this.Kardexmodel.codalmacen = element.codalmacen;
+     this.Kardexmodel.cantidad = Number(element.cantidad) * (-1);
+     this.Kardexmodel.codunidadmedida = Number(element.codunidadmedida);
+     this.Kardexmodel.codalmacen = Number(element.codalmacen);
      this.Kardexmodel.concepto = 'SALIDA POR VENTAS';
      this.Kardexmodel.origen = 'VENTAS';
      this.Kardexmodel.codnegocio = element.codnegocio;
+     this.Kardexmodel.montoxunidad = element.preciounitariosiniva;
+     this.Kardexmodel.montototal = Number(element.cantidad) * Number(element.preciounitariosiniva);
 
      this.lstkardex.push(this.Kardexmodel);
 
@@ -100,4 +102,5 @@ export class DocumentosVentasService {
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
 
+  
 }

@@ -1,8 +1,10 @@
+import { Articulo } from "./Articulo.model";
+
 export class Kardex{
 
     public id: number = 0;
-    public coddocumentoventa: number = 0;
-    public codarticulo: number;
+    //public documento_id: number = 0;
+    public articulo_id: number;
     public tipo: string;
     public fecha: Date;
     public documentoasociado: string;
@@ -19,12 +21,13 @@ export class Kardex{
     public codnegocio:number;
     public numerocontrol:number;
     public status:string='ACTIVO';
+    public Item: Articulo;
 
     constructor(json: any = null){
         if (json !== null) {
         this.id = json.id;
-        this.coddocumentoventa = json.documento_id;
-        this.codarticulo = json.codarticulo;
+        //this.documento_id = json.documento_id;
+        this.articulo_id = json.articulo_id;
         this.tipo = json.tipo;
         this.fecha = json.fecha;
         this.documentoasociado = json.documentoasociado;
@@ -41,6 +44,7 @@ export class Kardex{
         this.codnegocio = json.codnegocio;
         this.numerocontrol = json.numerocontrol;
         this.status=json.status;
+        this.Item=json.Item
         }
 
     }

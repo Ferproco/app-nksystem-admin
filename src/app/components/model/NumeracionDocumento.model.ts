@@ -2,7 +2,7 @@ export class NumeracionDocumento{
    
 	public idnumeraciondocumento:number;  
 	public codtipodocumento:number;
-	public status:string = 'ACTIVO';	    
+	public status:string = 'Activo';	    
     public codnegocio:number;
     public nombre:string;
     public resolucion:string;
@@ -11,6 +11,7 @@ export class NumeracionDocumento{
 	public desdenumero:number;
     public hastanumero:number;
     public principal:string='1';
+    public tipodedocumento:string;
    
 	    
     constructor(json: any = null){
@@ -26,6 +27,7 @@ export class NumeracionDocumento{
             this.desdenumero=json.desdenumero;
             this.hastanumero=json.hastanumero;
             this.principal=json.principal;
+            this.tipodedocumento=this.tipodedocumento;
                       
         }
 

@@ -131,16 +131,16 @@
                     </div>
 
                     <div id="pwd-container3">
-                      <div class="form-group">
-                        <label for="username">Precio Venta</label>
-                        <input formControlName="preciosugerido"
-                          [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
-                          type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
-                        <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
-                          <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
-                            Precio Incorrecto
-                          </div>
+
+                      <label for="username">Precio Venta</label>
+                      <input formControlName="preciosugerido"
+                        [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
+                        type="text" class="form-control" placeholder="Ingrese el Precio de Venta" />
+                      <div *ngIf="preciosugerido.invalid  && (preciosugerido.dirty || preciosugerido.touched)">
+                        <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
+                          Precio Incorrecto
                         </div>
+
                       </div>
                     </div>
                     <div id="pwd-container3">
@@ -170,9 +170,11 @@
                     </div>
 
                     <div id="pwd-container3">
-                      <div class="form-group">
-                        <label for="username">Unidad Medida</label>
-
+                      <label for="username">Unidad Medida</label>
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <button type="button" (click)="onCrearUnidad()" class="btn btn-primary">+</button>
+                        </span>
                         <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
                           <option value="null">--Seleccione--</option>
                           <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
@@ -188,7 +190,7 @@
                       <div class="form-group">
                         <label for="username">IVA Incluido</label>
                         <select class="select2_demo_3 form-control" formControlName="ivaincluido"
-                        (change)="CalcularPrecioVenta($event.target.value)">
+                          (change)="CalcularPrecioVenta($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{ivainc.id}}" *ngFor="let ivainc of ivaincluido">
                             {{ivainc.nombre}}</option>
@@ -356,7 +358,10 @@
 
 
 
-                                                <td>0,00</td>
+                                                <td>
+                                                  <input type="number" class="form-control"
+                                                    formControlName="montoxunidad" style="width:70px" />
+                                                </td>
                                                 <td>
                                                   <div class="btn-group project-list-add">
                                                     <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
@@ -478,19 +483,17 @@
 
 
                                 <div id="pwd-container3" *ngIf="visiblemarca">
-                                  <div class="form-group">
-                                    <label for="username">Marca</label>
-
+                                  <label for="username">Marca</label>
+                                  <div class="input-group">
+                                    <span class="input-group-btn">
+                                      <button type="button" (click)="onCrearMarca()" class="btn btn-primary">+</button>
+                                    </span>
                                     <select class="select2_demo_3 form-control" formControlName="codmarca">
-
                                       <option value="null">--Seleccione--</option>
                                       <option value="{{marca.id}}" *ngFor="let marca of lstMarcas">
                                         {{marca.nommarca}}</option>
-
-
                                     </select>
                                   </div>
-
                                 </div>
 
 
@@ -771,7 +774,7 @@
               </div>
             </div>
             <br>
-        
+
             <div class="income-dashone-total income-monthly shadow-reset nt-mg-b-30 res-mg-t-30">
               <div class="income-title">
                 <div class="main-income-head">
@@ -780,28 +783,28 @@
                     <p>Precio Sugerido</p>
                   </div>
                 </div>
-              </div>             
+              </div>
 
               <div class="income-dashone-pro">
                 <div class="income-rate-total">
                   <div class="price-adminpro-rate">
                     <h3><span>Precio Sin Iva $</span><span class="counter">{{preciosiniva}}</span></h3>
-                    <h3><span>Impuesto       $</span><span class="counter">{{montoiva}}</span></h3>
+                    <h3><span>Impuesto $</span><span class="counter">{{montoiva}}</span></h3>
                     <h3><span>Precio Con Iva $</span><span class="counter">{{precioconiva}}</span></h3>
                   </div>
                   <div class="price-graph">
                     <span id="sparkline1"></span>
                   </div>
                 </div>
-               
+
                 <div class="clear"></div>
               </div>
             </div>
           </div>
-        
-          
+
+
         </div>
-       
+
 
       </div>
     </div>

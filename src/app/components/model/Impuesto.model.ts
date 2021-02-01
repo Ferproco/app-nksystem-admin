@@ -9,7 +9,7 @@ export class Impuesto {
     public recargo: number;
     public fechaini: string;
     public fechafin: string;
-    public status: string;
+    public status: string='Activo';
     public codnegocio: string;
     public tipoimpuestos: TipoImpuesto;
 

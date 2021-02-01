@@ -67,6 +67,7 @@ export class CatalogoValorinventarioComponent implements OnInit {
           else {
             status = 0;
           }
+          
           this.lstKardex.push(element);
         });
         this.dataSource = new MatTableDataSource(this.lstKardex);
@@ -173,10 +174,7 @@ export class CatalogoValorinventarioComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
- /* cargararticulos(tipo){
-    this.tipoproductoconfig = tipo;
-    this.listarArticulosPorTipo(this.tipoproductoconfig);
-  }*/
+  
 
 
 }

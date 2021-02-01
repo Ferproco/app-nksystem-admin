@@ -8,17 +8,19 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GrupoArticuloService } from 'src/app/components/grupoarticulo/GrupoArticuloService.service';
-import { CrearImpuestoModalComponent } from 'src/app/components/impuesto/crear-impuesto-modal/crear-impuesto-modal.component';
-import { ImpuestoService } from 'src/app/components/impuesto/ImpuestoService.service';
-import { MarcaService } from 'src/app/components/marca/MarcaService.service';
 import { Articulo } from 'src/app/components/model/Articulo.model';
-import { UnidadService } from 'src/app/components/unidadmedida/UnidadService.service';
 import { AlmacenService } from '../../almacen/AlmacenService.service';
 import { CrearAlmacenModalComponent } from '../../almacen/crear-almacen-modal/crear-almacen-modal.component';
 import { CrearCategoriaModalComponent } from '../../categoria/crear-categoria-modal/crear-categoria-modal.component';
 
 import { ArticuloService } from '../ArticuloService.service';
 import { formatDate } from '@angular/common';
+import { ImpuestoService } from 'src/app/components/configuraciones/impuesto/ImpuestoService.service';
+import { CrearUnidadModalComponent } from '../../unidad/crear-unidad-modal/crear-unidad-modal.component';
+import { CrearMarcaModalComponent } from '../../marca/crear-marca-modal/crear-marca-modal.component';
+import { CrearImpuestosModalComponent } from '../../impuestos/crear-impuestos-modal/crear-impuestos-modal.component';
+import { UnidadService } from '../../unidad/UnidadService.service';
+import { MarcaService } from '../../marca/MarcaService.service';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -521,7 +523,7 @@ export class CrearArticuloComponent implements OnInit {
     });
   }
   onCrearImpuesto() {
-    this.bsModalRef = this.modalService.show(CrearImpuestoModalComponent);
+    this.bsModalRef = this.modalService.show(CrearImpuestosModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
       if (result) {
@@ -530,15 +532,36 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
+  onCrearUnidad() {
+    this.bsModalRef = this.modalService.show(CrearUnidadModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result) {
+        this.listarUnidades();
+      }
+
+    });
+  }
+  onCrearMarca() {
+    this.bsModalRef = this.modalService.show(CrearMarcaModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      if (result) {
+        this.listarMarcas();
+      }
+
+    });
+  }
   addItem(): void {
 
     this.ListItems.push(this.formbuilder.group({
       codnegocio: [this.idnegocio],
-      // codarticulo: [0, [Validators.required]],
+      //articulo_id: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
       codalmacen: [0, [Validators.required]],
       cantidad: [1, [Validators.required]],
-
+      montoxunidad: [1, [Validators.required]],
+      montototal:[1, [Validators.required]],
       status: ['A', [Validators.required]],
 
       fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
@@ -554,12 +577,12 @@ export class CrearArticuloComponent implements OnInit {
     return this.formbuilder.group({
       codnegocio: [this.idnegocio],
       // documentoid: [0],
-      // codarticulo: [0, [Validators.required]],
-      // codimpuesto: [0, [Validators.required]],
+     // articulo_id: [0, [Validators.required]],
       codunidadmedida: [0, [Validators.required]],
       codalmacen: [0, [Validators.required]],
       cantidad: [1, [Validators.required]],
-
+      montoxunidad: [1, [Validators.required]],
+      montototal:[1, [Validators.required]],
       status: ['A', [Validators.required]],
 
       fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],

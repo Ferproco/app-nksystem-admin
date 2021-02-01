@@ -4,6 +4,7 @@ import { VentasComponent } from './ventas.component';
 import { CatalogoDocumentoVentasComponent } from './catalogo-documento-ventas/catalogo-documento-ventas.component';
 import { DocumentoVentasComponent } from './documento-ventas/documento-ventas.component';
 
+
 const routes: Routes = [
   {
     path: '', component: VentasComponent,
@@ -23,7 +24,9 @@ const routes: Routes = [
       {
         path: 'documentodeventa-cotizacion/:tipodocumento',
         component: DocumentoVentasComponent
-      }
+      },
+    
+     
     ]
   }
 ];

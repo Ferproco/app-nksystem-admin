@@ -2,8 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
-import { FormaPagoService } from '../../formapago/FormaPagoService.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,17 +10,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Contacto } from '../../model/Contacto.model';
 import { DocumentoVenta } from '../../model/DocumentoVenta.model';
 import { DocumentosVentasService } from '../documentos-ventas.service';
-import { UnidadService } from '../../unidadmedida/UnidadService.service';
-import { ImpuestoService } from '../../impuesto/ImpuestoService.service';
 import { Articulo } from '../../model/Articulo.model';
-import { CrearNumeraciondocumentoModalComponent } from '../../configuracion/crear-numeraciondocumento-modal/crear-numeraciondocumento-modal.component';
-import { NumeracionDocumentoService } from '../../configuracion/NumeracionDocumentoService.service';
 import { AlmacenService } from '../../portafolio/almacen/AlmacenService.service';
+import { FormaPagoService } from '../../portafolio/formapago/FormaPagoService.service';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
 import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { ContactoService } from '../../portafolio/contacto/ContactoService.service';
 import { VendedorService } from '../../portafolio/vendedor/VendedorService.service';
 import { ModalClienteComponent } from '../../portafolio/contacto/modal-cliente/modal-cliente.component';
+import { NumeracionDocumentoService } from '../../configuraciones/numeraciondocumento/NumeracionDocumentoService.service';
+import { ImpuestoService } from '../../configuraciones/impuesto/ImpuestoService.service';
+
+import { NumeracionDocumento } from '../../model/NumeracionDocumento.model';
+import { MatTableDataSource } from '@angular/material/table';
+import { TipoDocumentoService } from '../../configuraciones/tipodocumento/TipoDocumentoService.service';
+import { CrearFormapagoModalComponent } from '../../portafolio/formapago/crear-formapago-modal/crear-formapago-modal.component';
+import { UnidadService } from '../../portafolio/unidad/UnidadService.service';
 
 @Component({
   selector: 'app-documento-ventas',
@@ -49,8 +52,7 @@ export class DocumentoVentasComponent implements OnInit {
   lstUnidades: any[] = [];
   lstImpuestos: any[] = [];
   lstAlmacenes: any[] = [];
-
-
+  lstNumeracionDocumento: any[] = [];
 
   DocumentoVentaForm: FormGroup;
   lstdetallesdocumentoventas: FormArray;
@@ -59,24 +61,29 @@ export class DocumentoVentasComponent implements OnInit {
   titulo: string = '';
   url: string = '';
 
+
   id = 0;
   idnegocio: number;
   nombreprimero: string;
   numeroidentificacion: string;
   direccionfiscal: string;
-
+  precsiniva: number;
+  cant: number;
   tipopersona: string;
   telefono: string;
   ContactoModel: Contacto;
   DocumentoVentaModel: DocumentoVenta;
   ArticuloModel: Articulo;
-
+  numeracionDocumentoModel: NumeracionDocumento;
+  prefijofactura:string;
+  numerodocumentos: number;
+  numerodocumentoconcatenado:string;
   nombrearticulo: string[] = [];
 
   constructor(private contactoServicio: ContactoService,
     private DocumentoventaServicio: DocumentosVentasService,
     private modalService: BsModalService,
-    private numeraciondocumentoServicio:NumeracionDocumentoService,
+    private numeraciondocumentoServicio: NumeracionDocumentoService,
     private FormaPagoService: FormaPagoService,
     private VendedorService: VendedorService,
     private toastr: ToastrService,
@@ -87,7 +94,8 @@ export class DocumentoVentasComponent implements OnInit {
     private Unidadservice: UnidadService,
     private Impuestoservice: ImpuestoService,
     private Almacenservice: AlmacenService,
-    private Articuloservicio: ArticuloService,) {
+    private Articuloservicio: ArticuloService,
+    private tipodocumentoServicio: TipoDocumentoService) {
 
 
     this.DocumentoVentaModel = new DocumentoVenta();
@@ -105,6 +113,7 @@ export class DocumentoVentasComponent implements OnInit {
   ngOnInit(): void {
 
     this.onTipoDocumento(this.tipodocumento);
+    this.listarNumeracionDocumento(this.tipodocumento);
     this.buildForm();
 
     this.listarVendedores();
@@ -272,7 +281,7 @@ export class DocumentoVentasComponent implements OnInit {
             this.tipopersona = 'Persona Juridica';
           }
       },
-      ((error: HttpErrorResponse) => {
+        ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
 
@@ -281,7 +290,7 @@ export class DocumentoVentasComponent implements OnInit {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
               { enableHtml: true, closeButton: true });
           }
-      }));
+        }));
 
   }
   onListarClientes() {
@@ -320,7 +329,6 @@ export class DocumentoVentasComponent implements OnInit {
         this.ListItems.controls[pos].get('preciounitariosiniva').setValue(this.ArticuloModel.preciosugerido);
         this.ListItems.controls[pos].get('codunidadmedida').setValue(this.ArticuloModel.codunidadmedida);
         this.ListItems.controls[pos].get('codimpuesto').setValue(this.ArticuloModel.codimpuesto);
-
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -396,7 +404,7 @@ export class DocumentoVentasComponent implements OnInit {
 
   onRedireccionar(tipo) {
     if (tipo === 'factura') {
-      this.router.navigate(['ventas/catalogodocumentodeventa-factura/factura']);
+      this.router.navigate(['/main/dashboard/ventas/catalogodocumentodeventa-factura/factura']);
 
     }
     else if (tipo === 'cotizacion') {
@@ -464,22 +472,66 @@ export class DocumentoVentasComponent implements OnInit {
           }
         }));
   }
-  onCrearNumeracionDocumento(){
+  /*onCrearNumeracionDocumento() {
     this.bsModalRef = this.modalService.show(CrearNumeraciondocumentoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
-      if (result){
-       // this.listarImpuestos();
+      if (result) {
+         this.listarNumeracionDocumento(this.tipodocumento);
       }
 
     });
+  }*/
+
+
+  CalcularPrecioVenta(event) {
+
+    console.log('event' + event);
+
+    this.precsiniva = this.ArticuloModel.preciosugerido * event;
+    this.cant = event;
+
   }
-  /*obtenerNumeracionDocumento() {
+  CalcularPrecioVenta2(event) {
+
+    console.log('event' + event);
+
+    this.precsiniva = this.cant * event;
+
+
+
+  }
+
+
+  private listarNumeracionDocumento(tipo: string): void {
     this.loading = true;
-    this.numeraciondocumentoServicio.listarFormaPagos('')
+    this.lstNumeracionDocumento = [];
+    this.numeraciondocumentoServicio.obtenerNumeracionDocumentoPorTipoDocumento('', this.tipodocumento)
       .subscribe(response => {
-        this.lstformaspago = response as any[];
-        this.loading = false;
+        this.lstNumeracionDocumento = response as NumeracionDocumento[];
+        //console.log('lstNumeracionDocumento' + JSON.stringify(this.lstNumeracionDocumento));
+        this.lstNumeracionDocumento.forEach(element => {
+
+          if (element.tipodedocumento === 'factura') {
+            if (element.principal) {
+              console.log('es principal');
+          
+            this.prefijofactura=element.prefijo;
+            this.numerodocumentos = element.proximonumerodocumento;
+            this.numerodocumentoconcatenado= element.prefijo + element.proximonumerodocumento,
+            this.DocumentoVentaForm.controls['numerodocumento'].setValue(this.numerodocumentoconcatenado );
+
+            console.log('numerodocumentos ' + this.numerodocumentos);
+          }
+          }
+
+          //this.numerodocumento=this.numerodocumentos;
+        });
+        /*this.dataSource = new MatTableDataSource(this.lstNumeracionDocumento);
+        this.dataSource.paginator = this.paginator;
+        this.LengthTable = this.lstDocumentos.length;
+        this.sortedData = this.lstDocumentos.slice();
+        this.loading = false;*/
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -491,5 +543,19 @@ export class DocumentoVentasComponent implements OnInit {
               { enableHtml: true, closeButton: true });
           }
         }));
-  }*/
+  }
+
+  onModificarNumeracionDocumento(){
+    //this.router.navigate(['inventario/creararticulo', id]);
+    //this.router.navigate(['main/dashboard/configuraciones/crearnumeraciondocumento', id]);
+
+    //this.bsModalRef = this.modalService.show(CrearNumeraciondocumentoModalComponent);
+    //this.bsModalRef.content.onClose.subscribe(result => {
+    //  if (result) {
+       // this.listarFormasdepago();
+      //}
+     // console.log('results', result);
+    //});
+  }
+
 }

@@ -20,6 +20,10 @@ const routes: Routes =
         path: 'inventarios',
         loadChildren: () => import('../../components/inventarios/inventarios.module').then(x => x.InventariosModule)
       },
+      {
+        path: 'configuraciones',
+        loadChildren: () => import('../../components/configuraciones/configuraciones.module').then(p => p.ConfiguracionesModule)
+      },
 
     ]
   }

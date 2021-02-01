@@ -243,16 +243,16 @@
                   <h1>Numero Documento <span class="table-project-n"></span>
                   </h1>
                   <div class="input-group">
-
-                    <input formControlName="numerodocumento" type="text" class="form-control"
+                  
+                    <input formControlName="numerodocumento"  type="text" class="form-control"
                       placeholder="Numero de Documento" />
-                    <span class="input-group-btn"><button type="button"  (click)="onCrearNumeracionDocumento()"class="btn btn-primary"><i
+                    <span class="input-group-btn"><button type="button"  (click)="onModificarNumeracionDocumento()"class="btn btn-primary"><i
                           class="adminpro-icon adminpro-settings"></i></button></span>
 
                           
                   </div>
                 </div>
-
+             
               </div>
               <div class="sparkline8-graph project-details-price-hd">
                 <div class="main-sparkline8-hd">
@@ -397,7 +397,7 @@
                               </select>
                             </td>
                             <td>
-                              <input type="number" class="form-control" formControlName="cantidad" style="width:70px" />
+                              <input type="number" class="form-control" formControlName="cantidad"  (change)="CalcularPrecioVenta($event.target.value)" style="width:70px" />
                             </td>
                             <td>
                               <select class="select2_demo_3 form-control" formControlName="codalmacen">
@@ -406,7 +406,7 @@
                                   {{almacen.nombre}}</option>
                               </select>
                             </td>
-                            <td><input type="number" class="form-control" formControlName="preciounitariosiniva" /></td>
+                            <td><input type="number" class="form-control" formControlName="preciounitariosiniva" (change)="CalcularPrecioVenta2($event.target.value)" /></td>
                             <td><input type="number" class="form-control" formControlName="porcentajedescuento"
                                 style="width:70px" /></td>
 
@@ -417,7 +417,7 @@
                                   {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
                               </select>
                             </td>
-                            <td>0,00</td>
+                            <td>{{precsiniva}}</td>
                             <td>
                               <div class="btn-group project-list-add">
                                 <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"

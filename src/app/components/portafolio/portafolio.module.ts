@@ -45,6 +45,22 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CatalogoEmpleadoComponent } from './empleado/catalogo-empleado/catalogo-empleado.component';
 import { EmpleadoService } from './empleado/EmpleadoService.service';
 import { CrearEmpleadoComponent } from './empleado/crear-empleado/crear-empleado.component';
+import { Impuesto } from '../model/Impuesto.model';
+import { ImpuestoService } from '../configuraciones/impuesto/ImpuestoService.service';
+import { TipoImpuestoService } from '../configuraciones/tipoimpuesto/TipoImpuestoService.service';
+import { CrearUnidadModalComponent } from './unidad/crear-unidad-modal/crear-unidad-modal.component';
+import { CrearMarcaModalComponent } from './marca/crear-marca-modal/crear-marca-modal.component';
+import { CrearImpuestosModalComponent } from './impuestos/crear-impuestos-modal/crear-impuestos-modal.component';
+import { CatalogoFormapagoComponent } from './formapago/catalogo-formapago/catalogo-formapago.component';
+import { CrearFormapagoComponent } from './formapago/crear-formapago/crear-formapago.component';
+import { FilterFormapagoPipe } from './formapago/catalogo-formapago/filter-formapago.pipe';
+import { FormaPagoService } from './formapago/FormaPagoService.service';
+import { CatalogoUnidadmedidaComponent } from './unidad/catalogo-unidadmedida/catalogo-unidadmedida.component';
+import { FilterUnidadmedidaPipe } from './unidad/catalogo-unidadmedida/filter-unidadmedida.pipe';
+import { UnidadService } from './unidad/UnidadService.service';
+import { CrearMarcaComponent } from './marca/crear-marca/crear-marca.component';
+import { CatalogoMarcaComponent } from './marca/catalogo-marca/catalogo-marca.component';
+import { MarcaService } from './marca/MarcaService.service';
 
 
 @NgModule({
@@ -69,7 +85,17 @@ import { CrearEmpleadoComponent } from './empleado/crear-empleado/crear-empleado
     CrearVendedorComponent,
     FilterVendedorPipe,
     CatalogoEmpleadoComponent,
-    CrearEmpleadoComponent
+    CrearEmpleadoComponent,
+    CrearMarcaModalComponent,
+    CrearImpuestosModalComponent,
+    CatalogoFormapagoComponent,
+    CrearFormapagoComponent,
+    FilterFormapagoPipe,
+    CatalogoUnidadmedidaComponent,
+    FilterUnidadmedidaPipe,
+    CrearUnidadModalComponent,
+    CrearMarcaComponent,
+    CatalogoMarcaComponent,
   ],
   imports: [
     
@@ -99,7 +125,12 @@ import { CrearEmpleadoComponent } from './empleado/crear-empleado/crear-empleado
     TipoContribuyenteService,
     PaisService,
     EmpleadoService,
-    ContactoService
+    ContactoService,
+    ImpuestoService,
+    TipoImpuestoService,
+    UnidadService,    
+    FormaPagoService,
+    MarcaService,
   ]
 })
 export class PortafolioModule { }

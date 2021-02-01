@@ -58,12 +58,14 @@ export class ArticuloService{
     const date = Number(fechastr[0]);
       console.log('Entro al for de articulos '+ JSON.stringify(element));
       element.id = 0;
-      element.codarticulo = Number(idIn);
+      element.articulo_id =Number(element.articulo_id);;
       element.tipo = 'ENT';
       element.fecha = new Date(year, month, date);
-      element.cantidad = element.cantidad;
+      element.cantidad = Number(element.cantidad);
       element.codunidadmedida = Number(element.codunidadmedida);
       element.codalmacen = Number(element.codalmacen);
+      element.montoxunidad=Number(element.montoxunidad);
+      element.montototal= Number(element.cantidad) * Number(element.montoxunidad);
       element.concepto = 'ENTRADA POR INVENTARIO';
       element.origen = 'INVENTARIO';
     });
