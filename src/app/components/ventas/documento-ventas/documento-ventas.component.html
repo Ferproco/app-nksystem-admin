@@ -143,6 +143,7 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                     <div class="project-details-mg">
@@ -243,28 +244,28 @@
                   <h1>Numero Documento <span class="table-project-n"></span>
                   </h1>
                   <div class="input-group">
-                  
-                    <input formControlName="numerodocumento"  type="text" class="form-control"
-                      placeholder="Numero de Documento" />
-                    <span class="input-group-btn"><button type="button"  (click)="onModificarNumeracionDocumento()"class="btn btn-primary"><i
-                          class="adminpro-icon adminpro-settings"></i></button></span>
 
-                          
+                    <input formControlName="numerodocumento" type="text" class="form-control"
+                      placeholder="Numero de Documento" />
+                    <span class="input-group-btn"><button type="button" (click)="onModificarNumeracionDocumento()"
+                        class="btn btn-primary"><i class="adminpro-icon adminpro-settings"></i></button></span>
+
+
                   </div>
                 </div>
-             
+
               </div>
               <div class="sparkline8-graph project-details-price-hd">
                 <div class="main-sparkline8-hd">
                   <h1>SubTotal <span class="table-project-n"></span></h1>
                   <div class="sparkline8-outline-icon">
-                    <h1>$685.000,00</h1>
+                    <h1>{{montototalsiniva}}</h1>
                   </div>
                 </div>
                 <div class="main-sparkline8-hd">
                   <h1>Descuento <span class="table-project-n"></span></h1>
                   <div class="sparkline8-outline-icon">
-                    <h1>$685.000,00</h1>
+                    <h1>0,00</h1>
                   </div>
                 </div>
               </div>
@@ -274,7 +275,7 @@
                 <div class="main-sparkline8-hd">
                   <h1>Total <span class="table-project-n"></span></h1>
                   <div class="sparkline8-outline-icon">
-                    <h1>$685.000,00</h1>
+                    <h1>{{montototalsiniva}}</h1>
                   </div>
                 </div>
 
@@ -357,9 +358,9 @@
 
                   <div class="sparkline10-graph">
                     <div class="static-table-list">
-                      <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
+                   <!--   <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        Agregar</button>
+                        Agregar</button>!-->
                       <table class="table border-table">
                         <thead>
                           <tr>
@@ -397,7 +398,8 @@
                               </select>
                             </td>
                             <td>
-                              <input type="number" class="form-control" formControlName="cantidad"  (change)="CalcularPrecioVenta($event.target.value)" style="width:70px" />
+                              <input type="number" class="form-control" formControlName="cantidad"
+                                (change)="CalcularPrecioVenta(i)" style="width:70px" />
                             </td>
                             <td>
                               <select class="select2_demo_3 form-control" formControlName="codalmacen">
@@ -406,7 +408,8 @@
                                   {{almacen.nombre}}</option>
                               </select>
                             </td>
-                            <td><input type="number" class="form-control" formControlName="preciounitariosiniva" (change)="CalcularPrecioVenta2($event.target.value)" /></td>
+                            <td><input type="number" class="form-control" formControlName="preciounitariosiniva"
+                                (change)="CalcularPrecioVenta(i)" /></td>
                             <td><input type="number" class="form-control" formControlName="porcentajedescuento"
                                 style="width:70px" /></td>
 
@@ -417,7 +420,10 @@
                                   {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
                               </select>
                             </td>
-                            <td>{{precsiniva}}</td>
+                            <td>
+                              <input type="number" class="form-control" formControlName="baseimponible"
+                                style="width:140px" />
+                            </td>
                             <td>
                               <div class="btn-group project-list-add">
                                 <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
@@ -428,6 +434,9 @@
 
                         </tbody>
                       </table>
+                      <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Agregar</button>
                     </div>
                   </div>
 

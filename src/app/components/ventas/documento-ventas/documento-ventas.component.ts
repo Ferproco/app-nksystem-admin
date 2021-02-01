@@ -75,10 +75,13 @@ export class DocumentoVentasComponent implements OnInit {
   DocumentoVentaModel: DocumentoVenta;
   ArticuloModel: Articulo;
   numeracionDocumentoModel: NumeracionDocumento;
-  prefijofactura:string;
+  prefijofactura: string;
   numerodocumentos: number;
-  numerodocumentoconcatenado:string;
+  numerodocumentoconcatenado: string;
   nombrearticulo: string[] = [];
+  montototalsiniva:number;
+  montototaliva:number;
+  montototalconiva:number;
 
   constructor(private contactoServicio: ContactoService,
     private DocumentoventaServicio: DocumentosVentasService,
@@ -162,9 +165,27 @@ export class DocumentoVentasComponent implements OnInit {
 
     });
 
-    (this.DocumentoVentaForm.get('lstdetallesdocumentoventas') as FormArray).valueChanges.subscribe(values => {
-      console.log('Cambios en el form ' + JSON.stringify(values));
+    (this.DocumentoVentaForm.get('lstdetallesdocumentoventas') as FormArray).valueChanges.subscribe(lisatadoarticulos => {
+      console.log('Cambios en el form ' + JSON.stringify(lisatadoarticulos));
+        //console.log('lstNumeracionDocumento' + JSON.stringify(this.lstNumeracionDocumento));
+        this.montototalsiniva=0;
+        lisatadoarticulos.forEach(element => {
+
+          this.montototalsiniva=this.montototalsiniva + element.baseimponible ;
+         // this.montototalconiva=montototalsiniva *
+
+         /* montoimpuesto = (precio * valorimpuesto) / 100;
+      console.log('valorimpuesto ' + valorimpuesto);
+      this.preciosiniva = precio;
+      this.montoiva = montoimpuesto;
+      precioiva = precio + montoimpuesto;
+      this.precioconiva = precioiva;*/
+
+        });
+       // console.log('montototalsiniva ' + this.montototalsiniva);
     });
+
+
   }
 
   createItem(): FormGroup {
@@ -329,6 +350,13 @@ export class DocumentoVentasComponent implements OnInit {
         this.ListItems.controls[pos].get('preciounitariosiniva').setValue(this.ArticuloModel.preciosugerido);
         this.ListItems.controls[pos].get('codunidadmedida').setValue(this.ArticuloModel.codunidadmedida);
         this.ListItems.controls[pos].get('codimpuesto').setValue(this.ArticuloModel.codimpuesto);
+
+        const cant = Number(this.ListItems.controls[pos].get('cantidad').value);
+        const precionu = Number(this.ListItems.controls[pos].get('preciounitariosiniva').value);
+        this.precsiniva = cant * precionu;
+       // console.log('precsiniva', this.precsiniva);
+        this.ListItems.controls[pos].get('baseimponible').setValue(this.precsiniva);
+        console.log('El articulo es ' + JSON.stringify(this.ArticuloModel));
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -484,23 +512,24 @@ export class DocumentoVentasComponent implements OnInit {
   }*/
 
 
-  CalcularPrecioVenta(event) {
+  CalcularPrecioVenta(pos: number) {
 
     console.log('event' + event);
 
-    this.precsiniva = this.ArticuloModel.preciosugerido * event;
-    this.cant = event;
+    //this.precsiniva = this.ArticuloModel.preciosugerido * event;
+    //this.cant = event;
+    const cant = Number(this.ListItems.controls[pos].get('cantidad').value);
+    console.log('cant', cant);
+    const precionu = Number(this.ListItems.controls[pos].get('preciounitariosiniva').value);
+    console.log('precionu', precionu);
+    this.precsiniva = cant * precionu;
+    console.log('precsiniva', this.precsiniva);
+    this.ListItems.controls[pos].get('baseimponible').setValue(this.precsiniva);
+    // this.ListItems.controls[pos].get('baseimponible').setValue(this.precsiniva);
+
 
   }
-  CalcularPrecioVenta2(event) {
 
-    console.log('event' + event);
-
-    this.precsiniva = this.cant * event;
-
-
-
-  }
 
 
   private listarNumeracionDocumento(tipo: string): void {
@@ -515,14 +544,14 @@ export class DocumentoVentasComponent implements OnInit {
           if (element.tipodedocumento === 'factura') {
             if (element.principal) {
               console.log('es principal');
-          
-            this.prefijofactura=element.prefijo;
-            this.numerodocumentos = element.proximonumerodocumento;
-            this.numerodocumentoconcatenado= element.prefijo + element.proximonumerodocumento,
-            this.DocumentoVentaForm.controls['numerodocumento'].setValue(this.numerodocumentoconcatenado );
 
-            console.log('numerodocumentos ' + this.numerodocumentos);
-          }
+              this.prefijofactura = element.prefijo;
+              this.numerodocumentos = element.proximonumerodocumento;
+              this.numerodocumentoconcatenado = element.prefijo + element.proximonumerodocumento,
+                this.DocumentoVentaForm.controls['numerodocumento'].setValue(this.numerodocumentoconcatenado);
+
+              console.log('numerodocumentos ' + this.numerodocumentos);
+            }
           }
 
           //this.numerodocumento=this.numerodocumentos;
@@ -545,16 +574,16 @@ export class DocumentoVentasComponent implements OnInit {
         }));
   }
 
-  onModificarNumeracionDocumento(){
+  onModificarNumeracionDocumento() {
     //this.router.navigate(['inventario/creararticulo', id]);
     //this.router.navigate(['main/dashboard/configuraciones/crearnumeraciondocumento', id]);
 
     //this.bsModalRef = this.modalService.show(CrearNumeraciondocumentoModalComponent);
     //this.bsModalRef.content.onClose.subscribe(result => {
     //  if (result) {
-       // this.listarFormasdepago();
-      //}
-     // console.log('results', result);
+    // this.listarFormasdepago();
+    //}
+    // console.log('results', result);
     //});
   }
 
