@@ -175,7 +175,7 @@
                         <span class="input-group-btn">
                           <button type="button" (click)="onCrearUnidad()" class="btn btn-primary">+</button>
                         </span>
-                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
+                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida" (change)="onChangeUnidadPrincipal($event.target.value)">
                           <option value="null">--Seleccione--</option>
                           <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
                             {{unidad.nomunidadmedida}}</option>
@@ -304,6 +304,89 @@
 
                 <div class="row">
                   <accordion [isAnimated]="false">
+                    <accordion-group heading="Empaques y Conversión de Unidades">
+                      <div class="row">
+                        <div class="project-details-area mg-b-15">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="project-details-wrap shadow-reset">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="sparkline10-graph">
+                                        <div class="static-table-list">
+
+                                          <table class="table border-table">
+                                            <thead>
+                                              <tr>
+                                                <th>Unidad Medida</th>
+                                                <th>Cantidad X </th>
+                                                <th>Unidad Medida Principal</th>
+                                                <th></th>
+                                              </tr>
+                                            </thead>
+                                            <tbody formArrayName="lstunidadesalternas">
+                                              <tr
+                                                *ngFor="let lstunidadesalternas of ListItemsUnidasesAlternas.controls; let i = index"
+                                                [formGroup]="ListItemsUnidasesAlternas.controls[i]">
+                                                <td>
+                                                  <select class="select2_demo_3 form-control"
+                                                    formControlName="codunidadmedidaalterna">
+                                                    <option value="null">--Seleccione--</option>
+                                                    <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
+                                                      {{unidad.nomunidadmedida}}</option>
+                                                  </select>
+                                                </td>
+                                                <td>
+                                                  <input type="number" class="form-control"
+                                                    formControlName="valorconversion" style="width:70px" />
+                                                </td>
+                                                <td>
+                                                  <select class="select2_demo_3 form-control"
+                                                    formControlName="codunidadminima">
+                                                    <option value="null">--Seleccione--</option>
+                                                    <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
+                                                      {{unidad.nomunidadmedida}}</option>
+                                                  </select>
+
+                                                </td>
+
+
+
+
+                                                <td>
+                                                  <div class="btn-group project-list-add">
+                                                    <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
+                                                        aria-hidden="true"></i></button>
+                                                  </div>
+                                                </td>
+                                              </tr>
+
+                                            </tbody>
+                                          </table>
+                                          <button type="button" class="btn btn-custon-four btn-primary"
+                                            (click)="addItemUnidadesAlternas()">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                            Agregar Otra Unidad</button>
+
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </accordion-group>
+                  </accordion>
+                </div>
+
+                <div class="row">
+                  <accordion [isAnimated]="false">
                     <accordion-group heading="Ingresar Inventario">
                       <div class="row">
                         <div class="project-details-area mg-b-15">
@@ -315,10 +398,7 @@
                                     <div class="col-lg-12">
                                       <div class="sparkline10-graph">
                                         <div class="static-table-list">
-                                          <button type="button" class="btn btn-custon-four btn-primary"
-                                            (click)="addItem()">
-                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                            Agregar</button>
+
                                           <table class="table border-table">
                                             <thead>
                                               <tr>
@@ -360,7 +440,7 @@
 
                                                 <td>
                                                   <input type="number" class="form-control"
-                                                    formControlName="montoxunidad" style="width:70px" />
+                                                    formControlName="montoxunidad" style="width:130px" />
                                                 </td>
                                                 <td>
                                                   <div class="btn-group project-list-add">
@@ -372,6 +452,11 @@
 
                                             </tbody>
                                           </table>
+                                          <button type="button" class="btn btn-custon-four btn-primary"
+                                            (click)="addItem()">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                            Agregar en otra Bodega</button>
+
                                         </div>
                                       </div>
 
@@ -532,6 +617,7 @@
                                 <div id="pwd-container3" *ngIf="visiblecolor">
                                   <div class="form-group">
                                     <label for="username">Color</label>
+                                    
                                     <input formControlName="color"
                                       [ngClass]="{'invalid-data': color.invalid && (color.touched || color.dirty)}"
                                       type="text" class="form-control" placeholder="Ingrese el Color" />
@@ -788,9 +874,9 @@
               <div class="income-dashone-pro">
                 <div class="income-rate-total">
                   <div class="price-adminpro-rate">
-                    <h3><span>Precio Sin Iva $</span><span class="counter">{{preciosiniva}}</span></h3>
-                    <h3><span>Impuesto $</span><span class="counter">{{montoiva}}</span></h3>
-                    <h3><span>Precio Con Iva $</span><span class="counter">{{precioconiva}}</span></h3>
+                    <h3><span>Precio Sin Iva $</span><span class="counter">{{preciosiniva | currency}}</span></h3>
+                    <h3><span>Impuesto $</span><span class="counter">{{montoiva | number}}</span></h3>
+                    <h3><span>Precio Con Iva $</span><span class="counter">{{precioconiva | number}}</span></h3>
                   </div>
                   <div class="price-graph">
                     <span id="sparkline1"></span>

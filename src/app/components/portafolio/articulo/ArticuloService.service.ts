@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { ɵELEMENT_PROBE_PROVIDERS } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Api } from 'src/app/config';
 import { Articulo } from '../../model/Articulo.model';
@@ -49,7 +50,7 @@ export class ArticuloService{
   guardarArticulo(idIn: number, idnegocio: number, articulo: Articulo){
     console.log('el articulo enviado es ' + JSON.stringify(articulo));
     console.log('el documento enviado es ' + JSON.stringify(articulo.lstmovimientoskardex));
-    
+    console.log('la lista de unidades alternas es ' + JSON.stringify(articulo.lstunidadesalternas));
     articulo.lstmovimientoskardex.forEach(element => {
       const fechastr = element.fecha.toString().split('-');
     console.log('la fecha '+ fechastr);
@@ -68,6 +69,19 @@ export class ArticuloService{
       element.montototal= Number(element.cantidad) * Number(element.montoxunidad);
       element.concepto = 'ENTRADA POR INVENTARIO';
       element.origen = 'INVENTARIO';
+    });
+
+    articulo.lstunidadesalternas.forEach(element =>{
+   
+      console.log('Entro al for de unidades alternas '+ JSON.stringify(element));
+      element.id = 0;
+      element.articulo_id =Number(element.articulo_id);;
+      element.codunidadmedidaalterna = Number(element.codunidadmedidaalterna);
+      //element.fecha = new Date(year, month, date);
+      element.valorconversion = Number(element.valorconversion);
+      element.codunidadminima = Number(element.codunidadminima);
+      //element.montototal= Number(element.cantidad) * Number(element.montoxunidad);
+      element.codnegocio=element.codnegocio;
     });
     const body = {
       id: Number(idIn),
@@ -96,7 +110,8 @@ export class ArticuloService{
       esimpoconsumo: articulo.esimpoconsumo,
       valorimpoconsumo:Number(articulo.valorimpoconsumo),
       porcentajeimpoconsumo:Number(articulo.porcentajeimpoconsumo),
-      lstmovimientoskardex: articulo.lstmovimientoskardex
+      lstmovimientoskardex: articulo.lstmovimientoskardex,
+      lstunidadesalternas:articulo.lstunidadesalternas
     };
     console.log('id ' + idIn + 'articulo ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

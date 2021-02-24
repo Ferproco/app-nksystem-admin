@@ -21,6 +21,8 @@ import { CrearMarcaModalComponent } from '../../marca/crear-marca-modal/crear-ma
 import { CrearImpuestosModalComponent } from '../../impuestos/crear-impuestos-modal/crear-impuestos-modal.component';
 import { UnidadService } from '../../unidad/UnidadService.service';
 import { MarcaService } from '../../marca/MarcaService.service';
+import { Kardex } from 'src/app/components/model/Kardex.model';
+import { UnidadMedidaAlterna } from 'src/app/components/model/UnidadMedidaAlterna.model';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -45,6 +47,7 @@ export class CrearArticuloComponent implements OnInit {
   loading = false;
   lstFamilias: any[] = [];
   lstUnidades: any[] = [];
+  //lstUnidadesAlternas:any[] = [];
   lstImpuestos: any[] = [];
   lstMarcas: any[] = [];
   lstAlmacenes: any[] = [];
@@ -53,6 +56,8 @@ export class CrearArticuloComponent implements OnInit {
 
 
   lstmovimientoskardex: FormArray;
+  lstunidadesalternas: FormArray;
+
 
   idnegocio: number;
   formarticulo: FormGroup;
@@ -126,8 +131,8 @@ export class CrearArticuloComponent implements OnInit {
 
     this.ArticuloModel = new Articulo();
     this.idnegocio = 1;
-    this.idivaincluido = 2;
-    this.ArticuloModel.ivaincluido = this.idivaincluido;
+    //this.idivaincluido = 2;
+    //this.ArticuloModel.ivaincluido = this.idivaincluido;
 
     this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
     if (this.route.snapshot.params.id) {
@@ -176,11 +181,14 @@ export class CrearArticuloComponent implements OnInit {
       esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
       porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
-      lstmovimientoskardex: this.formbuilder.array([this.createItem()])
+      //lstmovimientoskardex: this.formbuilder.array([this.createItem()]),
+      //lstunidadesalternas: this.formbuilder.array([this.createItemUnidadesalternas()])
+      lstmovimientoskardex: this.formbuilder.array([]),
+      lstunidadesalternas: this.formbuilder.array([])
 
     })
   }
-
+  
   guardarArticulo(event: Event) {
     event.preventDefault();
     this.loading = true;
@@ -410,6 +418,7 @@ export class CrearArticuloComponent implements OnInit {
     const obj = this.articuloservice.mostrarArticulo(id)
       .subscribe(response => {
         this.ArticuloModel = response as any;
+        console.log('el articulo ' + JSON.stringify(this.ArticuloModel));
         if (this.ArticuloModel.status === 'ACTIVO') {
           status = 1;
         }
@@ -417,6 +426,17 @@ export class CrearArticuloComponent implements OnInit {
           status = 0;
         }
         this.buildForm();
+        const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
+        this.ArticuloModel.lstmovimientoskardex.map(item =>{
+          formarraylstkardex.push(this.createItem(item));
+        });
+        this.formarticulo.setControl("lstmovimientoskardex", formarraylstkardex);
+       /**  Cargar la lista de unidades alternas**/
+       const formarraylstUnidadesAlternas = this.formarticulo.get("lstunidadesalternas") as FormArray;
+       this.ArticuloModel.lstunidadesalternas.map(itemalterna =>{
+        formarraylstUnidadesAlternas.push(this.createItemUnidadesalternas(itemalterna));
+       });
+       this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -508,6 +528,20 @@ export class CrearArticuloComponent implements OnInit {
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
+  onChangeUnidadPrincipal(event){
+    console.log(' el vaolor event', event);
+
+    const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
+    formarraylstkardex.clear();
+    this.ArticuloModel.lstmovimientoskardex = [];
+    this.formarticulo.setControl("lstmovimientoskardex", formarraylstkardex);
+
+    const formarraylstUnidadesAlternas = this.formarticulo.get("lstunidadesalternas") as FormArray;
+    formarraylstUnidadesAlternas.clear();
+    this.ArticuloModel.lstunidadesalternas = [];
+    this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
+  }
+  
   onChange(event: MatSlideToggleChange) {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
   }
@@ -552,8 +586,58 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
-  addItem(): void {
+  
+  addItemUnidadesAlternas(): void {
+    this.ListItemsUnidasesAlternas.push(this.formbuilder.group({
+      codnegocio: [this.idnegocio],
+      //codarticulo: [0, [Validators.required]],
+      codunidadmedidaalterna: [0, [Validators.required]],
+      codunidadminima: [0, [Validators.required]],
+      valorconversion: [0, [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+    }));
+  }
+  get ListItems(): FormArray {
+    return this.formarticulo.get("lstmovimientoskardex") as FormArray
+  }
 
+  get ListItemsUnidasesAlternas(): FormArray {
+    return this.formarticulo.get("lstunidadesalternas") as FormArray
+  }
+
+  /*createItem(): FormGroup {
+    return this.formbuilder.group({
+      codnegocio: [this.idnegocio],
+      // documentoid: [0],
+      // articulo_id: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+      montoxunidad: [1, [Validators.required]],
+      montototal: [1, [Validators.required]],
+      status: ['A', [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+
+    });
+  }*/
+
+  createItem(kardex: Kardex): FormGroup {
+    return this.formbuilder.group({
+      codnegocio: [this.idnegocio],
+      // documentoid: [0],
+      articulo_id: [kardex.articulo_id, [Validators.required]],
+      codunidadmedida: [kardex.codunidadmedida, [Validators.required]],
+      codalmacen: [kardex.codalmacen, [Validators.required]],
+      cantidad: [kardex.cantidad, [Validators.required]],
+      montoxunidad: [kardex.montoxunidad, [Validators.required]],
+      montototal: [kardex.montototal, [Validators.required]],
+      status: [kardex.status, [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+
+    });
+  }
+
+  addItem(): void {
     this.ListItems.push(this.formbuilder.group({
       codnegocio: [this.idnegocio],
       //articulo_id: [0, [Validators.required]],
@@ -561,44 +645,44 @@ export class CrearArticuloComponent implements OnInit {
       codalmacen: [0, [Validators.required]],
       cantidad: [1, [Validators.required]],
       montoxunidad: [1, [Validators.required]],
-      montototal:[1, [Validators.required]],
+      montototal: [1, [Validators.required]],
       status: ['A', [Validators.required]],
-
-      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
-
-
-
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]]
     }));
   }
-  get ListItems(): FormArray {
-    return this.formarticulo.get("lstmovimientoskardex") as FormArray
-  }
-  createItem(): FormGroup {
+
+  createItemUnidadesalternas(unidadmedidaalterna: UnidadMedidaAlterna): FormGroup {
     return this.formbuilder.group({
       codnegocio: [this.idnegocio],
       // documentoid: [0],
-     // articulo_id: [0, [Validators.required]],
-      codunidadmedida: [0, [Validators.required]],
-      codalmacen: [0, [Validators.required]],
-      cantidad: [1, [Validators.required]],
-      montoxunidad: [1, [Validators.required]],
-      montototal:[1, [Validators.required]],
-      status: ['A', [Validators.required]],
+      // articulo_id: [0, [Validators.required]],
+      /* codunidadmedida: [0, [Validators.required]],
+       codalmacen: [0, [Validators.required]],
+       cantidad: [1, [Validators.required]],
+       montoxunidad: [1, [Validators.required]],
+       montototal:[1, [Validators.required]],
+       status: ['A', [Validators.required]],*/
 
-      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+      //codarticulo: [0, [Validators.required]],
+      codunidadmedidaalterna: [unidadmedidaalterna.codunidadmedidaalterna, [Validators.required]],
+      codunidadminima: [unidadmedidaalterna.codunidadminima, [Validators.required]],
+      valorconversion: [unidadmedidaalterna.valorconversion, [Validators.required]],
+      //fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
 
     });
   }
+
   CalcularPrecioVenta(event) {
     var valorimpuesto: number = 0;
     var montoimpuesto: number = 0;
-    var precio : number= 0;
-    var precioiva : number= 0;
-    var porcentajeiva : number= 0;
+    var precio: number = 0;
+    var precioiva: number = 0;
+    var porcentajeiva: number = 0;
     var tieneivaincluido: number;
-    var preciosinivas : number= 0;
+    var preciosinivas: number = 0;
 
     valorimpuesto = this.lstImpuestos[event - 1].normal;
+    
     console.log('event' + event);
     console.log('valorimpuesto ' + valorimpuesto);
     tieneivaincluido = Number(this.formarticulo.get('ivaincluido').value);
@@ -616,7 +700,7 @@ export class CrearArticuloComponent implements OnInit {
       console.log('precio ' + precio);
       console.log('montoimpuesto ' + montoimpuesto);
       console.log('precioconiva ' + precioiva);
-    
+
     }
     else if (tieneivaincluido === 1) {
       console.log('entro por 1 ');

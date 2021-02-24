@@ -1,8 +1,8 @@
 export class UnidadMedidaAlterna{
     public id:number;
-    public codunidadmedida:number;
-    public codarticulo:number;
-    public valorcoversion:number;
+    public codunidadmedidaalterna:number;
+    public articulo_id: number;
+    public valorconversion:number;
     public codnegocio:number;
     public codunidadminima:number;
     
@@ -10,9 +10,9 @@ export class UnidadMedidaAlterna{
         if(json !== null) {
 
             this.id= json.id;
-            this.codunidadmedida = json.codunidadmedida;
-            this.codarticulo = json.codarticulo;
-            this.valorcoversion =  json.valorcoversion;
+            this.codunidadmedidaalterna = json.codunidadmedidaalterna;
+            this.articulo_id = json.articulo_id;
+            this.valorconversion =  json.valorconversion;
             this.codnegocio = json.codnegocio;
             this.codunidadminima = json.codunidadminima;
 

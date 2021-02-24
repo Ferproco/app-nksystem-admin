@@ -61,6 +61,8 @@ import { UnidadService } from './unidad/UnidadService.service';
 import { CrearMarcaComponent } from './marca/crear-marca/crear-marca.component';
 import { CatalogoMarcaComponent } from './marca/catalogo-marca/catalogo-marca.component';
 import { MarcaService } from './marca/MarcaService.service';
+import { UnidadMedidaAlterna } from '../model/UnidadMedidaAlterna.model';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 @NgModule({
@@ -114,7 +116,8 @@ import { MarcaService } from './marca/MarcaService.service';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ColorPickerModule
   ],
   providers: [
     AlmacenService,
@@ -128,7 +131,8 @@ import { MarcaService } from './marca/MarcaService.service';
     ContactoService,
     ImpuestoService,
     TipoImpuestoService,
-    UnidadService,    
+    UnidadService, 
+    //UnidadMedidaAlterna,   
     FormaPagoService,
     MarcaService,
   ]

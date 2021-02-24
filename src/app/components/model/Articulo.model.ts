@@ -36,7 +36,7 @@ export class Articulo {
   public alto: number = 0;
   public profundidad: number = 0;
   public facturarsinexistencia: number;
-  public ivaincluido: number;
+  public ivaincluido: number = 2;
   public aplicaimpuestoconsumo: number;
   public fechacreacion: Date;
   public marca: Marca;
@@ -44,11 +44,8 @@ export class Articulo {
   public impuesto: Impuesto;
   public unidadmedida:UnidadMedida;
   public lstmovimientoskardex: Kardex[]=[];
-  
-  //public listakardex: Array<Kardex> = [];
-  //public listaunidadesalternas: Array<UnidadMedidaAlterna> = [];
- // public listabodegas: Array<Almacen> = [];
-
+  public lstunidadesalternas: UnidadMedidaAlterna[]=[];
+ 
   constructor(json: any = null) {
     if (json !== null) {
       this.id = json.id;
@@ -88,13 +85,9 @@ export class Articulo {
       this.ivaincluido = json.ivaincluido;
       this.aplicaimpuestoconsumo = json.aplicaimpuestoconsumo;
       this.fechacreacion = json.fechacreacion;
-
-      
-      //this.listakardex = json.listakardex;
-      //this.listaunidadesalternas = json.listaunidadesalternas;
-      //this.listabodegas = json.listabodegas;
-
-
+      this.lstmovimientoskardex=json.lstmovimientoskardex;
+      this.lstunidadesalternas=json.lstunidadesalternas;
+            
     }
   }
 }
