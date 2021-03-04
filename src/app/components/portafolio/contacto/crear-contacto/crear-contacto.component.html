@@ -95,8 +95,8 @@
                             <label for="username">N° Identificacion</label>
                             <input (blur)="CalcularDigitoVerficacion($event.target.value)" formControlName="numeroidentificacion"
                               [ngClass]="{'invalid-data': numeroidentificacion.invalid && (numeroidentificacion.touched || numeroidentificacion.dirty)}"
-                              type="text" class="form-control" data-mask="$ 999,999,999.99" placeholder="Ingrese el Número de Identificación" />
-                              <span class="help-block">$ 999,999,999.99</span>
+                              type="text" class="form-control" placeholder="Ingrese el Número de Identificación" />
+                              
                             <div
                               *ngIf="numeroidentificacion.invalid  && (numeroidentificacion.dirty || numeroidentificacion.touched)">
                               <div *ngIf="numeroidentificacion.errors.required">

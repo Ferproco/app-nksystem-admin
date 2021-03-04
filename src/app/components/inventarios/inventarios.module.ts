@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CatalogoValorinventarioComponent } from './catalogo-valorinventario/catalogo-valorinventario.component';
 import { KardexService } from './KardexService.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-valorkardex.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     [
       InventariosComponent,
       CatalogoValorinventarioComponent,
+      CatalogoValorkardexComponent,
     ],
   imports: [
     CommonModule,

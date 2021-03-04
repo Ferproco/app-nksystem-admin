@@ -63,6 +63,7 @@ import { CatalogoMarcaComponent } from './marca/catalogo-marca/catalogo-marca.co
 import { MarcaService } from './marca/MarcaService.service';
 import { UnidadMedidaAlterna } from '../model/UnidadMedidaAlterna.model';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-almacen-modal.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     CrearCategoriaModalComponent,
     CatalogoAlmacenComponent,
     CrearAlmacenComponent,
+    CrearAlmacenModalComponent,
     FilterAlmacenPipe,
     CatalogoVendedorComponent,
     CrearVendedorComponent,

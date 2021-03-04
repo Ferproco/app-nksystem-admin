@@ -175,7 +175,8 @@
                         <span class="input-group-btn">
                           <button type="button" (click)="onCrearUnidad()" class="btn btn-primary">+</button>
                         </span>
-                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida" (change)="onChangeUnidadPrincipal($event.target.value)">
+                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida"
+                          (change)="onChangeUnidadPrincipal($event.target.value)">
                           <option value="null">--Seleccione--</option>
                           <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
                             {{unidad.nomunidadmedida}}</option>
@@ -427,13 +428,23 @@
                                                     style="width:70px" />
                                                 </td>
                                                 <td>
-                                                  <select class="select2_demo_3 form-control"
-                                                    formControlName="codalmacen">
-                                                    <option value="0">--Seleccione--</option>
-                                                    <option value="{{almacen.idalmacen}}"
-                                                      *ngFor="let almacen of lstAlmacenes">
-                                                      {{almacen.nombre}}</option>
-                                                  </select>
+
+
+                                                 
+                                                  <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                      <button type="button" (click)="onCrearBodega()"
+                                                        class="btn btn-primary">+</button>
+                                                    </span>
+                                                    <select class="select2_demo_3 form-control"
+                                                      formControlName="codalmacen">
+
+                                                      <option value="0">--Seleccione--</option>
+                                                      <option value="{{almacen.idalmacen}}"
+                                                        *ngFor="let almacen of lstAlmacenes">
+                                                        {{almacen.nombre}}</option>
+                                                    </select>
+                                                  </div>
                                                 </td>
 
 
@@ -617,7 +628,7 @@
                                 <div id="pwd-container3" *ngIf="visiblecolor">
                                   <div class="form-group">
                                     <label for="username">Color</label>
-                                    
+
                                     <input formControlName="color"
                                       [ngClass]="{'invalid-data': color.invalid && (color.touched || color.dirty)}"
                                       type="text" class="form-control" placeholder="Ingrese el Color" />
