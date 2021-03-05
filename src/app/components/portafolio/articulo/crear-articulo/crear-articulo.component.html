@@ -129,9 +129,8 @@
                         </select>
                       </div>
                     </div>
-
+                    <br />
                     <div id="pwd-container3">
-
                       <label for="username">Precio Venta</label>
                       <input formControlName="preciosugerido"
                         [ngClass]="{'invalid-data': preciosugerido.invalid && (preciosugerido.touched || preciosugerido.dirty)}"
@@ -140,11 +139,10 @@
                         <div class="invalid-mensaje" *ngIf="preciosugerido.errors.pattern">
                           Precio Incorrecto
                         </div>
-
                       </div>
                     </div>
+                    <br />
                     <div id="pwd-container3">
-
                       <label for="username">Impuesto</label>
                       <div class="input-group">
                         <span class="input-group-btn"><button type="button" (click)="onCrearImpuesto()"
@@ -154,10 +152,10 @@
                           <option value="0">--Seleccione--</option>
                           <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
                             {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
-
                         </select>
                       </div>
                     </div>
+                    <br />
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Clasificación IVA</label>
@@ -175,7 +173,8 @@
                         <span class="input-group-btn">
                           <button type="button" (click)="onCrearUnidad()" class="btn btn-primary">+</button>
                         </span>
-                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida" (change)="onChangeUnidadPrincipal($event.target.value)">
+                        <select class="select2_demo_3 form-control" formControlName="codunidadmedida"
+                          (change)="onChangeUnidadPrincipal($event.target.value)">
                           <option value="null">--Seleccione--</option>
                           <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
                             {{unidad.nomunidadmedida}}</option>
@@ -242,65 +241,62 @@
                             type="text" class="form-control" placeholder="Ingrese la Descripción Larga"></textarea>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
+                <br>
 
                 <div class="row">
-
-                  <div class="row">
-
-                    <div class="col-lg-2">
-                      <div id="pwd-container3" *ngIf="visiblecantidadminima">
-                        <div class="form-group">
-                          <label for="username">Cantidad Minima</label>
-                          <input formControlName="stockminimo"
-                            [ngClass]="{'invalid-data': stockminimo.invalid && (stockminimo.touched || stockminimo.dirty)}"
-                            type="text" class="form-control" placeholder="Ingrese la Cantidad Minima " />
-                          <div *ngIf="stockminimo.invalid  && (stockminimo.dirty || stockminimo.touched)">
-                            <div class="invalid-mensaje" *ngIf="stockminimo.errors.pattern">
-                              Cantidad Incorrecto
-                            </div>
+                  <div class="col-lg-2">
+                    <div id="pwd-container3" *ngIf="visiblecantidadminima">
+                      <div class="form-group">
+                        <label for="username">Cantidad Minima</label>
+                        <input formControlName="stockminimo"
+                          [ngClass]="{'invalid-data': stockminimo.invalid && (stockminimo.touched || stockminimo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese la Cantidad Minima " />
+                        <div *ngIf="stockminimo.invalid  && (stockminimo.dirty || stockminimo.touched)">
+                          <div class="invalid-mensaje" *ngIf="stockminimo.errors.pattern">
+                            Cantidad Incorrecto
                           </div>
                         </div>
                       </div>
-
                     </div>
-                    <div class="col-lg-3">
-                      <div id="pwd-container3" *ngIf="visiblecantidadmaxima">
-                        <div class="form-group">
-                          <label for="username">Cantidad Maxima</label>
-                          <input formControlName="stockmaximo"
-                            [ngClass]="{'invalid-data': stockmaximo.invalid && (stockmaximo.touched || stockmaximo.dirty)}"
-                            type="text" class="form-control" placeholder="Ingrese la Cantidad Maxima" />
-                          <div *ngIf="stockmaximo.invalid  && (stockmaximo.dirty || stockmaximo.touched)">
-                            <div class="invalid-mensaje" *ngIf="stockmaximo.errors.pattern">
-                              Cantidad Incorrecto
-                            </div>
+
+                  </div>
+                  <div class="col-lg-3">
+                    <div id="pwd-container3" *ngIf="visiblecantidadmaxima">
+                      <div class="form-group">
+                        <label for="username">Cantidad Maxima</label>
+                        <input formControlName="stockmaximo"
+                          [ngClass]="{'invalid-data': stockmaximo.invalid && (stockmaximo.touched || stockmaximo.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese la Cantidad Maxima" />
+                        <div *ngIf="stockmaximo.invalid  && (stockmaximo.dirty || stockmaximo.touched)">
+                          <div class="invalid-mensaje" *ngIf="stockmaximo.errors.pattern">
+                            Cantidad Incorrecto
                           </div>
                         </div>
                       </div>
-
                     </div>
-                    <div class="col-lg-3">
-                      <div id="pwd-container3" *ngIf="visiblepuntoreorden">
-                        <div class="form-group">
-                          <label for="username">Punto de reorden</label>
-                          <input formControlName="cantidadreorden"
-                            [ngClass]="{'invalid-data': cantidadreorden.invalid && (cantidadreorden.touched || cantidadreorden.dirty)}"
-                            type="text" class="form-control" placeholder="Ingrese el punto de Reorden" />
-                          <div *ngIf="cantidadreorden.invalid  && (cantidadreorden.dirty || cantidadreorden.touched)">
-                            <div class="invalid-mensaje" *ngIf="cantidadreorden.errors.pattern">
-                              Punto Reorden Incorrecto
-                            </div>
+
+                  </div>
+                  <div class="col-lg-3">
+                    <div id="pwd-container3" *ngIf="visiblepuntoreorden">
+                      <div class="form-group">
+                        <label for="username">Punto de reorden</label>
+                        <input formControlName="cantidadreorden"
+                          [ngClass]="{'invalid-data': cantidadreorden.invalid && (cantidadreorden.touched || cantidadreorden.dirty)}"
+                          type="text" class="form-control" placeholder="Ingrese el punto de Reorden" />
+                        <div *ngIf="cantidadreorden.invalid  && (cantidadreorden.dirty || cantidadreorden.touched)">
+                          <div class="invalid-mensaje" *ngIf="cantidadreorden.errors.pattern">
+                            Punto Reorden Incorrecto
                           </div>
                         </div>
                       </div>
-
                     </div>
+
                   </div>
                 </div>
+                <br>
 
                 <div class="row">
                   <accordion [isAnimated]="false">
@@ -617,7 +613,7 @@
                                 <div id="pwd-container3" *ngIf="visiblecolor">
                                   <div class="form-group">
                                     <label for="username">Color</label>
-                                    
+
                                     <input formControlName="color"
                                       [ngClass]="{'invalid-data': color.invalid && (color.touched || color.dirty)}"
                                       type="text" class="form-control" placeholder="Ingrese el Color" />
@@ -854,6 +850,27 @@
                     </div>
                     <div class="file-type-view">
                       <h5><a href="#">Document-file.jpg</a></h5>
+                      <div style="text-align:center; margin-top: 100px; ">
+                        <mat-card style="margin-top:10px; width: 50%;">
+                          <mat-card-content>
+                            <ul>
+                              <li *ngFor="let file of files">
+                                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+                                <span id="file-label">
+
+                                </span>
+                              </li>
+                            </ul>
+                          </mat-card-content>
+                          <mat-card-actions>
+                            <button type="button" mat-button color="warn" (click)="onClickImagen()">
+                              <mat-icon>file_upload</mat-icon>
+                              Upload
+                            </button>
+                          </mat-card-actions>
+                        </mat-card><input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple"
+                          accept="image/*" style="display:none;" />
+                      </div>
                     </div>
                   </div>
                 </div>

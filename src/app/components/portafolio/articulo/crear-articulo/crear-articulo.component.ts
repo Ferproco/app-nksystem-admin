@@ -1,6 +1,6 @@
 import { CategoriaService } from './../../categoria/CategoriaService.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,6 +23,9 @@ import { UnidadService } from '../../unidad/UnidadService.service';
 import { MarcaService } from '../../marca/MarcaService.service';
 import { Kardex } from 'src/app/components/model/Kardex.model';
 import { UnidadMedidaAlterna } from 'src/app/components/model/UnidadMedidaAlterna.model';
+import { UploadService } from '../upload.service';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -31,6 +34,7 @@ import { UnidadMedidaAlterna } from 'src/app/components/model/UnidadMedidaAltern
 })
 export class CrearArticuloComponent implements OnInit {
 
+  @ViewChild("fileUpload", { static: false }) fileUpload: ElementRef; files = [];
   precioconiva: number = 0;
   preciosiniva: number = 0;
   montoiva: number = 0;
@@ -127,7 +131,8 @@ export class CrearArticuloComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: BsModalService,
-    private httpClient: HttpClient,) {
+    private httpClient: HttpClient,
+    private uploadService: UploadService) {
 
     this.ArticuloModel = new Articulo();
     this.idnegocio = 1;
@@ -188,7 +193,53 @@ export class CrearArticuloComponent implements OnInit {
 
     })
   }
-  
+
+  uploadFile(file) {
+    const formData = new FormData();
+    formData.append('file', file.data);
+    file.inProgress = true;
+    this.uploadService.upload(formData).pipe(
+      map(event => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        file.inProgress = false;
+        return of(`${file.data.name} upload failed.`);
+      })).subscribe((event: any) => {
+        if (typeof (event) === 'object') {
+          console.log(event.body);
+        }
+      });
+  }
+
+  private uploadFiles() {
+    this.fileUpload.nativeElement.value = '';
+    this.files.forEach(file => {
+      this.uploadFile(file);
+    });
+  }
+
+  onClickImagen() {
+    const fileUpload = this.fileUpload.nativeElement;fileUpload.onchange = () => {
+    for (let index = 0; index < fileUpload.files.length; index++)
+    {
+     const file = fileUpload.files[index];
+     this.files.push({ data: file, inProgress: false, progress: 0});
+    }
+      this.uploadFiles();
+    };
+    fileUpload.click();
+}
+
+
+
+
   guardarArticulo(event: Event) {
     event.preventDefault();
     this.loading = true;
@@ -427,16 +478,16 @@ export class CrearArticuloComponent implements OnInit {
         }
         this.buildForm();
         const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
-        this.ArticuloModel.lstmovimientoskardex.map(item =>{
+        this.ArticuloModel.lstmovimientoskardex.map(item => {
           formarraylstkardex.push(this.createItem(item));
         });
         this.formarticulo.setControl("lstmovimientoskardex", formarraylstkardex);
-       /**  Cargar la lista de unidades alternas**/
-       const formarraylstUnidadesAlternas = this.formarticulo.get("lstunidadesalternas") as FormArray;
-       this.ArticuloModel.lstunidadesalternas.map(itemalterna =>{
-        formarraylstUnidadesAlternas.push(this.createItemUnidadesalternas(itemalterna));
-       });
-       this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
+        /**  Cargar la lista de unidades alternas**/
+        const formarraylstUnidadesAlternas = this.formarticulo.get("lstunidadesalternas") as FormArray;
+        this.ArticuloModel.lstunidadesalternas.map(itemalterna => {
+          formarraylstUnidadesAlternas.push(this.createItemUnidadesalternas(itemalterna));
+        });
+        this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -528,7 +579,7 @@ export class CrearArticuloComponent implements OnInit {
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
-  onChangeUnidadPrincipal(event){
+  onChangeUnidadPrincipal(event) {
     console.log(' el vaolor event', event);
 
     const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
@@ -541,7 +592,7 @@ export class CrearArticuloComponent implements OnInit {
     this.ArticuloModel.lstunidadesalternas = [];
     this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
   }
-  
+
   onChange(event: MatSlideToggleChange) {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
   }
@@ -586,7 +637,7 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
-  
+
   addItemUnidadesAlternas(): void {
     this.ListItemsUnidasesAlternas.push(this.formbuilder.group({
       codnegocio: [this.idnegocio],
@@ -682,7 +733,7 @@ export class CrearArticuloComponent implements OnInit {
     var preciosinivas: number = 0;
 
     valorimpuesto = this.lstImpuestos[event - 1].normal;
-    
+
     console.log('event' + event);
     console.log('valorimpuesto ' + valorimpuesto);
     tieneivaincluido = Number(this.formarticulo.get('ivaincluido').value);
