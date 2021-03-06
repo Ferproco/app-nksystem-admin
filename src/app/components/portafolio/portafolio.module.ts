@@ -65,6 +65,7 @@ import { MarcaService } from './marca/MarcaService.service';
 import { UnidadMedidaAlterna } from '../model/UnidadMedidaAlterna.model';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-almacen-modal.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CrearCategoriaModalComponent,
     CatalogoAlmacenComponent,
     CrearAlmacenComponent,
+    CrearAlmacenModalComponent,
     FilterAlmacenPipe,
     CatalogoVendedorComponent,
     CrearVendedorComponent,

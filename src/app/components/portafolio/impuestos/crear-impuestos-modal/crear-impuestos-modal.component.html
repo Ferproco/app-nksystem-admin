@@ -11,7 +11,7 @@
         <div class="col-lg-12">
           <div id="pwd-container3">
 
-            
+
 
             <div class="row">
               <div class="col-lg-6">
@@ -19,7 +19,7 @@
                   <label for="username">Tipo Impuesto</label>
                   <div class="input-group">
                     <span class="input-group-btn"><button type="button" (click)="onCrearTipoImpuesto()"
-                      class="btn btn-primary">+</button></span>
+                        class="btn btn-primary">+</button></span>
                     <select class="select2_demo_3 form-control" formControlName="idtipoimpuesto">
                       <option value="null">--Seleccione--</option>
                       <option value="{{tipoimpuesto.id}}" *ngFor="let tipoimpuesto of lstTipoImpuestos">

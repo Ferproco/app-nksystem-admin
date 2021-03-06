@@ -6,15 +6,17 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Kardex } from 'src/app/components/model/Kardex.model';
+import { Kardex } from '../../model/Kardex.model';
 import { KardexService } from '../KardexService.service';
 
 @Component({
-  selector: 'app-catalogo-valorinventario',
-  templateUrl: './catalogo-valorinventario.component.html',
-  styleUrls: ['./catalogo-valorinventario.component.css']
+  selector: 'app-catalogo-valorkardex',
+  templateUrl: './catalogo-valorkardex.component.html',
+  styleUrls: ['./catalogo-valorkardex.component.css']
 })
-export class CatalogoValorinventarioComponent implements OnInit {
+
+
+export class CatalogoValorkardexComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Articulos';
   lstKardex: Kardex[] = [];
@@ -35,7 +37,7 @@ export class CatalogoValorinventarioComponent implements OnInit {
   showModalBox: boolean = false;
   PuedeEliminar: boolean = false;
 
-  displayedColumns: string[] = ['Fecha','Codigo', 'Items','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
+  displayedColumns: string[] = ['Fecha','Codigo', 'Items','Tercero','Tipo Doc','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
   dataSource: MatTableDataSource<Kardex>;
   selection = new SelectionModel<Kardex>(true, []);
 
@@ -44,9 +46,9 @@ export class CatalogoValorinventarioComponent implements OnInit {
   constructor(private kardexServicio: KardexService,
     
     private toastr: ToastrService,
-    private router: Router) {
-       this.idnegocio = 1;
-     }
+    private router: Router) { 
+      this.idnegocio = 1;
+    }
 
   ngOnInit(): void {
     this.listarkardex();

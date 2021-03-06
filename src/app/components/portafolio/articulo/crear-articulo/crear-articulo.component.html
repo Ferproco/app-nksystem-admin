@@ -423,13 +423,23 @@
                                                     style="width:70px" />
                                                 </td>
                                                 <td>
-                                                  <select class="select2_demo_3 form-control"
-                                                    formControlName="codalmacen">
-                                                    <option value="0">--Seleccione--</option>
-                                                    <option value="{{almacen.idalmacen}}"
-                                                      *ngFor="let almacen of lstAlmacenes">
-                                                      {{almacen.nombre}}</option>
-                                                  </select>
+
+
+                                                 
+                                                  <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                      <button type="button" (click)="onCrearBodega()"
+                                                        class="btn btn-primary">+</button>
+                                                    </span>
+                                                    <select class="select2_demo_3 form-control"
+                                                      formControlName="codalmacen">
+
+                                                      <option value="0">--Seleccione--</option>
+                                                      <option value="{{almacen.idalmacen}}"
+                                                        *ngFor="let almacen of lstAlmacenes">
+                                                        {{almacen.nombre}}</option>
+                                                    </select>
+                                                  </div>
                                                 </td>
 
 

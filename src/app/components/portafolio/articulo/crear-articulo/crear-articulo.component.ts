@@ -452,16 +452,7 @@ export class CrearArticuloComponent implements OnInit {
     }
 
   }
-  onCrearBodega() {
-    this.bsModalRef = this.modalService.show(CrearAlmacenModalComponent);
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if (result) {
-        this.listarBodegas();
-      }
-      console.log('results', result);
-
-    });
-  }
+  
 
   buscarArticulo(id: number) {
     let status = 0;
@@ -604,6 +595,16 @@ export class CrearArticuloComponent implements OnInit {
       if (result) {
         this.listarFamilias();
       }
+
+    });
+  }
+  onCrearBodega() {
+    this.bsModalRef = this.modalService.show(CrearAlmacenModalComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if (result) {
+        this.listarBodegas();
+      }
+      console.log('results', result);
 
     });
   }
