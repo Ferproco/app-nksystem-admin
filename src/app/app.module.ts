@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrarseComponent } from './components/login/registrarse/registrarse.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // RECOMMENDED
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { GrupoArticuloService } from './components/grupoarticulo/GrupoArticuloService.service';
@@ -26,19 +26,21 @@ import { CatalogoTransaccionesComponent } from './components/transacciones/catal
 import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
 import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 import { DepartamentoService } from './components/departamento/DepartamentoService.service';
 import { MunicipioService } from './components/municipio/MunicipioService.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -71,9 +73,7 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     FilterTransaccionesPipe,
     MensajeEliminarComponent,
     DocumentosComprasComponent,
-    CatalogoDocumentosComprasComponent,
-   
-  
+    CatalogoDocumentosComprasComponent
 
   ],
   imports: [
@@ -97,6 +97,7 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     MatMenuModule,
     MatIconModule,
     MatToolbarModule,
+    MatCardModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatDialogModule,
@@ -105,7 +106,8 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     ModalModule.forRoot(),
     AccordionModule.forRoot(),
     ButtonsModule.forRoot(),
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressBarModule
 
   ],
   providers: [
@@ -118,7 +120,7 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     ListaPrecioService,
     DocumentosVentasService,
     DocumentoCompraService,
-     BsModalRef
+    BsModalRef
   ],
   bootstrap: [AppComponent]
 })

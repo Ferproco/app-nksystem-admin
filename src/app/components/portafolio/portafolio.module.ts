@@ -1,3 +1,4 @@
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -63,6 +64,7 @@ import { CatalogoMarcaComponent } from './marca/catalogo-marca/catalogo-marca.co
 import { MarcaService } from './marca/MarcaService.service';
 import { UnidadMedidaAlterna } from '../model/UnidadMedidaAlterna.model';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-almacen-modal.component';
 
 
@@ -102,7 +104,7 @@ import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-
     CatalogoMarcaComponent,
   ],
   imports: [
-    
+
     CommonModule,
     PortafolioRoutingModule,
     FormsModule,
@@ -119,7 +121,9 @@ import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatSlideToggleModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatCardModule,
+    MatProgressBarModule
   ],
   providers: [
     AlmacenService,
@@ -133,8 +137,8 @@ import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-
     ContactoService,
     ImpuestoService,
     TipoImpuestoService,
-    UnidadService, 
-    //UnidadMedidaAlterna,   
+    UnidadService,
+    //UnidadMedidaAlterna,
     FormaPagoService,
     MarcaService,
   ]
