@@ -6,7 +6,9 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Articulo } from '../../model/Articulo.model';
 import { Kardex } from '../../model/Kardex.model';
+import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
 import { KardexService } from '../KardexService.service';
 
 @Component({
@@ -20,6 +22,8 @@ export class CatalogoValorkardexComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Articulos';
   lstKardex: Kardex[] = [];
+  lstArticulos: Articulo[] = [];
+  tipoproductoconfig = 'T';
   sortedData;
   filtrararticulos = '';
 
@@ -37,26 +41,66 @@ export class CatalogoValorkardexComponent implements OnInit {
   showModalBox: boolean = false;
   PuedeEliminar: boolean = false;
 
-  displayedColumns: string[] = ['Fecha','Codigo', 'Items','Tercero','Tipo Doc','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
-  dataSource: MatTableDataSource<Kardex>;
+  //displayedColumns: string[] = ['Fecha','Codigo', 'Items','Tercero','Tipo Doc','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
+  
+  displayedColumns: string[] =['Codigo', 'Nombre',  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'];
+ // dataSource: MatTableDataSource<Kardex>;
+  dataSource: MatTableDataSource<Articulo>;
   selection = new SelectionModel<Kardex>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private kardexServicio: KardexService,
-    
-    private toastr: ToastrService,
-    private router: Router) { 
-      this.idnegocio = 1;
+  constructor(private articuloServicio: ArticuloService,
+              private kardexServicio: KardexService,    
+              private toastr: ToastrService,
+              private router: Router) { 
+              this.idnegocio = 1;
     }
 
   ngOnInit(): void {
-    this.listarkardex();
+    //this.listarkardex();
+    this.listarArticulosPorTipo(this.tipoproductoconfig);
   }
   ngAfterViewInit() {
 
   }
-  listarkardex() {
+
+  private listarArticulosPorTipo(tipo: string): void {
+    this.loading = true;
+    this.lstArticulos = [];
+    let status = 0;
+    this.articuloServicio.listarArticulosPorTipo('', tipo)
+      .subscribe(response => {
+        const listaarticulo = response as Articulo[];
+        listaarticulo.forEach(element => {
+          if (element.status === 'ACTIVO') {
+            status = 1;
+          }
+          else {
+            status = 0;
+          }
+          this.lstArticulos.push(element);
+        });
+
+
+        this.dataSource = new MatTableDataSource(this.lstArticulos);
+        this.dataSource.paginator = this.paginator;
+        this.LengthTable = this.lstArticulos.length;
+        this.sortedData = this.lstArticulos.slice();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+  /*listarkardex() {
     this.loading = true;
     this.lstKardex = [];
     let status = 0;
@@ -90,7 +134,7 @@ export class CatalogoValorkardexComponent implements OnInit {
           }
         }));
   }
- 
+ */
 
   
   applyFilter(event: Event) {
@@ -170,7 +214,7 @@ export class CatalogoValorkardexComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Kardex): string {
+  checkboxLabel(row?: Articulo): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

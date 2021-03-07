@@ -19,6 +19,7 @@ import { CatalogoValorinventarioComponent } from './catalogo-valorinventario/cat
 import { KardexService } from './KardexService.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-valorkardex.component';
+import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-va
     MatSlideToggleModule
   ],
   providers: [
-    KardexService
+    KardexService,
+    ArticuloService,
   ]
 })
 export class InventariosModule { }
