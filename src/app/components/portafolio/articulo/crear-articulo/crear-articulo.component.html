@@ -247,7 +247,7 @@
                 <br>
 
                 <div class="row">
-                  <div class="col-lg-2">
+                  <div class="col-lg-3">
                     <div id="pwd-container3" *ngIf="visiblecantidadminima">
                       <div class="form-group">
                         <label for="username">Cantidad Minima</label>
@@ -346,13 +346,9 @@
                                                   </select>
 
                                                 </td>
-
-
-
-
                                                 <td>
                                                   <div class="btn-group project-list-add">
-                                                    <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
+                                                    <button type="button" (click)="removeItemUnidadesAlternas(i)" class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
                                                         aria-hidden="true"></i></button>
                                                   </div>
                                                 </td>
@@ -424,8 +420,6 @@
                                                 </td>
                                                 <td>
 
-
-                                                 
                                                   <div class="input-group">
                                                     <span class="input-group-btn">
                                                       <button type="button" (click)="onCrearBodega()"
@@ -442,15 +436,13 @@
                                                   </div>
                                                 </td>
 
-
-
-                                                <td>
+                                               <td>
                                                   <input type="number" class="form-control"
                                                     formControlName="montoxunidad" style="width:130px" />
                                                 </td>
                                                 <td>
                                                   <div class="btn-group project-list-add">
-                                                    <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
+                                                    <button type="button" (click)="removeItemListaKardex(i)" class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
                                                         aria-hidden="true"></i></button>
                                                   </div>
                                                 </td>
@@ -922,4 +914,6 @@
       </div>
     </div>
   </div>
+  <br>
+  <br>
 </form>

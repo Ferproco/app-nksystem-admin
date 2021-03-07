@@ -226,19 +226,15 @@ export class CrearArticuloComponent implements OnInit {
   }
 
   onClickImagen() {
-    const fileUpload = this.fileUpload.nativeElement;fileUpload.onchange = () => {
-    for (let index = 0; index < fileUpload.files.length; index++)
-    {
-     const file = fileUpload.files[index];
-     this.files.push({ data: file, inProgress: false, progress: 0});
-    }
+    const fileUpload = this.fileUpload.nativeElement; fileUpload.onchange = () => {
+      for (let index = 0; index < fileUpload.files.length; index++) {
+        const file = fileUpload.files[index];
+        this.files.push({ data: file, inProgress: false, progress: 0 });
+      }
       this.uploadFiles();
     };
     fileUpload.click();
-}
-
-
-
+  }
 
   guardarArticulo(event: Event) {
     event.preventDefault();
@@ -262,9 +258,6 @@ export class CrearArticuloComponent implements OnInit {
           }
         }));
   }
-
-
-
 
   listarFamilias() {
     this.loading = true;
@@ -325,6 +318,7 @@ export class CrearArticuloComponent implements OnInit {
           }
         }));
   }
+
   listarImpuestos() {
     this.loading = true;
     this.impuestoservice.listarImpuestos('')
@@ -344,6 +338,7 @@ export class CrearArticuloComponent implements OnInit {
           }
         }));
   }
+
   listarMarcas() {
     this.loading = true;
     this.marcaservice.listarMarcas('')
@@ -363,6 +358,7 @@ export class CrearArticuloComponent implements OnInit {
           }
         }));
   }
+
   listarGrupoArticulos() {
     this.loading = true;
     this.grupoarticuloservice.listarGrupoArticulos('')
@@ -452,7 +448,6 @@ export class CrearArticuloComponent implements OnInit {
     }
 
   }
-  
 
   buscarArticulo(id: number) {
     let status = 0;
@@ -502,18 +497,23 @@ export class CrearArticuloComponent implements OnInit {
       }
     });
   }
+
   get codigo() {
     return this.formarticulo.get('codigo');
   }
+
   get nomarticulo() {
     return this.formarticulo.get('nomarticulo');
   }
+
   get referencia() {
     return this.formarticulo.get('referencia');
   }
+
   get serial() {
     return this.formarticulo.get('serial');
   }
+
   get codigobarraprincipal() {
     return this.formarticulo.get('codigobarraprincipal');
   }
@@ -521,24 +521,31 @@ export class CrearArticuloComponent implements OnInit {
   get descripcionlarga() {
     return this.formarticulo.get('descripcionlarga');
   }
+
   get preciosugerido() {
     return this.formarticulo.get('preciosugerido');
   }
+
   get stockminimo() {
     return this.formarticulo.get('stockminimo');
   }
+
   get stockmaximo() {
     return this.formarticulo.get('stockmaximo');
   }
+
   get cantidadreorden() {
     return this.formarticulo.get('cantidadreorden');
   }
+
   get talla() {
     return this.formarticulo.get('talla');
   }
+
   get peso() {
     return this.formarticulo.get('peso');
   }
+
   get color() {
     return this.formarticulo.get('color');
   }
@@ -546,9 +553,11 @@ export class CrearArticuloComponent implements OnInit {
   get codfamilia() {
     return this.formarticulo.get('codfamilia');
   }
+
   get codunidadmedida() {
     return this.formarticulo.get('codunidadmedida');
   }
+
   get codmarca() {
     return this.formarticulo.get('codmarca');
   }
@@ -556,6 +565,7 @@ export class CrearArticuloComponent implements OnInit {
   get codimpuesto() {
     return this.formarticulo.get('codimpuesto');
   }
+
   get status() {
     return this.formarticulo.get('status');
   }
@@ -563,21 +573,22 @@ export class CrearArticuloComponent implements OnInit {
   get valorimpoconsumo() {
     return this.formarticulo.get('valorimpoconsumo');
   }
+
   get porcentajeimpoconsumo() {
     return this.formarticulo.get('porcentajeimpoconsumo');
   }
+
   onChangeTipo(event) {
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
+
   onChangeUnidadPrincipal(event) {
     console.log(' el vaolor event', event);
-
     const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
     formarraylstkardex.clear();
     this.ArticuloModel.lstmovimientoskardex = [];
     this.formarticulo.setControl("lstmovimientoskardex", formarraylstkardex);
-
     const formarraylstUnidadesAlternas = this.formarticulo.get("lstunidadesalternas") as FormArray;
     formarraylstUnidadesAlternas.clear();
     this.ArticuloModel.lstunidadesalternas = [];
@@ -598,6 +609,7 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
+
   onCrearBodega() {
     this.bsModalRef = this.modalService.show(CrearAlmacenModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -608,6 +620,7 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
+
   onCrearImpuesto() {
     this.bsModalRef = this.modalService.show(CrearImpuestosModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -618,6 +631,7 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
+
   onCrearUnidad() {
     this.bsModalRef = this.modalService.show(CrearUnidadModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -628,6 +642,7 @@ export class CrearArticuloComponent implements OnInit {
 
     });
   }
+
   onCrearMarca() {
     this.bsModalRef = this.modalService.show(CrearMarcaModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -639,16 +654,36 @@ export class CrearArticuloComponent implements OnInit {
     });
   }
 
-  addItemUnidadesAlternas(): void {
-    this.ListItemsUnidasesAlternas.push(this.formbuilder.group({
-      codnegocio: [this.idnegocio],
-      //codarticulo: [0, [Validators.required]],
-      codunidadmedidaalterna: [0, [Validators.required]],
-      codunidadminima: [0, [Validators.required]],
-      valorconversion: [0, [Validators.required]],
-      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
-    }));
+  removeItemUnidadesAlternas(pos: number){
+
+    this.ListItemsUnidasesAlternas.removeAt(pos);
   }
+
+  removeItemListaKardex(pos: number){
+
+    this.ListItems.removeAt(pos);
+  }
+
+  addItemUnidadesAlternas(): void {
+    const idunidad = Number.parseInt(this.formarticulo.get('codunidadmedida').value);
+    console.log(idunidad);
+    if (!idunidad){
+      this.toastr.info('Seleccione la Unidad de Medida Principal', 'Informacion', { enableHtml: true, closeButton: true });
+    }
+    else
+    {
+      this.ListItemsUnidasesAlternas.push(this.formbuilder.group({
+        codnegocio: [this.idnegocio],
+        //codarticulo: [0, [Validators.required]],
+        codunidadmedidaalterna: [0, [Validators.required]],
+        codunidadminima: [{value: idunidad, disabled:  true}, [Validators.required]],
+        valorconversion: [0, [Validators.required]],
+        fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+      }));
+    }
+
+  }
+
   get ListItems(): FormArray {
     return this.formarticulo.get("lstmovimientoskardex") as FormArray
   }
@@ -732,9 +767,7 @@ export class CrearArticuloComponent implements OnInit {
     var porcentajeiva: number = 0;
     var tieneivaincluido: number;
     var preciosinivas: number = 0;
-
     valorimpuesto = this.lstImpuestos[event - 1].normal;
-
     console.log('event' + event);
     console.log('valorimpuesto ' + valorimpuesto);
     tieneivaincluido = Number(this.formarticulo.get('ivaincluido').value);
@@ -757,17 +790,13 @@ export class CrearArticuloComponent implements OnInit {
     else if (tieneivaincluido === 1) {
       console.log('entro por 1 ');
       this.precioconiva = precio;
-
       porcentajeiva = (valorimpuesto / 100) + 1;
       console.log('porcentajeiva ' + porcentajeiva);
       preciosinivas = precio / porcentajeiva;
       console.log('preciosinivas ' + preciosinivas);
       this.preciosiniva = preciosinivas;
-
       montoimpuesto = (preciosinivas * valorimpuesto) / 100;
       this.montoiva = montoimpuesto;
-
-
     }
     //this.formarticulo.get('precioconiva').setValue(Number(digitoverificacion));}
   }
