@@ -1,8 +1,8 @@
 <div class="loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
   </div>
-  
-  
+
+
   <div class="content-inner-all">
     <!-- Breadcome start-->
     <div class="breadcome-area mg-b-30 small-dn">
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Static Table Start -->
   <div class="content-inner-all">
     <div class="data-table-area mg-b-15">
@@ -53,13 +53,13 @@
                 <div class="static-table-list">
                   <mat-toolbar class="toolmenu">
                     <mat-toolbar-row>
-  
+
                       <div class="breadcome-heading">
                         <input type="text" (keyup)="applyFilter($event)" name="filtrarclientes" placeholder="Buscar..."
                           class="form-control">
                         <a href=""><i class="fa fa-search"></i></a>
                       </div>
-  
+
                       <span class="example-spacer"></span>
                       <button class="botonmenu" mat-button [matMenuTriggerFor]="menu"
                         aria-label="Example icon-button with menu icon">
@@ -69,7 +69,7 @@
                         <button (click)="ExportarExcel()" mat-menu-item>Excel</button>
                         <button mat-menu-item (click)="ExportarTxt()">TXT</button>
                       </mat-menu>
-  
+
                       <button mat-icon-button class="example-icon favorite-icon botonmenu"
                         aria-label="Example icon-button with heart icon">
                         <mat-icon (click)="Refrescar()">refresh</mat-icon>
@@ -95,56 +95,56 @@
                       </td>
                     </ng-container>
                       <!-- Position Column -->
-                      <ng-container matColumnDef="Fecha">
+                      <ng-container matColumnDef="Codigo">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                          FECHA
+                          Codigo
                         </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fecha | date:'dd-MM-yyyy'}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.codigo }} </td>
                       </ng-container>
-    
+
                     <!-- Position Column -->
-                    <ng-container matColumnDef="Codigo">
+                    <ng-container matColumnDef="Nombre">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         CODIGO
                       </th>
-                      <td mat-cell *matCellDef="let element"> {{element.articulo?.codigo}} </td>
+                      <td mat-cell *matCellDef="let element"> {{element.nomarticulo}} </td>
                     </ng-container>
-  
-                    <!-- Name Column -->
+
+                    <!-- Name Column
                     <ng-container matColumnDef="Items">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> ITEMS </th>
                       <td mat-cell *matCellDef="let element"> {{element.articulo?.nomarticulo}} </td>
-                    </ng-container>
-  
-                      <!-- Name Column -->
+                    </ng-container>-->
+
+                      <!-- Name Column
                       <ng-container matColumnDef="Tercero">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Tercero </th>
                         <td mat-cell *matCellDef="let element"> {{element.documentoasociado}} </td>
-                      </ng-container>
+                      </ng-container>-->
                       <!-- Name Column -->
-                       <!-- Name Column -->
+                       <!-- Name Column
                        <ng-container matColumnDef="Tipo Doc">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Doc </th>
                         <td mat-cell *matCellDef="let element"> {{element.documentoasociado}} </td>
-                      </ng-container>
-                      <!-- Name Column -->
+                      </ng-container>-->
+                      <!-- Name Column
                       <ng-container matColumnDef="Documento Asociado">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> DOCUMENTO ASOCIADO </th>
                         <td mat-cell *matCellDef="let element"> {{element.documentoasociado}} </td>
-                      </ng-container>
-                       <!-- Name Column -->
+                      </ng-container>-->
+                       <!-- Name Column
                        <ng-container matColumnDef="Concepto">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> CONCEPTO </th>
                         <td mat-cell *matCellDef="let element"> {{element.concepto}} </td>
-                      </ng-container>
-                  
-  
-                    <!-- Weight Column -->
+                      </ng-container>-->
+
+
+                    <!-- Weight Column
                     <ng-container matColumnDef="Cantidad">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> CANTIDAD </th>
                       <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
                     </ng-container>
-  
+
                     <ng-container matColumnDef="Und Medida">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> UNIDAD </th>
                       <td mat-cell *matCellDef="let element"> {{element.unidadmedida?.nomunidadmedida}} </td>
@@ -169,12 +169,12 @@
                           </div>
                         </ng-template>
                       </td>
-                    </ng-container>
-  
-  
+                    </ng-container>-->
+
+
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
                     <tr class="mat-row" *matNoDataRow>
                       <td class="mat-cell" colspan="8">No hay resultados para busqueda</td>
                     </tr>
@@ -184,9 +184,9 @@
                       showFirstLastButtons>
                     </mat-paginator>
                   </div>
-  
+
                 </div>
-  
+
               </div>
             </div>
           </div>

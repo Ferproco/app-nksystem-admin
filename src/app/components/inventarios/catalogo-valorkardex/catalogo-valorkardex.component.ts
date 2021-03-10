@@ -42,18 +42,18 @@ export class CatalogoValorkardexComponent implements OnInit {
   PuedeEliminar: boolean = false;
 
   //displayedColumns: string[] = ['Fecha','Codigo', 'Items','Tercero','Tipo Doc','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
-  
-  displayedColumns: string[] =['Codigo', 'Nombre',  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'];
+
+  displayedColumns: string[] =['Codigo', 'Nombre'/*,  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'*/];
  // dataSource: MatTableDataSource<Kardex>;
   dataSource: MatTableDataSource<Articulo>;
-  selection = new SelectionModel<Kardex>(true, []);
+  selection = new SelectionModel<Articulo>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private articuloServicio: ArticuloService,
-              private kardexServicio: KardexService,    
+              private kardexServicio: KardexService,
               private toastr: ToastrService,
-              private router: Router) { 
+              private router: Router) {
               this.idnegocio = 1;
     }
 
@@ -114,7 +114,7 @@ export class CatalogoValorkardexComponent implements OnInit {
           else {
             status = 0;
           }
-          
+
           this.lstKardex.push(element);
         });
         this.dataSource = new MatTableDataSource(this.lstKardex);
@@ -136,7 +136,7 @@ export class CatalogoValorkardexComponent implements OnInit {
   }
  */
 
-  
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -178,10 +178,10 @@ export class CatalogoValorkardexComponent implements OnInit {
     }
   }
 
- 
 
- 
-  
+
+
+
 
 
   ExportarExcel(){
@@ -221,7 +221,7 @@ export class CatalogoValorkardexComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  
+
 
 
 }
