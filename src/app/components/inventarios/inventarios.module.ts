@@ -20,6 +20,7 @@ import { KardexService } from './KardexService.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-valorkardex.component';
 import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
+import { TableTransaccionInventariosComponent } from './table-transaccion-inventarios/table-transaccion-inventarios.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ArticuloService } from '../portafolio/articulo/ArticuloService.service'
       InventariosComponent,
       CatalogoValorinventarioComponent,
       CatalogoValorkardexComponent,
+      TableTransaccionInventariosComponent,
     ],
   imports: [
     CommonModule,
