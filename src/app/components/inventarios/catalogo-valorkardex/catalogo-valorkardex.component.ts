@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import { ArticuloKardex } from '../../model/ArticuloKardex.model';
 //import { Articulo } from '../../model/Articulo.model';
 import { Kardex } from '../../model/Kardex.model';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
@@ -32,7 +33,7 @@ export class CatalogoValorkardexComponent implements OnInit {
   loading = false;
   titulo = 'Listado de Articulos';
   lstKardex: Kardex[] = [];
-  lstArticulos: Articulo[] = [];
+  lstArticulos: ArticuloKardex[] = [];
   tipoproductoconfig = 'T';
   sortedData;
   filtrararticulos = '';
@@ -55,7 +56,7 @@ export class CatalogoValorkardexComponent implements OnInit {
   //displayedColumns: string[] =['Codigo', 'Nombre'/*,  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'*/];
  // dataSource: MatTableDataSource<Kardex>;
   //dataSource: MatTableDataSource<Articulo>;
-  selection = new SelectionModel<Articulo>(true, []);
+  selection = new SelectionModel<ArticuloKardex>(true, []);
 
   isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
   expandedElement: any;
@@ -63,7 +64,6 @@ export class CatalogoValorkardexComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private articuloServicio: ArticuloService,
-              private kardexServicio: KardexService,
               private toastr: ToastrService,
               private router: Router) {
 
@@ -81,15 +81,39 @@ export class CatalogoValorkardexComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    //this.listarkardex();
-    //this.listarArticulosPorTipo(this.tipoproductoconfig);
-
+    this.listarArticulosPorTipo(this.tipoproductoconfig);
     this.dataSource = new ExampleDataSource(dataMain);
     this.dataSource.sort = this.sort;
   }
 
   ngAfterViewInit() {
 
+  }
+
+  private listarArticulosPorTipo(tipo: string): void {
+    this.loading = true;
+    this.lstArticulos = [];
+    let status = 0;
+    this.articuloServicio.listarArticulosPorFilter('', tipo, '', '')
+      .subscribe(response => {
+        this.lstArticulos = response as ArticuloKardex[];
+
+        //this.dataSource = new MatTableDataSource(this.lstArticulos);
+        //this.dataSource.paginator = this.paginator;
+        //this.LengthTable = this.lstArticulos.length;
+        //this.sortedData = this.lstArticulos.slice();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   applyFilter(event: Event) {
@@ -150,7 +174,7 @@ export class CatalogoValorkardexComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Articulo): string {
+  checkboxLabel(row?: ArticuloKardex): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -159,20 +183,10 @@ export class CatalogoValorkardexComponent implements OnInit {
 
 }
 
-export interface Articulo {
-  nomarticulo: string;
-  codigo: string;
-  entrada: number;
-  salida: number;
-  saldo: number;
-  costo: number;
-  costototal: number;
-  symbol: string;
-}
 
-const dataMain: Articulo[] = [
-  {codigo: "1", nomarticulo: "Computador", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079, symbol: 'H'},
-  {codigo: "1", nomarticulo: "Mouse y Teclado", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079, symbol: 'H'},
+const dataMain: ArticuloKardex[] = [
+  {codigo: "1", nomarticulo: "Computador", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079},
+  {codigo: "1", nomarticulo: "Mouse y Teclado", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079},
 
 ];
 
