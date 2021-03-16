@@ -2,6 +2,7 @@ import { Kardex } from './Kardex.model';
 
 export class ArticuloKardex{
 
+  public id: number;
   public nomarticulo: string;
   public codigo: string;
   public entrada: number;

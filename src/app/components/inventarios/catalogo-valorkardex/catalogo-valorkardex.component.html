@@ -123,7 +123,7 @@
                   <!-- saldo Column -->
                   <ng-container matColumnDef="saldo">
                     <mat-header-cell *matHeaderCellDef> SALDO </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.salida}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.saldo}} </mat-cell>
                   </ng-container>
 
                   <!-- Costo Column -->
@@ -141,7 +141,7 @@
                   <!-- Expanded Content Column - The detail row is made up of this one column -->
                   <ng-container matColumnDef="expandedDetail">
                     <mat-cell *matCellDef="let detail">
-                      <app-table-transaccion-inventarios></app-table-transaccion-inventarios>
+                      <app-table-transaccion-inventarios [masterRow]="detail.element"></app-table-transaccion-inventarios>
                     </mat-cell>
                   </ng-container>
 

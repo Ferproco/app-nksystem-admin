@@ -1,10 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
+import { ArticuloKardex } from '../../model/ArticuloKardex.model';
 import { Kardex } from '../../model/Kardex.model';
 import { KardexService } from '../KardexService.service';
 
@@ -16,26 +17,59 @@ import { KardexService } from '../KardexService.service';
 export class TableTransaccionInventariosComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Fecha', 'Codigo', 'Items', 'Documento Asociado', 'Concepto', 'Cantidad', 'Und Medida', 'Costo Promedio', 'Total'];
+  displayedColumns: string[] = [
+    'Fecha',
+    //'Codigo',
+    //'Items',
+    'Tercero',
+    'Tipo Documento',
+    'Documento Asociado',
+    'Concepto',
+    'Entrada',
+    'Salida',
+    'Und Medida',
+    'Costo Promedio',
+    'Total'];
   dataSource: MatTableDataSource<Kardex>;
   selection = new SelectionModel<Kardex>(true, []);
   loading = false;
   lstKardex: Kardex[] = [];
   LengthTable = 0;
   sortedData;
+  @Input() masterRow: ArticuloKardex;
 
   constructor(private kardexServicio: KardexService,
-              private toastr: ToastrService) { }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.listarkardex();
+
+    console.log('que trae el master row ' + JSON.stringify(this.masterRow));
   }
 
   listarkardex() {
     this.loading = true;
     this.lstKardex = [];
     let status = 0;
-    this.kardexServicio.listarKardex('')
+    let articulokardex = this.masterRow as ArticuloKardex;
+
+    articulokardex.lstmovimientoskardex.forEach(element => {
+      if (element.cantidad >= 0){
+        element.entrada = element.cantidad;
+        element.salida = 0;
+      }
+      else {
+        element.salida = Number(element.cantidad) * -1;
+        element.entrada = 0;
+      }
+    });
+    this.lstKardex = articulokardex.lstmovimientoskardex;
+    this.dataSource = new MatTableDataSource(this.lstKardex);
+    this.dataSource.paginator = this.paginator;
+    this.LengthTable = this.lstKardex.length;
+    this.sortedData = this.lstKardex.slice();
+    this.loading = false;
+    /*this.kardexServicio.listarKardex('')
       .subscribe(response => {
         this.lstKardex = response as Kardex[];
         this.dataSource = new MatTableDataSource(this.lstKardex);
@@ -53,7 +87,7 @@ export class TableTransaccionInventariosComponent implements OnInit {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
               { enableHtml: true, closeButton: true });
           }
-        }));
+        }));*/
   }
 
   sortData(sort: Sort) {
@@ -64,11 +98,11 @@ export class TableTransaccionInventariosComponent implements OnInit {
     }
   }
 
-   /** Selects all rows if they are not all selected; otherwise clear selection. */
-   masterToggle() {
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -79,8 +113,8 @@ export class TableTransaccionInventariosComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-   /** Whether the number of selected elements matches the total number of rows. */
-   isAllSelected() {
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.LengthTable;//this.dataSource.data.length;
     return numSelected === numRows;

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { ArticuloKardex } from '../../model/ArticuloKardex.model';
-//import { Articulo } from '../../model/Articulo.model';
 import { Kardex } from '../../model/Kardex.model';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
 import { KardexService } from '../KardexService.service';
@@ -82,8 +81,6 @@ export class CatalogoValorkardexComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarArticulosPorTipo(this.tipoproductoconfig);
-    this.dataSource = new ExampleDataSource(dataMain);
-    this.dataSource.sort = this.sort;
   }
 
   ngAfterViewInit() {
@@ -97,7 +94,8 @@ export class CatalogoValorkardexComponent implements OnInit {
     this.articuloServicio.listarArticulosPorFilter('', tipo, '', '')
       .subscribe(response => {
         this.lstArticulos = response as ArticuloKardex[];
-
+        this.dataSource = new ExampleDataSource(this.lstArticulos);
+        this.dataSource.sort = this.sort;
         //this.dataSource = new MatTableDataSource(this.lstArticulos);
         //this.dataSource.paginator = this.paginator;
         //this.LengthTable = this.lstArticulos.length;
@@ -183,12 +181,6 @@ export class CatalogoValorkardexComponent implements OnInit {
 
 }
 
-
-const dataMain: ArticuloKardex[] = [
-  {codigo: "1", nomarticulo: "Computador", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079, lstmovimientoskardex: null},
-  {codigo: "1", nomarticulo: "Mouse y Teclado", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079, lstmovimientoskardex: null},
-
-];
 
 export class ExampleDataSource extends MatTableDataSource<any> {
 

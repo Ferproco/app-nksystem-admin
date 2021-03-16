@@ -9,6 +9,8 @@ export class Kardex{
     public fecha: Date;
     public documentoasociado: string;
     public cantidad: number;
+    public entrada: number;
+    public salida: number;
     public montoxunidad: number = 0;
     public codunidadmedida: number = 0;
     public codunidadalterna: number = 0;
