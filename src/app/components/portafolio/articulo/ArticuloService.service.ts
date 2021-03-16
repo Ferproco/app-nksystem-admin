@@ -71,13 +71,14 @@ export class ArticuloService {
     const fechahastastr = fechahasta.toString().split('-');
     let fechad = null;
     let fechah = null;
+    var fechahoy= new Date();
 
     if (fechadesdestr[2] || fechadesdestr[1] || fechadesdestr[0]) {
       console.log('entro por el mayor que cero');
       fechad = new Date(Number(fechadesdestr[2]), Number(fechadesdestr[1]) - 1, Number(fechadesdestr[0]));
     }
     else {
-      fechad = new Date();
+      fechad = new Date(fechahoy.getFullYear(), fechahoy.getMonth()-1, fechahoy.getDay());
       console.log('entro por vacio');
     }
 
@@ -85,7 +86,7 @@ export class ArticuloService {
       fechah = new Date(Number(fechahastastr[2]), Number(fechahastastr[1]) - 1, Number(fechahastastr[0]));
     }
     else {
-      fechah = new Date().toString().split('-');
+      fechah = new Date(fechahoy.getFullYear(), fechahoy.getMonth()-1, fechahoy.getDay());
     }
     console.log('La fecha desde ' + fechad + ' y hasta ' + fechah);
     const body = {

@@ -1,3 +1,5 @@
+import { Kardex } from './Kardex.model';
+
 export class ArticuloKardex{
 
   public nomarticulo: string;
@@ -7,4 +9,5 @@ export class ArticuloKardex{
   public saldo: number;
   public costo: number;
   public costototal: number;
+  public lstmovimientoskardex: Kardex[]=[];
 }

@@ -185,8 +185,8 @@ export class CatalogoValorkardexComponent implements OnInit {
 
 
 const dataMain: ArticuloKardex[] = [
-  {codigo: "1", nomarticulo: "Computador", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079},
-  {codigo: "1", nomarticulo: "Mouse y Teclado", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079},
+  {codigo: "1", nomarticulo: "Computador", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079, lstmovimientoskardex: null},
+  {codigo: "1", nomarticulo: "Mouse y Teclado", entrada: 1.0079, salida: 1.0079, saldo: 1.0079, costo: 1.0079, costototal: 1.0079, lstmovimientoskardex: null},
 
 ];
 
