@@ -68,34 +68,17 @@ export class ArticuloService {
       tipoitems = 5;
     }
     //const fecha  = new Date(fechadesde);
-    //const fechadesdestr = fechadesde.toString().split('-');
-    //const fechahastastr = fechahasta.toString().split('-');
-    //let fechad = new Date(fechadesde);
-    //let fechah = new Date(fechahasta);
-    //var fechahoy= new Date();
-
-    /*if (fechadesdestr[2] || fechadesdestr[1] || fechadesdestr[0]) {
-      console.log('entro por el mayor que cero');
-      fechad = new Date(Number(fechadesdestr[2]), Number(fechadesdestr[1]) - 1, Number(fechadesdestr[0]));
-    }
-    else {
-      fechad = new Date(fechahoy.getFullYear(), fechahoy.getMonth()-1, fechahoy.getDay());
-      console.log('entro por vacio');
-    }
-
-    if (fechahastastr[2] || fechahastastr[1] || fechahastastr[0]) {
-      fechah = new Date(Number(fechahastastr[2]), Number(fechahastastr[1]) - 1, Number(fechahastastr[0]));
-    }
-    else {
-      fechah = new Date(fechahoy.getFullYear(), fechahoy.getMonth()-1, fechahoy.getDay());
-    }*/
-    console.log('La fecha desde ' + fechadesde + ' y hasta ' + fechahasta);
+    const fechadesdestr = fechadesde.toString().split('-');
+    const fechahastastr = fechahasta.toString().split('-');
+    let fechad = null;
+    let fechah = null;
+    fechad = new Date(Number(fechadesdestr[2]), Number(fechadesdestr[1]) - 1, Number(fechadesdestr[0]));
+    fechah = new Date(Number(fechahastastr[2]), Number(fechahastastr[1]) - 1, Number(fechahastastr[0]));
     const body = {
       tipo: Number(tipoitems),
-      fechadesde: fechadesde,
-      fechahasta: fechahasta
+      fechadesde: fechad,
+      fechahasta: fechah
     }
-    console.log('Lo que se esta enviando es ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/transacciones/articulos/';
     return this.httpClient.post(endpoint, JSON.stringify(body), { headers: httpHeaders });
@@ -105,15 +88,12 @@ export class ArticuloService {
   guardarArticulo(idIn: number, idnegocio: number, articulo: Articulo) {
 
     articulo.lstmovimientoskardex.forEach(element => {
-
       const fechastr = element.fecha.toString().split('-');
-      console.log('la fecha ' + fechastr);
       const year = Number(fechastr[2]);
       const month = Number(fechastr[1]) - 1;
       const date = Number(fechastr[0]);
-      console.log('Entro al for de articulos ' + JSON.stringify(element));
       element.id = element.id;
-      element.articulo_id = Number(idIn);
+      element.articulo_id = Number(element.articulo_id);
       element.tipo = 'ENT';
       element.fecha = new Date(year, month, date);
       element.cantidad = Number(element.cantidad);
@@ -126,7 +106,7 @@ export class ArticuloService {
     });
 
     articulo.lstunidadesalternas.forEach(element => {
-      console.log('Entro al for de unidades alternas ' + JSON.stringify(element));
+      //console.log('Entro al for de unidades alternas ' + JSON.stringify(element));
       element.id = element.id;
       element.articulo_id = Number(element.articulo_id);
       element.codunidadmedidaalterna = Number(element.codunidadmedidaalterna);
@@ -166,7 +146,7 @@ export class ArticuloService {
       lstmovimientoskardex: articulo.lstmovimientoskardex,
       lstunidadesalternas: articulo.lstunidadesalternas
     };
-    console.log('id ' + idIn + 'articulo ' + JSON.stringify(body));
+    console.log('id ' + idIn + ' articulo ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.post(endpoint, JSON.stringify(body), { headers: httpHeaders });
