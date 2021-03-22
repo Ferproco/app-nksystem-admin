@@ -49,6 +49,7 @@
                 </h1>
               </div>
             </div>
+            <form [formGroup]="formatransacciones" (ngSubmit)="searchfilter($event)">
             <div class="sparkline8-graph">
               <div class="static-table-list">
                 <mat-toolbar class="toolmenu">
@@ -74,22 +75,59 @@
                   </mat-toolbar-row>
                 </mat-toolbar>
                 <div class="row">
-                  <div class="col-lg-2">
-                    <label for="password3">Fecha Desde</label>
+
+                  <div class="col-xs-12 col-12 col-sm-2 form-group">
+                    <label for="password3">Fecha inicial</label>
                     <div class="input-group date">
                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                      <input class="form-control" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+                      <input
+                      class="form-control"
+                      formControlName="fechadesde"
+                      bsDatepicker #dp="bsDatepicker"
+                      [bsConfig]="bsConfig"
+                      >
                     </div>
                   </div>
-                  <div class="col-lg-2">
-                    <label for="password3">Fecha Hasta</label>
+                  <div class="col-xs-12 col-12 col-sm-2 form-group">
+                    <label for="password3">Fecha final</label>
                     <div class="input-group date">
                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                      <input class="form-control" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+                      <input
+                      class="form-control"
+                      formControlName="fechahasta"
+                      bsDatepicker #dp="bsDatepicker"
+                      [bsConfig]="bsConfig"
+                      >
                     </div>
+                  </div>
+                  <div class="col-xs-12 col-12 col-sm-2 form-group">
+                    <label for="password3">Bodega</label>
+
+                      <select class="select2_demo_3 form-control" formControlName="codalmacen">
+                        <option value="0">--Seleccione--</option>
+                        <option
+                          value="{{almacen.idalmacen}}" *ngFor="let almacen of lstAlmacenes">{{almacen.nombre}}
+                        </option>
+                      </select>
+
+                  </div>
+                  <div class="col-xs-12 col-12 col-sm-2 form-group">
+                    <label for="password3">Producto</label>
+                    <div class="input-group date">
+                      <input type="text" class="form-control" formControlName="codarticulo"
+                      placeholder="Codigo Items" style="width:100%" />
+                    <span class="input-group-btn"><button type="button"
+                        class="btn btn-primary"><i class="fa fa-search"></i></button></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-12 col-sm-2 form-group">
+                    <label for="password3" style="color: white;">B</label>
+                    <div class="input-group date">
+                      <button type="submit" class="btn btn-custon-rounded-four btn-warning"><span
+                          class="adminpro-icon "><i class="fa fa-search"></i></span> Buscar</button>
+                        </div>
                   </div>
                 </div>
-
                 <table class="table" mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 
                   <!--- Note that these columns can be defined in any order.
@@ -141,7 +179,8 @@
                   <!-- Expanded Content Column - The detail row is made up of this one column -->
                   <ng-container matColumnDef="expandedDetail">
                     <mat-cell *matCellDef="let detail">
-                      <app-table-transaccion-inventarios [masterRow]="detail.element"></app-table-transaccion-inventarios>
+                      <app-table-transaccion-inventarios [masterRow]="detail.element">
+                      </app-table-transaccion-inventarios>
                     </mat-cell>
                   </ng-container>
 
@@ -163,6 +202,7 @@
               </div>
 
             </div>
+          </form>
           </div>
         </div>
       </div>

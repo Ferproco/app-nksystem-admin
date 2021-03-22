@@ -21,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-valorkardex.component';
 import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
 import { TableTransaccionInventariosComponent } from './table-transaccion-inventarios/table-transaccion-inventarios.component';
+import { AlmacenService } from '../portafolio/almacen/AlmacenService.service';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { TableTransaccionInventariosComponent } from './table-transaccion-invent
   providers: [
     KardexService,
     ArticuloService,
+    AlmacenService
   ]
 })
 export class InventariosModule { }

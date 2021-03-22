@@ -712,7 +712,7 @@ export class CrearArticuloComponent implements OnInit {
     return this.formbuilder.group({
       codnegocio: [this.idnegocio],
       // documentoid: [0],
-      articulo_id: [kardex.articulo_id, [Validators.required]],
+      //articulo_id: [kardex.articulo_id, [Validators.required]],
       codunidadmedida: [kardex.codunidadmedida, [Validators.required]],
       codalmacen: [kardex.codalmacen, [Validators.required]],
       cantidad: [kardex.cantidad, [Validators.required]],

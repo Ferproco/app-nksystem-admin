@@ -50,6 +50,7 @@ export class ArticuloService {
   }
 
   listarArticulosPorFilter(codnegocio: string, tipo: string, fechadesde: string, fechahasta: string) {
+
     let tipoitems = 0;
     if (tipo === 'P') {
       tipoitems = 1;
@@ -66,14 +67,14 @@ export class ArticuloService {
     else if (tipo === 'T') {
       tipoitems = 5;
     }
+    //const fecha  = new Date(fechadesde);
+    //const fechadesdestr = fechadesde.toString().split('-');
+    //const fechahastastr = fechahasta.toString().split('-');
+    //let fechad = new Date(fechadesde);
+    //let fechah = new Date(fechahasta);
+    //var fechahoy= new Date();
 
-    const fechadesdestr = fechadesde.toString().split('-');
-    const fechahastastr = fechahasta.toString().split('-');
-    let fechad = null;
-    let fechah = null;
-    var fechahoy= new Date();
-
-    if (fechadesdestr[2] || fechadesdestr[1] || fechadesdestr[0]) {
+    /*if (fechadesdestr[2] || fechadesdestr[1] || fechadesdestr[0]) {
       console.log('entro por el mayor que cero');
       fechad = new Date(Number(fechadesdestr[2]), Number(fechadesdestr[1]) - 1, Number(fechadesdestr[0]));
     }
@@ -87,12 +88,12 @@ export class ArticuloService {
     }
     else {
       fechah = new Date(fechahoy.getFullYear(), fechahoy.getMonth()-1, fechahoy.getDay());
-    }
-    console.log('La fecha desde ' + fechad + ' y hasta ' + fechah);
+    }*/
+    console.log('La fecha desde ' + fechadesde + ' y hasta ' + fechahasta);
     const body = {
       tipo: Number(tipoitems),
-      fechadesde: fechad,
-      fechahasta: fechah
+      fechadesde: fechadesde,
+      fechahasta: fechahasta
     }
     console.log('Lo que se esta enviando es ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
@@ -104,14 +105,15 @@ export class ArticuloService {
   guardarArticulo(idIn: number, idnegocio: number, articulo: Articulo) {
 
     articulo.lstmovimientoskardex.forEach(element => {
+
       const fechastr = element.fecha.toString().split('-');
       console.log('la fecha ' + fechastr);
       const year = Number(fechastr[2]);
       const month = Number(fechastr[1]) - 1;
       const date = Number(fechastr[0]);
       console.log('Entro al for de articulos ' + JSON.stringify(element));
-      element.id = 0;
-      element.articulo_id = Number(element.articulo_id);;
+      element.id = element.id;
+      element.articulo_id = Number(idIn);
       element.tipo = 'ENT';
       element.fecha = new Date(year, month, date);
       element.cantidad = Number(element.cantidad);
@@ -125,7 +127,7 @@ export class ArticuloService {
 
     articulo.lstunidadesalternas.forEach(element => {
       console.log('Entro al for de unidades alternas ' + JSON.stringify(element));
-      element.id = 0;
+      element.id = element.id;
       element.articulo_id = Number(element.articulo_id);
       element.codunidadmedidaalterna = Number(element.codunidadmedidaalterna);
       //element.fecha = new Date(year, month, date);

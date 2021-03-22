@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'compras/documentodecompra-factura/:tipodocumento', component: DocumentosComprasComponent },
   { path: 'inventarios', loadChildren: () => import('./components/inventarios/inventarios.module').then(m => m.InventariosModule) },
   { path: 'configuraciones', loadChildren: () => import('./components/configuraciones/configuraciones.module').then(m => m.ConfiguracionesModule) },
+  { path: 'compras', loadChildren: () => import('./components/compras/compras.module').then(m => m.ComprasModule) },
 
 
 ];

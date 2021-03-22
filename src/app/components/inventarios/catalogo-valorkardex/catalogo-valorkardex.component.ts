@@ -1,7 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
+import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +12,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { ArticuloKardex } from '../../model/ArticuloKardex.model';
 import { Kardex } from '../../model/Kardex.model';
+import { AlmacenService } from '../../portafolio/almacen/AlmacenService.service';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
 import { KardexService } from '../KardexService.service';
 
@@ -33,6 +36,7 @@ export class CatalogoValorkardexComponent implements OnInit {
   titulo = 'Listado de Articulos';
   lstKardex: Kardex[] = [];
   lstArticulos: ArticuloKardex[] = [];
+  lstAlmacenes: any[] = [];
   tipoproductoconfig = 'T';
   sortedData;
   filtrararticulos = '';
@@ -49,6 +53,8 @@ export class CatalogoValorkardexComponent implements OnInit {
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
+  bsValue = new Date();
+  formatransacciones: FormGroup;
 
   //displayedColumns: string[] = ['Fecha','Codigo', 'Items','Tercero','Tipo Doc','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
 
@@ -62,8 +68,12 @@ export class CatalogoValorkardexComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
   constructor(private articuloServicio: ArticuloService,
+              private almacenServicio: AlmacenService,
               private toastr: ToastrService,
+              private formBuilder: FormBuilder,
               private router: Router) {
 
               this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
@@ -80,18 +90,26 @@ export class CatalogoValorkardexComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.formatransacciones = this.formBuilder.group({
+      fechadesde:  [formatDate(new Date(), 'dd-MM-yyyy', 'en')],
+      fechahasta:  [formatDate(new Date(), 'dd-MM-yyyy', 'en')],
+      codalmacen: 0,
+      codarticulo: ''
+    });
+
     this.listarArticulosPorTipo(this.tipoproductoconfig);
+    this.listarBodegas();
   }
 
   ngAfterViewInit() {
 
   }
 
-  private listarArticulosPorTipo(tipo: string): void {
+  searchfilter(event: Event) {
+    event.preventDefault();
     this.loading = true;
-    this.lstArticulos = [];
-    let status = 0;
-    this.articuloServicio.listarArticulosPorFilter('', tipo, '', '')
+
+    this.articuloServicio.listarArticulosPorFilter('', this.tipoproductoconfig, this.formatransacciones.get('fechadesde').value, this.formatransacciones.get('fechahasta').value)
       .subscribe(response => {
         this.lstArticulos = response as ArticuloKardex[];
         this.dataSource = new ExampleDataSource(this.lstArticulos);
@@ -100,6 +118,53 @@ export class CatalogoValorkardexComponent implements OnInit {
         //this.dataSource.paginator = this.paginator;
         //this.LengthTable = this.lstArticulos.length;
         //this.sortedData = this.lstArticulos.slice();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
+  private listarArticulosPorTipo(tipo: string): void {
+    this.loading = true;
+    this.lstArticulos = [];
+    let status = 0;
+    this.articuloServicio.listarArticulosPorFilter('', tipo, this.formatransacciones.get('fechadesde').value, this.formatransacciones.get('fechahasta').value)
+      .subscribe(response => {
+        this.lstArticulos = response as ArticuloKardex[];
+        this.dataSource = new ExampleDataSource(this.lstArticulos);
+        this.dataSource.sort = this.sort;
+        //this.dataSource = new MatTableDataSource(this.lstArticulos);
+        //this.dataSource.paginator = this.paginator;
+        //this.LengthTable = this.lstArticulos.length;
+        //this.sortedData = this.lstArticulos.slice();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
+  listarBodegas() {
+    this.loading = true;
+    this.almacenServicio.listarAlmacenes('')
+      .subscribe(response => {
+        this.lstAlmacenes = response as any[];
+        console.log(this.lstAlmacenes);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
