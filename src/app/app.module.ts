@@ -72,8 +72,8 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     CatalogoTransaccionesComponent,
     FilterTransaccionesPipe,
     MensajeEliminarComponent,
-    DocumentosComprasComponent,
-    CatalogoDocumentosComprasComponent
+   // DocumentosComprasComponent
+   // CatalogoDocumentosComprasComponent
 
   ],
   imports: [
