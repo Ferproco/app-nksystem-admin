@@ -44,7 +44,7 @@ export class TableTransaccionInventariosComponent implements OnInit {
   ngOnInit(): void {
     this.listarkardex();
 
-    console.log('que trae el master row ' + JSON.stringify(this.masterRow));
+    //console.log('que trae el master row ' + JSON.stringify(this.masterRow));
   }
 
   listarkardex() {

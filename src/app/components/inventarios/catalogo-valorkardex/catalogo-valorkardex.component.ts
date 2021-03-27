@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -56,6 +56,9 @@ export class CatalogoValorkardexComponent implements OnInit {
   bsValue = new Date();
   formatransacciones: FormGroup;
 
+  fechainicial: string = formatDate(new Date(), 'dd-MM-yyyy', 'en');
+  fechafinal:   string = formatDate(new Date(), 'dd-MM-yyyy', 'en');
+
   //displayedColumns: string[] = ['Fecha','Codigo', 'Items','Tercero','Tipo Doc','Documento Asociado' ,'Concepto', 'Cantidad' , 'Und Medida'  ,'Costo Promedio','Total','Status'];
 
   //displayedColumns: string[] =['Codigo', 'Nombre'/*,  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'*/];
@@ -91,8 +94,8 @@ export class CatalogoValorkardexComponent implements OnInit {
 
   ngOnInit(): void {
     this.formatransacciones = this.formBuilder.group({
-      fechadesde:  [formatDate(new Date(), 'dd-MM-yyyy', 'en')],
-      fechahasta:  [formatDate(new Date(), 'dd-MM-yyyy', 'en')],
+      fechadesde:  new FormControl(formatDate(new Date(), 'dd-MM-yyyy', 'en')),//[formatDate(new Date(), 'dd-MM-yyyy', 'en')],
+      fechahasta:  new FormControl(formatDate(new Date(), 'dd-MM-yyyy', 'en')),//[formatDate(new Date(), 'dd-MM-yyyy', 'en')],
       codalmacen: 0,
       codarticulo: ''
     });
@@ -107,38 +110,26 @@ export class CatalogoValorkardexComponent implements OnInit {
 
   searchfilter(event: Event) {
     event.preventDefault();
-    this.loading = true;
+    this.listarArticulosPorTipo(this.tipoproductoconfig);
+  }
 
-    this.articuloServicio.listarArticulosPorFilter('', this.tipoproductoconfig, this.formatransacciones.get('fechadesde').value, this.formatransacciones.get('fechahasta').value)
-      .subscribe(response => {
-        this.lstArticulos = response as ArticuloKardex[];
-        this.dataSource = new ExampleDataSource(this.lstArticulos);
-        this.dataSource.sort = this.sort;
-        //this.dataSource = new MatTableDataSource(this.lstArticulos);
-        //this.dataSource.paginator = this.paginator;
-        //this.LengthTable = this.lstArticulos.length;
-        //this.sortedData = this.lstArticulos.slice();
-        this.loading = false;
-      },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          if (error.status === 404) {
-
-          }
-          else {
-            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-              { enableHtml: true, closeButton: true });
-          }
-        }));
+  onValueChangeFI(value: string): void {
+    this.fechainicial = formatDate(value, 'dd-MM-yyyy', 'en');//[formatDate(new Date(), 'dd-MM-yyyy', 'en');
+  }
+  onValueChangeFF(value: string): void {
+    this.fechafinal = formatDate(value, 'dd-MM-yyyy', 'en');
   }
 
   private listarArticulosPorTipo(tipo: string): void {
+
     this.loading = true;
     this.lstArticulos = [];
     let status = 0;
-    this.articuloServicio.listarArticulosPorFilter('', tipo, this.formatransacciones.get('fechadesde').value, this.formatransacciones.get('fechahasta').value)
+    this.dataSource = new ExampleDataSource(this.lstArticulos);
+    this.articuloServicio.listarArticulosPorFilter('', tipo, this.fechainicial, this.fechafinal)
       .subscribe(response => {
         this.lstArticulos = response as ArticuloKardex[];
+        console.log('La lista de articulos ' + JSON.stringify(this.lstArticulos));
         this.dataSource = new ExampleDataSource(this.lstArticulos);
         this.dataSource.sort = this.sort;
         //this.dataSource = new MatTableDataSource(this.lstArticulos);
@@ -164,7 +155,7 @@ export class CatalogoValorkardexComponent implements OnInit {
     this.almacenServicio.listarAlmacenes('')
       .subscribe(response => {
         this.lstAlmacenes = response as any[];
-        console.log(this.lstAlmacenes);
+        //console.log(this.lstAlmacenes);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {

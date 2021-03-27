@@ -2,8 +2,6 @@
   <mat-spinner></mat-spinner>
 </div>
 
-
-
 <form [formGroup]="formarticulo" (ngSubmit)="guardarArticulo($event)">
 
   <div class="content-inner-all">
@@ -404,8 +402,6 @@
                                             <tbody formArrayName="lstmovimientoskardex">
                                               <tr *ngFor="let lstmovimientoskardex of ListItems.controls; let i = index"
                                                 [formGroup]="ListItems.controls[i]">
-
-
                                                 <td>
                                                   <select class="select2_demo_3 form-control"
                                                     formControlName="codunidadmedida">
@@ -419,7 +415,6 @@
                                                     style="width:70px" />
                                                 </td>
                                                 <td>
-
                                                   <div class="input-group">
                                                     <span class="input-group-btn">
                                                       <button type="button" (click)="onCrearBodega()"

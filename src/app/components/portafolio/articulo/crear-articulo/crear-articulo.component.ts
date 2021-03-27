@@ -252,7 +252,8 @@ export class CrearArticuloComponent implements OnInit {
           if (error.status === 404) {
 
           }
-          else {
+          else
+          {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
               { enableHtml: true, closeButton: true });
           }
@@ -264,7 +265,7 @@ export class CrearArticuloComponent implements OnInit {
     this.familiaserive.listarCategorias('')
       .subscribe(response => {
         this.lstFamilias = response as any[];
-        console.log(this.lstFamilias);
+        //console.log(this.lstFamilias);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -284,7 +285,7 @@ export class CrearArticuloComponent implements OnInit {
     this.almacenServicio.listarAlmacenes('')
       .subscribe(response => {
         this.lstAlmacenes = response as any[];
-        console.log(this.lstAlmacenes);
+        //console.log(this.lstAlmacenes);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -304,7 +305,7 @@ export class CrearArticuloComponent implements OnInit {
     this.unidadservice.listarUnidades('')
       .subscribe(response => {
         this.lstUnidades = response as any[];
-        console.log(this.lstUnidades);
+        //console.log(this.lstUnidades);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -324,7 +325,7 @@ export class CrearArticuloComponent implements OnInit {
     this.impuestoservice.listarImpuestos('')
       .subscribe(response => {
         this.lstImpuestos = response as any[];
-        console.log(this.lstImpuestos);
+        //console.log(this.lstImpuestos);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -344,7 +345,7 @@ export class CrearArticuloComponent implements OnInit {
     this.marcaservice.listarMarcas('')
       .subscribe(response => {
         this.lstMarcas = response as any[];
-        console.log(this.lstMarcas);
+        //console.log(this.lstMarcas);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -364,7 +365,7 @@ export class CrearArticuloComponent implements OnInit {
     this.grupoarticuloservice.listarGrupoArticulos('')
       .subscribe(response => {
         this.lstGrupoArticulos = response as any[];
-        console.log(this.lstGrupoArticulos);
+        //console.log(this.lstGrupoArticulos);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -455,7 +456,7 @@ export class CrearArticuloComponent implements OnInit {
     const obj = this.articuloservice.mostrarArticulo(id)
       .subscribe(response => {
         this.ArticuloModel = response as any;
-        console.log('el articulo ' + JSON.stringify(this.ArticuloModel));
+        //console.log('el articulo ' + JSON.stringify(this.ArticuloModel));
         if (this.ArticuloModel.status === 'ACTIVO') {
           status = 1;
         }
@@ -466,6 +467,7 @@ export class CrearArticuloComponent implements OnInit {
         const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
         this.ArticuloModel.lstmovimientoskardex.map(item => {
           formarraylstkardex.push(this.createItem(item));
+          //console.log('al consultar el articulo esto lo trae el kardex ' + JSON.stringify(item));
         });
         this.formarticulo.setControl("lstmovimientoskardex", formarraylstkardex);
         /**  Cargar la lista de unidades alternas**/
@@ -584,7 +586,7 @@ export class CrearArticuloComponent implements OnInit {
   }
 
   onChangeUnidadPrincipal(event) {
-    console.log(' el vaolor event', event);
+    //console.log(' el vaolor event', event);
     const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
     formarraylstkardex.clear();
     this.ArticuloModel.lstmovimientoskardex = [];
@@ -602,7 +604,7 @@ export class CrearArticuloComponent implements OnInit {
   onCrearCategoria() {
     this.bsModalRef = this.modalService.show(CrearCategoriaModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
-      console.log('results', result);
+      //console.log('results', result);
       if (result) {
         this.listarFamilias();
       }
@@ -666,7 +668,7 @@ export class CrearArticuloComponent implements OnInit {
 
   addItemUnidadesAlternas(): void {
     const idunidad = Number.parseInt(this.formarticulo.get('codunidadmedida').value);
-    console.log(idunidad);
+    //console.log(idunidad);
     if (!idunidad){
       this.toastr.info('Seleccione la Unidad de Medida Principal', 'Informacion', { enableHtml: true, closeButton: true });
     }
@@ -711,8 +713,8 @@ export class CrearArticuloComponent implements OnInit {
   createItem(kardex: Kardex): FormGroup {
     return this.formbuilder.group({
       codnegocio: [this.idnegocio],
-      // documentoid: [0],
-      //articulo_id: [kardex.articulo_id, [Validators.required]],
+      id: [kardex.id],
+      articulo_id: [kardex.articulo_id],
       codunidadmedida: [kardex.codunidadmedida, [Validators.required]],
       codalmacen: [kardex.codalmacen, [Validators.required]],
       cantidad: [kardex.cantidad, [Validators.required]],
@@ -741,21 +743,11 @@ export class CrearArticuloComponent implements OnInit {
   createItemUnidadesalternas(unidadmedidaalterna: UnidadMedidaAlterna): FormGroup {
     return this.formbuilder.group({
       codnegocio: [this.idnegocio],
-      // documentoid: [0],
-      // articulo_id: [0, [Validators.required]],
-      /* codunidadmedida: [0, [Validators.required]],
-       codalmacen: [0, [Validators.required]],
-       cantidad: [1, [Validators.required]],
-       montoxunidad: [1, [Validators.required]],
-       montototal:[1, [Validators.required]],
-       status: ['A', [Validators.required]],*/
-
-      //codarticulo: [0, [Validators.required]],
+      id: [unidadmedidaalterna.id],
+      articulo_id: [unidadmedidaalterna.articulo_id],
       codunidadmedidaalterna: [unidadmedidaalterna.codunidadmedidaalterna, [Validators.required]],
       codunidadminima: [unidadmedidaalterna.codunidadminima, [Validators.required]],
-      valorconversion: [unidadmedidaalterna.valorconversion, [Validators.required]],
-      //fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
-
+      valorconversion: [unidadmedidaalterna.valorconversion, [Validators.required]]
     });
   }
 
@@ -768,32 +760,20 @@ export class CrearArticuloComponent implements OnInit {
     var tieneivaincluido: number;
     var preciosinivas: number = 0;
     valorimpuesto = this.lstImpuestos[event - 1].normal;
-    console.log('event' + event);
-    console.log('valorimpuesto ' + valorimpuesto);
     tieneivaincluido = Number(this.formarticulo.get('ivaincluido').value);
-    console.log('tieneivaincluido ' + tieneivaincluido);
     precio = Number(this.formarticulo.get('preciosugerido').value);
 
     if (tieneivaincluido === 2) {
-      console.log('entro por 2 ' + tieneivaincluido);
       montoimpuesto = (precio * valorimpuesto) / 100;
-      console.log('valorimpuesto ' + valorimpuesto);
       this.preciosiniva = precio;
       this.montoiva = montoimpuesto;
       precioiva = precio + montoimpuesto;
       this.precioconiva = precioiva;
-      console.log('precio ' + precio);
-      console.log('montoimpuesto ' + montoimpuesto);
-      console.log('precioconiva ' + precioiva);
-
     }
     else if (tieneivaincluido === 1) {
-      console.log('entro por 1 ');
       this.precioconiva = precio;
       porcentajeiva = (valorimpuesto / 100) + 1;
-      console.log('porcentajeiva ' + porcentajeiva);
       preciosinivas = precio / porcentajeiva;
-      console.log('preciosinivas ' + preciosinivas);
       this.preciosiniva = preciosinivas;
       montoimpuesto = (preciosinivas * valorimpuesto) / 100;
       this.montoiva = montoimpuesto;
