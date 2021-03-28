@@ -9,11 +9,14 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { Articulo } from '../../model/Articulo.model';
 import { ArticuloKardex } from '../../model/ArticuloKardex.model';
 import { Kardex } from '../../model/Kardex.model';
 import { AlmacenService } from '../../portafolio/almacen/AlmacenService.service';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
+import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { KardexService } from '../KardexService.service';
 
 @Component({
@@ -31,7 +34,9 @@ import { KardexService } from '../KardexService.service';
 
 
 export class CatalogoValorkardexComponent implements OnInit {
-
+  entoVenta;
+  ArticuloModel: Articulo;
+  bsModalRef: BsModalRef;
   loading = false;
   titulo = 'Listado de Articulos';
   lstKardex: Kardex[] = [];
@@ -77,7 +82,9 @@ export class CatalogoValorkardexComponent implements OnInit {
               private almacenServicio: AlmacenService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private modalService: BsModalService,
+              private Articuloservicio: ArticuloService) {
 
               this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
               this.idnegocio = 1;
@@ -168,6 +175,45 @@ export class CatalogoValorkardexComponent implements OnInit {
               { enableHtml: true, closeButton: true });
           }
         }));
+  }
+ 
+  onListarArticulos() {
+   // console.log('la posicion ' + pos);
+    const config: ModalOptions = { class: 'modal-lg' };
+    this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
+    this.bsModalRef.content.onSelect.subscribe(result => {
+      console.log('results', result);
+      this.buscarArticulo(result);
+    });
+  }
+
+  buscarArticulo(id: number) {
+    let status = 0;
+    const obj = this.Articuloservicio.mostrarArticulo(id)
+      .subscribe(response => {
+        this.ArticuloModel = response as any;
+        if (this.ArticuloModel.status === 'ACTIVO') {
+          status = 1;
+        }
+        else {
+          status = 0;
+        }
+        //this..controls[pos].get('codarticulo').setValue(this.ArticuloModel.id);
+       
+      
+        console.log('El articulo es ' + JSON.stringify(this.ArticuloModel));
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
   }
 
   applyFilter(event: Event) {
@@ -289,5 +335,5 @@ export class ExampleDataSource extends MatTableDataSource<any> {
 
     return this.addExpandedRows(filtered);
   }
-
+  
 }
