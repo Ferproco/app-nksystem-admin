@@ -147,6 +147,8 @@
                     <mat-cell *matCellDef="let element"> {{element.nomarticulo}} </mat-cell>
                   </ng-container>
 
+
+
                   <!-- Entrada Column -->
                   <ng-container matColumnDef="entrada">
                     <mat-header-cell *matHeaderCellDef> ENT </mat-header-cell>
@@ -193,6 +195,9 @@
                     [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
                     style="overflow: hidden">
                   </mat-row>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="8">No hay resultados para busqueda</td>
+                  </tr>
                 </table>
 
                 <div class="mat-paginator-container">
