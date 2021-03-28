@@ -75,7 +75,7 @@ export class DocumentosVentasService {
       fechavencimiento: new Date(yearvence, monthvence, datevence),
       fecha: new Date(),
       referencia:documento.referencia,
-      status: documento.status,
+      status: Number(documento.status) === 1 ? 'ACTIVO' : 'INACTIVO',
       baseimp:Number(documento.baseimp),
       isrl: Number(documento.isrl),
       observacion: documento.observacion,
