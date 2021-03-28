@@ -24,6 +24,11 @@ const routes: Routes =
         path: 'configuraciones',
         loadChildren: () => import('../../components/configuraciones/configuraciones.module').then(p => p.ConfiguracionesModule)
       },
+      {
+        path: 'compras',
+        loadChildren: () => import('../../components/compras/compras.module').then(z => z.ComprasModule)
+      },
+
 
     ]
   }

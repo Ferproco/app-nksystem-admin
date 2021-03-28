@@ -52,6 +52,7 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    console.log('el tipo de dcumento es' + this.tipodocumento);
     this.onTipoDocumento();
     this.listarDocumento(this.tipodocumento);
   }
