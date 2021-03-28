@@ -49,7 +49,7 @@ export class ArticuloService {
     return this.httpClient.get(endpoint, { headers: httpHeaders });
   }
 
-  listarArticulosPorFilter(codnegocio: string, tipo: string, fechadesde: string, fechahasta: string) {
+  listarArticulosPorFilter(codnegocio: string, tipo: string, fechadesde: string, fechahasta: string, kardexcriterio: any) {
 
     let tipoitems = 0;
     if (tipo === 'P') {
@@ -77,8 +77,10 @@ export class ArticuloService {
     const body = {
       tipo: Number(tipoitems),
       fechadesde: fechad,
-      fechahasta: fechah
+      fechahasta: fechah,
+      codalmacen: Number(kardexcriterio.codalmacen)
     }
+    console.log('la busqueda ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/transacciones/articulos/';
     return this.httpClient.post(endpoint, JSON.stringify(body), { headers: httpHeaders });

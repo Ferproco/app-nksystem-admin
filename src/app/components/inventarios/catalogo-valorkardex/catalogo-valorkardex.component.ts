@@ -129,11 +129,12 @@ export class CatalogoValorkardexComponent implements OnInit {
 
   private listarArticulosPorTipo(tipo: string): void {
 
+    const value = this.formatransacciones.value;
     this.loading = true;
     this.lstArticulos = [];
     let status = 0;
     this.dataSource = new ExampleDataSource(this.lstArticulos);
-    this.articuloServicio.listarArticulosPorFilter('', tipo, this.fechainicial, this.fechafinal)
+    this.articuloServicio.listarArticulosPorFilter('', tipo, this.fechainicial, this.fechafinal, value)
       .subscribe(response => {
         this.lstArticulos = response as ArticuloKardex[];
         console.log('La lista de articulos ' + JSON.stringify(this.lstArticulos));

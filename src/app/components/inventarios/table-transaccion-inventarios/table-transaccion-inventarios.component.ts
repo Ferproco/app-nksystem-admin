@@ -25,6 +25,7 @@ export class TableTransaccionInventariosComponent implements OnInit {
     'Tipo Documento',
     'Documento Asociado',
     'Concepto',
+    'Almacen',
     'Entrada',
     'Salida',
     'Und Medida',
