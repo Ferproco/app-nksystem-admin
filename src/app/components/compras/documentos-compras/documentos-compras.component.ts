@@ -6,15 +6,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { ImpuestoService } from '../../configuraciones/impuesto/ImpuestoService.service';
+import { NumeracionDocumentoService } from '../../configuraciones/numeraciondocumento/NumeracionDocumentoService.service';
+import { TipoDocumentoService } from '../../configuraciones/tipodocumento/TipoDocumentoService.service';
 import { Articulo } from '../../model/Articulo.model';
 import { Contacto } from '../../model/Contacto.model';
 import { DocumentoCompra } from '../../model/DocumentoCompra.model';
+import { NumeracionDocumento } from '../../model/NumeracionDocumento.model';
+import { AlmacenService } from '../../portafolio/almacen/AlmacenService.service';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
 import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { ContactoService } from '../../portafolio/contacto/ContactoService.service';
 import { ModalClienteComponent } from '../../portafolio/contacto/modal-cliente/modal-cliente.component';
 import { CrearFormapagoModalComponent } from '../../portafolio/formapago/crear-formapago-modal/crear-formapago-modal.component';
 import { FormaPagoService } from '../../portafolio/formapago/FormaPagoService.service';
+import { UnidadService } from '../../portafolio/unidad/UnidadService.service';
 import { VendedorService } from '../../portafolio/vendedor/VendedorService.service';
 import { DocumentoCompraService } from '../DocumentoCompraService.service';
 
@@ -39,10 +45,10 @@ export class DocumentosComprasComponent implements OnInit {
   lstVendedores: any [] = [];
   lstUnidades: any[] = [];
   lstImpuestos: any[] = [];
+  lstAlmacenes: any[] = [];
+  lstNumeracionDocumento: any[] = [];
 
-  allTeamDetails: any [] = [
-    {coditem: '00001', nombre: 'Elemento 1'}
-  ];
+ 
 
   DocumentoCompraForm: FormGroup;
   lstdetallesdocumentocompras: FormArray;
@@ -56,24 +62,41 @@ export class DocumentosComprasComponent implements OnInit {
   nombreprimero: string;
   numeroidentificacion:string;
   direccionfiscal:string;
-
+  precsiniva: number;
+  cant: number;
   tipopersona:string;
   telefono:string;
   ContactoModel: Contacto;
   ArticuloModel:Articulo;
   DocumentoCompraModel:DocumentoCompra;
-
+  numeracionDocumentoModel: NumeracionDocumento;
+  prefijofactura: string;
+  numerodocumentos: number;
+  numerodocumentoconcatenado: string;
+  nombrearticulo: string[] = [];
+  montototalsiniva:number;
+  montototaliva:number;
+  montototalconiva:number;
+  
   constructor(private contactoServicio: ContactoService,
     private articuloServicio: ArticuloService,
     private documentocompraServicio: DocumentoCompraService,
     private modalService: BsModalService,
+    private numeraciondocumentoServicio: NumeracionDocumentoService,
     private formaPagoService: FormaPagoService,
     private vendedorService: VendedorService,
+    private FormaPagoService: FormaPagoService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private httpClient: HttpClient) {
+    private httpClient: HttpClient,
+    private Unidadservice: UnidadService,
+    private Impuestoservice: ImpuestoService,
+    private Almacenservice: AlmacenService,
+    private Articuloservicio: ArticuloService,
+    private tipodocumentoServicio: TipoDocumentoService,
+    private VendedorService: VendedorService) {
 
     this.DocumentoCompraModel = new DocumentoCompra();
     this.idnegocio = 1;
@@ -90,10 +113,14 @@ export class DocumentosComprasComponent implements OnInit {
   ngOnInit(): void {
 
     this.onTipoDocumento(this.tipodocumento);
+    this.listarNumeracionDocumento(this.tipodocumento);
     this. buildForm();
 
     this.listarVendedores();
     this.listarFormasdepago();
+    this.onListarImpuestos();
+    this.onListarUnidades();
+    this.onListarAlmacen();
   }
 
   private buildForm(){
@@ -131,24 +158,83 @@ export class DocumentosComprasComponent implements OnInit {
       //itemDetails: this.formBuilder.array([this.formBuilder.group({codigo: '', descripcion: '', price: ''})])
 
     });
+    (this.DocumentoCompraForm.get('lstdetallesdocumentocompras') as FormArray).valueChanges.subscribe(lisatadoarticulos => {
+      console.log('Cambios en el form ' + JSON.stringify(lisatadoarticulos));
+        //console.log('lstNumeracionDocumento' + JSON.stringify(this.lstNumeracionDocumento));
+        this.montototalsiniva=0;
+        lisatadoarticulos.forEach(element => {
 
+          this.montototalsiniva=this.montototalsiniva + element.baseimponible ;
+         // this.montototalconiva=montototalsiniva *
+
+         /* montoimpuesto = (precio * valorimpuesto) / 100;
+      console.log('valorimpuesto ' + valorimpuesto);
+      this.preciosiniva = precio;
+      this.montoiva = montoimpuesto;
+      precioiva = precio + montoimpuesto;
+      this.precioconiva = precioiva;*/
+
+        });
+       // console.log('montototalsiniva ' + this.montototalsiniva);
+    });
 
   }
 
   createItem(): FormGroup {
     return this.formBuilder.group({
-      codigo: '',
-      descripcion: '',
-      price: ''
+      codnegocio: [this.idnegocio],
+      documentoid: [0],
+      codarticulo: [0, [Validators.required]],
+      codimpuesto: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+      preciounitariosiniva: [0, [Validators.required]],
+      montototalconiva: [0, [Validators.required]],
+      baseimponible: [0, [Validators.required]],
+      porcentajedescuento: [0, [Validators.required]],
+      montodescuento: [0, [Validators.required]],
+      porcentajeimpuesto: [0, [Validators.required]],
+      montoimpuesto: [0, [Validators.required]],
+      islr: [0, [Validators.required]],
+      porcentajeislr: [0, [Validators.required]],
+      status: ['A', [Validators.required]],
+      tipoarticulo: ['A', [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+      serial: [''],
+      garantia: [''],
+      tipodocumento: [this.tipodocumento]
     });
   }
 
+
   addItem(): void {
-    /*this.itemDetails = this.DocumentoVentaForm.get('itemDetails') as FormArray;
-    this.itemDetails.push(this.createItem());*/
-    let fg = this.formBuilder.group(this.createItem());
-    this.ListItems.push(this.formBuilder.group({codigo: '', descripcion: '', price: ''}));
+
+    this.ListItems.push(this.formBuilder.group({
+      codnegocio: [this.idnegocio],
+      codarticulo: [0, [Validators.required]],
+      codimpuesto: [0, [Validators.required]],
+      codunidadmedida: [0, [Validators.required]],
+      codalmacen: [0, [Validators.required]],
+      cantidad: [1, [Validators.required]],
+      preciounitariosiniva: [0, [Validators.required]],
+      montototalconiva: [0, [Validators.required]],
+      baseimponible: [0, [Validators.required]],
+      porcentajedescuento: [0, [Validators.required]],
+      montodescuento: [0, [Validators.required]],
+      porcentajeimpuesto: [0, [Validators.required]],
+      montoimpuesto: [0, [Validators.required]],
+      islr: [0, [Validators.required]],
+      porcentajeislr: [0, [Validators.required]],
+      status: ['A', [Validators.required]],
+      tipoarticulo: ['A', [Validators.required]],
+      fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
+      serial: [''],
+      garantia: [''],
+      tipodocumento: [this.tipodocumento]
+    }));
   }
+
 
 
 
@@ -184,38 +270,93 @@ export class DocumentosComprasComponent implements OnInit {
     }));
 
   }
-  buscarArticulo(id: number) {
+
+
+  buscarContacto(id: number) {
+    const obj = this.contactoServicio.mostrarContactos(id)
+      .subscribe(response => {
+        this.ContactoModel = response as any;
+
+        if (this.nombreprimero === '') {
+          this.nombreprimero = this.ContactoModel.razonsocial;
+        }
+        else {
+          this.nombreprimero = this.ContactoModel.nombreprimero + ' ' +
+            this.ContactoModel.nombresegundo + ' ' +
+            this.ContactoModel.apellidoprimero + ' ' +
+            this.ContactoModel.apellidosegundo;
+        }
+        this.DocumentoCompraForm.controls['codcontacto'].setValue(this.ContactoModel.id);
+        this.numeroidentificacion = this.ContactoModel.numeroidentificacion;
+        this.telefono = this.ContactoModel.telefonofijo1;
+        this.direccionfiscal = this.ContactoModel.direccionfiscal;
+        if (this.ContactoModel.codtipopersona === 1)
+          if (this.ContactoModel.codtipopersona === 1) {
+            this.tipopersona = 'Persona Natural';
+          }
+          else {
+            this.tipopersona = 'Persona Juridica';
+          }
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
+  }
+
+
+
+  onListarClientes() {
+    const config: ModalOptions = { class: 'modal-lg' };
+    this.bsModalRef = this.modalService.show(ModalClienteComponent, config);
+    this.bsModalRef.content.onSelect.subscribe(result => {
+      console.log('results', result);
+      this.buscarContacto(result);
+    });
+
+  }
+
+  
+
+  onListarArticulos(pos: number) {
+    console.log('la posicion ' + pos);
+    const config: ModalOptions = { class: 'modal-lg' };
+    this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
+    this.bsModalRef.content.onSelect.subscribe(result => {
+      console.log('results', result);
+      this.buscarArticulo(result, pos);
+    });
+  }
+  buscarArticulo(id: number, pos: number) {
     let status = 0;
-    const obj = this.articuloServicio.mostrarArticulo(id)
+    const obj = this.Articuloservicio.mostrarArticulo(id)
       .subscribe(response => {
         this.ArticuloModel = response as any;
-
         if (this.ArticuloModel.status === 'ACTIVO') {
           status = 1;
         }
         else {
           status = 0;
         }
+        this.ListItems.controls[pos].get('codarticulo').setValue(this.ArticuloModel.id);
+        this.nombrearticulo[pos] = this.ArticuloModel.nomarticulo;
+        this.ListItems.controls[pos].get('preciounitariosiniva').setValue(this.ArticuloModel.preciosugerido);
+        this.ListItems.controls[pos].get('codunidadmedida').setValue(this.ArticuloModel.codunidadmedida);
+        this.ListItems.controls[pos].get('codimpuesto').setValue(this.ArticuloModel.codimpuesto);
 
-        this.DocumentoCompraForm.controls['codarticulo'].setValue(this.ArticuloModel.id);
-        //this.nombreprimero = this.ContactoModel
-        /*this.numeroidentificacion=this.ContactoModel.numeroidentificacion;
-        this.telefono=this.ContactoModel.telefonofijo1;
-        this.direccionfiscal=this.ContactoModel.direccionfiscal;
-        if(this.ContactoModel.codtipopersona===1)
-        if (this.ContactoModel.codtipopersona === 1) {
-          this.tipopersona = 'Persona Natural';
-        }
-        else {
-          this.tipopersona = 'Persona Juridica';
-        }
-*/
-
-       // direccionfiscal: this.ContactoModel.direccionfiscal,
-        console.log('el cliente es de build form ' + this.ArticuloModel.nomarticulo);
-        console.log('el codigo tipo articulo es de build form ' + this.ArticuloModel.codtipoproducto);
-       // this.buildForm();
-
+        const cant = Number(this.ListItems.controls[pos].get('cantidad').value);
+        const precionu = Number(this.ListItems.controls[pos].get('preciounitariosiniva').value);
+        this.precsiniva = cant * precionu;
+       // console.log('precsiniva', this.precsiniva);
+        this.ListItems.controls[pos].get('baseimponible').setValue(this.precsiniva);
+        console.log('El articulo es ' + JSON.stringify(this.ArticuloModel));
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -229,135 +370,54 @@ export class DocumentosComprasComponent implements OnInit {
         }));
 
   }
-
-
-  buscarContacto(id: number) {
-
-    const obj = this.contactoServicio.mostrarContactos(id)
-      .subscribe(response => {
-        this.ContactoModel = response as any;
-
-        if (this.nombreprimero === '') {
-          this.nombreprimero =this.ContactoModel.razonsocial;
-        }
-        else {
-          this.nombreprimero = this.ContactoModel.nombreprimero   + ' ' +
-                               this.ContactoModel.nombresegundo   + ' ' +
-                               this.ContactoModel.apellidoprimero + ' ' +
-                               this.ContactoModel.apellidosegundo;
-        }
-        this.DocumentoCompraForm.controls['codcontacto'].setValue(this.ContactoModel.id);
-        //this.nombreprimero = this.ContactoModel
-        this.numeroidentificacion=this.ContactoModel.numeroidentificacion;
-        this.telefono=this.ContactoModel.telefonofijo1;
-        this.direccionfiscal=this.ContactoModel.direccionfiscal;
-        if(this.ContactoModel.codtipopersona===1)
-        if (this.ContactoModel.codtipopersona === 1) {
-          this.tipopersona = 'Persona Natural';
-        }
-        else {
-          this.tipopersona = 'Persona Juridica';
-        }
-
-
-       // direccionfiscal: this.ContactoModel.direccionfiscal,
-        console.log('el cliente es de build form ' + this.ContactoModel.numeroidentificacion);
-        console.log('el codigo tipo persona es de build form ' + this.ContactoModel.codtipopersona);
-       // this.buildForm();
-
-      },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          if (error.status === 404) {
-
-          }
-          else {
-            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-              { enableHtml: true, closeButton: true });
-          }
-        }));
-
-  }
-
-
-
-  onListarClientes(){
-
-    const config: ModalOptions = { class: 'modal-lg' };
-    this.bsModalRef = this.modalService.show(ModalClienteComponent, config);
-    this.bsModalRef.content.onSelect.subscribe(result => {
-      console.log('results', result);
-      this.buscarContacto(result);
-
-    });
-    /*this.bsModalRef.content.onClose.subscribe(result => {
-      console.log('results', result);
-
-    });*/
-  }
-
-  onListarArticulos(){
-    const config: ModalOptions = { class: 'modal-lg' };
-    this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
-    this.bsModalRef.content.onSelect.subscribe(result => {
-      console.log('results', result);
-      this.buscarArticulo(result);
-
-    });
-    /*this.bsModalRef.content.onClose.subscribe(result => {
-      console.log('results', result);
-
-    });*/
-
-  }
-  onCrearPlazoCredito(){
+  onCrearPlazoCredito() {
     this.bsModalRef = this.modalService.show(CrearFormapagoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
-      if (result){
+      if (result) {
         this.listarFormasdepago();
       }
       console.log('results', result);
-
     });
   }
 
   listarFormasdepago() {
     this.loading = true;
-    this.formaPagoService.listarFormaPagos('')
+    this.FormaPagoService.listarFormaPagos('')
       .subscribe(response => {
         this.lstformaspago = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   listarVendedores() {
     this.loading = true;
-    this.vendedorService.listarVendedores('')
+    this.VendedorService.listarVendedores('')
       .subscribe(response => {
         this.lstVendedores = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
+
 
   onTipoDocumento(tipo){
     if (tipo === 'facturacompra'){
@@ -372,7 +432,7 @@ export class DocumentosComprasComponent implements OnInit {
 
   onRedireccionar(tipo){
     if (tipo === 'facturacompra'){
-      this.router.navigate(['compras/catalogodocumentodecompra-factura/facturacompra']);
+      this.router.navigate(['/main/dashboard/compras/catalogodocumentodecompra-factura/facturacompra']);
 
     }
     else if (tipo === 'cotizacion'){
@@ -380,7 +440,136 @@ export class DocumentosComprasComponent implements OnInit {
 
     }
   }
+  onListarUnidades() {
+    this.loading = true;
+    this.Unidadservice.listarUnidades('')
+      .subscribe(response => {
+        this.lstUnidades = response as any[];
+        console.log(this.lstUnidades);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
+  onListarImpuestos() {
+    this.loading = true;
+    this.Impuestoservice.listarImpuestos('')
+      .subscribe(response => {
+        this.lstImpuestos = response as any[];
+        console.log(this.lstImpuestos);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
+  onListarAlmacen() {
+    this.loading = true;
+    this.Almacenservice.listarAlmacenes('')
+      .subscribe(response => {
+        this.lstAlmacenes = response as any[];
+        console.log(this.lstAlmacenes);
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+  CalcularPrecioVenta(pos: number) {
+
+    console.log('event' + event);
+
+    //this.precsiniva = this.ArticuloModel.preciosugerido * event;
+    //this.cant = event;
+    const cant = Number(this.ListItems.controls[pos].get('cantidad').value);
+    console.log('cant', cant);
+    const precionu = Number(this.ListItems.controls[pos].get('preciounitariosiniva').value);
+    console.log('precionu', precionu);
+    this.precsiniva = cant * precionu;
+    console.log('precsiniva', this.precsiniva);
+    this.ListItems.controls[pos].get('baseimponible').setValue(this.precsiniva);
+    // this.ListItems.controls[pos].get('baseimponible').setValue(this.precsiniva);
+
+
+  }
+  private listarNumeracionDocumento(tipo: string): void {
+    this.loading = true;
+    this.lstNumeracionDocumento = [];
+    this.numeraciondocumentoServicio.obtenerNumeracionDocumentoPorTipoDocumento('', this.tipodocumento)
+      .subscribe(response => {
+        this.lstNumeracionDocumento = response as NumeracionDocumento[];
+        //console.log('lstNumeracionDocumento' + JSON.stringify(this.lstNumeracionDocumento));
+        this.lstNumeracionDocumento.forEach(element => {
+
+          if (element.tipodedocumento === 'facturacompra') {
+            if (element.principal) {
+              console.log('es principal');
+
+              this.prefijofactura = element.prefijo;
+              this.numerodocumentos = element.proximonumerodocumento;
+              this.numerodocumentoconcatenado = element.prefijo + element.proximonumerodocumento,
+              this.DocumentoCompraForm.controls['numerodocumento'].setValue(this.numerodocumentoconcatenado);
+
+              console.log('numerodocumentos ' + this.numerodocumentos);
+            }
+          }
+
+          //this.numerodocumento=this.numerodocumentos;
+        });
+        /*this.dataSource = new MatTableDataSource(this.lstNumeracionDocumento);
+        this.dataSource.paginator = this.paginator;
+        this.LengthTable = this.lstDocumentos.length;
+        this.sortedData = this.lstDocumentos.slice();
+        this.loading = false;*/
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+  }
+
+  onModificarNumeracionDocumento() {
+    //this.router.navigate(['inventario/creararticulo', id]);
+    //this.router.navigate(['main/dashboard/configuraciones/crearnumeraciondocumento', id]);
+
+    //this.bsModalRef = this.modalService.show(CrearNumeraciondocumentoModalComponent);
+    //this.bsModalRef.content.onClose.subscribe(result => {
+    //  if (result) {
+    // this.listarFormasdepago();
+    //}
+    // console.log('results', result);
+    //});
+  }
 }
 export class Item {
   coditem = '';

@@ -1,10 +1,11 @@
 import { FormaPago } from './FormaPago.model';
 import { Vendedor } from './Vendedor.model';
 import { Contacto } from './Contacto.model';
+import { DetallesDocumentoCompra } from './DetallesDocumentoCompra.model';
 
 export class DocumentoCompra {
 
-  public id: number = 0;
+  public documentoid: number = 0;
   public numerodocumento: string = null;
   public codnegocio: number;
   public codformapago: number = 1;
@@ -14,7 +15,7 @@ export class DocumentoCompra {
   public fechavencimiento: Date = new Date();
   public fecha: Date = new Date();
   public referencia: string;
-  public status: string;
+  public status: string = 'ACTIVO';
   public baseimp: number = 0;
   public isrl: number = 0;
   public observacion: string = '';
@@ -35,10 +36,11 @@ export class DocumentoCompra {
   public contacto: Contacto;
   public vendedor: Vendedor;
   public formapago: FormaPago;
+  public lstdetallesdocumentocompras: DetallesDocumentoCompra[]=[];
 
   constructor(json: any = null) {
     if (json !== null) {
-      this.id = json.id;
+      this.documentoid = json.documentoid;
       this.numerodocumento = json.numerodocumento;
       this.codnegocio = json.codnegocio;
       this.codformapago = json.codformapago;

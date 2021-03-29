@@ -106,7 +106,7 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
 
   registrardocumento() {
     if (this.tipodocumento === 'facturacompra'){
-      this.router.navigate(['compras/documentodecompra-factura',this.tipodocumento]);
+      this.router.navigate(['/main/dashboard/compras/documentodecompra-factura',this.tipodocumento]);
     }
     else if (this.tipodocumento === 'cotizacion'){
       this.router.navigate(['ventas/documentodeventa-cotizacion',this.tipodocumento]);
@@ -138,7 +138,7 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.documentoid + 1}`;
   }
 
   sortData(sort: Sort) {
