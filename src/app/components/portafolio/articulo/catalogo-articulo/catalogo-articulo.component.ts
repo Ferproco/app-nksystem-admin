@@ -36,7 +36,7 @@ export class CatalogoArticuloComponent implements OnInit {
   showModalBox: boolean = false;
   PuedeEliminar: boolean = false;
 
-  displayedColumns: string[] = ['Codigo', 'Nombre',  'Categoria' ,'Precio', 'Und Medida'  ,'Impuesto','Status', 'Acción'];
+  displayedColumns: string[] = ['Codigo', 'Nombre',  'Tipo', 'Categoria' ,'Precio', 'Und Medida' ,'Impuesto','Status', 'Acción'];
   dataSource: MatTableDataSource<Articulo>;
   selection = new SelectionModel<Articulo>(true, []);
 

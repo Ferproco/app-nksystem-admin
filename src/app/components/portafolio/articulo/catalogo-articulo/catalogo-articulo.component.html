@@ -1,4 +1,3 @@
-
 <div class="loading" *ngIf="loading">
   <mat-spinner></mat-spinner>
 </div>
@@ -56,11 +55,16 @@
                 </h1>
 
                 <div class="view-mail-action view-mail-ov-d-n">
-                  <a style="cursor: pointer;" (click)="cargararticulos('P')"><i class="fa fa-user login-user"></i> Producto</a>
-                  <a class="compose-draft-bt" style="cursor: pointer;" (click)="cargararticulos('S')"><i class="fa fa-print"></i> Servicio</a>
-                  <a class="compose-draft-bt" style="cursor: pointer;" (click)="cargararticulos('M')"><i class="fa fa-print"></i> Materia Prima</a>
-                  <a class="compose-draft-bt" style="cursor: pointer;" (click)="cargararticulos('G')"><i class="fa fa-print"></i> Gastos</a>
-                  <a class="compose-discard-bt" style="cursor: pointer;" (click)="cargararticulos('T')"><i class="fa fa-trash-o"></i> Todos</a>
+                  <a style="cursor: pointer;" (click)="cargararticulos('P')"><i class="fa fa-user login-user"></i>
+                    Producto</a>
+                  <a class="compose-draft-bt" style="cursor: pointer;" (click)="cargararticulos('S')"><i
+                      class="fa fa-print"></i> Servicio</a>
+                  <a class="compose-draft-bt" style="cursor: pointer;" (click)="cargararticulos('M')"><i
+                      class="fa fa-print"></i> Materia Prima</a>
+                  <a class="compose-draft-bt" style="cursor: pointer;" (click)="cargararticulos('G')"><i
+                      class="fa fa-print"></i> Gastos</a>
+                  <a class="compose-discard-bt" style="cursor: pointer;" (click)="cargararticulos('T')"><i
+                      class="fa fa-trash-o"></i> Todos</a>
                 </div>
               </div>
             </div>
@@ -70,12 +74,14 @@
                   <mat-toolbar-row>
 
                     <div class="breadcome-heading">
-                      <input type="text" (keyup)="applyFilter($event)" name="filtrarclientes" placeholder="Buscar..." class="form-control">
+                      <input type="text" (keyup)="applyFilter($event)" name="filtrarclientes" placeholder="Buscar..."
+                        class="form-control">
                       <a href=""><i class="fa fa-search"></i></a>
                     </div>
 
                     <span class="example-spacer"></span>
-                    <button class="botonmenu" mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon">
+                    <button class="botonmenu" mat-button [matMenuTriggerFor]="menu"
+                      aria-label="Example icon-button with menu icon">
                       <mat-icon>save_alt</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
@@ -83,10 +89,12 @@
                       <button mat-menu-item (click)="ExportarTxt()">TXT</button>
                     </mat-menu>
 
-                    <button mat-icon-button class="example-icon favorite-icon botonmenu" aria-label="Example icon-button with heart icon">
+                    <button mat-icon-button class="example-icon favorite-icon botonmenu"
+                      aria-label="Example icon-button with heart icon">
                       <mat-icon (click)="Refrescar()">refresh</mat-icon>
                     </button>
-                    <button mat-icon-button class="example-icon botonmenu" aria-label="Example icon-button with share icon">
+                    <button mat-icon-button class="example-icon botonmenu"
+                      aria-label="Example icon-button with share icon">
                       <mat-icon (click)="Importar()">file_upload</mat-icon>
                     </button>
                   </mat-toolbar-row>
@@ -96,16 +104,13 @@
                   <ng-container matColumnDef="select">
                     <th mat-header-cell *matHeaderCellDef>
                       <mat-checkbox (change)="$event ? masterToggle() : null"
-                                    [checked]="selection.hasValue() && isAllSelected()"
-                                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                    [aria-label]="checkboxLabel()">
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                       </mat-checkbox>
                     </th>
                     <td mat-cell *matCellDef="let row">
-                      <mat-checkbox (click)="$event.stopPropagation()"
-                                    (change)="$event ? selection.toggle(row) : null"
-                                    [checked]="selection.isSelected(row)"
-                                    [aria-label]="checkboxLabel(row)">
+                      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                       </mat-checkbox>
                     </td>
                   </ng-container>
@@ -122,6 +127,13 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
                     <td mat-cell *matCellDef="let element"> {{element.nomarticulo}} </td>
                   </ng-container>
+
+                  <!-- Tipo Column -->
+                  <ng-container matColumnDef="Tipo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO </th>
+                    <td mat-cell *matCellDef="let element"> {{element.codtipoproducto === 1 ? 'Producto' : 'Servicio'}} </td>
+                  </ng-container>
+
                   <!-- Weight Column -->
 
                   <ng-container matColumnDef="Categoria">
@@ -131,7 +143,7 @@
 
                   <ng-container matColumnDef="Precio">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO VENTA </th>
-                    <td mat-cell *matCellDef="let element"> {{element.preciosugerido}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.preciosugerido | currency}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="Und Medida">
@@ -141,7 +153,7 @@
 
                   <ng-container matColumnDef="Impuesto">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> IMPUESTO </th>
-                    <td mat-cell *matCellDef="let element"> {{element.impuesto.nombreimpuesto}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.impuesto?.nombreimpuesto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="Status">
@@ -162,16 +174,21 @@
                     <th mat-header-cell *matHeaderCellDef> ACCIÓN </th>
                     <td mat-cell *matCellDef="let element" class="datatable-ct">
                       <div class="btn-group project-list-add">
-                        <button type="button" (click)="Ver(element.id)" class="btn btn-white btn-xs"><i class="fa fa-eye" aria-hidden="true" data-toggle="modal" data-target="#app-mensaje-eliminar"></i> </button>
+                        <button type="button" (click)="Ver(element.id)" class="btn btn-white btn-xs"><i
+                            class="fa fa-eye" aria-hidden="true" data-toggle="modal"
+                            data-target="#app-mensaje-eliminar"></i> </button>
                       </div>
                       |
                       <div class="btn-group project-list-add">
-                        <button type="submit" (click)="Modificar(element.id)" class="btn btn-white btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        <button type="submit" (click)="Modificar(element.id)" class="btn btn-white btn-xs"><i
+                            class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </button>
                       </div>
                       |
                       <div class="btn-group project-list-add">
-                        <button type="button" (click)="Eliminar(element.id)" class="btn btn-white btn-xs"> <i class="fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#app-mensaje-eliminar"></i></button>
+                        <button type="button" (click)="Eliminar(element.id)" class="btn btn-white btn-xs"> <i
+                            class="fa fa-trash-o" aria-hidden="true" data-toggle="modal"
+                            data-target="#app-mensaje-eliminar"></i></button>
 
                       </div>
                     </td>
@@ -185,7 +202,8 @@
                   </tr>
                 </table>
                 <div class="mat-paginator-container">
-                  <mat-paginator [length]="LengthTable" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+                  <mat-paginator [length]="LengthTable" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+                    showFirstLastButtons>
                   </mat-paginator>
                 </div>
 
@@ -198,5 +216,3 @@
   </div>
 
 </div>
-
-

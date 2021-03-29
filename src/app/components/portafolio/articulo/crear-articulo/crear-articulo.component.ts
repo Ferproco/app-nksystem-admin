@@ -168,7 +168,7 @@ export class CrearArticuloComponent implements OnInit {
       codfamilia: [this.ArticuloModel.codfamilia, [Validators.required]],
       codunidadmedida: [this.ArticuloModel.codunidadmedida, [Validators.required]],
       codimpuesto: [this.ArticuloModel.codimpuesto, [Validators.required]],
-      codmarca: [this.ArticuloModel.codmarca, [Validators.required]],
+      codmarca: [this.ArticuloModel.codmarca],
       preciosugerido: [this.ArticuloModel.preciosugerido, [Validators.pattern(this.parrterobservaciones)]],
       referencia: [this.ArticuloModel.referencia, [Validators.pattern(this.parrterobservaciones)]],
       serial: [this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
@@ -238,26 +238,30 @@ export class CrearArticuloComponent implements OnInit {
 
   guardarArticulo(event: Event) {
     event.preventDefault();
-    this.loading = true;
-    const value = this.formarticulo.value;
-
-    this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
-      .subscribe(response => {
-        this.loading = false;
-        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.router.navigate(['/main/dashboard/portafolio/listararticulos']);
-      },
-        ((error: HttpErrorResponse) => {
+    if (this.formarticulo.valid){
+      this.loading = true;
+      const value = this.formarticulo.value;
+      this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
+        .subscribe(response => {
           this.loading = false;
-          if (error.status === 404) {
+          this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+          this.router.navigate(['/main/dashboard/portafolio/listararticulos']);
+        },
+          ((error: HttpErrorResponse) => {
+            this.loading = false;
+            if (error.status === 404) {
 
-          }
-          else
-          {
-            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-              { enableHtml: true, closeButton: true });
-          }
-        }));
+            }
+            else {
+              this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+                { enableHtml: true, closeButton: true });
+            }
+          }));
+    }
+    else{
+      this.toastr.error('Opss faltan datos que son obligatorios ', 'Error',
+      { enableHtml: true, closeButton: true });
+    }
   }
 
   listarFamilias() {
@@ -492,6 +496,7 @@ export class CrearArticuloComponent implements OnInit {
   }
 
   cargarRequeridos(e) {
+    console.log('Mouse over');
     this.camposrequeridos = 'Valores Requeridos:\n';
     Object.keys(this.formarticulo.controls).forEach(key => {
       if (this.formarticulo.controls[key].invalid) {
@@ -656,12 +661,12 @@ export class CrearArticuloComponent implements OnInit {
     });
   }
 
-  removeItemUnidadesAlternas(pos: number){
+  removeItemUnidadesAlternas(pos: number) {
 
     this.ListItemsUnidasesAlternas.removeAt(pos);
   }
 
-  removeItemListaKardex(pos: number){
+  removeItemListaKardex(pos: number) {
 
     this.ListItems.removeAt(pos);
   }
@@ -669,16 +674,15 @@ export class CrearArticuloComponent implements OnInit {
   addItemUnidadesAlternas(): void {
     const idunidad = Number.parseInt(this.formarticulo.get('codunidadmedida').value);
     //console.log(idunidad);
-    if (!idunidad){
+    if (!idunidad) {
       this.toastr.info('Seleccione la Unidad de Medida Principal', 'Informacion', { enableHtml: true, closeButton: true });
     }
-    else
-    {
+    else {
       this.ListItemsUnidasesAlternas.push(this.formbuilder.group({
         codnegocio: [this.idnegocio],
         //codarticulo: [0, [Validators.required]],
         codunidadmedidaalterna: [0, [Validators.required]],
-        codunidadminima: [{value: idunidad, disabled:  true}, [Validators.required]],
+        codunidadminima: [{ value: idunidad, disabled: true }, [Validators.required]],
         valorconversion: [0, [Validators.required]],
         fecha: [formatDate(new Date(), 'dd-MM-yyyy', 'en'), [Validators.required]],
       }));
