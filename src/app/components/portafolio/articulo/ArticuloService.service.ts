@@ -1,7 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { ɵELEMENT_PROBE_PROVIDERS } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
 import { Api } from 'src/app/config';
 import { Articulo } from '../../model/Articulo.model';
 
@@ -118,15 +116,27 @@ export class ArticuloService {
       //element.montototal= Number(element.cantidad) * Number(element.montoxunidad);
       element.codnegocio = element.codnegocio;
     });
+    console.log('La marca ' + articulo.codmarca);
+    let marca = null;
+    if (Number(articulo.codtipoproducto) === 1){
+      if (articulo.codmarca === null || articulo.codmarca === 0){
+        marca = null;
+      }
+      else{
+        marca = Number(articulo.codmarca);
+      }
+    }else{
+      marca = null;
+    }
     const body = {
       id: Number(idIn),
       codnegocio: Number(idnegocio),
       codigo: articulo.codigo,
       nomarticulo: articulo.nomarticulo,
-      codmarca: Number(articulo.codmarca),
+      codmarca: marca,
       codfamilia: Number(articulo.codfamilia),
-      codunidadmedida: Number(articulo.codunidadmedida),
-      codimpuesto: Number(articulo.codimpuesto),
+      codunidadmedida: articulo.codunidadmedida === 0 ? null : Number(articulo.codunidadmedida),
+      codimpuesto: articulo.codimpuesto === 0 ? null : Number(articulo.codimpuesto),
       preciosugerido: Number(articulo.preciosugerido),
       referencia: articulo.referencia,
       codigobarraprincipal: articulo.codigobarraprincipal,
