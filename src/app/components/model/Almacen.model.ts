@@ -3,7 +3,7 @@ export class Almacen {
   public codalmacen: string;
   public codnegocio: string;
   public nombre: string;
-  public principal: string;
+  public principal: string = '0';
   public tipoalmacen: string;
   public direccion: string;
   public status: string='Activo';

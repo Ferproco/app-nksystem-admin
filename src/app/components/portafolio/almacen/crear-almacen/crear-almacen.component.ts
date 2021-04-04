@@ -37,8 +37,8 @@ export class CrearAlmacenComponent implements OnInit {
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
-  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
-
+  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_]*$/;
+  parrterdireccion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_\#\/\°]*$/;
   constructor(private almacenServicio: AlmacenService,
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
@@ -89,8 +89,8 @@ export class CrearAlmacenComponent implements OnInit {
 
     this.formalmacen = this.formbuilder.group({
       nombre: [this.AlmacenModel.nombre, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      direccion: [this.AlmacenModel.direccion, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      principal: [this.AlmacenModel.principal, [Validators.required]],
+      direccion: [this.AlmacenModel.direccion, [Validators.required, Validators.pattern(this.parrterdireccion)]],
+      principal: [Number(this.AlmacenModel.principal) === 1 ? true : false, [Validators.required]],
       status: [this.AlmacenModel.status === 'Activo' ? 1: 0, [Validators.required]]
 
     });
