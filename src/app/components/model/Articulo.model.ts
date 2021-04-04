@@ -13,7 +13,7 @@ export class Articulo {
   public codmarca: number;
   public codfamilia: number;
   public codunidadmedida: number;
-  public codimpuesto: number = 0;
+  public codimpuesto: number;
   public preciosugerido: number;
   public codigobarraprincipal: string;
   public referencia: string;
@@ -45,7 +45,7 @@ export class Articulo {
   public unidadmedida:UnidadMedida;
   public lstmovimientoskardex: Kardex[]=[];
   public lstunidadesalternas: UnidadMedidaAlterna[]=[];
- 
+
   constructor(json: any = null) {
     if (json !== null) {
       this.id = json.id;
@@ -87,7 +87,7 @@ export class Articulo {
       this.fechacreacion = json.fechacreacion;
       this.lstmovimientoskardex=json.lstmovimientoskardex;
       this.lstunidadesalternas=json.lstunidadesalternas;
-            
+
     }
   }
 }

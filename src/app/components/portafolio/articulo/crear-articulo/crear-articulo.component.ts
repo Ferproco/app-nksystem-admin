@@ -119,7 +119,7 @@ export class CrearArticuloComponent implements OnInit {
 
   ];
 
-  modificable = false;
+  isDisabledState: boolean = true
 
   constructor(private articuloservice: ArticuloService,
     private familiaserive: CategoriaService,
@@ -459,6 +459,8 @@ export class CrearArticuloComponent implements OnInit {
   buscarArticulo(id: number) {
     let status = 0;
     this.loading = true;
+    this.isDisabledState = false;
+    //this.modificable = true;
     const obj = this.articuloservice.mostrarArticulo(id)
       .subscribe(response => {
         this.ArticuloModel = response as any;
@@ -506,6 +508,8 @@ export class CrearArticuloComponent implements OnInit {
       }
     });
   }
+
+
 
   get codigo() {
     return this.formarticulo.get('codigo');
@@ -588,6 +592,7 @@ export class CrearArticuloComponent implements OnInit {
   }
 
   onChangeTipo(event) {
+
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
