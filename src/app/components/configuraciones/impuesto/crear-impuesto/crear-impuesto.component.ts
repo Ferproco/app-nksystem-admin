@@ -39,7 +39,7 @@ export class CrearImpuestoComponent implements OnInit {
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
-  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_]*$/;
 
   constructor(private tipoimpuestoServicio: TipoImpuestoService,
               private impuestoService: ImpuestoService,
@@ -51,7 +51,7 @@ export class CrearImpuestoComponent implements OnInit {
 
                 this.ImpuestoModel=new Impuesto();
 
-   
+
     this.idnegocio = 1;
     this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
     if (this.route.snapshot.params.id) {
@@ -158,7 +158,7 @@ export class CrearImpuestoComponent implements OnInit {
   onChange(event: MatSlideToggleChange) {
 
     this.formimpuesto.get('status').setValue(event.checked === true ? 1 : 0);
-    this.Objetoestado = this.formimpuesto.get('status').value === 1 ? 'Activo' : 'Inactivo';    
+    this.Objetoestado = this.formimpuesto.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
   onCrearTipoImpuesto(){
