@@ -36,6 +36,7 @@ export class CrearAlmacenModalComponent implements OnInit {
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  parrterdireccion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_\#\/\°]*$/;
   Objetoestado: string = 'Activo';
 
   constructor(private bsModalRef: BsModalRef,
@@ -82,8 +83,8 @@ export class CrearAlmacenModalComponent implements OnInit {
 
     this.formalmacen = this.formbuilder.group({
       nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      direccion: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      principal: ['1', [Validators.required]],
+      direccion: ['', [Validators.required, Validators.pattern(this.parrterdireccion)]],
+      principal: [Number('0') === 1 ? true : false, [Validators.required]],
       status: [1, [Validators.required]]
     });
     this.Objetoestado = this.formalmacen.get('status').value === 1 ? 'Activo' : 'Inactivo';
