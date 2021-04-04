@@ -61,7 +61,7 @@ export class CatalogoDocumentosComprasComponent implements OnInit {
     console.log('el tipo de dcumento es' + this.tipodocumento);
     
     if (this.tipodocumento === 'facturacompra'){
-      this.titulo = 'Factura Compra';
+      this.titulo = 'Factur Compra';
     }
     else if (this.tipodocumento === 'cotizacion'){
       this.titulo = 'Cotizaciones';

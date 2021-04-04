@@ -114,7 +114,7 @@ export class DocumentosComprasComponent implements OnInit {
 
     this.onTipoDocumento(this.tipodocumento);
     this.listarNumeracionDocumento(this.tipodocumento);
-    this. buildForm();
+    this.buildForm();
 
     this.listarVendedores();
     this.listarFormasdepago();

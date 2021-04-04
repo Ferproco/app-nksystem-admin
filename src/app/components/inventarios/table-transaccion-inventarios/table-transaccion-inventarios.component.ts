@@ -55,7 +55,7 @@ export class TableTransaccionInventariosComponent implements OnInit {
     let articulokardex = this.masterRow as ArticuloKardex;
 
     articulokardex.lstmovimientoskardex.forEach(element => {
-      if (element.cantidad >= 0){
+      if (element.cantidad >= 0) {
         element.entrada = element.cantidad;
         element.salida = 0;
       }
@@ -63,7 +63,19 @@ export class TableTransaccionInventariosComponent implements OnInit {
         element.salida = Number(element.cantidad) * -1;
         element.entrada = 0;
       }
+      if (element.contacto != null) {
+        if (element.contacto.nombreprimero === '') {
+          element.contacto.nombreprimero = element.contacto.razonsocial;
+        }
+        else {
+          element.contacto.nombreprimero = element.contacto.nombreprimero + ' ' +
+            element.contacto.nombresegundo + ' ' +
+            element.contacto.apellidoprimero + ' ' +
+            element.contacto.apellidosegundo;
+        }
+      }
     });
+
     this.lstKardex = articulokardex.lstmovimientoskardex;
     this.dataSource = new MatTableDataSource(this.lstKardex);
     this.dataSource.paginator = this.paginator;

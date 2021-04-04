@@ -50,6 +50,7 @@ export class DocumentoCompraService {
       this.Kardexmodel.cantidad = Number(element.cantidad);
       this.Kardexmodel.codunidadmedida = Number(element.codunidadmedida);
       this.Kardexmodel.codalmacen = Number(element.codalmacen);
+      this.Kardexmodel.codcontacto = Number(documento.codcontacto);
       this.Kardexmodel.concepto = 'ENTRADA POR COMPRAS';
       this.Kardexmodel.origen = 'COMPRAS';
       this.Kardexmodel.codnegocio = element.codnegocio;

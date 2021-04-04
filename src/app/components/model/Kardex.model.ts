@@ -23,6 +23,9 @@ export class Kardex{
     public codnegocio:number;
     public numerocontrol:number;
     public status:string='ACTIVO';
+    public codcontacto:number=0;
+    //public contacto: any={};
+
    // public articulo: Articulo;
 
     constructor(json: any = null){
@@ -46,6 +49,8 @@ export class Kardex{
         this.codnegocio = json.codnegocio;
         this.numerocontrol = json.numerocontrol;
         this.status=json.status;
+        this.codcontacto=json.codcontacto;
+        //this.contacto = json.contacto;
        // this.articulo=json.Item
         }
 
