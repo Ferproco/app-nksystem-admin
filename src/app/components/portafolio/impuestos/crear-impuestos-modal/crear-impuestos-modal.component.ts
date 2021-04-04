@@ -22,15 +22,16 @@ export class CrearImpuestosModalComponent implements OnInit {
   loading = false;
   formimpuestos: FormGroup;
   idnegocio: number;
-  
+
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
-  currentDate = new Date();  
+  currentDate = new Date();
 
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
-  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  //parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  parrterobservaciones = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[@$?¡\-_]){1})\S{8,16}$/
   constructor(private tipoimpuestoServicio: TipoImpuestoService,
     private impuestoService: ImpuestoService,
     private bsModalRef: BsModalRef,

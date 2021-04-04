@@ -24,7 +24,7 @@ export class Kardex{
     public numerocontrol:number;
     public status:string='ACTIVO';
     public codcontacto:number=0;
-    //public contacto: any={};
+    public contacto: any={};
 
    // public articulo: Articulo;
 
@@ -50,7 +50,7 @@ export class Kardex{
         this.numerocontrol = json.numerocontrol;
         this.status=json.status;
         this.codcontacto=json.codcontacto;
-        //this.contacto = json.contacto;
+        this.contacto = json.contacto;
        // this.articulo=json.Item
         }
 
