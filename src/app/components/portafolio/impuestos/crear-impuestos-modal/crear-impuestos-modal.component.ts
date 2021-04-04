@@ -31,7 +31,7 @@ export class CrearImpuestosModalComponent implements OnInit {
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   //parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
-  parrterobservaciones = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[@$?¡\-_]){1})\S{8,16}$/
+  parrterobservaciones = '/^[A-Za-z0-9\s]+$/g';
   constructor(private tipoimpuestoServicio: TipoImpuestoService,
     private impuestoService: ImpuestoService,
     private bsModalRef: BsModalRef,

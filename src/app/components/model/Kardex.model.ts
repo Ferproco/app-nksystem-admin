@@ -1,4 +1,5 @@
 import { Articulo } from "./Articulo.model";
+import { Contacto } from "./Contacto.model";
 
 export class Kardex{
 
@@ -24,7 +25,7 @@ export class Kardex{
     public numerocontrol:number;
     public status:string='ACTIVO';
     public codcontacto:number=0;
-    public contacto: any={};
+    public contacto: Contacto;
 
    // public articulo: Articulo;
 
