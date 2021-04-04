@@ -119,6 +119,8 @@ export class CrearArticuloComponent implements OnInit {
 
   ];
 
+  modificable = false;
+
   constructor(private articuloservice: ArticuloService,
     private familiaserive: CategoriaService,
     private unidadservice: UnidadService,

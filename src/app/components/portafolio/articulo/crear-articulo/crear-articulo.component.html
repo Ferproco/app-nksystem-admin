@@ -66,7 +66,7 @@
                     <div class="i-checks pull-left">
                       <label>
                         <input type="radio" formControlName="codtipoproducto" (change)="onChangeTipo($event)"
-                          name="codtipoproducto" [value]="tipo.id">
+                          name="codtipoproducto" [value]="tipo.id" disabled="modificable">
                         {{tipo.nombre}}
                       </label>
                     </div>
