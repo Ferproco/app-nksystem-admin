@@ -24,7 +24,7 @@ export class CatalogoContactosComponent implements OnInit {
   sortedData;
   LengthTable = 0;
 
-  tipopersonaconfig = 'T';
+  tipopersonaconfig = 'Todos';
 
   bsModalRef: BsModalRef;
 
