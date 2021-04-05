@@ -36,7 +36,7 @@ export class Articulo {
   public alto: number = 0;
   public profundidad: number = 0;
   public facturarsinexistencia: number;
-  public ivaincluido: number = 2;
+  public ivaincluido: number;
   public aplicaimpuestoconsumo: number;
   public fechacreacion: Date;
   public marca: Marca;
