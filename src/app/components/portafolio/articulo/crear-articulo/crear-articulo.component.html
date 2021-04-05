@@ -196,7 +196,8 @@
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="username">Es Impoconsumo</label>
-                        <select class="select2_demo_3 form-control" formControlName="esimpoconsumo">
+                        <select class="select2_demo_3 form-control" formControlName="esimpoconsumo"
+                        (change)="Esimpoconsumo($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{esimpoc.id}}" *ngFor="let esimpoc of esimpoconsumo">
                             {{esimpoc.nombre}}</option>
@@ -295,7 +296,7 @@
                 </div>
                 <br>
 
-                <div class="row">
+                <div class="row" *ngIf="visiblecantidadminima">
                   <accordion [isAnimated]="false">
                     <accordion-group heading="Empaques y Conversión de Unidades">
                       <div class="row">
@@ -375,7 +376,7 @@
                   </accordion>
                 </div>
 
-                <div class="row">
+                <div class="row" *ngIf="visiblecantidadminima">
                   <accordion [isAnimated]="false">
                     <accordion-group heading="Ingresar Inventario">
                       <div class="row">

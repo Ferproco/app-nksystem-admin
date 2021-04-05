@@ -72,8 +72,10 @@ export class CrearArticuloComponent implements OnInit {
   bsModalRef: any;
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
-  paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
+  patternumerodecimal = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_]*$/;
 
   customClass = 'customClass';
   isFirstOpen = true;
@@ -165,7 +167,7 @@ export class CrearArticuloComponent implements OnInit {
 
     this.formarticulo = this.formbuilder.group({
       codigo: [this.ArticuloModel.codigo, [Validators.required]],
-      nomarticulo: [this.ArticuloModel.nomarticulo, [Validators.required]],
+      nomarticulo: [this.ArticuloModel.nomarticulo, [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
       codtipoproducto: [this.ArticuloModel.codtipoproducto, [Validators.required]],
       codfamilia: [this.ArticuloModel.codfamilia, [Validators.required]],
       codunidadmedida: [this.ArticuloModel.codunidadmedida, [Validators.required]],
@@ -175,25 +177,27 @@ export class CrearArticuloComponent implements OnInit {
       referencia: [this.ArticuloModel.referencia, [Validators.pattern(this.parrterobservaciones)]],
       serial: [this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
       codigobarraprincipal: [this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.parrterobservaciones)]],
-      descripcionlarga: [this.ArticuloModel.descripcionlarga, [Validators.pattern(this.parrterobservaciones)]],
+      descripcionlarga: [this.ArticuloModel.descripcionlarga, [Validators.pattern(this.patternombreydescripcion)]],
       status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0],
-      stockminimo: [this.ArticuloModel.stockminimo, [Validators.pattern(this.parrterobservaciones)]],
-      stockmaximo: [this.ArticuloModel.stockmaximo, [Validators.pattern(this.parrterobservaciones)]],
-      cantidadreorden: [this.ArticuloModel.cantidadreorden, [Validators.pattern(this.parrterobservaciones)]],
-      peso: [this.ArticuloModel.peso, [Validators.pattern(this.parrterobservaciones)]],
-      talla: [this.ArticuloModel.talla, [Validators.pattern(this.parrterobservaciones)]],
+      stockminimo: [this.ArticuloModel.stockminimo, [Validators.pattern(this.patternumerodecimal)]],
+      stockmaximo: [this.ArticuloModel.stockmaximo, [Validators.pattern(this.patternumerodecimal)]],
+      cantidadreorden: [this.ArticuloModel.cantidadreorden, [Validators.pattern(this.patternumerodecimal)]],
+      peso: [this.ArticuloModel.peso, [Validators.pattern(this.patternumerodecimal)]],
+      talla: [this.ArticuloModel.talla, [Validators.pattern(this.patternumerodecimal)]],
       color: [this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]],
-      tipoiva: [this.ArticuloModel.tipoiva, [Validators.pattern(this.parrterobservaciones)]],
-      ivaincluido: [this.ArticuloModel.ivaincluido, [Validators.pattern(this.parrterobservaciones)]],
+      tipoiva: [this.ArticuloModel.tipoiva, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      ivaincluido: [this.ArticuloModel.ivaincluido, [Validators.required]],
       esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
-      valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
-      porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
+      valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.patternumerodecimal)]],
+      porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.patternumerodecimal)]],
       //lstmovimientoskardex: this.formbuilder.array([this.createItem()]),
       //lstunidadesalternas: this.formbuilder.array([this.createItemUnidadesalternas()])
       lstmovimientoskardex: this.formbuilder.array([]),
       lstunidadesalternas: this.formbuilder.array([])
 
     })
+
+
   }
 
   uploadFile(file) {
@@ -464,7 +468,7 @@ export class CrearArticuloComponent implements OnInit {
     const obj = this.articuloservice.mostrarArticulo(id)
       .subscribe(response => {
         this.ArticuloModel = response as any;
-        //console.log('el articulo ' + JSON.stringify(this.ArticuloModel));
+        console.log('el articulo ' + JSON.stringify(this.ArticuloModel));
         if (this.ArticuloModel.status === 'ACTIVO') {
           status = 1;
         }
@@ -484,6 +488,26 @@ export class CrearArticuloComponent implements OnInit {
           formarraylstUnidadesAlternas.push(this.createItemUnidadesalternas(itemalterna));
         });
         this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
+
+        console.log('Que trae esta vaina ' + this.ArticuloModel.esimpoconsumo);
+        if (Number(this.ArticuloModel.esimpoconsumo) === 1){
+          console.log('Entro en 1');
+          this.formarticulo.controls.porcentajeimpoconsumo.enable();
+          this.formarticulo.controls.valorimpoconsumo.enable();
+        }
+        else if (Number(this.ArticuloModel.esimpoconsumo) === 2){
+          console.log('Entro en 2');
+          this.formarticulo.controls.porcentajeimpoconsumo.disable();
+          //this.formarticulo.controls.valorimpoconsumo.disable();
+
+          this.formarticulo.controls['valorimpoconsumo'].disable();
+        }
+        else{
+          this.formarticulo.controls.porcentajeimpoconsumo.enable();
+          this.formarticulo.controls.valorimpoconsumo.enable();
+        }
+
+
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -501,12 +525,17 @@ export class CrearArticuloComponent implements OnInit {
 
   cargarRequeridos(e) {
     console.log('Mouse over');
+    let i = 0;
+    let valido = false;
     this.camposrequeridos = 'Valores Requeridos:\n';
     Object.keys(this.formarticulo.controls).forEach(key => {
+
       if (this.formarticulo.controls[key].invalid) {
         this.camposrequeridos += key + '\n';
       }
+
     });
+
   }
 
 
@@ -595,6 +624,24 @@ export class CrearArticuloComponent implements OnInit {
 
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
+  }
+
+  Esimpoconsumo(event){
+
+    if (Number(event) === 1){
+      console.log('Entro en 1');
+      this.formarticulo.controls.porcentajeimpoconsumo.enable();
+      this.formarticulo.controls.valorimpoconsumo.enable();
+    }
+    else if (Number(event) === 2){
+
+      this.formarticulo.controls.porcentajeimpoconsumo.disable();
+      this.formarticulo.controls.valorimpoconsumo.disable();
+    }
+    else{
+      this.formarticulo.controls.porcentajeimpoconsumo.enable();
+      this.formarticulo.controls.valorimpoconsumo.enable();
+    }
   }
 
   onChangeUnidadPrincipal(event) {
