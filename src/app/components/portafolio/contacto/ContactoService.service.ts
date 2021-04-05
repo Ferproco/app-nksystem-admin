@@ -33,13 +33,13 @@ export class ContactoService{
 
   listarContactosPorTipoCOntacto(codnegocio: string, tipo: string){
     let tipocontacto = 0;
-    if (tipo === 'C'){
+    if (tipo === 'Cliente'){
       tipocontacto = 1;
     }
-    else if (tipo === 'P'){
+    else if (tipo === 'Proveedor'){
       tipocontacto = 2;
     }
-    else if (tipo === 'T'){
+    else if (tipo === 'Todos'){
       tipocontacto = 3;
     }
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
