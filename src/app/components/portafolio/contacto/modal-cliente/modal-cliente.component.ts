@@ -27,7 +27,7 @@ export class ModalClienteComponent implements OnInit {
   displayedColumns: string[] = ['TIPO IDENTIFICACION', 'N° IDENTIFICACION', 'NOMBRE', 'TELEFONO', 'EMAIL', 'TIPO PERSONA', 'ESTATUS', 'ACCION'];
   dataSource: MatTableDataSource<Contacto>;
   selection = new SelectionModel<Contacto>(true, []);
-  tipopersonaconfig = 'T';
+  tipopersonaconfig = 'Todos';
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

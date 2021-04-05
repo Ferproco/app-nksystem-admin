@@ -55,10 +55,10 @@
         <th mat-header-cell *matHeaderCellDef> TIPO CONTACTO </th>
         <td mat-cell *matCellDef="let element">
           <div *ngIf="element.codtipocontacto === 1; else proveedor">
-            <i class="fa fa-reply"></i> C
+            <i></i> Cliente
           </div>
           <ng-template #proveedor>
-            <i class="fa fa-reply"></i> P
+            <i></i> Proveedor
           </ng-template>
         </td>
       </ng-container>
