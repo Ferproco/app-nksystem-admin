@@ -88,6 +88,7 @@ export class CrearContactoComponent implements OnInit {
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  parrterdireccion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_\#\/\°]*$/;
   bsModalRef: any;
 
   customClass = 'customClass';
@@ -149,7 +150,7 @@ export class CrearContactoComponent implements OnInit {
       telefonofijo1: [this.ContactoModel.telefonofijo1, [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofijo2: [this.ContactoModel.telefonofijo2, [Validators.pattern(this.patten), Validators.maxLength(15)]],
       telefonofax: [this.ContactoModel.telefonofax, [Validators.pattern(this.patten), Validators.maxLength(15)]],
-      direccionfiscal: [this.ContactoModel.direccionfiscal, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      direccionfiscal: [this.ContactoModel.direccionfiscal, [Validators.required, Validators.pattern(this.parrterdireccion)]],
       correoe: [this.ContactoModel.correoe, [Validators.pattern('^([^\\s]|\\s[^\\s])+$')]],
       fecharegistro: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), [Validators.required]],
       codvendedor: [this.ContactoModel.codvendedor, [Validators.required]],
@@ -160,7 +161,7 @@ export class CrearContactoComponent implements OnInit {
       codmunicipio: [this.ContactoModel.codmunicipio, [Validators.required]],
       lugarenvio: [this.ContactoModel.lugarenvio, [Validators.pattern(this.parrterobservaciones)]],
       codlistaprecio: [this.ContactoModel.codlistaprecio, [Validators.required]],
-      direccionexogena: [this.ContactoModel.direccionfiscal, [Validators.pattern(this.parrterobservaciones)]],
+      direccionexogena: [this.ContactoModel.direccionfiscal, [Validators.pattern(this.parrterdireccion)]],
       paginaweb: [this.ContactoModel.paginaweb, [Validators.pattern(this.parrterobservaciones)]],
       limitecreditohasta: [this.ContactoModel.limitecreditohasta, [ Validators.pattern(this.parrterobservaciones)]],
       fechacreditodesde: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],

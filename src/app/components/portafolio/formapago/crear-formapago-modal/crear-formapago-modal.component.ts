@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { FormaPago } from 'src/app/components/model/FormaPago.model';
@@ -34,11 +34,12 @@ export class CrearFormapagoModalComponent implements OnInit {
               private formbuilder: FormBuilder,
               private toastr: ToastrService,
               private router: Router,
+              private modalService: BsModalService,
               private route: ActivatedRoute) {
 
                 this.idnegocio = 1;
                 this.formapago = new FormaPago(0, '', 0, this.idnegocio, 1);
-                this.buildForm(this.formapago);
+                this.buildForm();
 
                 }
 
@@ -46,16 +47,16 @@ export class CrearFormapagoModalComponent implements OnInit {
     this.onClose = new Subject();
   }
 
-  public buildForm(formapago: FormaPago){
+  public buildForm(){
     this.formformapago = this.formbuilder.group({
-      id: [formapago.id, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      nombre: [formapago.nombre, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      dias: [formapago.dias, [Validators.required, Validators.pattern(this.paterhombre)]],
-      status: [formapago.status, [Validators.required]]
+      
+      nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      dias: [0, [Validators.required, Validators.pattern(this.paterhombre)]],
+      status: [1, [Validators.required]]
     });
   }
 
-  public onConfirm(): void {
+ /* public onConfirm(): void {
     const value = this.formformapago.value;
     console.log(value);
     this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value, this.operacion)
@@ -71,8 +72,13 @@ export class CrearFormapagoModalComponent implements OnInit {
       { enableHtml: true, closeButton: true });
     }));
 
-  }
+  }*/
 
+  public onConfirm(): void {
+    this.onClose.next(true);
+    this.bsModalRef.hide();
+
+  }
   public onCancel(): void {
     this.onClose.next(false);
     this.bsModalRef.hide();
@@ -88,12 +94,16 @@ export class CrearFormapagoModalComponent implements OnInit {
         this.onClose.next(true);
         this.bsModalRef.hide();
       },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          console.log('Error ' + JSON.stringify(error));
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio  ' + '<br>' + error.message, 'Error',
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
             { enableHtml: true, closeButton: true });
-        }));
+        }
+      }));
   }
 
   get nombre() {

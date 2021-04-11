@@ -66,6 +66,7 @@ import { UnidadMedidaAlterna } from '../model/UnidadMedidaAlterna.model';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-almacen-modal.component';
+import { CrearFormapagoModalComponent } from './formapago/crear-formapago-modal/crear-formapago-modal.component';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-
     CrearImpuestosModalComponent,
     CatalogoFormapagoComponent,
     CrearFormapagoComponent,
+    CrearFormapagoModalComponent,
     FilterFormapagoPipe,
     CatalogoUnidadmedidaComponent,
     FilterUnidadmedidaPipe,
