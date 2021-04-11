@@ -65,7 +65,7 @@ export class ArticuloService {
     else if (tipo === 'T') {
       tipoitems = 5;
     }
-    //const fecha  = new Date(fechadesde);
+
     const fechadesdestr = fechadesde.toString().split('-');
     const fechahastastr = fechahasta.toString().split('-');
     let fechad = null;
@@ -76,9 +76,9 @@ export class ArticuloService {
       tipo: Number(tipoitems),
       fechadesde: fechad,
       fechahasta: fechah,
-      codalmacen: Number(kardexcriterio.codalmacen)
+      codalmacen: Number(kardexcriterio.codalmacen),
+      articulo_id:  Number(kardexcriterio.idarticulo)
     }
-    console.log('la busqueda ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/transacciones/articulos/';
     return this.httpClient.post(endpoint, JSON.stringify(body), { headers: httpHeaders });

@@ -104,7 +104,8 @@ export class CatalogoValorkardexComponent implements OnInit {
       fechadesde:  new FormControl(formatDate(new Date(), 'dd-MM-yyyy', 'en')),//[formatDate(new Date(), 'dd-MM-yyyy', 'en')],
       fechahasta:  new FormControl(formatDate(new Date(), 'dd-MM-yyyy', 'en')),//[formatDate(new Date(), 'dd-MM-yyyy', 'en')],
       codalmacen: 0,
-      codarticulo: ''
+      codarticulo: '',
+      idarticulo: 0
     });
 
     this.listarArticulosPorTipo(this.tipoproductoconfig);
@@ -137,7 +138,6 @@ export class CatalogoValorkardexComponent implements OnInit {
     this.articuloServicio.listarArticulosPorFilter('', tipo, this.fechainicial, this.fechafinal, value)
       .subscribe(response => {
         this.lstArticulos = response as ArticuloKardex[];
-        console.log('La lista de articulos ' + JSON.stringify(this.lstArticulos));
         this.dataSource = new ExampleDataSource(this.lstArticulos);
         this.dataSource.sort = this.sort;
         //this.dataSource = new MatTableDataSource(this.lstArticulos);
@@ -163,7 +163,6 @@ export class CatalogoValorkardexComponent implements OnInit {
     this.almacenServicio.listarAlmacenes('')
       .subscribe(response => {
         this.lstAlmacenes = response as any[];
-        //console.log(this.lstAlmacenes);
         this.loading = false;
       },
         ((error: HttpErrorResponse) => {
@@ -177,13 +176,11 @@ export class CatalogoValorkardexComponent implements OnInit {
           }
         }));
   }
- 
+
   onListarArticulos() {
-   // console.log('la posicion ' + pos);
     const config: ModalOptions = { class: 'modal-lg' };
     this.bsModalRef = this.modalService.show(CatalogoArticuloModalComponent, config);
     this.bsModalRef.content.onSelect.subscribe(result => {
-      console.log('results', result);
       this.buscarArticulo(result);
     });
   }
@@ -199,10 +196,9 @@ export class CatalogoValorkardexComponent implements OnInit {
         else {
           status = 0;
         }
-        //this..controls[pos].get('codarticulo').setValue(this.ArticuloModel.id);
-       
-      
-        console.log('El articulo es ' + JSON.stringify(this.ArticuloModel));
+        this.formatransacciones.get('codarticulo').setValue(this.ArticuloModel.codigo);
+        this.formatransacciones.get('idarticulo').setValue(this.ArticuloModel.id);
+
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -336,5 +332,5 @@ export class ExampleDataSource extends MatTableDataSource<any> {
 
     return this.addExpandedRows(filtered);
   }
-  
+
 }
