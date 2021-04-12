@@ -14,7 +14,7 @@ import { CrearAlmacenModalComponent } from '../../almacen/crear-almacen-modal/cr
 import { CrearCategoriaModalComponent } from '../../categoria/crear-categoria-modal/crear-categoria-modal.component';
 
 import { ArticuloService } from '../ArticuloService.service';
-import { formatDate } from '@angular/common';
+import { formatCurrency, formatDate, getCurrencySymbol } from '@angular/common';
 import { ImpuestoService } from 'src/app/components/configuraciones/impuesto/ImpuestoService.service';
 import { CrearUnidadModalComponent } from '../../unidad/crear-unidad-modal/crear-unidad-modal.component';
 import { CrearMarcaModalComponent } from '../../marca/crear-marca-modal/crear-marca-modal.component';
@@ -26,6 +26,7 @@ import { UnidadMedidaAlterna } from 'src/app/components/model/UnidadMedidaAltern
 import { UploadService } from '../upload.service';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -75,7 +76,7 @@ export class CrearArticuloComponent implements OnInit {
   patternumerodecimal = '[0-9]+(\.[0-9][0-9]?)?';
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
-  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_]*$/;
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
 
   customClass = 'customClass';
   isFirstOpen = true;
@@ -102,14 +103,14 @@ export class CrearArticuloComponent implements OnInit {
     { id: 4, nombre: 'Gasto' },
   ];
 
-  tipoiva = [
+  tipoivalis = [
     { id: 1, nombre: 'Gravado' },
     { id: 2, nombre: 'Exento' },
     { id: 3, nombre: 'Excluido' },
 
   ];
 
-  ivaincluido = [
+  ivaincluidolist = [
     { id: 1, nombre: 'Si' },
     { id: 2, nombre: 'No' },
 
@@ -122,6 +123,7 @@ export class CrearArticuloComponent implements OnInit {
   ];
 
   isDisabledState: boolean = true
+  esimpoconsumovalor: boolean = true;
 
   constructor(private articuloservice: ArticuloService,
     private familiaserive: CategoriaService,
@@ -164,6 +166,18 @@ export class CrearArticuloComponent implements OnInit {
   }
 
   private buildForm() {
+    if (this.ArticuloModel.esimpoconsumo === null) {
+      this.esimpoconsumovalor = false;
+    }
+    else
+      if (Number(this.ArticuloModel.esimpoconsumo) === 1) {
+        this.esimpoconsumovalor = false;
+      }
+      else
+        if (Number(this.ArticuloModel.esimpoconsumo) === 2) {
+          this.esimpoconsumovalor = true;
+        }
+    //else this.esimpoconsumovalor = false;
 
     this.formarticulo = this.formbuilder.group({
       codigo: [this.ArticuloModel.codigo, [Validators.required]],
@@ -176,7 +190,7 @@ export class CrearArticuloComponent implements OnInit {
       preciosugerido: [this.ArticuloModel.preciosugerido, [Validators.pattern(this.parrterobservaciones)]],
       referencia: [this.ArticuloModel.referencia, [Validators.pattern(this.parrterobservaciones)]],
       serial: [this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
-      codigobarraprincipal: [this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.parrterobservaciones)]],
+      codigobarraprincipal: [this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.patternumerodecimal)]],
       descripcionlarga: [this.ArticuloModel.descripcionlarga, [Validators.pattern(this.patternombreydescripcion)]],
       status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0],
       stockminimo: [this.ArticuloModel.stockminimo, [Validators.pattern(this.patternumerodecimal)]],
@@ -187,9 +201,9 @@ export class CrearArticuloComponent implements OnInit {
       color: [this.ArticuloModel.color, [Validators.pattern(this.parrterobservaciones)]],
       tipoiva: [this.ArticuloModel.tipoiva, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       ivaincluido: [this.ArticuloModel.ivaincluido, [Validators.required]],
-      esimpoconsumo: [this.ArticuloModel.esimpoconsumo, [Validators.pattern(this.parrterobservaciones)]],
-      valorimpoconsumo: [this.ArticuloModel.valorimpoconsumo, [Validators.pattern(this.patternumerodecimal)]],
-      porcentajeimpoconsumo: [this.ArticuloModel.porcentajeimpoconsumo, [Validators.pattern(this.patternumerodecimal)]],
+      esimpoconsumo: [this.ArticuloModel.esimpoconsumo === null ? null : Number(this.ArticuloModel.esimpoconsumo), [Validators.pattern(this.parrterobservaciones)]],
+      valorimpoconsumo: [{ value: this.ArticuloModel.valorimpoconsumo, disabled: this.esimpoconsumovalor }, [Validators.pattern(this.patternumerodecimal)]],
+      porcentajeimpoconsumo: [{ value: this.ArticuloModel.porcentajeimpoconsumo, disabled: this.esimpoconsumovalor }, [Validators.pattern(this.patternumerodecimal)]],
       //lstmovimientoskardex: this.formbuilder.array([this.createItem()]),
       //lstunidadesalternas: this.formbuilder.array([this.createItemUnidadesalternas()])
       lstmovimientoskardex: this.formbuilder.array([]),
@@ -244,7 +258,7 @@ export class CrearArticuloComponent implements OnInit {
 
   guardarArticulo(event: Event) {
     event.preventDefault();
-    if (this.formarticulo.valid){
+    if (this.formarticulo.valid) {
       this.loading = true;
       const value = this.formarticulo.value;
       this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
@@ -264,9 +278,9 @@ export class CrearArticuloComponent implements OnInit {
             }
           }));
     }
-    else{
+    else {
       this.toastr.error('Opss faltan datos que son obligatorios ', 'Error',
-      { enableHtml: true, closeButton: true });
+        { enableHtml: true, closeButton: true });
     }
   }
 
@@ -392,6 +406,7 @@ export class CrearArticuloComponent implements OnInit {
 
   MostrarCamposTipoProducto(event) {
     const idtipo = Number(event);
+
     if (idtipo === 1) {
       this.visiblecostoxproducto = true;
       this.visiblecantidad = true;
@@ -476,6 +491,8 @@ export class CrearArticuloComponent implements OnInit {
           status = 0;
         }
         this.buildForm();
+        this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
+        this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
         const formarraylstkardex = this.formarticulo.get("lstmovimientoskardex") as FormArray;
         this.ArticuloModel.lstmovimientoskardex.map(item => {
           formarraylstkardex.push(this.createItem(item));
@@ -489,23 +506,28 @@ export class CrearArticuloComponent implements OnInit {
         });
         this.formarticulo.setControl("lstunidadesalternas", formarraylstUnidadesAlternas);
 
-        console.log('Que trae esta vaina ' + this.ArticuloModel.esimpoconsumo);
-        if (Number(this.ArticuloModel.esimpoconsumo) === 1){
-          console.log('Entro en 1');
-          this.formarticulo.controls.porcentajeimpoconsumo.enable();
-          this.formarticulo.controls.valorimpoconsumo.enable();
-        }
-        else if (Number(this.ArticuloModel.esimpoconsumo) === 2){
-          console.log('Entro en 2');
-          this.formarticulo.controls.porcentajeimpoconsumo.disable();
-          //this.formarticulo.controls.valorimpoconsumo.disable();
 
-          this.formarticulo.controls['valorimpoconsumo'].disable();
-        }
-        else{
-          this.formarticulo.controls.porcentajeimpoconsumo.enable();
-          this.formarticulo.controls.valorimpoconsumo.enable();
-        }
+        /* if (this.formarticulo.get('esimpoconsumo').value === 2){
+           console.log('Que trae esta vaina ' + this.formarticulo.get('esimpoconsumo').value);
+           this.formarticulo.get('porcentajeimpoconsumo').disable();
+           this.formarticulo.controls.valorimpoconsumo.disable();
+         }
+         if (Number(this.ArticuloModel.esimpoconsumo) === 1){
+           console.log('Entro en 1');
+           this.formarticulo.get('porcentajeimpoconsumo').enable();
+           this.formarticulo.get('valorimpoconsumo').enable();
+         }
+         else if (Number(this.ArticuloModel.esimpoconsumo) === 2){
+           console.log('Entro en 2');
+           this.formarticulo.get('porcentajeimpoconsumo').disable();
+           //t
+
+           this.formarticulo.get('valorimpoconsumo').disable();
+         }
+         else{
+           this.formarticulo.controls.porcentajeimpoconsumo.enable();
+           this.formarticulo.controls.valorimpoconsumo.enable();
+         }*/
 
 
         this.loading = false;
@@ -608,6 +630,10 @@ export class CrearArticuloComponent implements OnInit {
     return this.formarticulo.get('codimpuesto');
   }
 
+  get tipoiva() {
+    return this.formarticulo.get('tipoiva');
+  }
+
   get status() {
     return this.formarticulo.get('status');
   }
@@ -620,25 +646,31 @@ export class CrearArticuloComponent implements OnInit {
     return this.formarticulo.get('porcentajeimpoconsumo');
   }
 
+  get ivaincluido() {
+    return this.formarticulo.get('ivaincluido');
+  }
+
   onChangeTipo(event) {
 
     this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
     this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);
   }
 
-  Esimpoconsumo(event){
+  Esimpoconsumo(event) {
 
-    if (Number(event) === 1){
+    if (Number(event) === 1) {
       console.log('Entro en 1');
       this.formarticulo.controls.porcentajeimpoconsumo.enable();
       this.formarticulo.controls.valorimpoconsumo.enable();
     }
-    else if (Number(event) === 2){
+    else if (Number(event) === 2) {
 
       this.formarticulo.controls.porcentajeimpoconsumo.disable();
+      this.formarticulo.get('porcentajeimpoconsumo').setValue("0");
       this.formarticulo.controls.valorimpoconsumo.disable();
+      this.formarticulo.get('valorimpoconsumo').setValue("0");
     }
-    else{
+    else {
       this.formarticulo.controls.porcentajeimpoconsumo.enable();
       this.formarticulo.controls.valorimpoconsumo.enable();
     }
@@ -838,4 +870,13 @@ export class CrearArticuloComponent implements OnInit {
     }
     //this.formarticulo.get('precioconiva').setValue(Number(digitoverificacion));}
   }
+
+  updateValue(value: string) {
+    let val = parseInt(value, 10);
+    if (Number.isNaN(val)) {
+      val = 0;
+    }
+    //this.formarticulo.get('preciosugerido').setValue(formatCurrency(val, 'es_CO', getCurrencySymbol('COP', 'wide')));
+  }
+
 }

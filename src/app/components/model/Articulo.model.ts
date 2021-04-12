@@ -26,7 +26,7 @@ export class Articulo {
   public stockmaximo: number;
   public cantidadreorden: number;
   public tipoiva: string;
-  public esimpoconsumo: string;
+  public esimpoconsumo: string = '2';
   public valorimpoconsumo: number;
   public porcentajeimpoconsumo: number;
   public peso: number;

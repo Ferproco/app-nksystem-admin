@@ -55,9 +55,23 @@ import { DocumentosVentasService } from './components/ventas/documentos-ventas.s
 import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 
 
-
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "$",
+  suffix: "",
+  thousands: ".",
+  nullable: true,
+  min: null,
+  max: null,
+  inputMode: CurrencyMaskInputMode.NATURAL
+};
 
 @NgModule({
   declarations: [
@@ -107,7 +121,8 @@ import { DocumentoCompraService } from './components/compras/DocumentoCompraServ
     AccordionModule.forRoot(),
     ButtonsModule.forRoot(),
     MatSlideToggleModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
 
   ],
   providers: [
