@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Impuesto } from '../model/Impuesto.model';
 import { Transacciones } from '../model/Transacciones.model';
 
@@ -10,7 +10,7 @@ import { Transacciones } from '../model/Transacciones.model';
 export class TransaccionesService{
 
   lstTransacciones: Transacciones[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

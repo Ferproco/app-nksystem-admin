@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Departamento } from '../model/Departamento.model';
 
 @Injectable()
 export class DepartamentoService{
 
   lstDepartamentos: Departamento[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

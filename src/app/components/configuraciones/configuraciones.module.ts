@@ -40,6 +40,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TipoDocumentoService } from './tipodocumento/TipoDocumentoService.service';
+import { CatalogoNegocioComponent } from './negocio/catalogo-negocio/catalogo-negocio.component';
+import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.component';
 
 
 
@@ -55,7 +57,9 @@ import { TipoDocumentoService } from './tipodocumento/TipoDocumentoService.servi
       CatalogoTipoImpuestoComponentComponent,
       CrearTipoImpuestoComponentComponent,
       CrearNumeraciondocumentoComponent,
-      CatalogoNumeraciondocumentoComponent
+      CatalogoNumeraciondocumentoComponent,
+      CatalogoNegocioComponent,
+      CrearNegocioComponent
         
     ],
   imports: [

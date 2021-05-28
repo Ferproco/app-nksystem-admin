@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { TipoImpuesto } from '../../model/TipoImpuesto.model';
 
 
@@ -10,7 +10,7 @@ import { TipoImpuesto } from '../../model/TipoImpuesto.model';
 export class TipoImpuestoService{
 
   lstTipoImpuestos: TipoImpuesto[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

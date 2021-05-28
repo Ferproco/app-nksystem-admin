@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 
 import { GrupoArticulo } from '../model/GrupoArticulo.model';
 
@@ -10,7 +10,7 @@ import { GrupoArticulo } from '../model/GrupoArticulo.model';
 export class GrupoArticuloService{
 
   lstGrupoArticulos: GrupoArticulo[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

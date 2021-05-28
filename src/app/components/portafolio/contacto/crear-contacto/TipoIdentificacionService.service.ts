@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Contacto } from 'src/app/components/model/Contacto.model';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TipoIdentificacionService{
 
   lstTipoIdentificacion: Contacto[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  urlAuthentication: "http://localhost:8046/",
+  UrlTransactional: "http://localhost:8080/"
 };
 
 /*

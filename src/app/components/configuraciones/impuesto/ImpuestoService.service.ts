@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Impuesto } from '../../model/Impuesto.model';
 
 
@@ -10,7 +10,7 @@ import { Impuesto } from '../../model/Impuesto.model';
 export class ImpuestoService{
 
   lstImpuestos: Impuesto[] = [];
-  uriapi: string = Api.url;
+  uriapi: string =  environment.UrlTransactional;
   value: any;
   Eliminar = new EventEmitter<boolean>();
 

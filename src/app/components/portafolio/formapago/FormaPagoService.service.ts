@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable, ɵConsole } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { FormaPago } from '../../model/FormaPago.model';
 
 @Injectable()
 export class FormaPagoService{
 
   lstFormaPagos: FormaPago[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
   value: any;
 
   constructor(private httpClient: HttpClient){

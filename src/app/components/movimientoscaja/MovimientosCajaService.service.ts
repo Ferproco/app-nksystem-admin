@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Cliente } from '../model/Cliente.model';
 import { MovimientosCaja } from '../model/MovimientosCaja.model';
 
@@ -9,7 +9,7 @@ import { MovimientosCaja } from '../model/MovimientosCaja.model';
 export class MovimientosCajaService{
 
   lstMovimientosCajas: MovimientosCaja[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

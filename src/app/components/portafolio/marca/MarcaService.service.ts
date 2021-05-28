@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Marca } from '../../model/Marca.model';
 
 
@@ -10,7 +10,7 @@ import { Marca } from '../../model/Marca.model';
 export class MarcaService{
 
   lstMarcas: Marca[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 

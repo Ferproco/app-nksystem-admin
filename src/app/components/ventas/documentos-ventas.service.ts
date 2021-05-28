@@ -3,8 +3,8 @@ import { DetallesDocumentoVenta } from './../model/DetallesDocumentoVenta.model'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
 import { DocumentoVenta } from '../model/DocumentoVenta.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -12,7 +12,7 @@ import { DocumentoVenta } from '../model/DocumentoVenta.model';
 })
 export class DocumentosVentasService {
 
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
   lstdetallesventas: DetallesDocumentoVenta[]=[];
   lstkardex: Kardex[]=[];
   Kardexmodel: Kardex;

@@ -8,8 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
-import { RegistrarseComponent } from './components/login/registrarse/registrarse.component';
+import { RegistrarseComponent } from './components/auth/registrarse/registrarse.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // RECOMMENDED
@@ -56,6 +55,9 @@ import { DocumentosComprasComponent } from './components/compras/documentos-comp
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { LoginComponent } from './components/auth/login/login.component';
+import { LoginService } from './components/auth/login/LoginService.service';
+import { StorageService } from './components/auth/login/StorageService.service';
 
 
 export const customCurrencyMaskConfig = {
@@ -135,6 +137,8 @@ export const customCurrencyMaskConfig = {
     ListaPrecioService,
     DocumentosVentasService,
     DocumentoCompraService,
+    LoginService,
+    StorageService,
     BsModalRef
   ],
   bootstrap: [AppComponent]

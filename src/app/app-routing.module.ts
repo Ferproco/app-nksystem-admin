@@ -1,6 +1,5 @@
 
 import { MainComponent } from './components/main/main.component';
-import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,6 +10,7 @@ import { CatalogoTransaccionesComponent } from './components/transacciones/catal
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 
 const routes: Routes = [

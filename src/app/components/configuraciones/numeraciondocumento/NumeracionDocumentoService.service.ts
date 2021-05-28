@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
-import { Api } from 'src/app/config';
+import { environment } from "src/environments/environment";
 import { NumeracionDocumento } from "../../model/NumeracionDocumento.model";
 
 @Injectable()
 export class NumeracionDocumentoService{
 
   lstNumeracionDocumentos: NumeracionDocumento[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
   value: any;
   nombrelogicodocumento : String;
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Departamento } from '../model/Departamento.model';
 import { Municipio } from '../model/Municipio.model';
 
@@ -8,7 +8,7 @@ import { Municipio } from '../model/Municipio.model';
 export class MunicipioService{
 
   lstMunicipios: Municipio[] = [];
-  uriapi: string = Api.url;
+  uriapi: string = environment.UrlTransactional;
 
   constructor(private httpClient: HttpClient){
 
