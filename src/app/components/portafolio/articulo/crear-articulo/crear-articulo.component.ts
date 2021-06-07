@@ -560,8 +560,6 @@ export class CrearArticuloComponent implements OnInit {
 
   }
 
-
-
   get codigo() {
     return this.formarticulo.get('codigo');
   }

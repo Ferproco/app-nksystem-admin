@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-
-
-
-
 import { ConfiguracionesComponent } from './configuraciones.component';
 import { CatalogoImpuestoComponent } from './impuesto/catalogo-impuesto/catalogo-impuesto.component';
 import { CrearImpuestoComponent } from './impuesto/crear-impuesto/crear-impuesto.component';
@@ -12,6 +7,8 @@ import { CatalogoNumeraciondocumentoComponent } from './numeraciondocumento/cata
 import { CrearNumeraciondocumentoComponent } from './numeraciondocumento/crear-numeraciondocumento/crear-numeraciondocumento.component';
 import { CatalogoTipoImpuestoComponentComponent } from './tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
 import { CrearTipoImpuestoComponentComponent } from './tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
+import { CatalogoUsuarioComponent } from './usuario/catalogo-usuario/catalogo-usuario.component';
+import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
 
 
 const routes: Routes =
@@ -56,10 +53,14 @@ const routes: Routes =
           path: 'crearnumeraciondocumento/:id',
           component: CrearNumeraciondocumentoComponent
         },
-       /* {
-          path: 'crear-numeraciondocumento-modal',
-          component: CrearNumeraciondocumentoModalComponent
-        },*/
+        {
+          path: 'listarusuarios',
+          component: CatalogoUsuarioComponent
+        },
+        {
+          path: 'crearusuario',
+          component: CrearUsuarioComponent
+        }
         
       ]
     }

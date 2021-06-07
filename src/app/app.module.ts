@@ -51,13 +51,13 @@ import * as accordion from 'ngx-bootstrap/accordion';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DocumentosVentasService } from './components/ventas/documentos-ventas.service';
-import { DocumentosComprasComponent } from './components/compras/documentos-compras/documentos-compras.component';
 import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { LoginComponent } from './components/auth/login/login.component';
 import { LoginService } from './components/auth/login/LoginService.service';
 import { StorageService } from './components/auth/login/StorageService.service';
+import { NegocioService } from './components/configuraciones/negocio/NegocioService.service';
 
 
 export const customCurrencyMaskConfig = {
@@ -139,6 +139,7 @@ export const customCurrencyMaskConfig = {
     DocumentoCompraService,
     LoginService,
     StorageService,
+    NegocioService,
     BsModalRef
   ],
   bootstrap: [AppComponent]

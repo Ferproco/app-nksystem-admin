@@ -8,19 +8,19 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
-import { Categoria } from 'src/app/components/model/Categoria.model';
-import { CategoriaService } from '../CategoriaService.service';
+import { Usuario } from '../../../model/Usuario.model';
+import { UsuarioService } from '../UsuarioService.service';
 
 @Component({
-  selector: 'app-catalogo-categoria',
-  templateUrl: './catalogo-categoria.component.html',
-  styleUrls: ['./catalogo-categoria.component.css']
+  selector: 'app-catalogo-usuario',
+  templateUrl: './catalogo-usuario.component.html',
+  styleUrls: ['./catalogo-usuario.component.css']
 })
-export class CatalogoCategoriaComponent implements OnInit {
+export class CatalogoUsuarioComponent implements OnInit {
   loading = false;
-  titulo = 'Listado de Almacenes';
-  lstCategorias: Categoria[] = [];
-  filtrarcategorias = '';
+  titulo = 'Listado de Usuarios';
+  lstUsuarios: Usuario[] = [];
+  filtrarusuarios = '';
 
   tableSizes = [3, 6, 9, 12];
 
@@ -29,49 +29,46 @@ export class CatalogoCategoriaComponent implements OnInit {
   sortedData;
 
   bsModalRef: BsModalRef;
-  displayedColumns: string[] = ['select', 'Codigo', 'Nombre', 'Status', 'Acción'];
-  dataSource: MatTableDataSource<Categoria>;
-  selection = new SelectionModel<Categoria>(true, []);
+  displayedColumns: string[] = ['select', 'Codigo', 'Usuario', 'Nombre', 'Telefono', 'Ocupacion', 'Status', 'Acción'];
+  dataSource: MatTableDataSource<Usuario>;
+  selection = new SelectionModel<Usuario>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
-
-  constructor(private categoriaServicio: CategoriaService,
+  constructor(private usuarioService: UsuarioService,
     private toastr: ToastrService,
     private router: Router,
     private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.listarCategorias();
+    this.listarUsuarios();
   }
 
-  listarCategorias() {
+  listarUsuarios() {
     this.loading = true;
-    this.categoriaServicio.listarCategorias('').subscribe(response => {
-        this.lstCategorias = response as Categoria[];
-        this.dataSource = new MatTableDataSource(this.lstCategorias);
-        this.dataSource.paginator = this.paginator;
-        this.LengthTable = this.lstCategorias.length;
-        this.sortedData = this.lstCategorias.slice();
+    this.usuarioService.listarUsuarios().subscribe(response => {
+      this.lstUsuarios = response as Usuario[];
+      this.dataSource = new MatTableDataSource(this.lstUsuarios);
+      this.dataSource.paginator = this.paginator;
+      this.LengthTable = this.lstUsuarios.length;
+      this.sortedData = this.lstUsuarios.slice();
+      this.loading = false;
+    },
+      ((error: HttpErrorResponse) => {
         this.loading = false;
-      },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          if (error.status === 404) {
+        if (error.status === 404) {
 
-          }
-          else {
-            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-              { enableHtml: true, closeButton: true });
-          }
-        }));
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
 
-
-  registrarcategorias() {
-    this.router.navigate(['main/dashboard/portafolio/crearcategoria']);
+  registrarusuarios() {
+    this.router.navigate(['main/dashboard/configuraciones/crearusuario']);
   }
 
   applyFilter(event: Event) {
@@ -84,7 +81,7 @@ export class CatalogoCategoriaComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    const data = this.lstCategorias.slice();
+    const data = this.lstUsuarios.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedData = data;
       return;
@@ -122,11 +119,10 @@ export class CatalogoCategoriaComponent implements OnInit {
   }
   eliminarporcodigo(id: number) {
     this.loading = true;
-    this.categoriaServicio.eliminarCategoria(id)
-      .subscribe(response => {
+    this.usuarioService.eliminarUsuario(id).subscribe(response => {
         const respuesta = response;
         this.loading = false;
-        this.listarCategorias();
+        this.listarUsuarios();
       },
         ((error: HttpErrorResponse) => {
           this.loading = false;
@@ -149,7 +145,7 @@ export class CatalogoCategoriaComponent implements OnInit {
 
   }
   Refrescar() {
-    this.listarCategorias();
+    this.listarUsuarios();
   }
   Importar() {
 
@@ -167,10 +163,11 @@ export class CatalogoCategoriaComponent implements OnInit {
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
-  checkboxLabel(row?: Categoria): string {
+  checkboxLabel(row?: Usuario): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.codfamilia + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
+
 }

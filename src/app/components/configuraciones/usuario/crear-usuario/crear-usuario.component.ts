@@ -1,0 +1,113 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ToastrService } from 'ngx-toastr';
+import { Usuario } from 'src/app/components/model/Usuario.model';
+import { UsuarioService } from '../UsuarioService.service';
+
+@Component({
+  selector: 'app-crear-usuario',
+  templateUrl: './crear-usuario.component.html',
+  styleUrls: ['./crear-usuario.component.css']
+})
+export class CrearUsuarioComponent implements OnInit {
+
+  formusuario:FormGroup;
+  UsuarioModel:Usuario;
+  loading = false;
+  camposrequeridos:string;
+  idusuario = 0;
+
+  colorTheme = 'theme-orange';
+  bsConfig: Partial<BsDatepickerConfig>;
+  currentDate = new Date();
+
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
+
+  constructor( private toastr: ToastrService,
+               private router: Router,
+               private route: ActivatedRoute,
+               private formbuilder: FormBuilder,
+               private usuarioService: UsuarioService) { 
+
+    if (this.route.snapshot.params.id) {
+      this.idusuario = this.route.snapshot.params.id;
+    }
+    this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+    this.buildForm();
+  }
+
+  ngOnInit(): void {
+  }
+
+  private buildForm() {
+
+    this.formusuario = this.formbuilder.group({
+      email: ['', [Validators.required]],
+      nomarticulo: ['', [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
+      status: [true, [Validators.required]]
+      
+    });
+  }
+
+  get email() {
+    return this.formusuario.get('email');
+  }
+
+  get nomarticulo() {
+    return this.formusuario.get('nomarticulo');
+  }
+
+  get status() {
+    return this.formusuario.get('status');
+  }
+
+  onChange(event: MatSlideToggleChange) {
+    this.formusuario.get('status').setValue(event.checked === true ? '1' : '0');
+  }
+
+  cargarRequeridos(e) {
+    console.log('Mouse over');
+    let i = 0;
+    let valido = false;
+    this.camposrequeridos = 'Valores Requeridos:\n';
+    Object.keys(this.formusuario.controls).forEach(key => {
+
+      if (this.formusuario.controls[key].invalid) {
+        this.camposrequeridos += key + '\n';
+      }
+    });
+  }
+
+  guardarUsuario(event: Event) {
+    event.preventDefault();
+    if (this.formusuario.valid) {
+      this.loading = true;
+      const value = this.formusuario.value;
+      this.usuarioService.guardarUsuario(this.idusuario, value)
+        .subscribe(response => {
+          this.loading = false;
+          this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+          this.router.navigate(['/main/dashboard/configuraciones/listarusuarios']);
+        },
+          ((error: HttpErrorResponse) => {
+            this.loading = false;
+            if (error.status === 404) {
+
+            }
+            else {
+              this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+                { enableHtml: true, closeButton: true });
+            }
+          }));
+    }
+    else {
+      this.toastr.error('Opss faltan datos que son obligatorios ', 'Error',
+        { enableHtml: true, closeButton: true });
+    }
+  }
+
+}

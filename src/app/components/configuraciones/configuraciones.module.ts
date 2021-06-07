@@ -42,6 +42,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TipoDocumentoService } from './tipodocumento/TipoDocumentoService.service';
 import { CatalogoNegocioComponent } from './negocio/catalogo-negocio/catalogo-negocio.component';
 import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.component';
+import { UsuarioService } from './usuario/UsuarioService.service';
+import { CatalogoUsuarioComponent } from './usuario/catalogo-usuario/catalogo-usuario.component';
+import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
 
 
 
@@ -59,7 +62,9 @@ import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.com
       CrearNumeraciondocumentoComponent,
       CatalogoNumeraciondocumentoComponent,
       CatalogoNegocioComponent,
-      CrearNegocioComponent
+      CrearNegocioComponent,
+      CatalogoUsuarioComponent,
+      CrearUsuarioComponent
         
     ],
   imports: [
@@ -103,7 +108,8 @@ import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.com
     NumeracionDocumentoService,
     ImpuestoService,
     TipoImpuestoService,
-    TipoDocumentoService,
+    TipoDocumentoService,    
+    UsuarioService,
     BsModalRef
   ]
 })

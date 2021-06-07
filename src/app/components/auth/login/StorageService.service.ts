@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import { Router } from '@angular/router';
 import { JwtUser } from "../../model/JwtUser.model";
+import { Negocio } from "../../model/Negocio.model";
 import { Session } from "../../model/Session.model";
 
 @Injectable()
@@ -36,6 +37,11 @@ export class StorageService {
   getCurrentUser(): JwtUser {
     var session: Session = this.getCurrentSession();
     return (session && session.user) ? session.user : null;
+  };
+
+  getCurrentEmpresa(): Negocio {
+    var session: Session = this.getCurrentSession();
+    return (session && session.empresa) ? session.empresa : null;
   };
 
   isAuthenticated(): boolean {

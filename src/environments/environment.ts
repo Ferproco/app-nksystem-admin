@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   urlAuthentication: "http://localhost:8046/",
-  UrlTransactional: "http://localhost:8080/"
+  UrlTransactional: "http://localhost:8080/",
+  UrlServiceEmail: "http://localhost:8041/"
 };
 
 /*

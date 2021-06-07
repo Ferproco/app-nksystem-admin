@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NegocioService } from '../../configuraciones/negocio/NegocioService.service';
 import { Login } from '../../model/Login.model';
+import { Negocio } from '../../model/Negocio.model';
 import { Session } from '../../model/Session.model';
 import { LoginService } from './LoginService.service';
 import { StorageService } from './StorageService.service';
@@ -19,10 +21,11 @@ export class LoginComponent implements OnInit {
   LoginModel: Login;
   loading = false;
   constructor(private router: Router,
-              private formbuilder: FormBuilder,
-              private loginService: LoginService,
-              private storageService: StorageService,
-              private toastr: ToastrService) {
+    private formbuilder: FormBuilder,
+    private loginService: LoginService,
+    private negocioService: NegocioService,
+    private storageService: StorageService,
+    private toastr: ToastrService) {
 
     this.buildForm();
   }
@@ -43,23 +46,36 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
     this.loading = true;
     const value = this.formuser.value;
-    this.loginService.login(value.username, value.password)
-    .subscribe(response => {  
-      this.storageService.setCurrentSession(response as Session);    
-      this.router.navigate(['main/dashboard']);
-      this.loading = false;
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      if (error.status === 404) {
+    this.loginService.login(value.username, value.password).subscribe(response => {
+      console.log('la respuesta ' + JSON.stringify(response));
+      let sesion = response as Session;
+      this.negocioService.buscarnegocioporid(sesion.user?.empresaid).subscribe(responseempresa => {
+        console.log('La empresa es ' + JSON.stringify(responseempresa));
+        sesion.empresa = responseempresa as Negocio;
+        this.storageService.setCurrentSession(sesion);
+        this.router.navigate(['main/dashboard']);
+        this.loading = false;
+      });
 
-      }
-      else {
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-          { enableHtml: true, closeButton: true });
-      }
-    }));
-  
+
+    },
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
+          this.toastr.info('Usuario o Contraseña incorrectos ', 'Información',
+            { enableHtml: true, closeButton: true });
+        }
+        else
+          if (error.status === 401) {
+            this.toastr.error('Usuario no Autorizado ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+      }));
+
   }
 
   get username() {

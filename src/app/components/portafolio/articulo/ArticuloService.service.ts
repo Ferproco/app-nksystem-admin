@@ -163,6 +163,7 @@ export class ArticuloService {
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.post(endpoint, JSON.stringify(body), { headers: httpHeaders });
   }
+  
   eliminarArticulo(id: number) {
     const body = {
       id: Number(id)
