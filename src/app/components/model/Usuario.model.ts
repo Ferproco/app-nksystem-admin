@@ -16,7 +16,7 @@ export class Usuario{
 	public activo: boolean;	
 	public borrado: boolean;	
 	public valido: boolean;	
-	public esadministrador: boolean;
+	public esadministrador: boolean = false;
 	public vencepassword: Date;	
 	public accesotoken: string;	
 	public actualizartoken: string;	

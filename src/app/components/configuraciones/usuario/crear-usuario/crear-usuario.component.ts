@@ -5,6 +5,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmedValidator } from 'src/app/components/auth/validator';
 import { Usuario } from 'src/app/components/model/Usuario.model';
 import { UsuarioService } from '../UsuarioService.service';
 
@@ -15,10 +16,10 @@ import { UsuarioService } from '../UsuarioService.service';
 })
 export class CrearUsuarioComponent implements OnInit {
 
-  formusuario:FormGroup;
-  UsuarioModel:Usuario;
+  formusuario: FormGroup;
+  UsuarioModel: Usuario;
   loading = false;
-  camposrequeridos:string;
+  camposrequeridos: string;
   idusuario = 0;
 
   colorTheme = 'theme-orange';
@@ -27,11 +28,11 @@ export class CrearUsuarioComponent implements OnInit {
 
   patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
 
-  constructor( private toastr: ToastrService,
-               private router: Router,
-               private route: ActivatedRoute,
-               private formbuilder: FormBuilder,
-               private usuarioService: UsuarioService) { 
+  constructor(private toastr: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private formbuilder: FormBuilder,
+    private usuarioService: UsuarioService) {
 
     if (this.route.snapshot.params.id) {
       this.idusuario = this.route.snapshot.params.id;
@@ -46,10 +47,24 @@ export class CrearUsuarioComponent implements OnInit {
   private buildForm() {
 
     this.formusuario = this.formbuilder.group({
-      email: ['', [Validators.required]],
-      nomarticulo: ['', [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
-      status: [true, [Validators.required]]
-      
+      email: ['',
+        Validators.compose([
+          Validators.email,
+          Validators.required])
+      ],
+      nombrecompleto: ['', [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
+      ocupacion: [],
+      telefono: [],
+      password: ['', [Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(12)]],
+      repetirpassword: [''],
+      creadoel: [new Date()],
+      actualizadoel: [new Date()],
+      activo: [true, [Validators.required]]
+
+    }, {
+      validator: ConfirmedValidator('password', 'repetirpassword')
     });
   }
 
@@ -57,16 +72,32 @@ export class CrearUsuarioComponent implements OnInit {
     return this.formusuario.get('email');
   }
 
-  get nomarticulo() {
-    return this.formusuario.get('nomarticulo');
+  get telefono() {
+    return this.formusuario.get('telefono');
   }
 
-  get status() {
-    return this.formusuario.get('status');
+  get ocupacion() {
+    return this.formusuario.get('ocupacion');
+  }
+
+  get password() {
+    return this.formusuario.get('password');
+  }
+
+  get repetirpassword() {
+    return this.formusuario.get('repetirpassword');
+  }
+
+  get nombrecompleto() {
+    return this.formusuario.get('nombrecompleto');
+  }
+
+  get activo() {
+    return this.formusuario.get('activo');
   }
 
   onChange(event: MatSlideToggleChange) {
-    this.formusuario.get('status').setValue(event.checked === true ? '1' : '0');
+    this.formusuario.get('activo').setValue(event.checked === true ? true : false);
   }
 
   cargarRequeridos(e) {
@@ -89,6 +120,11 @@ export class CrearUsuarioComponent implements OnInit {
       const value = this.formusuario.value;
       this.usuarioService.guardarUsuario(this.idusuario, value)
         .subscribe(response => {
+
+          this.usuarioService.enviarEmailcrearUsuario(value.email, value.nombrecompleto, value.password).subscribe(response => {
+
+          });
+
           this.loading = false;
           this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
           this.router.navigate(['/main/dashboard/configuraciones/listarusuarios']);

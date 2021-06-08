@@ -27,7 +27,7 @@
                                             <span class="bread-slash">/ Configuración /</span>
                                         </li>
                                         <li>
-                                            <a routerLink="/main/dashboard/portafolio/listararticulos"><span
+                                            <a routerLink="/main/dashboard/configuraciones/listarusuarios"><span
                                                     class="bread-blod">Listado de
                                                     Usuarios /</span></a>
                                         </li>
@@ -66,7 +66,7 @@
                                         
                                     </div>
                                     <div class="col-lg-2">
-                                        <mat-slide-toggle (change)="onChange($event)" formControlName="status">Activo
+                                        <mat-slide-toggle (change)="onChange($event)" formControlName="activo">Activo
                                         </mat-slide-toggle>
                                     </div>
                                 </div>
@@ -83,9 +83,9 @@
                                                     <div *ngIf="email.errors.required">
                                                         email Requerido
                                                     </div>
-                                                    <div class="invalid-mensaje" *ngIf="email.errors.pattern">
-                                                        email Incorrecto
-                                                    </div>
+                                                    <div *ngIf="email.errors.email">
+                                                        Email incorrecto
+                                                    </div>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -93,15 +93,15 @@
                                         <div id="pwd-container3">
                                             <div class="form-group">
                                                 <label for="username">Ocupacion</label>
-                                                <input formControlName="email"
-                                                    [ngClass]="{'invalid-data': email.invalid && (email.touched || email.dirty)}"
-                                                    type="text" class="form-control" placeholder="Ingrese el email" />
-                                                <div *ngIf="email.invalid  && (email.dirty || email.touched)">
-                                                    <div *ngIf="email.errors.required">
-                                                        email Requerido
+                                                <input formControlName="ocupacion"
+                                                    [ngClass]="{'invalid-data': ocupacion.invalid && (ocupacion.touched || ocupacion.dirty)}"
+                                                    type="text" class="form-control" placeholder="Ingrese la Ocupacion" />
+                                                <div *ngIf="ocupacion.invalid  && (ocupacion.dirty || ocupacion.touched)">
+                                                    <div *ngIf="ocupacion.errors.required">
+                                                        Ocupacion Requerido
                                                     </div>
-                                                    <div class="invalid-mensaje" *ngIf="email.errors.pattern">
-                                                        email Incorrecto
+                                                    <div class="invalid-mensaje" *ngIf="ocupacion.errors.pattern">
+                                                        Ocupacion Incorrecto
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,8 +111,8 @@
                                               <label for="password3">Creado el</label>
                                               <div class="input-group date">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input class="form-control" bsDatepicker #dp="bsDatepicker"
-                                                  formControlName="fechacreditodesde" [bsConfig]="bsConfig">
+                                                <input class="form-control" disabled bsDatepicker #dp="bsDatepicker"
+                                                  formControlName="creadoel" [bsConfig]="bsConfig">
                                               </div>
                                             </div>
                                           </div>   
@@ -120,15 +120,21 @@
                                           <div id="pwd-container3">
                                             <div class="form-group">
                                                 <label for="username">Password</label>
-                                                <input formControlName="email"
-                                                    [ngClass]="{'invalid-data': email.invalid && (email.touched || email.dirty)}"
-                                                    type="text" class="form-control" placeholder="Ingrese el email" />
-                                                <div *ngIf="email.invalid  && (email.dirty || email.touched)">
-                                                    <div *ngIf="email.errors.required">
-                                                        email Requerido
+                                                <input formControlName="password"
+                                                    [ngClass]="{'invalid-data': password.invalid && (password.touched || password.dirty)}"
+                                                    type="password" class="form-control" />
+                                                <div *ngIf="password.invalid  && (password.dirty || password.touched)">
+                                                    <div *ngIf="password.errors.required">
+                                                        Password Requerido
                                                     </div>
-                                                    <div class="invalid-mensaje" *ngIf="email.errors.pattern">
-                                                        email Incorrecto
+                                                    <div *ngIf="password.errors.minlength">
+                                                        Password debe tener minimo 6 caracteres
+                                                    </div>
+                                                    <div *ngIf="password.errors.maxlength">
+                                                        Password debe tener maximo 12 caracteres
+                                                    </div>
+                                                    <div class="invalid-mensaje" *ngIf="password.errors.pattern">
+                                                        password Incorrecto
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,17 +146,17 @@
                                         <div id="pwd-container3">
                                             <div class="form-group">
                                                 <label for="username">Nombre Completo*</label>
-                                                <input formControlName="nomarticulo"
-                                                    [ngClass]="{'invalid-data': nomarticulo.invalid && (nomarticulo.touched || nomarticulo.dirty)}"
+                                                <input formControlName="nombrecompleto"
+                                                    [ngClass]="{'invalid-data': nombrecompleto.invalid && (nombrecompleto.touched || nombrecompleto.dirty)}"
                                                     type="text" class="form-control"
-                                                    placeholder="Ingrese el  Nombre del Articulo" />
+                                                    placeholder="Ingrese el  Nombre del usuario" />
                                                 <div
-                                                    *ngIf="nomarticulo.invalid  && (nomarticulo.dirty || nomarticulo.touched)">
-                                                    <div *ngIf="nomarticulo.errors.required">
-                                                        Nombre Requerido
+                                                    *ngIf="nombrecompleto.invalid  && (nombrecompleto.dirty || nombrecompleto.touched)">
+                                                    <div *ngIf="nombrecompleto.errors.required">
+                                                        Nombre de usuario Requerido
                                                     </div>
-                                                    <div class="invalid-mensaje" *ngIf="nomarticulo.errors.pattern">
-                                                        Nombre Incorrecto
+                                                    <div class="invalid-mensaje" *ngIf="nombrecompleto.errors.pattern">
+                                                        Nombre de usuario Incorrecto
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,17 +165,17 @@
                                         <div id="pwd-container3">
                                             <div class="form-group">
                                                 <label for="username">Telefono</label>
-                                                <input formControlName="nomarticulo"
-                                                    [ngClass]="{'invalid-data': nomarticulo.invalid && (nomarticulo.touched || nomarticulo.dirty)}"
+                                                <input formControlName="telefono"
+                                                    [ngClass]="{'invalid-data': telefono.invalid && (telefono.touched || telefono.dirty)}"
                                                     type="text" class="form-control"
-                                                    placeholder="Ingrese el  Nombre del Articulo" />
+                                                    placeholder="Ingrese el Telefono" />
                                                 <div
-                                                    *ngIf="nomarticulo.invalid  && (nomarticulo.dirty || nomarticulo.touched)">
-                                                    <div *ngIf="nomarticulo.errors.required">
-                                                        Nombre Requerido
+                                                    *ngIf="telefono.invalid  && (telefono.dirty || telefono.touched)">
+                                                    <div *ngIf="telefono.errors.required">
+                                                        Telefono Requerido
                                                     </div>
-                                                    <div class="invalid-mensaje" *ngIf="nomarticulo.errors.pattern">
-                                                        Nombre Incorrecto
+                                                    <div class="invalid-mensaje" *ngIf="telefono.errors.pattern">
+                                                        Telefono Incorrecto
                                                     </div>
                                                 </div>
                                             </div>
@@ -180,23 +186,33 @@
                                               <label for="password3">Actualizado el</label>
                                               <div class="input-group date">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input class="form-control" bsDatepicker #dp="bsDatepicker"
-                                                  formControlName="fechacreditohasta" [bsConfig]="bsConfig">
+                                                <input class="form-control" disabled bsDatepicker #dp="bsDatepicker"
+                                                  formControlName="actualizadoel" [bsConfig]="bsConfig">
                                               </div>
                                             </div>
                                           </div>
                                           <div id="pwd-container3">
                                             <div class="form-group">
                                                 <label for="username">Repetir Password</label>
-                                                <input formControlName="email"
-                                                    [ngClass]="{'invalid-data': email.invalid && (email.touched || email.dirty)}"
-                                                    type="text" class="form-control" placeholder="Ingrese el email" />
-                                                <div *ngIf="email.invalid  && (email.dirty || email.touched)">
-                                                    <div *ngIf="email.errors.required">
-                                                        email Requerido
+                                                <input formControlName="repetirpassword"
+                                                    [ngClass]="{'invalid-data': repetirpassword.invalid && (repetirpassword.touched || repetirpassword.dirty)}"
+                                                    type="password" class="form-control" />
+                                                <div *ngIf="repetirpassword.invalid  && (repetirpassword.dirty || repetirpassword.touched)">
+                                                    <div *ngIf="repetirpassword.errors.required">
+                                                        Password Requerido
                                                     </div>
-                                                    <div class="invalid-mensaje" *ngIf="email.errors.pattern">
-                                                        email Incorrecto
+                                                    <div *ngIf="repetirpassword.errors.minlength">
+                                                        Password debe tener minimo 6 caracteres
+                                                    </div>
+                                                    <div *ngIf="repetirpassword.errors.maxlength">
+                                                        Password debe tener maximo 12 caracteres
+                                                    </div>
+                                                    <div *ngIf="repetirpassword.errors.confirmedValidator">
+                                                        Password no coincide
+                                                    </div>
+                                                    
+                                                    <div class="invalid-mensaje" *ngIf="repetirpassword.errors.pattern">
+                                                        Password Incorrecto
                                                     </div>
                                                 </div>
                                             </div>
