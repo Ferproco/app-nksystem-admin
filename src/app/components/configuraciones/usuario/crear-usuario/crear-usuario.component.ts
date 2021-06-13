@@ -29,10 +29,10 @@ export class CrearUsuarioComponent implements OnInit {
   patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
 
   constructor(private toastr: ToastrService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private formbuilder: FormBuilder,
-    private usuarioService: UsuarioService) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private formbuilder: FormBuilder,
+              private usuarioService: UsuarioService) {
 
     if (this.route.snapshot.params.id) {
       this.idusuario = this.route.snapshot.params.id;
@@ -47,11 +47,7 @@ export class CrearUsuarioComponent implements OnInit {
   private buildForm() {
 
     this.formusuario = this.formbuilder.group({
-      email: ['',
-        Validators.compose([
-          Validators.email,
-          Validators.required])
-      ],
+      email: ['', Validators.compose([Validators.email, Validators.required])],
       nombrecompleto: ['', [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
       ocupacion: [],
       telefono: [],

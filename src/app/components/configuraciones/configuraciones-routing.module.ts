@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ConfiguracionesComponent } from './configuraciones.component';
 import { CatalogoImpuestoComponent } from './impuesto/catalogo-impuesto/catalogo-impuesto.component';
 import { CrearImpuestoComponent } from './impuesto/crear-impuesto/crear-impuesto.component';
+import { CatalogoNegocioComponent } from './negocio/catalogo-negocio/catalogo-negocio.component';
+import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.component';
 import { CatalogoNumeraciondocumentoComponent } from './numeraciondocumento/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
 import { CrearNumeraciondocumentoComponent } from './numeraciondocumento/crear-numeraciondocumento/crear-numeraciondocumento.component';
 import { CatalogoTipoImpuestoComponentComponent } from './tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
@@ -60,6 +62,14 @@ const routes: Routes =
         {
           path: 'crearusuario',
           component: CrearUsuarioComponent
+        },
+        {
+          path: 'listarempresas',
+          component: CatalogoNegocioComponent
+        },
+        {
+          path: 'crearempresa',
+          component: CrearNegocioComponent
         }
         
       ]

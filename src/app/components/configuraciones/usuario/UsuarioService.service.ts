@@ -21,11 +21,9 @@ export class UsuarioService{
   }
 
   listarUsuarios(){
-    const body = {
-
-    };
+    
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    const endpoint: any = this.uriapi + 'seguridad/usuario/1';
+    const endpoint: any = this.uriapi + 'seguridad/usuario/'+this.empresa.idnegocio;
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
