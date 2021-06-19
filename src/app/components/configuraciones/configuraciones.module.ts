@@ -45,6 +45,9 @@ import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.com
 import { UsuarioService } from './usuario/UsuarioService.service';
 import { CatalogoUsuarioComponent } from './usuario/catalogo-usuario/catalogo-usuario.component';
 import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
+import { CrearRolesComponent } from './roles/crear-roles/crear-roles.component';
+import { CrearAsignarRolesComponent } from './roles/crear-asignar-roles/crear-asignar-roles.component';
+import { CatalogoRolesComponent } from './roles/catalogo-roles/catalogo-roles.component';
 
 
 
@@ -64,7 +67,10 @@ import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.com
       CatalogoNegocioComponent,
       CrearNegocioComponent,
       CatalogoUsuarioComponent,
-      CrearUsuarioComponent
+      CrearUsuarioComponent,
+      CrearRolesComponent,
+      CrearAsignarRolesComponent,
+      CatalogoRolesComponent
         
     ],
   imports: [

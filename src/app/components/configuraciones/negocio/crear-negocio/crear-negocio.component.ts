@@ -31,7 +31,7 @@ export class CrearNegocioComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private formbuilder: FormBuilder,
-              private negocioService: NegocioService) { 
+              private negocioService: NegocioService) {
 
     if (this.route.snapshot.params.id) {
       this.idempresa = this.route.snapshot.params.id;
@@ -118,6 +118,10 @@ export class CrearNegocioComponent implements OnInit {
 
   guardarNegocio(event: Event) {
     event.preventDefault();
+    const controls = this.formempresa.controls;
+    Object.keys(controls).forEach((controlName) => {
+      controls[controlName].markAsTouched();
+    });
     if (this.formempresa.valid) {
       this.loading = true;
       const value = this.formempresa.value;

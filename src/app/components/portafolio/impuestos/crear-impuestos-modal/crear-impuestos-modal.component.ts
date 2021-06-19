@@ -95,7 +95,7 @@ export class CrearImpuestosModalComponent implements OnInit {
 
   listarTipoImpuestos() {
     this.loading = true;
-    this.tipoimpuestoServicio.listarTipoImpuestos('')
+    this.tipoimpuestoServicio.listarTipoImpuestos()
       .subscribe(response => {
         this.lstTipoImpuestos = response as any[];
         console.log('lista ' + JSON.stringify(this.lstTipoImpuestos));

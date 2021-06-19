@@ -1,13 +1,15 @@
 export class TipoImpuesto{
-    id: number;
-    nombretipoimpuesto: string;
-    codnegocio: number ;
-    status: string;
+    public id: number;
+    public nombretipoimpuesto: string;
+    public codnegocio: number ;
+    public status: string='Activo';
 
-    constructor( id: number, nombretipoimpuesto: string, codnegocio: number, status: string){
-       this.id = id;
-       this.nombretipoimpuesto = nombretipoimpuesto;
-       this.codnegocio = codnegocio;
-       this.status = status;
+    constructor(json: any = null){
+      if (json !== null) {
+       this.id = json.id;
+       this.nombretipoimpuesto = json.nombretipoimpuesto;
+       this.codnegocio = json.codnegocio;
+       this.status = json.status;
+      }
     }
 }

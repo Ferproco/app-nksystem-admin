@@ -20,16 +20,16 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 export class CrearImpuestoComponent implements OnInit {
 
   idimpuesto = 0;
-  lstTipoImpuestos: any [] = [];
+  lstTipoImpuestos: any[] = [];
   loading = false;
   formimpuesto: FormGroup;
   idnegocio: number;
-  ImpuestoModel:Impuesto;
+  ImpuestoModel: Impuesto;
   camposrequeridos: string;
 
   acciondeltitulo: string = 'Crear';
   Objetoestado: string = 'Activo';
-  objetoimagen:string= 'fa fa-plus-square-o';
+  objetoimagen: string = 'fa fa-plus-square-o';
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
@@ -42,14 +42,14 @@ export class CrearImpuestoComponent implements OnInit {
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_]*$/;
 
   constructor(private tipoimpuestoServicio: TipoImpuestoService,
-              private impuestoService: ImpuestoService,
-              private formbuilder: FormBuilder,
-              private toastr: ToastrService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private modalService: BsModalService) {
+    private impuestoService: ImpuestoService,
+    private formbuilder: FormBuilder,
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private modalService: BsModalService) {
 
-                this.ImpuestoModel=new Impuesto();
+    this.ImpuestoModel = new Impuesto();
 
 
     this.idnegocio = 1;
@@ -57,8 +57,8 @@ export class CrearImpuestoComponent implements OnInit {
     if (this.route.snapshot.params.id) {
       this.idimpuesto = this.route.snapshot.params.id;
       this.acciondeltitulo = 'Modificar';
-      this.objetoimagen='fa fa-edit';
-     // this.buscarArticulo(this.id);
+      this.objetoimagen = 'fa fa-edit';
+      // this.buscarArticulo(this.id);
     }
     this.buildForm();
     this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
@@ -69,54 +69,63 @@ export class CrearImpuestoComponent implements OnInit {
     this.buscarImpuesto(this.idimpuesto);
   }
 
-  guardarImpuesto(event: Event){
+  guardarImpuesto(event: Event) {
     event.preventDefault();
-    this.loading = true;
-    const value = this.formimpuesto.value;
-    this.impuestoService.guardarImpuesto(this.idimpuesto, this.idnegocio, value)
-    .subscribe(response => {
-      this.loading = false;
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.router.navigate(['/main/dashboard/configuraciones/listarimpuestos']);
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      if (error.status === 404) {
+    const controls = this.formimpuesto.controls;
+    Object.keys(controls).forEach((controlName) => {
+      controls[controlName].markAsTouched();
+    });
+    if (this.formimpuesto.valid) {
+      this.loading = true;
+      const value = this.formimpuesto.value;
+      this.impuestoService.guardarImpuesto(this.idimpuesto, this.idnegocio, value)
+        .subscribe(response => {
+          this.loading = false;
+          this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+          this.router.navigate(['/main/dashboard/configuraciones/listarimpuestos']);
+        },
+          ((error: HttpErrorResponse) => {
+            this.loading = false;
+            if (error.status === 404) {
 
-      }
-      else {
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-          { enableHtml: true, closeButton: true });
-      }
-    }));
+            }
+            else {
+              this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+                { enableHtml: true, closeButton: true });
+            }
+          }));
+    }
+    else {
+      this.toastr.error('Opss faltan datos que son obligatorios ', 'Error', { enableHtml: true, closeButton: true });
+    }
   }
 
   listarTipoImpuestos() {
     this.loading = true;
-    this.tipoimpuestoServicio.listarTipoImpuestos('')
+    this.tipoimpuestoServicio.listarTipoImpuestos()
       .subscribe(response => {
         this.lstTipoImpuestos = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
-  private buildForm(){
+  private buildForm() {
     this.formimpuesto = this.formbuilder.group({
       nombreimpuesto: [this.ImpuestoModel.nombreimpuesto, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       normal: [this.ImpuestoModel.normal, [Validators.required, Validators.pattern(this.paterhombre)]],
       fechaini: [new Date(this.currentDate.setDate(this.currentDate.getDate())), [Validators.required]],
       idtipoimpuesto: [this.ImpuestoModel.idtipoimpuesto, [Validators.required]],
-      status: [this.ImpuestoModel.status === 'Activo' ? 1: 0, [Validators.required]]
+      status: [this.ImpuestoModel.status === 'Activo' ? 1 : 0, [Validators.required]]
 
     });
     this.Objetoestado = this.formimpuesto.get('status').value === 1 ? 'Activo' : 'Inactivo';
@@ -161,11 +170,11 @@ export class CrearImpuestoComponent implements OnInit {
     this.Objetoestado = this.formimpuesto.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
-  onCrearTipoImpuesto(){
+  onCrearTipoImpuesto() {
     this.bsModalRef = this.modalService.show(CrearTipoImpuestoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
       console.log('results', result);
-      if (result){
+      if (result) {
         this.listarTipoImpuestos();
       }
 

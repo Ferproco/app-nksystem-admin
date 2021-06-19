@@ -19,7 +19,7 @@ import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-
 export class CatalogoTipoImpuestoComponentComponent implements OnInit {
 
   loading = false;
-  titulo = 'Listado de Forma Pagos';
+  titulo = 'Listado de Tipos de impuesto';
   lstTipoImpuesto: TipoImpuesto[] = [];
   filtrarformapago = '';
   LengthTable = 0;
@@ -53,7 +53,7 @@ export class CatalogoTipoImpuestoComponentComponent implements OnInit {
     this.loading = true;
     this.lstTipoImpuesto = [];
     let status = '';
-    this.tipoImpuestoService.listarTipoImpuestos('')
+    this.tipoImpuestoService.listarTipoImpuestos()
       .subscribe(response => {
         this.lstTipoImpuesto = response as any[];
         //listatipos.forEach(element => {

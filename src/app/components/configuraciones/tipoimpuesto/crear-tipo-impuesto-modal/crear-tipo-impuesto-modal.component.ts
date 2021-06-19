@@ -49,7 +49,7 @@ this.buildForm();
     event.preventDefault();
     this.loading = true;
     const value = this.formTipo.value;
-    this.TipoImpuestoService.guardarTipoImpuesto(this.id, this.idnegocio, value)
+    this.TipoImpuestoService.guardarTipoImpuesto(this.id, value)
       .subscribe(response => {
         this.loading = false;
         this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });

@@ -32,31 +32,30 @@ export class NegocioService {
   guardarEmpresa(id: number, empresa: Negocio){
 
     const body = {
-      /*accesotoken: '',
-      activo: user.activo,
-      actualizadoel: null,
-      actualizartoken: '',
-      borrado: true,
-      codigouser: myId,
-      creadoel: new Date(),
-      email: user.email,
-      emailconfirmado: false,
-      empresaid: this.empresa.idnegocio,
-      esadministrador: user.esadministrador,
+      idnegocio: id,
+      codnegocio: empresa.codnegocio,
+      nombre: empresa.nombre,
+      direccion: empresa.direccion,
+      telefono: empresa.telefono,
+      email: empresa.email,
+      telefonomovil: empresa.telefonomovil,
+      web: empresa.web,
       imagen: '',
-      nombrecompleto: user.nombrecompleto,
-      nombreusuario: user.email,
-      ocupacion: user.ocupacion,
-      password: user.password, 
-      telefono: user.telefono, 
-      telefonoconfirmado: false,
-      valido: true,
-      vencepassword: null*/
+      mascaracontable: '',
+      contribuyente: 'No',
+      habilitado: empresa.habilitado,
+      cantidadusuario: empresa.cantidadusuario,
+      tiempocierresesion: empresa.tiempocierresesion,
+      dominio: '',
+	    ip: '',
+	    puerto: '',
+      creadoel: new Date(),
+      actualizadoel: null
     };
 
-   
+
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    const endpoint: any = this.uriapi + 'seguridad/usuario';
+    const endpoint: any = this.uriapi + 'api/negocio';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
 

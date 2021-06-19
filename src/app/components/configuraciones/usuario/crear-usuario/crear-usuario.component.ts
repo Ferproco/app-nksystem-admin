@@ -111,6 +111,10 @@ export class CrearUsuarioComponent implements OnInit {
 
   guardarUsuario(event: Event) {
     event.preventDefault();
+    const controls = this.formusuario.controls;
+    Object.keys(controls).forEach((controlName) => {
+      controls[controlName].markAsTouched();
+    });
     if (this.formusuario.valid) {
       this.loading = true;
       const value = this.formusuario.value;
