@@ -47,6 +47,7 @@ export class CrearArticuloComponent implements OnInit {
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
+  Objetoestado: string = 'Activo';
 
   id = 0;
   loading = false;
@@ -210,8 +211,7 @@ export class CrearArticuloComponent implements OnInit {
       lstunidadesalternas: this.formbuilder.array([])
 
     })
-
-
+    this.Objetoestado = this.formarticulo.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
   uploadFile(file) {
@@ -692,6 +692,9 @@ export class CrearArticuloComponent implements OnInit {
 
   onChange(event: MatSlideToggleChange) {
     this.formarticulo.get('status').setValue(event.checked === true ? '1' : '0');
+
+    this.formarticulo.get('status').setValue(event.checked === true ? 1 : 0);
+    this.Objetoestado = this.formarticulo.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
   onCrearCategoria() {
