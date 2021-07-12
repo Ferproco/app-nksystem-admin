@@ -58,6 +58,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { LoginService } from './components/auth/login/LoginService.service';
 import { StorageService } from './components/auth/login/StorageService.service';
 import { NegocioService } from './components/configuraciones/negocio/NegocioService.service';
+import { RolesService } from './components/configuraciones/roles/RolesService.service';
 
 
 export const customCurrencyMaskConfig = {
@@ -140,6 +141,7 @@ export const customCurrencyMaskConfig = {
     LoginService,
     StorageService,
     NegocioService,
+    RolesService,
     BsModalRef
   ],
   bootstrap: [AppComponent]

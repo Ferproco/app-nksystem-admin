@@ -5,7 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { Articulo } from 'src/app/components/model/Articulo.model';
 import { ArticuloService } from '../ArticuloService.service';
 
@@ -31,7 +33,7 @@ export class CatalogoArticuloComponent implements OnInit {
   tableSizes = [3, 6, 9, 12];
 
   LengthTable = 0;
-  idnegocio: number;
+  bsModalRef: BsModalRef;
 
   showModalBox: boolean = false;
   PuedeEliminar: boolean = false;
@@ -45,9 +47,10 @@ export class CatalogoArticuloComponent implements OnInit {
 
   constructor(private articuloServicio: ArticuloService,
               private toastr: ToastrService,
-              private router: Router) {
-                this.idnegocio = 1;
-              }
+              private router: Router,
+              private modalService: BsModalService) {
+
+  }
 
   ngOnInit(): void {
     console.log('Que pasara');
@@ -61,7 +64,7 @@ export class CatalogoArticuloComponent implements OnInit {
     this.loading = true;
     this.lstArticulos = [];
     let status = 0;
-    this.articuloServicio.listarArticulos('')
+    this.articuloServicio.listarArticulos()
       .subscribe(response => {
         const listaarticulos = response as Articulo[];
         listaarticulos.forEach(element => {
@@ -94,19 +97,9 @@ export class CatalogoArticuloComponent implements OnInit {
     this.loading = true;
     this.lstArticulos = [];
     let status = 0;
-    this.articuloServicio.listarArticulosPorTipo('', tipo)
+    this.articuloServicio.listarArticulosPorTipo(tipo)
       .subscribe(response => {
-        const listaarticulo = response as Articulo[];
-        listaarticulo.forEach(element => {
-          if (element.status === 'ACTIVO') {
-            status = 1;
-          }
-          else {
-            status = 0;
-          }
-          this.lstArticulos.push(element);
-        });
-
+        this.lstArticulos = response as Articulo[];
 
         this.dataSource = new MatTableDataSource(this.lstArticulos);
         this.dataSource.paginator = this.paginator;
@@ -117,7 +110,7 @@ export class CatalogoArticuloComponent implements OnInit {
         ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
-
+            this.dataSource = new MatTableDataSource(this.lstArticulos);
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
@@ -177,31 +170,13 @@ export class CatalogoArticuloComponent implements OnInit {
 
   Eliminar(id: number) {
 
-    if (0) {
-      // Dont open the modal
-      this.showModalBox = false;
-    } else {
-      // Open the modal
-      this.showModalBox = true;
-    }
-
-    this.articuloServicio.Eliminar.subscribe(
-      (respuesta: boolean) => {
-        this.PuedeEliminar = respuesta;
-        console.log('Al eliminar ' + this.PuedeEliminar);
-
+    this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
+    this.bsModalRef.content.onClose.subscribe(result => {
+      console.log('results', result + ' Y EL CODIGO ' + id);
+      if (result){
+        this.eliminarporcodigo(id);
       }
-
-    );
-    console.log('DESPUES DEL SUSCRIBE ' + this.PuedeEliminar);
-    if (this.PuedeEliminar){
-      console.log('ENTRO A ELIMINAR' + this.PuedeEliminar);
-      this.eliminarporcodigo(id);
-      this.PuedeEliminar = false;
-    }
-    if (this.showModalBox) {
-      this.showModalBox = false;
-    }
+    });
   }
 
   eliminarporcodigo(id: number){
@@ -216,6 +191,9 @@ export class CatalogoArticuloComponent implements OnInit {
           this.loading = false;
           if (error.status === 404) {
 
+          }
+          else if (error.status === 409) {
+            this.toastr.info('Opss no puedes eliminar el registro ya que esta haciendo usado', 'Informacion', { enableHtml: true, closeButton: true });
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',

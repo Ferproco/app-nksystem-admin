@@ -32,7 +32,7 @@ export class NegocioService {
   guardarEmpresa(id: number, empresa: Negocio){
 
     const body = {
-      idnegocio: id,
+      idnegocio: Number(id),
       codnegocio: empresa.codnegocio,
       nombre: empresa.nombre,
       direccion: empresa.direccion,
@@ -66,6 +66,12 @@ export class NegocioService {
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/negocio/' + id;
     return this.httpClient.delete(endpoint, { headers: httpHeaders });
+  }
+
+  mostrar(id: number){
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/negocio/buscarid/' + id;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
 }

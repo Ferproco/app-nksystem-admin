@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { StorageService } from '../../auth/login/StorageService.service';
 import { Categoria } from '../../model/Categoria.model';
+import { Negocio } from '../../model/Negocio.model';
 
 
 
@@ -10,12 +12,15 @@ export class CategoriaService{
 
   lstCategorias: Categoria[] = [];
   uriapi: string = environment.UrlTransactional;
+  public empresa: Negocio;
 
-  constructor(private httpClient: HttpClient){
+  constructor(private httpClient: HttpClient,
+              private storageService: StorageService) {
 
-  }
+    this.empresa = this.storageService.getCurrentEmpresa();
+}
 
-  listarCategorias(codnegocio: string){
+  listarCategorias(){
     const body = {
 
     };
@@ -23,6 +28,7 @@ export class CategoriaService{
     const endpoint: any = this.uriapi + 'api/familia';
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
+
   guardarCategoria(id: number, idnegocio: number, categoria: Categoria){
 
     const body = {
@@ -38,7 +44,7 @@ export class CategoriaService{
     const endpoint: any = this.uriapi + 'api/familia';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
-  
+
   eliminarCategoria(id: number){
     const body = {
       id: Number(id)

@@ -34,6 +34,7 @@ export class CrearUsuarioComponent implements OnInit {
               private formbuilder: FormBuilder,
               private usuarioService: UsuarioService) {
 
+    this.UsuarioModel = new Usuario();
     if (this.route.snapshot.params.id) {
       this.idusuario = this.route.snapshot.params.id;
     }

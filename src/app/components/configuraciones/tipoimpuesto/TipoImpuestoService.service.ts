@@ -30,12 +30,18 @@ export class TipoImpuestoService{
     return this.httpClient.get<T>(endpoint, {headers: httpHeaders});
   }
 
+  mostrarTipoImpuesto(id: number){
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    const endpoint: any = this.uriapi + 'api/tipoimpuesto/' + id;
+    return this.httpClient.get(endpoint, {headers: httpHeaders});
+  }
+
   guardarTipoImpuesto(id: number, tipoimpuesto: TipoImpuesto){
 
     const body = {
       id: id,
       nombretipoimpuesto: tipoimpuesto.nombretipoimpuesto,
-      status: tipoimpuesto.status === '1' ? 'ACTIVO' : 'INACTIVO',
+      status: Number(tipoimpuesto.status) === 1 ? 'Activo' : 'Inactivo',
       codnegocio: this.empresa.idnegocio
     };
 

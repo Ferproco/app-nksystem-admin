@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { StorageService } from '../../auth/login/StorageService.service';
 import { Articulo } from '../../model/Articulo.model';
+import { Negocio } from '../../model/Negocio.model';
 
 
 
@@ -11,12 +13,17 @@ export class ArticuloService {
   lstArticulos: Articulo[] = [];
   uriapi: string = environment.UrlTransactional;
   value: any;
+  public empresa: Negocio;
 
   Eliminar = new EventEmitter<boolean>();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private storageService: StorageService) {
 
-  listarArticulos(codnegocio: string) {
+    this.empresa = this.storageService.getCurrentEmpresa();
+  }
+
+  listarArticulos() {
     const body = {
 
     };
@@ -25,7 +32,7 @@ export class ArticuloService {
     return this.httpClient.get(endpoint, { headers: httpHeaders });
   }
 
-  listarArticulosPorTipo(codnegocio: string, tipo: string) {
+  listarArticulosPorTipo(tipo: string) {
     let tipoitems = 0;
     if (tipo === 'P') {
       tipoitems = 1;
@@ -47,7 +54,7 @@ export class ArticuloService {
     return this.httpClient.get(endpoint, { headers: httpHeaders });
   }
 
-  listarArticulosPorFilter(codnegocio: string, tipo: string, fechadesde: string, fechahasta: string, kardexcriterio: any) {
+  listarArticulosPorFilter(tipo: string, fechadesde: string, fechahasta: string, kardexcriterio: any) {
 
     let tipoitems = 0;
     if (tipo === 'P') {
@@ -85,7 +92,7 @@ export class ArticuloService {
   }
 
 
-  guardarArticulo(idIn: number, idnegocio: number, articulo: Articulo) {
+  guardarArticulo(idIn: number, articulo: Articulo) {
 
     articulo.lstmovimientoskardex.forEach(element => {
       const fechastr = element.fecha.toString().split('-');
@@ -130,7 +137,7 @@ export class ArticuloService {
     }
     const body = {
       id: Number(idIn),
-      codnegocio: Number(idnegocio),
+      codnegocio: this.empresa.idnegocio,
       codigo: articulo.codigo,
       nomarticulo: articulo.nomarticulo,
       codmarca: marca,
@@ -163,7 +170,7 @@ export class ArticuloService {
     const endpoint: any = this.uriapi + 'api/articulo';
     return this.httpClient.post(endpoint, JSON.stringify(body), { headers: httpHeaders });
   }
-  
+
   eliminarArticulo(id: number) {
     const body = {
       id: Number(id)

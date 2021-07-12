@@ -20,6 +20,7 @@ export class CrearNegocioComponent implements OnInit {
   loading = false;
   camposrequeridos: string;
   idempresa = 0;
+  Objetoestado: string = 'Activo';
 
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
@@ -33,6 +34,7 @@ export class CrearNegocioComponent implements OnInit {
               private formbuilder: FormBuilder,
               private negocioService: NegocioService) {
 
+    this.EmpresaModel = new Negocio();
     if (this.route.snapshot.params.id) {
       this.idempresa = this.route.snapshot.params.id;
     }
@@ -42,24 +44,48 @@ export class CrearNegocioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.buscar(this.idempresa);
   }
 
   private buildForm() {
 
     this.formempresa = this.formbuilder.group({
-      codnegocio: ['', [Validators.required]],
-      email: ['', Validators.compose([Validators.email, Validators.required])],
-      nombre: ['', [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
-      direccion: ['', Validators.required],
-      telefono: [''],
-      creadoel: [new Date()],
-      actualizadoel: [new Date()],
-      cantidadusuario: [1,[Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
-      tiempocierresesion: [1,[Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
-      web: [''],
-      habilitado: [true, [Validators.required]]
+      codnegocio: [this.EmpresaModel.codnegocio, [Validators.required]],
+      email: [this.EmpresaModel.email, Validators.compose([Validators.email, Validators.required])],
+      nombre: [this.EmpresaModel.nombre, [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
+      direccion: [this.EmpresaModel.direccion, Validators.required],
+      telefono: [this.EmpresaModel.telefono],
+      creadoel: [this.EmpresaModel.creadoel],
+      actualizadoel: [this.EmpresaModel.actualizadoel],
+      cantidadusuario: [this.EmpresaModel.cantidadusuario,[Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
+      tiempocierresesion: [this.EmpresaModel.tiempocierresesion,[Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
+      web: [this.EmpresaModel.web],
+      habilitado: [this.EmpresaModel.habilitado, [Validators.required]]
 
     });
+    this.Objetoestado = this.formempresa.get('habilitado').value === true ? 'Activo' : 'Inactivo';
+  }
+
+  buscar(id: number) {
+    let status = 0;
+    this.loading = true;
+    const obj = this.negocioService.mostrar(id)
+      .subscribe(response => {
+        this.EmpresaModel = response as any;
+        this.buildForm();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
   }
 
   get tiempocierresesion() {
@@ -101,6 +127,7 @@ export class CrearNegocioComponent implements OnInit {
 
   onChange(event: MatSlideToggleChange) {
     this.formempresa.get('habilitado').setValue(event.checked === true ? true : false);
+    this.Objetoestado = this.formempresa.get('habilitado').value === true ? 'Activo' : 'Inactivo';
   }
 
   cargarRequeridos(e) {

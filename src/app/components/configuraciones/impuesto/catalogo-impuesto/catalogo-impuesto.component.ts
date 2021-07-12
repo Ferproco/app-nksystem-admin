@@ -46,6 +46,7 @@ export class CatalogoImpuestoComponent implements OnInit {
 
   private listarImpuestos(): void {
     this.loading = true;
+    this.lstImpuestos = [];
     this.impuestoServicio.listarImpuestos('')
       .subscribe(response => {
         this.lstImpuestos = response as Impuesto[];
@@ -58,7 +59,7 @@ export class CatalogoImpuestoComponent implements OnInit {
         ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
-
+            this.dataSource = new MatTableDataSource(this.lstImpuestos);
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
@@ -120,7 +121,7 @@ export class CatalogoImpuestoComponent implements OnInit {
 
   eliminarporcodigo(id: number){
     this.loading = true;
-    this.impuestoServicio.eliminarImpuesto(id)
+    this.impuestoServicio.eliminar(id)
       .subscribe(response => {
         const respuesta = response;
         this.loading = false;
@@ -147,6 +148,7 @@ export class CatalogoImpuestoComponent implements OnInit {
   ExportarTxt(){
 
   }
+
   Refrescar(){
     this.listarImpuestos();
   }

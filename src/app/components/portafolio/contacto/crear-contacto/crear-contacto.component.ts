@@ -20,7 +20,7 @@ import { FormaPagoService } from '../../formapago/FormaPagoService.service';
 import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
 
 
-export interface Tipopersona{
+export interface Tipopersona {
   id: number;
   nombre: string;
 
@@ -44,16 +44,16 @@ export class CrearContactoComponent implements OnInit {
   id = 0;
   loading = false;
   formcontacto: FormGroup;
-  lstTipoIdentificacion: any [] = [];
-  lstTipoContribuyente: any [] = [];
-  lstVendedores: any [] = [];
-  lstformaspago: any [] = [];
-  lstPais: any [] = [];
-  lstDepartamentos: any [] = [];
-  lstMunicipios: any [] = [];
+  lstTipoIdentificacion: any[] = [];
+  lstTipoContribuyente: any[] = [];
+  lstVendedores: any[] = [];
+  lstformaspago: any[] = [];
+  lstPais: any[] = [];
+  lstDepartamentos: any[] = [];
+  lstMunicipios: any[] = [];
   idnegocio: number;
   idpais: number = null;
-  lstListaprecios: any [] = [];
+  lstListaprecios: any[] = [];
 
   ContactoModel: Contacto;
 
@@ -70,8 +70,8 @@ export class CrearContactoComponent implements OnInit {
   camposrequeridos: string;
 
   tipopersona: Tipopersona[] = [
-    {id: 1, nombre: 'Persona Natural'},
-    {id: 2, nombre: 'Persona Juridica'}
+    { id: 1, nombre: 'Persona Natural' },
+    { id: 2, nombre: 'Persona Juridica' }
   ];
 
   codtipocontacto = [
@@ -95,31 +95,31 @@ export class CrearContactoComponent implements OnInit {
   isFirstOpen = true;
 
   constructor(private contactoServicio: ContactoService,
-              private tipoidentificacionServicio: TipoIdentificacionService,
-              private tipocontribuyenteServicio: TipoContribuyenteService,
-              private formaPagoService: FormaPagoService,
-              private vendedorService: VendedorService,
-              private paisService: PaisService,
-              private departamentoService: DepartamentoService,
-              private municipioServicio: MunicipioService,
-              private listaprecioServicio: ListaPrecioService,
-              private formbuilder: FormBuilder,
-              private toastr: ToastrService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private modalService: BsModalService) {
+    private tipoidentificacionServicio: TipoIdentificacionService,
+    private tipocontribuyenteServicio: TipoContribuyenteService,
+    private formaPagoService: FormaPagoService,
+    private vendedorService: VendedorService,
+    private paisService: PaisService,
+    private departamentoService: DepartamentoService,
+    private municipioServicio: MunicipioService,
+    private listaprecioServicio: ListaPrecioService,
+    private formbuilder: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private modalService: BsModalService) {
 
 
-      this.ContactoModel = new Contacto();
-      this.idnegocio = 1;
-      this.idpais = 48;
-      this.ContactoModel.codpais = this.idpais;
-      this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
-      this.buildForm();
-      if (this.route.snapshot.params.id){
-        this.id = this.route.snapshot.params.id;
-      }
+    this.ContactoModel = new Contacto();
+    this.idnegocio = 1;
+    this.idpais = 48;
+    this.ContactoModel.codpais = this.idpais;
+    this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+    this.buildForm();
+    if (this.route.snapshot.params.id) {
+      this.id = this.route.snapshot.params.id;
     }
+  }
 
   ngOnInit(): void {
 
@@ -134,7 +134,7 @@ export class CrearContactoComponent implements OnInit {
     this.buscarContacto(this.id);
   }
 
-  private buildForm(){
+  private buildForm() {
 
     this.formcontacto = this.formbuilder.group({
       codtipocontacto: [this.ContactoModel.codtipocontacto, [Validators.required]],
@@ -163,7 +163,7 @@ export class CrearContactoComponent implements OnInit {
       codlistaprecio: [this.ContactoModel.codlistaprecio, [Validators.required]],
       direccionexogena: [this.ContactoModel.direccionfiscal, [Validators.pattern(this.parrterdireccion)]],
       paginaweb: [this.ContactoModel.paginaweb, [Validators.pattern(this.parrterobservaciones)]],
-      limitecreditohasta: [this.ContactoModel.limitecreditohasta, [ Validators.pattern(this.parrterobservaciones)]],
+      limitecreditohasta: [this.ContactoModel.limitecreditohasta, [Validators.pattern(this.parrterobservaciones)]],
       fechacreditodesde: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
       fechacreditohasta: [formatDate(new Date(), 'yyyy-MM-dd', 'en')],
       observaciones: [this.ContactoModel.observaciones, [Validators.pattern(this.parrterobservaciones)]],
@@ -207,26 +207,36 @@ export class CrearContactoComponent implements OnInit {
 
   }
 
-  guardarContacto(event: Event){
+  guardarContacto(event: Event) {
     event.preventDefault();
-    this.loading = true;
-    const value = this.formcontacto.value;
-    this.contactoServicio.guardarContacto(this.id, this.idnegocio, value)
-    .subscribe(response => {
-      this.loading = false;
-      this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-      this.router.navigate(['/main/dashboard/portafolio/listarcontactos']);
-    },
-    ((error: HttpErrorResponse) => {
-      this.loading = false;
-      if (error.status === 404) {
+    const controls = this.formcontacto.controls;
+    Object.keys(controls).forEach((controlName) => {
+      controls[controlName].markAsTouched();
+    });
+    if (this.formcontacto.valid) {
+      this.loading = true;
+      const value = this.formcontacto.value;
+      this.contactoServicio.guardarContacto(this.id, this.idnegocio, value)
+        .subscribe(response => {
+          this.loading = false;
+          this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+          this.router.navigate(['/main/dashboard/portafolio/listarcontactos']);
+        },
+          ((error: HttpErrorResponse) => {
+            this.loading = false;
+            if (error.status === 404) {
 
-      }
-      else {
-        this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-          { enableHtml: true, closeButton: true });
-      }
-    }));
+            }
+            else {
+              this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+                { enableHtml: true, closeButton: true });
+            }
+          }));
+    }
+    else {
+      this.toastr.error('Opss faltan datos que son obligatorios ', 'Error',
+        { enableHtml: true, closeButton: true });
+    }
   }
 
   listarTipoIdentificacion() {
@@ -237,16 +247,16 @@ export class CrearContactoComponent implements OnInit {
         console.log(this.lstTipoIdentificacion);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   listarTipoContribuyente() {
@@ -257,63 +267,63 @@ export class CrearContactoComponent implements OnInit {
         console.log(this.lstTipoContribuyente);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   listarDepartamentos(event) {
     this.loading = true;
     this.lstDepartamentos = [];
     this.lstMunicipios = [];
-    console.log('el id del pais ' + event );
+    console.log('el id del pais ' + event);
     this.departamentoService.listarDepartamentosporPais('', Number(event))
       .subscribe(response => {
         this.lstDepartamentos = response as any[];
         console.log(this.lstDepartamentos);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
 
-  listarMunicipios (event) {
+  listarMunicipios(event) {
     this.loading = true;
     this.lstMunicipios = [];
 
-    console.log('el id del departamento ' + event );
+    console.log('el id del departamento ' + event);
     this.municipioServicio.listarMunicipiosporDepartamento('', Number(event))
       .subscribe(response => {
         this.lstMunicipios = response as any[];
         console.log(this.lstMunicipios);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
   listarVendedores() {
     this.loading = true;
@@ -322,16 +332,16 @@ export class CrearContactoComponent implements OnInit {
         this.lstVendedores = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   listarFormasdepago() {
@@ -341,16 +351,16 @@ export class CrearContactoComponent implements OnInit {
         this.lstformaspago = response as any[];
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
   listarPais() {
     this.loading = true;
@@ -360,16 +370,16 @@ export class CrearContactoComponent implements OnInit {
         console.log(this.lstPais);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
   listarListaPrecios() {
@@ -380,22 +390,21 @@ export class CrearContactoComponent implements OnInit {
         console.log(this.lstListaprecios);
         this.loading = false;
       },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
   }
 
-  MostrarCampos(event){
+  MostrarCampos(event) {
     const idtipo = Number(event);
-    if (idtipo === 6)
-    {
+    if (idtipo === 6) {
       this.visible = true;
       this.visiblenombres = false;
       this.visiblerazonsocial = true;
@@ -404,8 +413,7 @@ export class CrearContactoComponent implements OnInit {
       this.visibledepartamento = true;
       this.visiblecodigodv = true;
     }
-    else if (idtipo === 4 || idtipo === 5 || idtipo === 8)
-    {
+    else if (idtipo === 4 || idtipo === 5 || idtipo === 8) {
       this.visible = true;
       this.visiblenombres = true;
       this.visiblerazonsocial = false;
@@ -414,7 +422,7 @@ export class CrearContactoComponent implements OnInit {
       this.visibledepartamento = false;*/
       this.visiblecodigodv = false;
     }
-    else{
+    else {
       this.visible = true;
       this.visiblenombres = true;
       this.visiblerazonsocial = false;
@@ -425,14 +433,14 @@ export class CrearContactoComponent implements OnInit {
     }
 
   }
-  MostrarCamposTipoPresona(event){
+  MostrarCamposTipoPresona(event) {
     const idtipo = Number(event);
-    if (idtipo === 1){
+    if (idtipo === 1) {
       this.visiblenombres = true;
       this.visiblerazonsocial = false;
       this.visibleresponsabilidadtributaria = true;
     }
-    else{
+    else {
       this.visiblenombres = false;
       this.visiblerazonsocial = true;
       this.visibleresponsabilidadtributaria = true;
@@ -455,17 +463,17 @@ export class CrearContactoComponent implements OnInit {
     let arreglontemporal: any[] = [];
     // arreglonumeroidentificacion.replace('', '.');
     console.log('longitud primer valor sin puntos' + sinpuntos.length);
-       console.log('numero final primer valor sin puntos' + sinpuntos);
+    console.log('numero final primer valor sin puntos' + sinpuntos);
     let longnumero = 0;
-    if (sinpuntos.length < 15){
-       longnumero = 15 - sinpuntos.length;
+    if (sinpuntos.length < 15) {
+      longnumero = 15 - sinpuntos.length;
 
-    let ceros='0';
-    for (let i=1;i<longnumero;i++) {
-      ceros+='0';
-    }
-    sinpuntos = ceros+sinpuntos;
-    arreglonumeroidentificacion = sinpuntos;
+      let ceros = '0';
+      for (let i = 1; i < longnumero; i++) {
+        ceros += '0';
+      }
+      sinpuntos = ceros + sinpuntos;
+      arreglonumeroidentificacion = sinpuntos;
 
     }
     for (let numero of arreglonumeros) {
@@ -517,10 +525,10 @@ export class CrearContactoComponent implements OnInit {
     this.condicionadoxdefecto = digitoverificacion;
   }
 
-  get codtipocontibuyente(){
+  get codtipocontibuyente() {
     return this.formcontacto.get('codtipocontibuyente');
   }
-  get codtipopersona(){
+  get codtipopersona() {
     return this.formcontacto.get('codtipopersona');
   }
   get nombreprimero() {
@@ -553,33 +561,38 @@ export class CrearContactoComponent implements OnInit {
   get telefonomovil() {
     return this.formcontacto.get('telefonomovil');
   }
-  get correoe(){
+  get correoe() {
     return this.formcontacto.get('correoe');
   }
-  get razonsocial(){
+  get razonsocial() {
     return this.formcontacto.get('razonsocial');
   }
-  get limitecreditohasta(){
+  get limitecreditohasta() {
     return this.formcontacto.get('limitecreditohasta');
   }
 
-  get lugarenvio(){
+  get lugarenvio() {
     return this.formcontacto.get('lugarenvio');
   }
-  get direccionexogena(){
+  get direccionexogena() {
     return this.formcontacto.get('direccionexogena');
   }
-  get observaciones(){
+  get observaciones() {
     return this.formcontacto.get('observaciones');
   }
-  get paginaweb(){
+  get paginaweb() {
     return this.formcontacto.get('paginaweb');
   }
 
-  onCrearPlazoCredito(){
+  get codtipoidentificacion() {
+    return this.formcontacto.get('codtipoidentificacion');
+  }
+
+
+  onCrearPlazoCredito() {
     this.bsModalRef = this.modalService.show(CrearFormapagoModalComponent);
     this.bsModalRef.content.onClose.subscribe(result => {
-      if (result){
+      if (result) {
         this.listarFormasdepago();
       }
       console.log('results', result);
@@ -595,10 +608,10 @@ export class CrearContactoComponent implements OnInit {
     this.ContactoModel.codtipocontacto = this.formcontacto.get('codtipocontacto').value;
   }
 
-  cargarRequeridos(e){
+  cargarRequeridos(e) {
     this.camposrequeridos = 'Valores Requeridos:\n';
     Object.keys(this.formcontacto.controls).forEach(key => {
-      if (this.formcontacto.controls[key].invalid){
+      if (this.formcontacto.controls[key].invalid) {
         this.camposrequeridos += key + '\n';
       }
     });

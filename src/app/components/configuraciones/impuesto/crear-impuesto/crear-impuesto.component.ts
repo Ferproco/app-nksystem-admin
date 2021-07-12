@@ -50,8 +50,6 @@ export class CrearImpuestoComponent implements OnInit {
     private modalService: BsModalService) {
 
     this.ImpuestoModel = new Impuesto();
-
-
     this.idnegocio = 1;
     this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
     if (this.route.snapshot.params.id) {
@@ -137,6 +135,7 @@ export class CrearImpuestoComponent implements OnInit {
   get nombreimpuesto() {
     return this.formimpuesto.get('nombreimpuesto');
   }
+
   buscarImpuesto(id: number) {
     let status = 0;
     this.loading = true;

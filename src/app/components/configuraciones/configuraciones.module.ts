@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ConfiguracionesRoutingModule } from './configuraciones-routing.module';
 import { ConfiguracionesComponent } from './configuraciones.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +24,6 @@ import { CrearNumeraciondocumentoComponent } from './numeraciondocumento/crear-n
 import { CatalogoNumeraciondocumentoComponent } from './numeraciondocumento/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
 import { CatalogoTipoImpuestoComponentComponent } from './tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
 import { CrearTipoImpuestoComponentComponent } from './tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
-
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
@@ -50,9 +48,6 @@ import { CrearAsignarRolesComponent } from './roles/crear-asignar-roles/crear-as
 import { CatalogoRolesComponent } from './roles/catalogo-roles/catalogo-roles.component';
 
 
-
-
-
 @NgModule({
   declarations:
     [
@@ -68,10 +63,9 @@ import { CatalogoRolesComponent } from './roles/catalogo-roles/catalogo-roles.co
       CrearNegocioComponent,
       CatalogoUsuarioComponent,
       CrearUsuarioComponent,
+      CatalogoRolesComponent,
       CrearRolesComponent,
-      CrearAsignarRolesComponent,
-      CatalogoRolesComponent
-        
+      CrearAsignarRolesComponent
     ],
   imports: [
     CommonModule,
@@ -107,14 +101,14 @@ import { CatalogoRolesComponent } from './roles/catalogo-roles/catalogo-roles.co
     MatDialogModule,
     MatTooltipModule,
     ButtonsModule.forRoot()
-    
+
 
   ],
   providers: [
     NumeracionDocumentoService,
     ImpuestoService,
     TipoImpuestoService,
-    TipoDocumentoService,    
+    TipoDocumentoService,
     UsuarioService,
     BsModalRef
   ]

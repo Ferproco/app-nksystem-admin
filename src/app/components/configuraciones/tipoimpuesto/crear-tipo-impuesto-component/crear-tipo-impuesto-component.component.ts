@@ -39,7 +39,7 @@ export class CrearTipoImpuestoComponentComponent implements OnInit {
     private router: Router,
     private modalService: BsModalService) {
 
-      this.TipoImpuestoModel = new TipoImpuesto();
+    this.TipoImpuestoModel = new TipoImpuesto();
 
     if (this.route.snapshot.params.id) {
       this.idtipoimpuesto = this.route.snapshot.params.id;
@@ -51,6 +51,7 @@ export class CrearTipoImpuestoComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.buscarTipoImpuesto(this.idtipoimpuesto );
   }
 
   private buildForm() {
@@ -60,6 +61,28 @@ export class CrearTipoImpuestoComponentComponent implements OnInit {
 
     });
     this.Objetoestado = this.formimpuesto.get('status').value === 1 ? 'Activo' : 'Inactivo';
+  }
+
+  buscarTipoImpuesto(id: number) {
+    let status = 0;
+    this.loading = true;
+    const obj = this.tipoImpuestoService.mostrarTipoImpuesto(id)
+      .subscribe(response => {
+        this.TipoImpuestoModel = response as any;
+        this.buildForm();
+        this.loading = false;
+      },
+        ((error: HttpErrorResponse) => {
+          this.loading = false;
+          if (error.status === 404) {
+
+          }
+          else {
+            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+              { enableHtml: true, closeButton: true });
+          }
+        }));
+
   }
 
   get nombretipoimpuesto() {
@@ -85,7 +108,7 @@ export class CrearTipoImpuestoComponentComponent implements OnInit {
         .subscribe(response => {
           this.loading = false;
           this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-          this.router.navigate(['/main/dashboard/configuraciones/listartipoimpuesto']);
+          this.router.navigate(['/main/dashboard/configuraciones/listartipoimpuestos']);
         },
           ((error: HttpErrorResponse) => {
             this.loading = false;

@@ -49,7 +49,7 @@ export class CatalogoCategoriaComponent implements OnInit {
 
   listarCategorias() {
     this.loading = true;
-    this.categoriaServicio.listarCategorias('').subscribe(response => {
+    this.categoriaServicio.listarCategorias().subscribe(response => {
         this.lstCategorias = response as Categoria[];
         this.dataSource = new MatTableDataSource(this.lstCategorias);
         this.dataSource.paginator = this.paginator;

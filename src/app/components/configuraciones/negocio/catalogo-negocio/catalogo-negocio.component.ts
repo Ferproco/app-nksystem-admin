@@ -49,6 +49,7 @@ export class CatalogoNegocioComponent implements OnInit {
 
   listarEmpresas() {
     this.loading = true;
+    this.lstEmpresas = [];
     this.negocioService.listarEmpresas().subscribe(response => {
       this.lstEmpresas = response as Negocio[];
       this.dataSource = new MatTableDataSource(this.lstEmpresas);
@@ -60,7 +61,7 @@ export class CatalogoNegocioComponent implements OnInit {
       ((error: HttpErrorResponse) => {
         this.loading = false;
         if (error.status === 404) {
-
+          this.dataSource = new MatTableDataSource(this.lstEmpresas);
         }
         else {
           this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',

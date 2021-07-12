@@ -55,7 +55,7 @@ export class CatalogoArticuloModalComponent implements OnInit {
   private listarArticulos(tipo: string): void {
     this.loading = true;
     this.lstArticulos = [];
-    this.articuloServicio.listarArticulosPorTipo('', tipo)
+    this.articuloServicio.listarArticulosPorTipo(tipo)
       .subscribe(response => {
         const listaarticulo = response as Articulo[];
         listaarticulo.forEach(element => {

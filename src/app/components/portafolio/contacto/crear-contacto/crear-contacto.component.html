@@ -14,8 +14,7 @@
                 <div class="col-lg-6">
                   <div class="breadcome-heading">
                     <button type="submit" (mouseover)="cargarRequeridos($event)"
-                    matTooltip="{{camposrequeridos}}"
-                    class="form-control" [disabled]="formcontacto.invalid"><i class="fa fa-save"
+                    matTooltip="{{camposrequeridos}}" class="form-control"><i class="fa fa-save"
                         aria-hidden="true"></i> Guardar
                     </button>
                   </div>
@@ -80,12 +79,18 @@
                       <div class="form-group">
                         <label for="username">Tipo Identificacion</label>
                         <select class="select2_demo_3 form-control" formControlName="codtipoidentificacion"
+                        [ngClass]="{'invalid-data': codtipoidentificacion.invalid && (codtipoidentificacion.touched || codtipoidentificacion.dirty)}"
                           (change)="MostrarCampos($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{tipoidentificacion.id}}"
                             *ngFor="let tipoidentificacion of lstTipoIdentificacion">
                             {{tipoidentificacion.nombre}}</option>
                         </select>
+                      </div>
+                      <div *ngIf="codtipoidentificacion.invalid  && (codtipoidentificacion.dirty || codtipoidentificacion.touched)">
+                        <div class="invalid-mensaje" *ngIf="codtipoidentificacion.errors.required">
+                          Tipo Identificacion Requerido
+                        </div>
                       </div>
                     </div>
                     <div class="row">
@@ -96,10 +101,9 @@
                             <input (blur)="CalcularDigitoVerficacion($event.target.value)" formControlName="numeroidentificacion"
                               [ngClass]="{'invalid-data': numeroidentificacion.invalid && (numeroidentificacion.touched || numeroidentificacion.dirty)}"
                               type="text" class="form-control" placeholder="Ingrese el Número de Identificación" />
-                              
                             <div
                               *ngIf="numeroidentificacion.invalid  && (numeroidentificacion.dirty || numeroidentificacion.touched)">
-                              <div *ngIf="numeroidentificacion.errors.required">
+                              <div class="invalid-mensaje" *ngIf="numeroidentificacion.errors.required">
                                 N° Identificacion Requerido
                               </div>
                               <div class="invalid-mensaje" *ngIf="numeroidentificacion.errors.pattern">
@@ -125,21 +129,33 @@
                       <div class="form-group">
                         <label for="username">Tipo Persona</label>
                         <select class="select2_demo_3 form-control" formControlName="codtipopersona"
+                        [ngClass]="{'invalid-data': codtipopersona.invalid && (codtipopersona.touched || codtipopersona.dirty)}"
                           (change)="MostrarCamposTipoPresona($event.target.value)">
                           <option value="null">--Seleccione--</option>
                           <option value="{{tipoper.id}}" *ngFor="let tipoper of tipopersona">{{tipoper.nombre}}</option>
                         </select>
                       </div>
+                      <div *ngIf="codtipopersona.invalid  && (codtipopersona.dirty || codtipopersona.touched)">
+                        <div class="invalid-mensaje" *ngIf="codtipopersona.errors.required">
+                          Tipo Persona Requerido
+                        </div>
+                      </div>
                     </div>
                     <div id="pwd-container" *ngIf="visibleresponsabilidadtributaria">
                       <div class="form-group">
                         <label for="username">Tipo Contribuyente</label>
-                        <select class="select2_demo_3 form-control" formControlName="codtipocontibuyente">
+                        <select class="select2_demo_3 form-control" formControlName="codtipocontibuyente"
+                        [ngClass]="{'invalid-data': codtipocontibuyente.invalid && (codtipocontibuyente.touched || codtipocontibuyente.dirty)}">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{tipocontribuyente.id}}"
                             *ngFor="let tipocontribuyente of lstTipoContribuyente">
                             {{tipocontribuyente.nombre}}</option>
                         </select>
+                      </div>
+                      <div *ngIf="codtipocontibuyente.invalid  && (codtipocontibuyente.dirty || codtipocontibuyente.touched)">
+                        <div class="invalid-mensaje" *ngIf="codtipocontibuyente.errors.required">
+                          Tipo Contribuyente Requerido
+                        </div>
                       </div>
                     </div>
 

@@ -34,12 +34,12 @@ export class CatalogoNumeraciondocumentoComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+
   constructor(private numeracionServicio: NumeracionDocumentoService,
     private router: Router,
     private toastr: ToastrService,
     private modalService: BsModalService
-    ) { 
+    ) {
 
       this.idnegocio = 1;
     }
@@ -50,6 +50,7 @@ export class CatalogoNumeraciondocumentoComponent implements OnInit {
 
   private listarNumeracionDocumentos(): void {
     this.loading = true;
+    this.lstNumeracionDocumentos = [];
     this.numeracionServicio.listarNumeracionDocumentos('')
       .subscribe(response => {
         this.lstNumeracionDocumentos = response as NumeracionDocumento[];
@@ -62,7 +63,7 @@ export class CatalogoNumeraciondocumentoComponent implements OnInit {
         ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
-
+            this.dataSource = new MatTableDataSource(this.lstNumeracionDocumentos);
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
@@ -119,7 +120,7 @@ export class CatalogoNumeraciondocumentoComponent implements OnInit {
     this.router.navigate(['main/dashboard/configuraciones/crearnumeraciondocumento', id]);
   }
 
- 
+
   Eliminar(id: number){
     this.bsModalRef = this.modalService.show(MensajeEliminarComponent);
     this.bsModalRef.content.onClose.subscribe(result => {

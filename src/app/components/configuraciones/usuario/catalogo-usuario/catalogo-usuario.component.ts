@@ -47,6 +47,7 @@ export class CatalogoUsuarioComponent implements OnInit {
 
   listarUsuarios() {
     this.loading = true;
+    this.lstUsuarios = [];
     this.usuarioService.listarUsuarios().subscribe(response => {
       this.lstUsuarios = response as Usuario[];
       this.dataSource = new MatTableDataSource(this.lstUsuarios);
@@ -58,7 +59,7 @@ export class CatalogoUsuarioComponent implements OnInit {
       ((error: HttpErrorResponse) => {
         this.loading = false;
         if (error.status === 404) {
-
+          this.dataSource = new MatTableDataSource(this.lstUsuarios);
         }
         else {
           this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',

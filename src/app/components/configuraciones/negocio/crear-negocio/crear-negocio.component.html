@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="col-lg-2">
                                         <mat-slide-toggle (change)="onChange($event)" formControlName="habilitado">
-                                            Activo
+                                          {{Objetoestado}}
                                         </mat-slide-toggle>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                         <div id="pwd-container3">
                                             <div class="form-group">
                                                 <label for="username">Nombre*</label>
@@ -176,7 +176,7 @@
                                                 <div *ngIf="web.invalid  && (web.dirty || web.touched)">
                                                     <div *ngIf="web.errors.required">
                                                         Pagina Web de Empresa Requerido
-                                                    </div>                                                  
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

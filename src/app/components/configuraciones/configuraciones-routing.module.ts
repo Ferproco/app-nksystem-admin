@@ -7,6 +7,9 @@ import { CatalogoNegocioComponent } from './negocio/catalogo-negocio/catalogo-ne
 import { CrearNegocioComponent } from './negocio/crear-negocio/crear-negocio.component';
 import { CatalogoNumeraciondocumentoComponent } from './numeraciondocumento/catalogo-numeraciondocumento/catalogo-numeraciondocumento.component';
 import { CrearNumeraciondocumentoComponent } from './numeraciondocumento/crear-numeraciondocumento/crear-numeraciondocumento.component';
+import { CatalogoRolesComponent } from './roles/catalogo-roles/catalogo-roles.component';
+import { CrearAsignarRolesComponent } from './roles/crear-asignar-roles/crear-asignar-roles.component';
+import { CrearRolesComponent } from './roles/crear-roles/crear-roles.component';
 import { CatalogoTipoImpuestoComponentComponent } from './tipoimpuesto/catalogo-tipo-impuesto-component/catalogo-tipo-impuesto-component.component';
 import { CrearTipoImpuestoComponentComponent } from './tipoimpuesto/crear-tipo-impuesto-component/crear-tipo-impuesto-component.component';
 import { CatalogoUsuarioComponent } from './usuario/catalogo-usuario/catalogo-usuario.component';
@@ -18,19 +21,16 @@ const routes: Routes =
     {
       path: '', component: ConfiguracionesComponent,
       children: [
-        {
-          path: 'listarimpuestos',
-          component: CatalogoImpuestoComponent
-        },
-        {
-          path: 'crearimpuestos',
-          component: CrearImpuestoComponent
-        },
+        { path: 'listarimpuestos', component: CatalogoImpuestoComponent },
+        { path: 'crearimpuestos', component: CrearImpuestoComponent },
         {
           path: 'crearimpuestos/:id',
           component: CrearImpuestoComponent
         },
-       
+        {
+          path: 'listarroles',
+          component: CatalogoRolesComponent
+        },
         {
           path: 'listartipoimpuestos',
           component: CatalogoTipoImpuestoComponentComponent
@@ -70,11 +70,23 @@ const routes: Routes =
         {
           path: 'crearempresa',
           component: CrearNegocioComponent
+        },
+        {
+          path: 'crearempresa/:id',
+          component: CrearNegocioComponent
+        },
+        {
+          path: 'crearrol',
+          component: CrearRolesComponent
+        },
+        {
+          path: 'asignarrol',
+          component: CrearAsignarRolesComponent
         }
-        
+
       ]
     }
-    
+
   ];
 
 @NgModule({

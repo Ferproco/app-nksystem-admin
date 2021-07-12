@@ -135,7 +135,7 @@ export class CatalogoValorkardexComponent implements OnInit {
     this.lstArticulos = [];
     let status = 0;
     this.dataSource = new ExampleDataSource(this.lstArticulos);
-    this.articuloServicio.listarArticulosPorFilter('', tipo, this.fechainicial, this.fechafinal, value)
+    this.articuloServicio.listarArticulosPorFilter(tipo, this.fechainicial, this.fechafinal, value)
       .subscribe(response => {
         this.lstArticulos = response as ArticuloKardex[];
         this.dataSource = new ExampleDataSource(this.lstArticulos);

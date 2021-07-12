@@ -27,7 +27,7 @@
                     <span class="bread-slash">/ Configuración /</span>
                   </li>
                   <li>
-                    <a routerLink="/configuracion/listartipoimpuesto"><span class="bread-blod">
+                    <a routerLink="/main/dashboard/configuraciones/listartipoimpuestos"><span class="bread-blod">
                         Listado de Tipo Impuesto </span>
                     </a>
                   </li>
@@ -119,7 +119,7 @@
                   <ng-container matColumnDef="Status">
                     <th mat-header-cell *matHeaderCellDef> ESTADO </th>
                     <td mat-cell *matCellDef="let element">
-                      <div *ngIf="element.status === 'ACTIVO'; else inactivo" class="btn-group project-list-add">
+                      <div *ngIf="element.status === 'Activo'; else inactivo" class="btn-group project-list-add">
                         <button class="btn btn-white btn-xs">Activo </button>
                       </div>
                       <ng-template #inactivo>

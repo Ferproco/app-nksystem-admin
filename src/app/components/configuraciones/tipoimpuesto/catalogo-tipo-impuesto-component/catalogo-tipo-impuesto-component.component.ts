@@ -53,18 +53,8 @@ export class CatalogoTipoImpuestoComponentComponent implements OnInit {
     this.loading = true;
     this.lstTipoImpuesto = [];
     let status = '';
-    this.tipoImpuestoService.listarTipoImpuestos()
-      .subscribe(response => {
+    this.tipoImpuestoService.listarTipoImpuestos().subscribe(response => {
         this.lstTipoImpuesto = response as any[];
-        //listatipos.forEach(element => {
-          /*if (element.status === 'ACTIVO') {
-            status = 1;
-          }
-          else {
-            status = 0;
-          }*/
-          //this.lstTipoImpuesto.push(new TipoImpuesto(element.id, element.nombretipoimpuesto, this.idnegocio, status));
-        //});
         this.dataSource = new MatTableDataSource(this.lstTipoImpuesto);
         this.dataSource.paginator = this.paginator;
         this.LengthTable = this.lstTipoImpuesto.length;
@@ -74,7 +64,7 @@ export class CatalogoTipoImpuestoComponentComponent implements OnInit {
         ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
-
+            this.dataSource = new MatTableDataSource(this.lstTipoImpuesto);
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
@@ -124,7 +114,7 @@ export class CatalogoTipoImpuestoComponentComponent implements OnInit {
 
   Modificar(id: number){
 
-    this.router.navigate(['configuracion/creartipoimpuesto', id]);
+    this.router.navigate(['main/dashboard/configuraciones/creartipoimpuesto', id]);
   }
 
   Eliminar(id: number) {
@@ -150,6 +140,9 @@ export class CatalogoTipoImpuestoComponentComponent implements OnInit {
           this.loading = false;
           if (error.status === 404) {
 
+          }
+          else if (error.status === 409) {
+            this.toastr.info('Opss no puedes eliminar el registro ya que esta haciendo usado', 'Informacion', { enableHtml: true, closeButton: true });
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',

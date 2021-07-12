@@ -258,10 +258,14 @@ export class CrearArticuloComponent implements OnInit {
 
   guardarArticulo(event: Event) {
     event.preventDefault();
+    const controls = this.formarticulo.controls;
+    Object.keys(controls).forEach((controlName) => {
+      controls[controlName].markAsTouched();
+    });
     if (this.formarticulo.valid) {
       this.loading = true;
       const value = this.formarticulo.value;
-      this.articuloservice.guardarArticulo(this.id, this.idnegocio, value)
+      this.articuloservice.guardarArticulo(this.id, value)
         .subscribe(response => {
           this.loading = false;
           this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
@@ -286,7 +290,7 @@ export class CrearArticuloComponent implements OnInit {
 
   listarFamilias() {
     this.loading = true;
-    this.familiaserive.listarCategorias('')
+    this.familiaserive.listarCategorias()
       .subscribe(response => {
         this.lstFamilias = response as any[];
         //console.log(this.lstFamilias);

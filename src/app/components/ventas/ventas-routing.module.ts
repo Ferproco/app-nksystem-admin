@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { VentasComponent } from './ventas.component';
 import { CatalogoDocumentoVentasComponent } from './catalogo-documento-ventas/catalogo-documento-ventas.component';
 import { DocumentoVentasComponent } from './documento-ventas/documento-ventas.component';
+import { CuentasxcobrarComponent } from './cuentasxcobrar/cuentasxcobrar.component';
 
 
 const routes: Routes = [
@@ -25,8 +26,11 @@ const routes: Routes = [
         path: 'documentodeventa-cotizacion/:tipodocumento',
         component: DocumentoVentasComponent
       },
-    
-     
+      {
+        path: 'cuentasporcobrar',
+        component: CuentasxcobrarComponent
+      },
+
     ]
   }
 ];
