@@ -47,7 +47,8 @@ export class DocumentosVentasService {
 
      this.Kardexmodel = new Kardex();
      this.Kardexmodel.id = 0;
-     this.Kardexmodel.articulo_id =element.codarticulo;
+     this.Kardexmodel.articulo_id = element.codarticulo;
+     this.Kardexmodel.codcontacto = Number(documento.codcontacto);
      this.Kardexmodel.tipo = 'SAL';
      this.Kardexmodel.fecha = new Date(year, month, date);
      this.Kardexmodel.documentoasociado = documento.numerodocumento;
@@ -102,5 +103,5 @@ export class DocumentosVentasService {
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
   }
 
-  
+
 }

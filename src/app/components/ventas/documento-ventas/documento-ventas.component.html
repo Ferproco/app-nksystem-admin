@@ -50,15 +50,25 @@
 
               <div class="row">
 
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="user-profile-content">
-                        <h2>Sakila Joy</h2>
-                        <p class="profile-founder">Founder of <strong>Uttara It Park</strong>
+
+                        <h2>{{nombreprimero}}</h2>
+                        <div class="input-group">
+                          <span class="input-group-btn"><button type="button" (click)="onListarClientes()"
+                              class="btn btn-primary">+</button></span>
+                          <input value="{{nombreprimero}}" type="text" class="form-control"
+                            placeholder="Seleccione Contacto" />
+                          <span class="input-group-btn"><button type="button" (click)="onListarClientes()"
+                              class="btn btn-primary"><i class="fa fa-search"></i></button></span>
+                        </div>
+                        <p class="profile-founder"><strong>Identificación</strong> {{ numeroidentificacion }}
                         </p>
-                        <p class="profile-des">It is a long established fact that a reader will be distracted of by the
-                          readable content of a page when looking at its layout.The point of using Lorem Ipsum.</p>
+                        <p class="profile-founder"><strong>Tipo Persona</strong> {{tipopersona}} <strong>Telefono</strong> {{telefono}}
+                        </p>
+                        <p class="profile-des">{{direccionfiscal}}</p>
                       </div>
                     </div>
                   </div>
@@ -116,9 +126,15 @@
                     </table>
                   </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                   <div class="analytics-sparkle-line user-profile-sparkline">
                     <div class="analytics-content">
+                      <div class="input-group">
+                        <input formControlName="numerodocumento" type="text" class="form-control"
+                          placeholder="Numero de Documento" />
+                        <span class="input-group-btn"><button type="button" (click)="onModificarNumeracionDocumento()"
+                            class="btn btn-primary"><i class="adminpro-icon adminpro-settings"></i></button></span>
+                      </div>
                       <h5>Total Factura</h5>
                       <h1 class="counter">{{montototalsiniva}}</h1>
 
@@ -240,7 +256,7 @@
 
   </div>
 
-  <div class="content-inner-all">
+ <!-- <div class="content-inner-all">
     <div class="admin-dashone-data-table-area mg-b-15">
       <div class="container-fluid">
         <div class="row">
@@ -442,13 +458,10 @@
                   <h1>Numero Documento <span class="table-project-n"></span>
                   </h1>
                   <div class="input-group">
-
                     <input formControlName="numerodocumento" type="text" class="form-control"
                       placeholder="Numero de Documento" />
                     <span class="input-group-btn"><button type="button" (click)="onModificarNumeracionDocumento()"
                         class="btn btn-primary"><i class="adminpro-icon adminpro-settings"></i></button></span>
-
-
                   </div>
                 </div>
 
@@ -488,7 +501,7 @@
 
   </div>
 
-  <!--<div class="content-inner-all">
+  <div class="content-inner-all">
 
     <div class="project-details-area mg-b-15">
       <div class="container-fluid">

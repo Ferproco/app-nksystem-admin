@@ -53,6 +53,9 @@ import { CrearImpuestosModalComponent } from './impuestos/crear-impuestos-modal/
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-almacen-modal.component';
+import { UnidadService } from '../ajustes/unidad/UnidadService.service';
+import { MarcaService } from '../ajustes/marca/MarcaService.service';
+import { FormaPagoService } from '../ajustes/formapago/FormaPagoService.service';
 
 
 @NgModule({
@@ -115,6 +118,9 @@ import { CrearAlmacenModalComponent } from './almacen/crear-almacen-modal/crear-
     ContactoService,
     ImpuestoService,
     TipoImpuestoService,
+    UnidadService,
+    MarcaService,
+    FormaPagoService
   ]
 })
 export class PortafolioModule { }
