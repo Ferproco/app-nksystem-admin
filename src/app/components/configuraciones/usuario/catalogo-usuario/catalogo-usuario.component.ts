@@ -101,12 +101,12 @@ export class CatalogoUsuarioComponent implements OnInit {
     });*/
   }
 
-  Ver() {
+  Ver(id: number){
 
   }
 
   Modificar(id: number) {
-    this.router.navigate(['main/dashboard/portafolio/crearcategoria', id]);
+    this.router.navigate(['main/dashboard/configuraciones/crearusuario', id]);
   }
 
   Eliminar(id: number) {

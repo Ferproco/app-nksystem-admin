@@ -60,16 +60,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
     let status = 0;
     this.formaPagoService.listarFormaPagos('')
       .subscribe(response => {
-        const listaformas = response as any[];
-        listaformas.forEach(element => {
-          if (element.status === 'ACTIVO') {
-            status = 1;
-          }
-          else {
-            status = 0;
-          }
-          this.lstFormaPagos.push(new FormaPago(element.id, element.nombre, element.dias, this.idnegocio, status));
-        });
+        this.lstFormaPagos = response as any[];
         this.dataSource = new MatTableDataSource(this.lstFormaPagos);
         this.dataSource.paginator = this.paginator;
         this.LengthTable = this.lstFormaPagos.length;
@@ -89,7 +80,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
   }
 
   registrarformapago() {
-    this.router.navigate(['/main/dashboard/portafolio/crearformapagos']);
+    this.router.navigate(['/main/dashboard/ajustes/crearformapagos']);
   }
 
   applyFilter(event: Event) {
@@ -129,7 +120,7 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
 
   Modificar(id: number){
 
-    this.router.navigate(['configuracion/crearformapagos', id]);
+    this.router.navigate(['/main/dashboard/ajustes/crearformapagos', id]);
   }
 
   Eliminar(id: number) {
@@ -151,16 +142,19 @@ export class CatalogoFormapagoComponent implements OnInit, AfterViewInit  {
         this.loading = false;
         this.listarFormaPagos();
       },
-        ((error: HttpErrorResponse) => {
-          this.loading = false;
-          if (error.status === 404) {
+      ((error: HttpErrorResponse) => {
+        this.loading = false;
+        if (error.status === 404) {
 
-          }
-          else {
-            this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-              { enableHtml: true, closeButton: true });
-          }
-        }));
+        }
+        else if (error.status === 409) {
+          this.toastr.info('Opss no puedes eliminar el registro ya que esta haciendo usado', 'Informacion', { enableHtml: true, closeButton: true });
+        }
+        else {
+          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+            { enableHtml: true, closeButton: true });
+        }
+      }));
   }
 
   ExportarExcel(){

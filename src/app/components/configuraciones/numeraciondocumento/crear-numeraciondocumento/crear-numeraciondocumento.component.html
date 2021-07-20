@@ -70,34 +70,28 @@
                 </div>
                 <br>
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <label for="username">Tipo Documento</label>
                       <div class="form-group">
-                        <select class="select2_demo_3 form-control" formControlName="codtipodocumento">
+                        <select class="select2_demo_3 form-control" formControlName="codtipodocumento"
+                        [ngClass]="{'invalid-data': codtipodocumento.invalid && (codtipodocumento.touched || codtipodocumento.dirty)}">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{tipodocumento.idtipodocumento}}"
                             *ngFor="let tipodocumento of lstTipoDocumentos">
                             {{tipodocumento.nombre}}</option>
                         </select>
+                        <div *ngIf="codtipodocumento.invalid  && (codtipodocumento.dirty || codtipodocumento.touched)">
+                          <div class="invalid-mensaje" *ngIf="codtipodocumento.errors.required">
+                            Tipo Documento Requerido
+                          </div>
+                        </div>
                       </div>
+
                     </div>
                   </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div id="pwd-container3">
-                      <div class="form-group">
-                        <label>
-                          <input type="checkbox" formControlName="principal" value="">
-                          <i></i> Principal </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6">
+
+                  <div class="col-lg-3">
                     <div id="pwd-container3">
                       <div class="form-group">
                         <label for="password3">Nombre</label>
@@ -235,7 +229,17 @@
                     </div>
                   </div>
                 </div>
-
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div id="pwd-container3">
+                      <div class="form-group">
+                        <label>
+                          <input type="checkbox" formControlName="principal" value="">
+                          <i></i> Principal </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

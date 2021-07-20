@@ -49,7 +49,7 @@
                 <div class="main-sparkline13-hd">
                   <h1>
                     <i class="{{objetoimagen}}" aria-hidden="true"></i>
-                    {{acciondeltitulo}} <span class="table-project-n"></span> Impuestos
+                    {{acciondeltitulo}} <span class="table-project-n"></span>Tipo Impuestos
                   </h1>
                 </div>
               </div>
@@ -81,7 +81,7 @@
                           [ngClass]="{'invalid-data': nombretipoimpuesto.invalid && (nombretipoimpuesto.touched || nombretipoimpuesto.dirty)}"
                           type="text" class="form-control" placeholder="Ingrese el Nombre del Tipo Impuesto" />
                         <div *ngIf="nombretipoimpuesto.invalid  && (nombretipoimpuesto.dirty || nombretipoimpuesto.touched)">
-                          <div *ngIf="nombretipoimpuesto.errors.required">
+                          <div class="invalid-mensaje" *ngIf="nombretipoimpuesto.errors.required">
                             Nombre Requerido
                           </div>
                           <div class="invalid-mensaje" *ngIf="nombretipoimpuesto.errors.pattern">

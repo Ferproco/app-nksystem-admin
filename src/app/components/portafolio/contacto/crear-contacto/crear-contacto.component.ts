@@ -12,12 +12,12 @@ import { PaisService } from './PaisService.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { DepartamentoService } from 'src/app/components/departamento/DepartamentoService.service';
 import { ListaPrecioService } from 'src/app/components/listapeccio/ListaPrecioService.service';
 import { Contacto } from 'src/app/components/model/Contacto.model';
 import { MunicipioService } from 'src/app/components/municipio/MunicipioService.service';
-import { FormaPagoService } from '../../formapago/FormaPagoService.service';
-import { CrearFormapagoModalComponent } from '../../formapago/crear-formapago-modal/crear-formapago-modal.component';
+import { FormaPagoService } from 'src/app/components/ajustes/formapago/FormaPagoService.service';
+import { DepartamentoService } from 'src/app/components/ajustes/departamento/DepartamentoService.service';
+import { CrearFormapagoModalComponent } from 'src/app/components/ajustes/formapago/crear-formapago-modal/crear-formapago-modal.component';
 
 
 export interface Tipopersona {

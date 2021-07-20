@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Departamento } from '../model/Departamento.model';
+import { Departamento } from '../../model/Departamento.model';
 
 @Injectable()
 export class DepartamentoService{
@@ -23,7 +23,7 @@ export class DepartamentoService{
   }
 
   listarDepartamentosporPais(codnegocio: string, idpais: number){
-   
+
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'api/departamento/' + idpais;
     return this.httpClient.get(endpoint, {headers: httpHeaders});

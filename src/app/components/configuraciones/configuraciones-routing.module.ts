@@ -64,6 +64,10 @@ const routes: Routes =
           component: CrearUsuarioComponent
         },
         {
+          path: 'crearusuario/:id',
+          component: CrearUsuarioComponent
+        },
+        {
           path: 'listarempresas',
           component: CatalogoNegocioComponent
         },

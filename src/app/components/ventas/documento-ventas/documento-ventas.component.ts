@@ -12,7 +12,6 @@ import { DocumentoVenta } from '../../model/DocumentoVenta.model';
 import { DocumentosVentasService } from '../documentos-ventas.service';
 import { Articulo } from '../../model/Articulo.model';
 import { AlmacenService } from '../../portafolio/almacen/AlmacenService.service';
-import { FormaPagoService } from '../../portafolio/formapago/FormaPagoService.service';
 import { ArticuloService } from '../../portafolio/articulo/ArticuloService.service';
 import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { ContactoService } from '../../portafolio/contacto/ContactoService.service';
@@ -24,8 +23,10 @@ import { ImpuestoService } from '../../configuraciones/impuesto/ImpuestoService.
 import { NumeracionDocumento } from '../../model/NumeracionDocumento.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { TipoDocumentoService } from '../../configuraciones/tipodocumento/TipoDocumentoService.service';
-import { CrearFormapagoModalComponent } from '../../portafolio/formapago/crear-formapago-modal/crear-formapago-modal.component';
-import { UnidadService } from '../../portafolio/unidad/UnidadService.service';
+import { UnidadService } from '../../ajustes/unidad/UnidadService.service';
+import { FormaPagoService } from '../../ajustes/formapago/FormaPagoService.service';
+import { CrearFormapagoModalComponent } from '../../ajustes/formapago/crear-formapago-modal/crear-formapago-modal.component';
+
 
 @Component({
   selector: 'app-documento-ventas',
@@ -79,7 +80,7 @@ export class DocumentoVentasComponent implements OnInit {
   numerodocumentos: number;
   numerodocumentoconcatenado: string;
   nombrearticulo: string[] = [];
-  montototalsiniva:number;
+  montototalsiniva:number =0;
   montototaliva:number;
   montototalconiva:number;
 

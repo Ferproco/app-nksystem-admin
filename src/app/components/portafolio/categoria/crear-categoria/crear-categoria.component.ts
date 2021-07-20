@@ -22,7 +22,7 @@ export class CrearCategoriaComponent implements OnInit {
   CategoriaModel: Categoria;
   acciondeltitulo: string = 'Crear';
   Objetoestado: string = 'Activo';
-  objetoimagen:string= 'fa fa-plus-square-o';
+  objetoimagen: string = 'fa fa-plus-square-o';
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   customClass = 'customClass';
@@ -30,7 +30,7 @@ export class CrearCategoriaComponent implements OnInit {
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
-  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
 
   constructor(private categoriaService: CategoriaService,
     private formbuilder: FormBuilder,
@@ -38,17 +38,17 @@ export class CrearCategoriaComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
 
-      this.CategoriaModel = new Categoria();
-      this.idnegocio = 1;
-  
-      this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
-      if (this.route.snapshot.params.id) {
-        this.id = this.route.snapshot.params.id;
-        this.acciondeltitulo = 'Modificar';
-        this.objetoimagen='fa fa-edit';
-       // this.buscarArticulo(this.id);
-      }
-      this.buildForm();
+    this.CategoriaModel = new Categoria();
+    this.idnegocio = 1;
+
+    this.bsConfig = Object.assign({}, { containerClass: this.colorTheme }, { dateInputFormat: 'DD-MM-YYYY' });
+    if (this.route.snapshot.params.id) {
+      this.id = this.route.snapshot.params.id;
+      this.acciondeltitulo = 'Modificar';
+      this.objetoimagen = 'fa fa-edit';
+      // this.buscarArticulo(this.id);
+    }
+    this.buildForm();
   }
 
   ngOnInit(): void {
@@ -57,31 +57,41 @@ export class CrearCategoriaComponent implements OnInit {
 
   guardarCategoria(event: Event) {
     event.preventDefault();
-    this.loading = true;
-    const value = this.formcategoria.value;
-    this.categoriaService.guardarCategoria(this.id, this.idnegocio, value)
-      .subscribe(response => {
-        this.loading = false;
-        this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
-        this.router.navigate(['/main/dashboard/portafolio/listarcategorias']);
-      },
-      ((error: HttpErrorResponse) => {
-        this.loading = false;
-        if (error.status === 404) {
+    const controls = this.formcategoria.controls;
+    Object.keys(controls).forEach((controlName) => {
+      controls[controlName].markAsTouched();
+    });
+    if (this.formcategoria.valid) {
+      this.loading = true;
+      const value = this.formcategoria.value;
+      this.categoriaService.guardarCategoria(this.id, this.idnegocio, value)
+        .subscribe(response => {
+          this.loading = false;
+          this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
+          this.router.navigate(['/main/dashboard/portafolio/listarcategorias']);
+        },
+          ((error: HttpErrorResponse) => {
+            this.loading = false;
+            if (error.status === 404) {
 
-        }
-        else {
-          this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
-            { enableHtml: true, closeButton: true });
-        }
-      }));
+            }
+            else {
+              this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',
+                { enableHtml: true, closeButton: true });
+            }
+          }));
+    }
+    else {
+      this.toastr.error('Opss faltan datos que son obligatorios ', 'Error',
+        { enableHtml: true, closeButton: true });
+    }
   }
 
 
   private buildForm() {
     this.formcategoria = this.formbuilder.group({
-      nomfamilia: [this.CategoriaModel.nomfamilia, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
-      status: [this.CategoriaModel.status === 'Activo' ? 1: 0, [Validators.required]]
+      nomfamilia: [this.CategoriaModel.nomfamilia, [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
+      status: [this.CategoriaModel.status === 'Activo' ? 1 : 0, [Validators.required]]
 
     });
     this.Objetoestado = this.formcategoria.get('status').value === 1 ? 'Activo' : 'Inactivo';
@@ -118,12 +128,12 @@ export class CrearCategoriaComponent implements OnInit {
   get nomfamilia() {
     return this.formcategoria.get('nomfamilia');
   }
-onChange(event: MatSlideToggleChange) {
+  onChange(event: MatSlideToggleChange) {
 
     this.formcategoria.get('status').setValue(event.checked === true ? 1 : 0);
-    this.Objetoestado = this.formcategoria.get('status').value === 1 ? 'Activo' : 'Inactivo';    
+    this.Objetoestado = this.formcategoria.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
 
-  
+
 }

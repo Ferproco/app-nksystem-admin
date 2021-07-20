@@ -22,6 +22,11 @@ import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-va
 import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
 import { TableTransaccionInventariosComponent } from './table-transaccion-inventarios/table-transaccion-inventarios.component';
 import { AlmacenService } from '../portafolio/almacen/AlmacenService.service';
+import { CatalogoTransaccionesComponent } from './catalogo-transacciones/catalogo-transacciones.component';
+import { TransaccionesService } from './TransaccionesService.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -31,6 +36,7 @@ import { AlmacenService } from '../portafolio/almacen/AlmacenService.service';
       CatalogoValorinventarioComponent,
       CatalogoValorkardexComponent,
       TableTransaccionInventariosComponent,
+      CatalogoTransaccionesComponent
     ],
   imports: [
     CommonModule,
@@ -48,12 +54,16 @@ import { AlmacenService } from '../portafolio/almacen/AlmacenService.service';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ColorPickerModule,
+    MatCardModule,
+    MatProgressBarModule
   ],
   providers: [
     KardexService,
     ArticuloService,
-    AlmacenService
+    AlmacenService,
+    TransaccionesService
   ]
 })
 export class InventariosModule { }

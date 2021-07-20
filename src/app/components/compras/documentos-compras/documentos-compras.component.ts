@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { CrearFormapagoModalComponent } from '../../ajustes/formapago/crear-formapago-modal/crear-formapago-modal.component';
+import { FormaPagoService } from '../../ajustes/formapago/FormaPagoService.service';
+import { UnidadService } from '../../ajustes/unidad/UnidadService.service';
 import { ImpuestoService } from '../../configuraciones/impuesto/ImpuestoService.service';
 import { NumeracionDocumentoService } from '../../configuraciones/numeraciondocumento/NumeracionDocumentoService.service';
 import { TipoDocumentoService } from '../../configuraciones/tipodocumento/TipoDocumentoService.service';
@@ -18,9 +21,6 @@ import { ArticuloService } from '../../portafolio/articulo/ArticuloService.servi
 import { CatalogoArticuloModalComponent } from '../../portafolio/articulo/catalogo-articulo-modal/catalogo-articulo-modal.component';
 import { ContactoService } from '../../portafolio/contacto/ContactoService.service';
 import { ModalClienteComponent } from '../../portafolio/contacto/modal-cliente/modal-cliente.component';
-import { CrearFormapagoModalComponent } from '../../portafolio/formapago/crear-formapago-modal/crear-formapago-modal.component';
-import { FormaPagoService } from '../../portafolio/formapago/FormaPagoService.service';
-import { UnidadService } from '../../portafolio/unidad/UnidadService.service';
 import { VendedorService } from '../../portafolio/vendedor/VendedorService.service';
 import { DocumentoCompraService } from '../DocumentoCompraService.service';
 
@@ -48,7 +48,7 @@ export class DocumentosComprasComponent implements OnInit {
   lstAlmacenes: any[] = [];
   lstNumeracionDocumento: any[] = [];
 
- 
+
 
   DocumentoCompraForm: FormGroup;
   lstdetallesdocumentocompras: FormArray;
@@ -77,7 +77,7 @@ export class DocumentosComprasComponent implements OnInit {
   montototalsiniva:number;
   montototaliva:number;
   montototalconiva:number;
-  
+
   constructor(private contactoServicio: ContactoService,
     private articuloServicio: ArticuloService,
     private documentocompraServicio: DocumentoCompraService,
@@ -85,7 +85,6 @@ export class DocumentosComprasComponent implements OnInit {
     private numeraciondocumentoServicio: NumeracionDocumentoService,
     private formaPagoService: FormaPagoService,
     private vendedorService: VendedorService,
-    private FormaPagoService: FormaPagoService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -323,7 +322,7 @@ export class DocumentosComprasComponent implements OnInit {
 
   }
 
-  
+
 
   onListarArticulos(pos: number) {
     console.log('la posicion ' + pos);
@@ -382,7 +381,7 @@ export class DocumentosComprasComponent implements OnInit {
 
   listarFormasdepago() {
     this.loading = true;
-    this.FormaPagoService.listarFormaPagos('')
+    this.formaPagoService.listarFormaPagos('')
       .subscribe(response => {
         this.lstformaspago = response as any[];
         this.loading = false;

@@ -22,7 +22,7 @@ export class CrearTipoImpuestoComponentComponent implements OnInit {
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
-  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_]*$/;
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
 
   acciondeltitulo: string = 'Crear';
   Objetoestado: string = 'Activo';
@@ -56,7 +56,7 @@ export class CrearTipoImpuestoComponentComponent implements OnInit {
 
   private buildForm() {
     this.formimpuesto = this.formbuilder.group({
-      nombretipoimpuesto: [this.TipoImpuestoModel.nombretipoimpuesto, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombretipoimpuesto: [this.TipoImpuestoModel.nombretipoimpuesto, [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
       status: [this.TipoImpuestoModel.status === 'Activo' ? 1 : 0, [Validators.required]]
 
     });

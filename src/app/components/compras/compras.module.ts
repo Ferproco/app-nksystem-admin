@@ -25,8 +25,6 @@ import { NumeracionDocumentoService } from '../configuraciones/numeraciondocumen
 import { ImpuestoService } from '../configuraciones/impuesto/ImpuestoService.service';
 import { ArticuloService } from '../portafolio/articulo/ArticuloService.service';
 import { TipoDocumentoService } from '../configuraciones/tipodocumento/TipoDocumentoService.service';
-import { FormaPagoService } from '../portafolio/formapago/FormaPagoService.service';
-import { UnidadService } from '../portafolio/unidad/UnidadService.service';
 import { VendedorService } from '../portafolio/vendedor/VendedorService.service';
 import { CatalogoDocumentosComprasComponent } from './catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentosComprasComponent } from './documentos-compras/documentos-compras.component';
@@ -41,6 +39,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { FormaPagoService } from '../ajustes/formapago/FormaPagoService.service';
+import { UnidadService } from '../ajustes/unidad/UnidadService.service';
 
 
 @NgModule({
@@ -50,7 +50,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     CatalogoDocumentosComprasComponent,
     DocumentosComprasComponent
   ],
-  imports: 
+  imports:
   [
     CommonModule,
     ComprasRoutingModule,
@@ -88,17 +88,17 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
   ]
   ,
   providers: [
-   
+
     ContactoService,
     VendedorService,
     AlmacenService,
     NumeracionDocumentoService,
     ImpuestoService,
-    ArticuloService, 
+    ArticuloService,
     TipoDocumentoService,
     FormaPagoService,
     UnidadService
-   
+
   ]
 })
 export class ComprasModule { }

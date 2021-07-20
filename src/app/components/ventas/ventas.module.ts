@@ -40,10 +40,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormaPagoService } from '../portafolio/formapago/FormaPagoService.service';
-import { UnidadService } from '../portafolio/unidad/UnidadService.service';
-
-
+import { FormaPagoService } from '../ajustes/formapago/FormaPagoService.service';
+import { UnidadService } from '../ajustes/unidad/UnidadService.service';
 
 
 @NgModule({
@@ -51,8 +49,8 @@ import { UnidadService } from '../portafolio/unidad/UnidadService.service';
     VentasComponent,
     DocumentoVentasComponent,
     CatalogoDocumentoVentasComponent
-    
-     
+
+
   ],
   imports: [
     CommonModule,
@@ -88,21 +86,21 @@ import { UnidadService } from '../portafolio/unidad/UnidadService.service';
     MatDialogModule,
     MatTooltipModule,
     ButtonsModule.forRoot()
-    
-    
+
+
   ],
   providers: [
-   
+
     ContactoService,
     VendedorService,
     AlmacenService,
     NumeracionDocumentoService,
     ImpuestoService,
-    ArticuloService, 
+    ArticuloService,
     TipoDocumentoService,
     FormaPagoService,
     UnidadService
-   
+
   ]
 })
 export class VentasModule { }

@@ -28,6 +28,10 @@ const routes: Routes =
         path: 'compras',
         loadChildren: () => import('../../components/compras/compras.module').then(z => z.ComprasModule)
       },
+      {
+        path: 'ajustes',
+        loadChildren: () => import('../../components/ajustes/ajustes.module').then(z => z.AjustesModule)
+      },
 
 
     ]

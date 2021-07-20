@@ -21,7 +21,7 @@ export class UsuarioService{
   }
 
   listarUsuarios(){
-    
+
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'seguridad/usuario/'+this.empresa.idnegocio;
     return this.httpClient.get(endpoint, {headers: httpHeaders});
@@ -46,14 +46,14 @@ export class UsuarioService{
       nombrecompleto: user.nombrecompleto,
       nombreusuario: user.email,
       ocupacion: user.ocupacion,
-      password: user.password, 
-      telefono: user.telefono, 
+      password: user.password,
+      telefono: user.telefono,
       telefonoconfirmado: false,
       valido: true,
       vencepassword: null
     };
 
-   
+
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const endpoint: any = this.uriapi + 'seguridad/usuario';
     return this.httpClient.post(endpoint, JSON.stringify(body), {headers: httpHeaders});
@@ -63,7 +63,7 @@ export class UsuarioService{
     const body = {
       email: email,
       username: username,
-      password: password      
+      password: password
     };
 
     debugger
@@ -77,7 +77,7 @@ export class UsuarioService{
       id: Number(id)
     };
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    const endpoint: any = this.uriapi + 'api/familia/' + id;
+    const endpoint: any = this.uriapi + 'seguridad/usuario/' + id;
     return this.httpClient.delete(endpoint, {headers: httpHeaders});
   }
 }

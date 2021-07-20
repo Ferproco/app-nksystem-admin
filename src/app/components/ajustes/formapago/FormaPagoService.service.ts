@@ -23,14 +23,14 @@ export class FormaPagoService{
     return this.httpClient.get(endpoint, {headers: httpHeaders});
   }
 
-  guardarFormaPago(idp: number, idnegocio: number, formapago: FormaPago, operacion: string){
+  guardarFormaPago(idp: number, idnegocio: number, formapago: FormaPago){
     console.log(JSON.stringify(formapago));
     const body = {
       id: Number(idp),
       nombre: formapago.nombre,
       dias: Number(formapago.dias),
       codnegocio: Number(idnegocio),
-      status: formapago.status === 1 ? 'ACTIVO' : 'INACTIVO'
+      status: formapago.status === 1 ? 'Activo' : 'Inactivo'
     };
     console.log('asi se le envia al servicio ' + JSON.stringify(body));
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

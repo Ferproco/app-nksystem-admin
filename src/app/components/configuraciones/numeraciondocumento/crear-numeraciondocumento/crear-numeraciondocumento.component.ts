@@ -41,6 +41,7 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
   parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,]*$/;
 
   constructor(private tipodocumentoServicio: TipoDocumentoService,
@@ -120,7 +121,7 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
 
 
     this.formnumeraciondocumento = this.formbuilder.group({
-      nombre: [this.NumeracionDocumentoModel.nombre, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombre: [this.NumeracionDocumentoModel.nombre, [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
       proximonumerodocumento: [this.NumeracionDocumentoModel.proximonumerodocumento, [Validators.required, Validators.pattern(this.paterhombre)]],
       desdenumero: [this.NumeracionDocumentoModel.desdenumero, [Validators.required, Validators.pattern(this.paterhombre)]],
       hastanumero: [this.NumeracionDocumentoModel.hastanumero, [Validators.required, Validators.pattern(this.paterhombre)]],
@@ -196,6 +197,9 @@ export class CrearNumeraciondocumentoComponent implements OnInit {
   }
   get resolucion() {
     return this.formnumeraciondocumento.get('resolucion');
+  }
+  get codtipodocumento() {
+    return this.formnumeraciondocumento.get('codtipodocumento');
   }
 
 }

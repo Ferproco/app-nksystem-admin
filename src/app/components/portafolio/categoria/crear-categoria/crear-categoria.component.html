@@ -15,7 +15,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="breadcome-heading">
-                    <button type="submit" class="form-control" [disabled]="formcategoria.invalid">
+                    <button type="submit" class="form-control">
                       <i class="fa fa-save" aria-hidden="true"></i>
                       Guardar</button>
                   </div>
@@ -59,7 +59,7 @@
                 </div>
               </div>
               <div class="sparkline10-graph">
-                
+
                   <div class="row">
                     <div class="col-lg-4">
                       <div id="pwd-container3">
@@ -82,21 +82,21 @@
                           <input formControlName="nomfamilia"
                             [ngClass]="{'invalid-data': nomfamilia.invalid && (nomfamilia.touched || nomfamilia.dirty)}"
                             type="text" class="form-control" placeholder="Ingrese el Nombre de la Categoria" />
-                          <div *ngIf="nomfamilia.invalid  && (nomfamilia.dirty || nomfamilia.touched)">
-                            <div *ngIf="nomfamilia.errors.required">
-                              Nombre Requerido
+                            <div *ngIf="nomfamilia.invalid  && (nomfamilia.dirty || nomfamilia.touched)">
+                              <div class="invalid-mensaje" *ngIf="nomfamilia.errors.required">
+                                Nombre Requerido
+                              </div>
+                              <div class="invalid-mensaje" *ngIf="nomfamilia.errors.pattern">
+                                Nombre Incorrecto
+                              </div>
                             </div>
-                            <div class="invalid-mensaje" *ngIf="nomfamilia.errors.pattern">
-                              Nombre Incorrecto
-                            </div>
-                          </div>
                         </div>
 
                       </div>
                     </div>
 
                   </div>
-                
+
 
               </div>
             </div>

@@ -21,9 +21,8 @@ import { CrearProveedorComponent } from './components/proveedor/crear-proveedor/
 import { CatalogoProveedorComponent } from './components/proveedor/catalogo-proveedor/catalogo-proveedor.component';
 import { FilterProveedorPipe } from './components/proveedor/catalogo-proveedor/filter-proveedor.pipe';
 import { CuentasxcobrarComponent } from './components/ventas/cuentasxcobrar/cuentasxcobrar.component';
-import { CatalogoTransaccionesComponent } from './components/transacciones/catalogo-transacciones/catalogo-transacciones.component';
-import { TransaccionesService } from './components/transacciones/TransaccionesService.service';
-import { FilterTransaccionesPipe } from './components/transacciones/catalogo-transacciones/filter-transacciones.pipe';
+import { TransaccionesService } from './components/inventarios/TransaccionesService.service';
+import { FilterTransaccionesPipe } from './components/inventarios/catalogo-transacciones/filter-transacciones.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -40,18 +39,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import { DepartamentoService } from './components/departamento/DepartamentoService.service';
 import { MunicipioService } from './components/municipio/MunicipioService.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ListaPrecioService } from './components/listapeccio/ListaPrecioService.service';
 import { MensajeEliminarComponent } from './components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
-import * as accordion from 'ngx-bootstrap/accordion';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DocumentosVentasService } from './components/ventas/documentos-ventas.service';
-import { CatalogoDocumentosComprasComponent } from './components/compras/catalogo-documentos-compras/catalogo-documentos-compras.component';
 import { DocumentoCompraService } from './components/compras/DocumentoCompraService.service';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { LoginComponent } from './components/auth/login/login.component';
@@ -59,6 +55,8 @@ import { LoginService } from './components/auth/login/LoginService.service';
 import { StorageService } from './components/auth/login/StorageService.service';
 import { NegocioService } from './components/configuraciones/negocio/NegocioService.service';
 import { RolesService } from './components/configuraciones/roles/RolesService.service';
+import { ExportAsExcelFileService } from './components/util/export-as-excel-file.service';
+import { DepartamentoService } from './components/ajustes/departamento/DepartamentoService.service';
 
 
 export const customCurrencyMaskConfig = {
@@ -86,7 +84,6 @@ export const customCurrencyMaskConfig = {
     CatalogoProveedorComponent,
     FilterProveedorPipe,
     CuentasxcobrarComponent,
-    CatalogoTransaccionesComponent,
     FilterTransaccionesPipe,
     MensajeEliminarComponent,
    // DocumentosComprasComponent
@@ -142,7 +139,8 @@ export const customCurrencyMaskConfig = {
     StorageService,
     NegocioService,
     RolesService,
-    BsModalRef
+    BsModalRef,
+    ExportAsExcelFileService
   ],
   bootstrap: [AppComponent]
 })

@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { DepartamentoService } from 'src/app/components/departamento/DepartamentoService.service';
+import { DepartamentoService } from 'src/app/components/ajustes/departamento/DepartamentoService.service';
 import { Empleado } from 'src/app/components/model/Empleado.model';
 import { MunicipioService } from 'src/app/components/municipio/MunicipioService.service';
 import { PaisService } from '../../contacto/crear-contacto/PaisService.service';
@@ -36,7 +36,7 @@ export class CrearEmpleadoComponent implements OnInit {
   lstMunicipios: any [] = [];
   idnegocio: number;
   idpais: number = null;
- 
+
 
   EmpleadoModel: Empleado;
 
@@ -51,7 +51,7 @@ export class CrearEmpleadoComponent implements OnInit {
 
   camposrequeridos: string;
 
- 
+
   tipoempleado = [
     { id: 1, nombre: 'Vendedor' },
     { id: 2, nombre: 'Otro' }
@@ -200,7 +200,7 @@ export class CrearEmpleadoComponent implements OnInit {
       }));
   }
 
-  
+
   listarDepartamentos(event) {
     this.loading = true;
     this.lstDepartamentos = [];
@@ -247,7 +247,7 @@ export class CrearEmpleadoComponent implements OnInit {
         }
       }));
   }
-  
+
   listarPais() {
     this.loading = true;
     this.paisService.listarPais('')
@@ -269,7 +269,7 @@ export class CrearEmpleadoComponent implements OnInit {
   }
 
 
-  
+
   MostrarCamposTipoPresona(event){
     const idtipo = Number(event);
     if (idtipo === 1){
@@ -396,14 +396,14 @@ export class CrearEmpleadoComponent implements OnInit {
   get correoe(){
     return this.formempleado.get('correoe');
   }
-  
- 
+
+
 
   onChange(event: MatSlideToggleChange) {
     this.formempleado.get('status').setValue(event.checked === true ? '1' : '0');
   }
 
-  
+
 
   cargarRequeridos(e){
     this.camposrequeridos = 'Valores Requeridos:\n';

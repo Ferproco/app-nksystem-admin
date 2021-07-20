@@ -79,6 +79,11 @@
                             {{tipoimpuesto.nombretipoimpuesto}}</option>
                         </select>
                       </div>
+                      <div *ngIf="idtipoimpuesto.invalid  && (idtipoimpuesto.dirty || idtipoimpuesto.touched)">
+                        <div class="invalid-mensaje" *ngIf="idtipoimpuesto.errors.required">
+                          Tipo Impuesto Requerido
+                        </div>
+                      </div>
                     </div>
 
                     <div id="pwd-container3">
@@ -88,7 +93,7 @@
                           [ngClass]="{'invalid-data': nombreimpuesto.invalid && (nombreimpuesto.touched || nombreimpuesto.dirty)}"
                           type="text" class="form-control" placeholder="Ingrese el Nombre del Impuesto" />
                         <div *ngIf="nombreimpuesto.invalid  && (nombreimpuesto.dirty || nombreimpuesto.touched)">
-                          <div *ngIf="nombreimpuesto.errors.required">
+                          <div class="invalid-mensaje" *ngIf="nombreimpuesto.errors.required">
                             Nombre Requerido
                           </div>
                           <div class="invalid-mensaje" *ngIf="nombreimpuesto.errors.pattern">

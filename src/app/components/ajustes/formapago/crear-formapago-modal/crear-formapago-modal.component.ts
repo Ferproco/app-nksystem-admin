@@ -49,7 +49,7 @@ export class CrearFormapagoModalComponent implements OnInit {
 
   public buildForm(){
     this.formformapago = this.formbuilder.group({
-      
+
       nombre: ['', [Validators.required, Validators.pattern(this.parrterobservaciones)]],
       dias: [0, [Validators.required, Validators.pattern(this.paterhombre)]],
       status: [1, [Validators.required]]
@@ -88,7 +88,7 @@ export class CrearFormapagoModalComponent implements OnInit {
     event.preventDefault();
     const value = this.formformapago.value;
     console.log(value);
-    this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value, this.operacion)
+    this.formapagoService.guardarFormaPago(this.id, this.idnegocio, value)
       .subscribe(response => {
         this.toastr.info('Los datos se guardaron correctamente', 'Informacion', { enableHtml: true, closeButton: true });
         this.onClose.next(true);

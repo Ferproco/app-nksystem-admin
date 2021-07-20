@@ -39,7 +39,7 @@ export class CrearImpuestoComponent implements OnInit {
   patterninstrucciones = '^[A-Za-z0-9? _-]+$';
   patten = '[0-9]+(\[0-9][0-9]?)?';
   paterhombre = '[0-9]+(\.[0-9][0-9]?)?';
-  parrterobservaciones = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\%\-\_]*$/;
+  patternombreydescripcion = /^[a-zA-Z\u00C0-\u00FF\s\-0-9\.\,\#\%\$\-\_\*\/\&\"\°\¡\!\(\)]*$/;
 
   constructor(private tipoimpuestoServicio: TipoImpuestoService,
     private impuestoService: ImpuestoService,
@@ -119,7 +119,7 @@ export class CrearImpuestoComponent implements OnInit {
 
   private buildForm() {
     this.formimpuesto = this.formbuilder.group({
-      nombreimpuesto: [this.ImpuestoModel.nombreimpuesto, [Validators.required, Validators.pattern(this.parrterobservaciones)]],
+      nombreimpuesto: [this.ImpuestoModel.nombreimpuesto, [Validators.required, Validators.pattern(this.patternombreydescripcion)]],
       normal: [this.ImpuestoModel.normal, [Validators.required, Validators.pattern(this.paterhombre)]],
       fechaini: [new Date(this.currentDate.setDate(this.currentDate.getDate())), [Validators.required]],
       idtipoimpuesto: [this.ImpuestoModel.idtipoimpuesto, [Validators.required]],
@@ -134,6 +134,9 @@ export class CrearImpuestoComponent implements OnInit {
   }
   get nombreimpuesto() {
     return this.formimpuesto.get('nombreimpuesto');
+  }
+  get idtipoimpuesto() {
+    return this.formimpuesto.get('idtipoimpuesto');
   }
 
   buscarImpuesto(id: number) {

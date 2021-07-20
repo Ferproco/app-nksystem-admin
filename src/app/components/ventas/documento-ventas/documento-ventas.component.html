@@ -40,6 +40,205 @@
     </div>
   </div>
 
+  <div class="content-inner-all">
+
+    <div class="user-profile-area">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="user-profile-wrap shadow-reset">
+
+              <div class="row">
+
+                <div class="col-lg-5">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="user-profile-content">
+                        <h2>Sakila Joy</h2>
+                        <p class="profile-founder">Founder of <strong>Uttara It Park</strong>
+                        </p>
+                        <p class="profile-des">It is a long established fact that a reader will be distracted of by the
+                          readable content of a page when looking at its layout.The point of using Lorem Ipsum.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="user-profile-social-list">
+                    <table class="table small m-b-xs">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <strong>Fecha</strong>
+                            <div class="input-group date">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                              <input class="form-control" bsDatepicker #dp="bsDatepicker" formControlName="fechaemision"
+                                [bsConfig]="bsConfig">
+                            </div>
+                          </td>
+                          <td>
+                            <strong>Vence el</strong>
+                            <div class="input-group date">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                              <input class="form-control" bsDatepicker #dp="bsDatepicker"
+                                formControlName="fechavencimiento" [bsConfig]="bsConfig">
+                            </div>
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>Plazo Crédito</strong>
+                            <div class="input-group">
+                              <span class="input-group-btn"><button type="button" (click)="onCrearPlazoCredito()"
+                                  class="btn btn-primary">+</button></span>
+                              <select class="select2_demo_3 form-control" formControlName="codformapago">
+
+                                <option [value]="formapago.id" *ngFor="let formapago of lstformaspago">
+                                  {{formapago.nombre}}</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <strong>Vendedor</strong>
+                            <div class="input-group">
+                              <span class="input-group-btn"><button type="button"
+                                  class="btn btn-primary">+</button></span>
+                              <select class="select2_demo_3 form-control" formControlName="codvendedor">
+                                <option [value]="vendedor.id" *ngFor="let vendedor of lstVendedores">
+                                  {{vendedor.nombre}}</option>
+                              </select>
+                            </div>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="analytics-sparkle-line user-profile-sparkline">
+                    <div class="analytics-content">
+                      <h5>Total Factura</h5>
+                      <h1 class="counter">{{montototalsiniva}}</h1>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-inner-all">
+    <!-- Breadcome End-->
+    <div class="project-details-area mg-b-15">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="project-details-wrap shadow-reset">
+
+              <div class="row">
+                <div class="col-lg-12">
+
+
+                  <div class="sparkline10-graph">
+                    <div class="static-table-list">
+                      <!--   <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Agregar</button>!-->
+                      <table class="table border-table">
+                        <thead>
+                          <tr>
+                            <th>Item</th>
+                            <th>Descripción</th>
+                            <th>U Medida</th>
+                            <th>Cantidad</th>
+                            <th>Bodega</th>
+                            <th>Precio Uni.</th>
+                            <th>Dcto (%)</th>
+                            <th>Impuestos</th>
+                            <th>Precio Total</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody formArrayName="lstdetallesdocumentoventas">
+                          <tr *ngFor="let lstdetallesdocumentoventas of ListItems.controls; let i = index"
+                            [formGroup]="ListItems.controls[i]">
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-btn"><button type="button" (click)="onListarArticulos(i)"
+                                    class="btn btn-primary">+</button></span>
+                                <input type="text" class="form-control" formControlName="codarticulo"
+                                  placeholder="Codigo Items" style="width:100%" />
+                                <span class="input-group-btn"><button type="button" (click)="onListarArticulos(i)"
+                                    class="btn btn-primary"><i class="fa fa-search"></i></button></span>
+                              </div>
+                            </td>
+                            <td><input type="text" value="{{nombrearticulo[i]}}" class="form-control" /></td>
+                            <td>
+                              <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
+                                <option value="0">--Seleccione--</option>
+                                <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
+                                  {{unidad.nomunidadmedida}}</option>
+                              </select>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" formControlName="cantidad"
+                                (change)="CalcularPrecioVenta(i)" style="width:70px" />
+                            </td>
+                            <td>
+                              <select class="select2_demo_3 form-control" formControlName="codalmacen">
+                                <option value="0">--Seleccione--</option>
+                                <option value="{{almacen.idalmacen}}" *ngFor="let almacen of lstAlmacenes">
+                                  {{almacen.nombre}}</option>
+                              </select>
+                            </td>
+                            <td><input type="number" class="form-control" formControlName="preciounitariosiniva"
+                                (change)="CalcularPrecioVenta(i)" /></td>
+                            <td><input type="number" class="form-control" formControlName="porcentajedescuento"
+                                style="width:70px" /></td>
+
+                            <td>
+                              <select class="select2_demo_3 form-control" formControlName="codimpuesto">
+                                <option value="0">--Seleccione--</option>
+                                <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
+                                  {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
+                              </select>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" formControlName="baseimponible"
+                                style="width:140px" />
+                            </td>
+                            <td>
+                              <div class="btn-group project-list-add">
+                                <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
+                                    aria-hidden="true"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                      <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Agregar</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <div class="content-inner-all">
     <div class="admin-dashone-data-table-area mg-b-15">
@@ -56,7 +255,6 @@
                 </div>
               </div>
               <div class="project-details-wrap shadow-reset">
-
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="project-details-mg">
@@ -275,7 +473,7 @@
                 <div class="main-sparkline8-hd">
                   <h1>Total <span class="table-project-n"></span></h1>
                   <div class="sparkline8-outline-icon">
-                    <h1>{{montototalsiniva}}</h1>
+                    <h1></h1>
                   </div>
                 </div>
 
@@ -287,6 +485,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <!--<div class="content-inner-all">
@@ -344,111 +543,6 @@
     </div>
 
   </div>-->
-  <div class="content-inner-all">
-    <!-- Breadcome End-->
-    <div class="project-details-area mg-b-15">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="project-details-wrap shadow-reset">
 
-              <div class="row">
-                <div class="col-lg-12">
-
-
-                  <div class="sparkline10-graph">
-                    <div class="static-table-list">
-                      <!--   <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        Agregar</button>!-->
-                      <table class="table border-table">
-                        <thead>
-                          <tr>
-                            <th>Item</th>
-                            <th>Descripción</th>
-                            <th>U Medida</th>
-                            <th>Cantidad</th>
-                            <th>Bodega</th>
-                            <th>Precio Uni.</th>
-                            <th>Dcto (%)</th>
-                            <th>Impuestos</th>
-                            <th>Precio Total</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody formArrayName="lstdetallesdocumentoventas">
-                          <tr *ngFor="let lstdetallesdocumentoventas of ListItems.controls; let i = index"
-                            [formGroup]="ListItems.controls[i]">
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-btn"><button type="button" (click)="onListarArticulos(i)"
-                                    class="btn btn-primary">+</button></span>
-                                <input type="text" class="form-control" formControlName="codarticulo"
-                                  placeholder="Codigo Items" style="width:100%" />
-                                <span class="input-group-btn"><button type="button" (click)="onListarArticulos(i)"
-                                    class="btn btn-primary"><i class="fa fa-search"></i></button></span>
-                              </div>
-                            </td>
-                            <td><input type="text" value="{{nombrearticulo[i]}}" class="form-control" /></td>
-                            <td>
-                              <select class="select2_demo_3 form-control" formControlName="codunidadmedida">
-                                <option value="0">--Seleccione--</option>
-                                <option value="{{unidad.id}}" *ngFor="let unidad of lstUnidades">
-                                  {{unidad.nomunidadmedida}}</option>
-                              </select>
-                            </td>
-                            <td>
-                              <input type="number" class="form-control" formControlName="cantidad"
-                                (change)="CalcularPrecioVenta(i)" style="width:70px" />
-                            </td>
-                            <td>
-                              <select class="select2_demo_3 form-control" formControlName="codalmacen">
-                                <option value="0">--Seleccione--</option>
-                                <option value="{{almacen.idalmacen}}" *ngFor="let almacen of lstAlmacenes">
-                                  {{almacen.nombre}}</option>
-                              </select>
-                            </td>
-                            <td><input type="number" class="form-control" formControlName="preciounitariosiniva"
-                                (change)="CalcularPrecioVenta(i)" /></td>
-                            <td><input type="number" class="form-control" formControlName="porcentajedescuento"
-                                style="width:70px" /></td>
-
-                            <td>
-                              <select class="select2_demo_3 form-control" formControlName="codimpuesto">
-                                <option value="0">--Seleccione--</option>
-                                <option value="{{impuesto.idimpuesto}}" *ngFor="let impuesto of lstImpuestos">
-                                  {{impuesto.tipoimpuesto}} {{impuesto.normal}}%</option>
-                              </select>
-                            </td>
-                            <td>
-                              <input type="number" class="form-control" formControlName="baseimponible"
-                                style="width:140px" />
-                            </td>
-                            <td>
-                              <div class="btn-group project-list-add">
-                                <button class="btn btn-white btn-xs"> <i class="fa fa-trash-o"
-                                    aria-hidden="true"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-
-                        </tbody>
-                      </table>
-                      <button type="button" class="btn btn-custon-four btn-primary" (click)="addItem()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        Agregar</button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
 
 </form>

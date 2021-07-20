@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { MensajeEliminarComponent } from 'src/app/components/mensajeria/mensaje-eliminar/mensaje-eliminar.component';
 import { Categoria } from 'src/app/components/model/Categoria.model';
+import { ExportAsExcelFileService } from 'src/app/components/util/export-as-excel-file.service';
 import { CategoriaService } from '../CategoriaService.service';
 
 @Component({
@@ -39,6 +40,7 @@ export class CatalogoCategoriaComponent implements OnInit {
 
 
   constructor(private categoriaServicio: CategoriaService,
+    private exportAsExcelFileService: ExportAsExcelFileService,
     private toastr: ToastrService,
     private router: Router,
     private modalService: BsModalService) { }
@@ -103,8 +105,8 @@ export class CatalogoCategoriaComponent implements OnInit {
     });*/
   }
 
-  Ver() {
-
+  Ver(id: number) {
+    this.router.navigate(['main/dashboard/portafolio/crearcategoria', id]);
   }
 
   Modificar(id: number) {
@@ -143,7 +145,7 @@ export class CatalogoCategoriaComponent implements OnInit {
         }));
   }
   ExportarExcel() {
-
+    this.exportAsExcelFileService.exportAsExcelFile(this.lstCategorias, 'sample');
   }
   ExportarTxt() {
 

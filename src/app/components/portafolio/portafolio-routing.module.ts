@@ -13,11 +13,6 @@ import { CrearVendedorComponent } from './vendedor/crear-vendedor/crear-vendedor
 import { CatalogoContactosComponent } from './contacto/catalogo-contactos/catalogo-contactos.component';
 import { CatalogoEmpleadoComponent } from './empleado/catalogo-empleado/catalogo-empleado.component';
 import { CrearEmpleadoComponent } from './empleado/crear-empleado/crear-empleado.component';
-import { CatalogoFormapagoComponent } from './formapago/catalogo-formapago/catalogo-formapago.component';
-import { CrearFormapagoComponent } from './formapago/crear-formapago/crear-formapago.component';
-import { CatalogoUnidadmedidaComponent } from './unidad/catalogo-unidadmedida/catalogo-unidadmedida.component';
-import { CrearMarcaComponent } from './marca/crear-marca/crear-marca.component';
-import { CatalogoMarcaComponent } from './marca/catalogo-marca/catalogo-marca.component';
 
 const routes: Routes =
   [
@@ -81,7 +76,6 @@ const routes: Routes =
           path: 'crearcontacto/:id',
           component: CrearContactoComponent
         },
-
         {
           path: 'listarempleados',
           component: CatalogoEmpleadoComponent
@@ -94,35 +88,7 @@ const routes: Routes =
           path: 'crearempleado/:id',
           component: CrearEmpleadoComponent
         },
-        {
-          path: 'listarformaspagos',
-          component: CatalogoFormapagoComponent
-        },
-        {
-          path: 'crearformapagos',
-          component: CrearFormapagoComponent
-        },
 
-        {
-          path: 'crearformapagos/:id',
-          component: CrearFormapagoComponent
-        },
-        {
-          path: 'listarunidades',
-          component: CatalogoUnidadmedidaComponent
-        },
-        {
-          path: 'crearmarca',
-          component: CrearMarcaComponent
-        },
-        {
-          path: 'listarmarcas',
-          component: CatalogoMarcaComponent
-        },
-        /* {
-           path: 'crearunidadmedida',
-           component: CrearUnidadMedidaComponent
-         },*/
       ]
     }
   ];

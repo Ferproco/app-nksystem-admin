@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CatalogoTransaccionesComponent } from './catalogo-transacciones/catalogo-transacciones.component';
 import { CatalogoValorinventarioComponent } from './catalogo-valorinventario/catalogo-valorinventario.component';
 import { CatalogoValorkardexComponent } from './catalogo-valorkardex/catalogo-valorkardex.component';
 
@@ -19,6 +20,7 @@ const routes: Routes =
           path: 'listarkardexproductos',
           component: CatalogoValorkardexComponent
         },
+        { path: 'inventario/listartransacciones', component: CatalogoTransaccionesComponent },
       ]
     }
   ];

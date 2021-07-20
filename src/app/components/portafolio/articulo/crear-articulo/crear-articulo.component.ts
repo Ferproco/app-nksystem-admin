@@ -16,17 +16,17 @@ import { CrearCategoriaModalComponent } from '../../categoria/crear-categoria-mo
 import { ArticuloService } from '../ArticuloService.service';
 import { formatCurrency, formatDate, getCurrencySymbol } from '@angular/common';
 import { ImpuestoService } from 'src/app/components/configuraciones/impuesto/ImpuestoService.service';
-import { CrearUnidadModalComponent } from '../../unidad/crear-unidad-modal/crear-unidad-modal.component';
-import { CrearMarcaModalComponent } from '../../marca/crear-marca-modal/crear-marca-modal.component';
 import { CrearImpuestosModalComponent } from '../../impuestos/crear-impuestos-modal/crear-impuestos-modal.component';
-import { UnidadService } from '../../unidad/UnidadService.service';
-import { MarcaService } from '../../marca/MarcaService.service';
 import { Kardex } from 'src/app/components/model/Kardex.model';
 import { UnidadMedidaAlterna } from 'src/app/components/model/UnidadMedidaAlterna.model';
 import { UploadService } from '../upload.service';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { UnidadService } from 'src/app/components/ajustes/unidad/UnidadService.service';
+import { MarcaService } from 'src/app/components/ajustes/marca/MarcaService.service';
+import { CrearMarcaModalComponent } from 'src/app/components/ajustes/marca/crear-marca-modal/crear-marca-modal.component';
+import { CrearUnidadModalComponent } from 'src/app/components/ajustes/unidad/crear-unidad-modal/crear-unidad-modal.component';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -193,7 +193,7 @@ export class CrearArticuloComponent implements OnInit {
       serial: [this.ArticuloModel.serial, [Validators.pattern(this.parrterobservaciones)]],
       codigobarraprincipal: [this.ArticuloModel.codigobarraprincipal, [Validators.pattern(this.patternumerodecimal)]],
       descripcionlarga: [this.ArticuloModel.descripcionlarga, [Validators.pattern(this.patternombreydescripcion)]],
-      status: [this.ArticuloModel.status === 'ACTIVO' ? 1 : 0],
+      status: [this.ArticuloModel.status === 'Activo' ? 1 : 0],
       stockminimo: [this.ArticuloModel.stockminimo, [Validators.pattern(this.patternumerodecimal)]],
       stockmaximo: [this.ArticuloModel.stockmaximo, [Validators.pattern(this.patternumerodecimal)]],
       cantidadreorden: [this.ArticuloModel.cantidadreorden, [Validators.pattern(this.patternumerodecimal)]],
@@ -488,12 +488,7 @@ export class CrearArticuloComponent implements OnInit {
       .subscribe(response => {
         this.ArticuloModel = response as any;
         console.log('el articulo ' + JSON.stringify(this.ArticuloModel));
-        if (this.ArticuloModel.status === 'ACTIVO') {
-          status = 1;
-        }
-        else {
-          status = 0;
-        }
+
         this.buildForm();
         this.ArticuloModel.codtipoproducto = this.formarticulo.get('codtipoproducto').value;
         this.MostrarCamposTipoProducto(this.ArticuloModel.codtipoproducto);

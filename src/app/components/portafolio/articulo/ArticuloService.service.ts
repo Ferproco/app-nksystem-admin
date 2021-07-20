@@ -149,7 +149,7 @@ export class ArticuloService {
       codigobarraprincipal: articulo.codigobarraprincipal,
       serial: articulo.serial,
       descripcionlarga: articulo.descripcionlarga,
-      status: Number(articulo.status) === 1 ? 'ACTIVO' : 'INACTIVO',
+      status: Number(articulo.status) === 1 ? 'Activo' : 'Inactivo',
       stockminimo: Number(articulo.stockminimo),
       stockmaximo: Number(articulo.stockmaximo),
       cantidadreorden: Number(articulo.cantidadreorden),
