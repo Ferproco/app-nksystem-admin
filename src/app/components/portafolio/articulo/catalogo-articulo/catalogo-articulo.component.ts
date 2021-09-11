@@ -66,16 +66,7 @@ export class CatalogoArticuloComponent implements OnInit {
     let status = 0;
     this.articuloServicio.listarArticulos()
       .subscribe(response => {
-        const listaarticulos = response as Articulo[];
-        listaarticulos.forEach(element => {
-          if (element.status === 'ACTIVO') {
-            status = 1;
-          }
-          else {
-            status = 0;
-          }
-          this.lstArticulos.push(element);
-        });
+        this.lstArticulos = response as Articulo[];        
         this.dataSource = new MatTableDataSource(this.lstArticulos);
         this.dataSource.paginator = this.paginator;
         this.LengthTable = this.lstArticulos.length;
@@ -85,7 +76,7 @@ export class CatalogoArticuloComponent implements OnInit {
         ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
-
+            this.dataSource = new MatTableDataSource(this.lstArticulos);
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',

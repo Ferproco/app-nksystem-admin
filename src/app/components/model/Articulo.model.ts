@@ -18,7 +18,7 @@ export class Articulo {
   public codigobarraprincipal: string;
   public referencia: string;
   public serial: string;
-  public status: string = 'ACTIVO';
+  public status: string = 'Activo';
   public codnegocio: number;
   public codtipoproducto: number;
   public descripcionlarga: string;

@@ -40,7 +40,7 @@ export class CrearContactoComponent implements OnInit {
   colorTheme = 'theme-orange';
   bsConfig: Partial<BsDatepickerConfig>;
   currentDate = new Date();
-
+  Objetoestado: string = 'Activo';
   id = 0;
   loading = false;
   formcontacto: FormGroup;
@@ -170,10 +170,9 @@ export class CrearContactoComponent implements OnInit {
       descuentocondicionado: [this.ContactoModel.descuentocondicionado, [Validators.pattern(this.parrterobservaciones)]],
       codigodv: [this.ContactoModel.codigodv, [Validators.pattern(this.paterhombre)]],
       /*responsableiva: [this.ContactoModel.responsableiva, [Validators.required]],*/
-      status: [this.ContactoModel.status === 'ACTIVO' ? 1 : 0]
+      status: [this.ContactoModel.status === 'Activo' ? 1 : 0]
     });
-
-
+    this.Objetoestado = this.formcontacto.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
   buscarContacto(id: number) {
@@ -570,7 +569,6 @@ export class CrearContactoComponent implements OnInit {
   get limitecreditohasta() {
     return this.formcontacto.get('limitecreditohasta');
   }
-
   get lugarenvio() {
     return this.formcontacto.get('lugarenvio');
   }
@@ -583,11 +581,18 @@ export class CrearContactoComponent implements OnInit {
   get paginaweb() {
     return this.formcontacto.get('paginaweb');
   }
-
   get codtipoidentificacion() {
     return this.formcontacto.get('codtipoidentificacion');
   }
-
+  get codpais(){
+    return this.formcontacto.get('codpais');
+  }
+  get coddepartamento(){
+    return this.formcontacto.get('coddepartamento');
+  }
+  get codmunicipio(){
+    return this.formcontacto.get('codmunicipio');
+  }
 
   onCrearPlazoCredito() {
     this.bsModalRef = this.modalService.show(CrearFormapagoModalComponent);
@@ -601,7 +606,8 @@ export class CrearContactoComponent implements OnInit {
   }
 
   onChange(event: MatSlideToggleChange) {
-    this.formcontacto.get('status').setValue(event.checked === true ? '1' : '0');
+    this.formcontacto.get('status').setValue(event.checked === true ? 1 : 0);
+    this.Objetoestado = this.formcontacto.get('status').value === 1 ? 'Activo' : 'Inactivo';
   }
 
   onChangeTipo(event) {

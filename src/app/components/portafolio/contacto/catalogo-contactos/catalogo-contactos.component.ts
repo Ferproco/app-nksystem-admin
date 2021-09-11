@@ -28,7 +28,7 @@ export class CatalogoContactosComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
-  displayedColumns: string[] = ['select', 'TIPO IDENTIFICACION', 'N° IDENTIFICACION', 'NOMBRE', 'TELEFONO', 'EMAIL', 'TIPO PERSONA', 'ESTATUS', 'ACCION'];
+  displayedColumns: string[] = ['select', 'TIPO IDENTIFICACION', 'N° IDENTIFICACION', 'NOMBRE', 'TIPO PERSONA', 'ESTATUS', 'ACCION'];
   dataSource: MatTableDataSource<Contacto>;
   selection = new SelectionModel<Contacto>(true, []);
 
@@ -71,7 +71,7 @@ export class CatalogoContactosComponent implements OnInit {
         ((error: HttpErrorResponse) => {
           this.loading = false;
           if (error.status === 404) {
-
+            this.dataSource = new MatTableDataSource(this.lstContactos);
           }
           else {
             this.toastr.error('Opss ocurrio un error, no hay comunicación con el servicio ' + '<br>' + error.message, 'Error',

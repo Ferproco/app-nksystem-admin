@@ -85,7 +85,7 @@ export class ContactoService{
       descuentocondicionado: contacto.descuentocondicionado,
       codigodv: contacto.codigodv,
       responsableiva: contacto.responsableiva,
-      status: Number(contacto.status) === 1 ? 'ACTIVO' : 'INACTIVO'
+      status: Number(contacto.status) === 1 ? 'Activo' : 'Inactivo'
 
     };
     console.log('id ' + idIn + 'contacto ' + JSON.stringify(body));

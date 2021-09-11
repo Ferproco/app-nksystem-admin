@@ -27,6 +27,7 @@ import { UnidadService } from 'src/app/components/ajustes/unidad/UnidadService.s
 import { MarcaService } from 'src/app/components/ajustes/marca/MarcaService.service';
 import { CrearMarcaModalComponent } from 'src/app/components/ajustes/marca/crear-marca-modal/crear-marca-modal.component';
 import { CrearUnidadModalComponent } from 'src/app/components/ajustes/unidad/crear-unidad-modal/crear-unidad-modal.component';
+import { ConfiguracionesModule } from 'src/app/components/configuraciones/configuraciones.module';
 
 @Component({
   selector: 'app-crear-articulo',
@@ -852,7 +853,9 @@ export class CrearArticuloComponent implements OnInit {
     valorimpuesto = this.lstImpuestos[event - 1].normal;
     tieneivaincluido = Number(this.formarticulo.get('ivaincluido').value);
     precio = Number(this.formarticulo.get('preciosugerido').value);
-
+    console.log('el evento ', event);
+    console.log('La lista trae ', JSON.stringify(this.lstImpuestos));
+console.log('Tiene iva ', tieneivaincluido);
     if (tieneivaincluido === 2) {
       montoimpuesto = (precio * valorimpuesto) / 100;
       this.preciosiniva = precio;

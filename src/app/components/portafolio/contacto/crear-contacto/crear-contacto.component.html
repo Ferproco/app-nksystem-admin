@@ -14,8 +14,8 @@
                 <div class="col-lg-6">
                   <div class="breadcome-heading">
                     <button type="submit" (mouseover)="cargarRequeridos($event)"
-                    matTooltip="{{camposrequeridos}}" class="form-control"><i class="fa fa-save"
-                        aria-hidden="true"></i> Guardar
+                      matTooltip="{{camposrequeridos}}" class="form-control">
+                      <i class="fa fa-save" aria-hidden="true"></i> Guardar
                     </button>
                   </div>
                 </div>
@@ -26,7 +26,7 @@
                       <span class="bread-slash">/ Contactos /</span>
                     </li>
                     <li>
-                      <a routerLink="/contactos/listarcontactos"><span class="bread-blod">Listado de
+                      <a routerLink="/main/dashboard/portafolio/listarcontactos"><span class="bread-blod">Listado de
                           Contactos /</span></a>
                     </li>
                     <li><span class="bread-blod">Crear</span>
@@ -68,7 +68,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <mat-slide-toggle (change)="onChange($event)" formControlName="status">Activo
+                    <mat-slide-toggle (change)="onChange($event)" formControlName="status">{{Objetoestado}}
                     </mat-slide-toggle>
                   </div>
                 </div>
@@ -245,34 +245,51 @@
                       <div class="form-group">
                         <label for="username">Pais</label>
                         <select class="select2_demo_3 form-control" formControlName="codpais"
+                        [ngClass]="{'invalid-data': codpais.invalid && (codpais.touched || codpais.dirty)}"
                           (change)="listarDepartamentos($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option value="{{pais.id}}" *ngFor="let pais of lstPais">
                             {{pais.nombre}}
                           </option>
-
                         </select>
+                      </div>
+                      <div *ngIf="codpais.invalid  && (codpais.dirty || codpais.touched)">
+                        <div class="invalid-mensaje" *ngIf="codpais.errors.required">
+                          Pais Requerido
+                        </div>
                       </div>
                     </div>
                     <div id="pwd-container3" *ngIf="visibledepartamento">
                       <div class="form-group">
                         <label for="username">Departamento</label>
                         <select class="select2_demo_3 form-control" formControlName="coddepartamento"
+                        [ngClass]="{'invalid-data': coddepartamento.invalid && (coddepartamento.touched || coddepartamento.dirty)}"
                           (change)="listarMunicipios($event.target.value)">
                           <option [value]="null">--Seleccione--</option>
                           <option [value]="departamento.id" *ngFor="let departamento of lstDepartamentos">
                             {{departamento.nombre}}</option>
                         </select>
                       </div>
+                      <div *ngIf="coddepartamento.invalid  && (coddepartamento.dirty || coddepartamento.touched)">
+                        <div class="invalid-mensaje" *ngIf="coddepartamento.errors.required">
+                          Departamento Requerido
+                        </div>
+                      </div>
                     </div>
                     <div id="pwd-container3" *ngIf="visiblemunicipio">
                       <div class="form-group">
                         <label for="username">Municipio</label>
-                        <select class="select2_demo_3 form-control" formControlName="codmunicipio">
+                        <select class="select2_demo_3 form-control" formControlName="codmunicipio"
+                        [ngClass]="{'invalid-data': codmunicipio.invalid && (codmunicipio.touched || codmunicipio.dirty)}">
                           <option [value]="null">--Seleccione--</option>
                           <option [value]="municipio.id" *ngFor="let municipio of lstMunicipios">
                             {{municipio.nombre}}</option>
                         </select>
+                      </div>
+                      <div *ngIf="codmunicipio.invalid  && (codmunicipio.dirty || codmunicipio.touched)">
+                        <div class="invalid-mensaje" *ngIf="codmunicipio.errors.required">
+                          Municipio Requerido
+                        </div>
                       </div>
                     </div>
 
@@ -479,10 +496,10 @@
 
                       </ul>
                       <div class="tab-content res-tab-content-project">
+                        <br/>
                         <div id="home" class="tab-pane fade in active animated zoomInLeft">
                           <div class="row">
                             <div class="col-lg-5">
-
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Cupo</label>
@@ -522,26 +539,15 @@
                                 <div class="form-group">
                                   <label for="username">Descuento Condicionado:</label>
                                   <select class="select2_demo_3 form-control" formControlName="descuentocondicionado">
-                                    <option value="0">--Seleccione--</option>
-                                    <option value="Bahamas">Si</option>
-                                    <option value="Bahrain">No</option>
-
+                                    <option value="null">--Seleccione--</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
                                   </select>
                                 </div>
                               </div>
-
-
                             </div>
 
                             <div class="col-lg-5">
-                              <div id="pwd-container3">
-                                <div class="form-group">
-                                  <label for="username">Dirección Exogena</label>
-                                  <textarea formControlName="direccionexogena"
-                                    [ngClass]="{'invalid-data': direccionexogena.invalid && (direccionexogena.touched || direccionexogena.dirty)}"
-                                    type="text" class="form-control" placeholder="Ingrese la Dirección"></textarea>
-                                </div>
-                              </div>
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Lugar de Envio</label>
@@ -555,7 +561,14 @@
                                   </div>
                                 </div>
                               </div>
-
+                              <div id="pwd-container3">
+                                <div class="form-group">
+                                  <label for="username">Dirección Exogena</label>
+                                  <textarea formControlName="direccionexogena"
+                                    [ngClass]="{'invalid-data': direccionexogena.invalid && (direccionexogena.touched || direccionexogena.dirty)}"
+                                    type="text" class="form-control" placeholder="Ingrese la Dirección"></textarea>
+                                </div>
+                              </div>
                               <div id="pwd-container3">
                                 <div class="form-group">
                                   <label for="username">Observaciones</label>
@@ -564,16 +577,8 @@
                                     type="text" class="form-control" placeholder="Ingrese las Observaciones"></textarea>
                                 </div>
                               </div>
-
-
-
-
                             </div>
-
                           </div>
-
-
-
                         </div>
                         <!-- TERMINA PESTAÑA HOME -->
                         <div id="menu1" class="tab-pane fade animated zoomInLeft">

@@ -24,7 +24,7 @@ export class Contacto {
    public codtipocontacto: number;
    public codformapago: number = 1;
    public codtipocontibuyente: number = null;
-   public status: string = 'ACTIVO';
+   public status: string = 'Activo';
    public regimeniva: string;
    public fecharegistro: Date;
    public tarifa: string;
